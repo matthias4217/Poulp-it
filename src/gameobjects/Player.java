@@ -14,6 +14,11 @@ public class Player {
 	 */
 	int hp;
 	/**
+	 * Maximum health the player can have
+	 * It should be read from a configuration file.
+	 */
+	int max_hp;
+	/**
 	 * Weapon of the Player
 	 */
 	Weapon weapon;
@@ -25,4 +30,22 @@ public class Player {
 	 * Boolean : true for debug state ; false for normal use
 	 */
 	boolean debug;
+	
+	/**
+	 * Constructor for the Player class
+	 * <p>
+	 * @param hp
+	 * @param max_hp
+	 * @param weapon
+	 * @param states
+	 * @param debug
+	 */
+	Player(int hp, int max_hp, Weapon weapon, LinkedList<State> states, boolean debug) {
+		this.hp = hp;
+		this.max_hp = max_hp;
+		this.weapon = weapon;
+		this.states = states;
+		this.debug = debug;
+		
+	}
 }
