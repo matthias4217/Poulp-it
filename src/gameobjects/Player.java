@@ -40,7 +40,7 @@ public class Player {
 	 * @param states	LinkedList<State> States in which the player is.
 	 * @param debug		Boolean enabling debug mode.
 	 */
-	Player(int hp, int max_hp, Weapon weapon, LinkedList<State> states, boolean debug) {
+	public Player(int hp, int max_hp, Weapon weapon, LinkedList<State> states, boolean debug) {
 		this.hp = hp;
 		this.max_hp = max_hp;
 		this.weapon = weapon;
