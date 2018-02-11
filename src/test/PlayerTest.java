@@ -6,9 +6,9 @@ import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
-import gameobjects.Player;
-import gameobjects.State;
-import gameobjects.Weapon;
+import content.game_elements.Player;
+import content.game_elements.State;
+import content.game_elements.Weapon;
 
 class PlayerTest extends Player {
 
