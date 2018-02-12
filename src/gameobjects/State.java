@@ -1,5 +1,5 @@
 package gameobjects;
 
-public class State {
+public class State extends GameObject{
 
 }

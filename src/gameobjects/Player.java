@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * @author matthias
  *
  */
-public class Player {
+public class Player extends GameObject{
 	
 	/**
 	 * Health of the Player
