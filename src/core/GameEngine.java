@@ -19,7 +19,7 @@ public class GameEngine {
 	for each gameObject in gameObjects:
 		for each script in gameObject.scripts:
 			script.Start()
-	
+	// Une super modif
 	
 	
 	
