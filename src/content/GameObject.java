@@ -6,11 +6,10 @@ package content;
 import java.util.Collection;
 
 /**
- * @author Raphaël
+ * @author Raphaï¿½l
  *	Superclass for all game element in a scene
  */
 public class GameObject {
-	
 	
 	Collection<MonoBehavior> scripts;
 	

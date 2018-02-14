@@ -22,5 +22,5 @@ class PlayerTest extends Player {
 		Player playertest = new Player(100, 100, null, null, false);
 		fail("Not yet implemented");
 	}
-
+	
 }
