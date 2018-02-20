@@ -5,6 +5,6 @@ package gameobjects;
  * @author matthias
  *
  */
-public class Weapon extends GameObject {
-
+public abstract class GameObject {
+	
 }
