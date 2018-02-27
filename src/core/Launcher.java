@@ -10,7 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 import core.exceptions.MultipleGameEngineException;
 
@@ -22,8 +27,8 @@ import core.exceptions.MultipleGameEngineException;
  */
 public class Launcher extends Application {
 
-	static final double WINDOW_WIDTH = 900;
-	static final double WINDOW_HEIGHT = 500;
+	static final double WINDOW_WIDTH = 1345;
+	static final double WINDOW_HEIGHT = 917;
 	static final String WINDOW_TITLE = "Hardcore Rodeo 96 !!!";
 
 
@@ -36,16 +41,16 @@ public class Launcher extends Application {
 
 		// Initialization of the window
 		stage.setTitle(WINDOW_TITLE);
-		stage.setResizable(false);
+		stage.setResizable(false); 
 		Group group0 = new Group();
 		stage.setScene(new Scene(group0));
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		Image background = new Image("resources/background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 
-
+		
 		// If we implements a menu, that's probably around here
 		
 		
@@ -55,6 +60,10 @@ public class Launcher extends Application {
 		GraphicManager graphicManager = new GraphicManager();
 		gameEngine.init();
 
+		
+		
+		
+		
 
 
 		AnimationTimer timer = new AnimationTimer() {
@@ -64,6 +73,8 @@ public class Launcher extends Application {
 				gc.drawImage(background, 0, 0);
 				gameEngine.update();
 				graphicManager.render(gc);
+				
+				
 			}
 		};
 		timer.start();
