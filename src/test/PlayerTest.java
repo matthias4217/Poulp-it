@@ -13,13 +13,12 @@ import content.game_elements.Weapon;
 class PlayerTest extends Player {
 
 	PlayerTest(int hp, int max_hp, Weapon weapon, LinkedList<State> states, boolean debug) {
-		super(hp, max_hp, weapon, states, debug);
-		// TODO Auto-generated constructor stub
+		super(max_hp, weapon);
 	}
 
 	@Test
 	void testPlayer() {
-		Player playertest = new Player(100, 100, null, null, false);
+		Player playertest = new Player(10, null);
 		fail("Not yet implemented");
 	}
 

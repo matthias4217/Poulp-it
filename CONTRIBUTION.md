@@ -2,6 +2,7 @@
 
 ## Conventions de code ##
 
+  * We code in english t(-_-t) !
   * Bien documenter avec Javadocs
 
 
