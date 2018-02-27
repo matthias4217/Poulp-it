@@ -42,7 +42,7 @@ public class Launcher extends Application {
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, false, true);
+		Image background = new Image("background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 
 
@@ -61,6 +61,7 @@ public class Launcher extends Application {
 			@Override
 			public void handle(long now) {
 				/* Is called in each frame while the timer is active */
+				gc.drawImage(background, 0, 0);
 				gameEngine.update();
 				graphicManager.render(gc);
 			}
