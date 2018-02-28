@@ -60,20 +60,15 @@ public class Launcher extends Application {
 		GraphicManager graphicManager = new GraphicManager();
 		gameEngine.init();
 
-		
-		
-		
-		
-
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
 				/* Is called in each frame while the timer is active */
 				gc.drawImage(background, 0, 0);
+				
 				gameEngine.update();
 				graphicManager.render(gc);
-				
 				
 			}
 		};

@@ -12,17 +12,17 @@ import core.exceptions.MultipleGameEngineException;
 
 public class GameEngine {
 
-	static boolean alreadyExist = false;		// To ensure there can be only one instance of GameEngine 
+	static boolean alreadyExist = false;		// To ensure there can be only one instance of GameEngine created
 	
 	LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 	LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
-	Player[] players;		// Convenient access to the players since this array contains references
+	Player[] players;		// Convenient access to the players (since this array contains references)
 	
 
-	
+	/* Constructor */
 	public GameEngine(int nbPlayers) throws MultipleGameEngineException {
 		if (alreadyExist) {
-			throw new MultipleGameEngineException();
+			throw new MultipleGameEngineException("One instance of GameEngine already exists");
 		}
 		alreadyExist = true;
 		
@@ -40,7 +40,6 @@ public class GameEngine {
 
 	public void init() {
 		/* Initialize the game */
-		
 		
 		
 	}
@@ -63,8 +62,8 @@ public class GameEngine {
 			}
 		}
 	}
-	
-	
+
+
 	
 	
 }
