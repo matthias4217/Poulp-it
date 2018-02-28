@@ -1,5 +1,6 @@
 package core.scripts;
 
+import core.util.Vector2;
 import core.util.specific.RaycastOrigins;
 
 /**
@@ -26,7 +27,7 @@ public class RaycastController extends MonoBehavior {
 
 	@Override
 	public void awake() {		// Awake in order to get the BoxCollider2D component before CameraFollow
-		collider = GetComponent<BoxCollider2D> ();
+		collider = support.GetComponent<BoxCollider2D> ();
 	}
 
 	@Override
@@ -58,3 +59,7 @@ public class RaycastController extends MonoBehavior {
 
 
 
+class RaycastOrigins {
+	public Vector2 topLeft, topRight;
+	public Vector2 bottomLeft, bottomRight;
+}

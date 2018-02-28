@@ -1,6 +1,8 @@
 package core.scripts;
 
 import core.util.Vector2;
+import core.util.specific.Bounds;
+import core.util.specific.FocusArea;
 
 /**
  * @@@
@@ -10,7 +12,7 @@ import core.util.Vector2;
  */
 public class CameraFollow extends MonoBehavior {
 
-	public Controller2D target;
+	public Controller target;
 	public float verticalOffset;
 	public float lookAheadDstX;
 	public float lookSmoothTimeX;
@@ -28,19 +30,19 @@ public class CameraFollow extends MonoBehavior {
 	private boolean lookAheadStopped;
 
 	@Override
-	void start() {
-		focusArea = new FocusArea (target.collider.bounds, focusAreaSize);
+	public void start() {
+		focusArea = new FocusArea(target.collider.bounds, focusAreaSize);
 	}
 
 	@Override
-	void lateUpdate() {
-		focusArea.Update (target.collider.bounds);
+	public void lateUpdate() {
+		focusArea.update(target.collider.bounds);
 
-		Vector2 focusPosition = focusArea.center + Vector2.up * verticalOffset;
+		Vector2 focusPosition = focusArea.center.add(Vector2.up.multiply(verticalOffset));
 
 		if (focusArea.velocity.x != 0) {
-			lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
-			if (Mathf.Sign(target.playerInput.x) == Math.signum(focusArea.velocity.x) && target.playerInput.x != 0) {
+			lookAheadDirX = Math.signum(focusArea.velocity.x);
+			if (Math.signum(target.playerInput.x) == Math.signum(focusArea.velocity.x) && target.playerInput.x != 0) {
 				lookAheadStopped = false;
 				targetLookAheadX = lookAheadDirX * lookAheadDstX;
 			}
@@ -55,9 +57,55 @@ public class CameraFollow extends MonoBehavior {
 
 		currentLookAheadX = Mathf.SmoothDamp (currentLookAheadX, targetLookAheadX, ref smoothLookVelocityX, lookSmoothTimeX);
 
-		focusPosition.y = Mathf.SmoothDamp (transform.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
-		focusPosition += Vector2.right * currentLookAheadX;
-		transform.position = (Vector3)focusPosition + Vector3.forward * -10;
+		focusPosition.y = Mathf.SmoothDamp (support.position.y, focusPosition.y, ref smoothVelocityY, verticalSmoothTime);
+		focusPosition = focusPosition.add(Vector2.right.multiply(currentLookAheadX)));
+		support.position = focusPosition + Vector3.forward * -10;
 	}
 
+}
+
+
+
+
+
+class FocusArea {
+	/* Class which represents the focus area of the camera around its target. */
+
+	public Vector2 center;			// The center of the area
+	public Vector2 velocity;		// @@@
+	float left, right;				// @@@
+	float top, bottom;				// @@@
+
+
+	public FocusArea(Bounds targetBounds, Vector2 size) {
+		left = targetBounds.center.x - size.x/2;
+		right = targetBounds.center.x + size.x/2;
+		bottom = targetBounds.min.y;
+		top = targetBounds.min.y + size.y;
+
+		velocity = Vector2.zero;
+		center = new Vector2(targetBounds.center.x, (top+bottom)/2);
+	}
+
+	public void update(Bounds targetBounds) {
+		float shiftX = 0;
+		if (targetBounds.min.x < left) {
+			shiftX = targetBounds.min.x - left;
+		} else if (targetBounds.max.x > right) {
+			shiftX = targetBounds.max.x - right;
+		}
+		left += shiftX;
+		right += shiftX;
+
+		float shiftY = 0;
+		if (targetBounds.min.y < bottom) {
+			shiftY = targetBounds.min.y - bottom;
+		} else if (targetBounds.max.y > top) {
+			shiftY = targetBounds.max.y - top;
+		}
+		top += shiftY;
+		bottom += shiftY;
+		center = new Vector2((left+right)/2,(top+bottom)/2);
+		velocity = new Vector2 (shiftX, shiftY);
+	}
 }

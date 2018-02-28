@@ -1,5 +1,7 @@
 package core.scripts;
 
+import content.GameObject;
+
 /**
  * Superclass for all scripts which can be added to a GameObject. 
  * 
@@ -7,6 +9,10 @@ package core.scripts;
  *
  */
 public class MonoBehavior {
+	
+	GameObject support;			// The GameObject to which the script is attached
+	
+	
 	public void awake() {
 	}
 	public void start() {
