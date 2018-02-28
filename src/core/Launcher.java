@@ -53,7 +53,7 @@ public class Launcher extends Application {
 		
 		// If we implements a menu, that's probably around here
 		
-		
+	
 		// Initialization of the game
 		int nbPlayers = 1;
 		GameEngine gameEngine = new GameEngine(nbPlayers);
