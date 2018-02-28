@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core;
 
 import javafx.animation.AnimationTimer;
@@ -10,20 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
-import java.io.File;
-
 import core.exceptions.MultipleGameEngineException;
 
 /**
- * @author Raph
- *
  * This is the starting point of the program.
  * Launcher extends Application and thus has a start method called.
+ * This class must stay clean and only call other methods.
+ * 
+ * @author Raph
+ * 
  */
 public class Launcher extends Application {
 
@@ -33,6 +26,13 @@ public class Launcher extends Application {
 
 
 	public static void main(String[] args) {
+		/**
+		 * When the Application is launched, 
+		 * - init() is called
+		 * - start() is called
+		 * - waiting for Platform.exit() or last window closed
+		 * - stop() is called
+		 */
 		launch(args);
 	}
 
@@ -75,6 +75,12 @@ public class Launcher extends Application {
 		timer.start();
 	}
 
-
+	
+	@Override
+	public void stop() {
+		/* Is called when the window is closed */
+		
+		
+	}
 
 }

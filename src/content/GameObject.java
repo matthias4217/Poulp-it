@@ -1,16 +1,16 @@
-/**
- * 
- */
 package content;
 
 import java.util.LinkedList;
 import core.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import core.scripts.MonoBehavior;
 
 /**
+ * Superclass for any game element in a scene which has a spatial position and is renderable.
+ * 
  * @author Raph
- *	Superclass for all game element in a scene which have a spacial position and are renderable.
+ * 
  */
 public class GameObject {
 	
