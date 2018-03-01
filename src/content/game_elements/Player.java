@@ -1,13 +1,15 @@
-package gameobjects;
+package content.game_elements;
 
 import java.util.LinkedList;
 
-/**
+import content.GameObject;
+
+/** Player object, which is a renderable GameObject
  * 
  * @author matthias
  *
  */
-public class Player extends GameObject{
+public class Player extends GameObject {
 	
 	/**
 	 * Health of the Player
