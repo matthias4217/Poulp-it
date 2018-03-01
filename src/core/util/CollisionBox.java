@@ -30,4 +30,5 @@ public class CollisionBox extends CollisionBounds {
 		pointsArray[3] = originPoint.add(Vector2.right.multiply(width));
 		setPointsArray(pointsArray);
 	}
+	
 }
