@@ -11,8 +11,8 @@ package core.exceptions;
 @SuppressWarnings("serial")
 public class MultipleGameEngineException extends Exception {
 	
-	public MultipleGameEngineException(String msg) {
-		super(msg);
+	public MultipleGameEngineException() {
+		super("One instance of GameEngine already exists");
 	}
 
 }

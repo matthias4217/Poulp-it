@@ -15,8 +15,7 @@ import core.scripts.MonoBehavior;
 public class GameObject {
 	
 	public Vector2 position;
-	// public Vector2 velocity; ?
-	
+	public CollisionBounds collisionBounds; 
 	public Image sprite;
 	
 	public LinkedList<MonoBehavior> scripts;

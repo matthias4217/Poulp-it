@@ -13,7 +13,7 @@ public class MonoBehavior {
 	GameObject support;			// The GameObject to which the script is attached
 	
 	
-	public void awake() {
+	public void awake() throws Exception {
 	}
 	public void start() {
 	}
@@ -21,5 +21,6 @@ public class MonoBehavior {
 	}
 	public void lateUpdate() {
 	}
+	
 	
 }

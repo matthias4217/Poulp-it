@@ -1,7 +1,7 @@
 package core.util;
 
 /**
- * Simple structure which represent a 2-dimensional vector.
+ * This class represents a 2-dimensional vector.
  * Contains:
  * 		classic functions on vectors
  * 		convenient static variables which can be used
@@ -34,6 +34,19 @@ public final class Vector2 {
 		return new Vector2(factor * x, factor * y);
 	}
 	
+	public float norm() {
+		/* Return the norm of this Vector2 */
+		return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+	}
+	
+	public Vector2 normalize() {
+		/* Return the normalized Vector2 associated to this one.
+		 * NOT IN PLACE
+		 */
+		float norm = this.norm();
+		return new Vector2(this.x / norm, this.y / norm);
+	}
+	
 	
 	
 	public static Vector2 zero	= new Vector2(0, 0);
@@ -45,9 +58,15 @@ public final class Vector2 {
 	
 	
 	
+	@Override
+	public boolean equals(Object toCompare) {
+		Vector2 toCompareVector = (Vector2) toCompare;
+		return (toCompareVector.x == this.x && toCompareVector.y == this.y);
+	}
 	
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
+	
 }

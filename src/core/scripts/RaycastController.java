@@ -1,10 +1,10 @@
 package core.scripts;
 
-import core.util.Vector2;
-import core.util.specific.RaycastOrigins;
+import core.exceptions.InvalidBoxColliderException;
+import core.util.*;
 
 /**
- * @@@
+ * This script is attached to a RECTANGULAR object
  * 
  * @author Raph
  * 
@@ -22,27 +22,20 @@ public class RaycastController extends MonoBehavior {
 	protected float horizontalRaySpacing;
 	protected float verticalRaySpacing;
 	
-	public BoxCollider2D collider;
+	public CollisionBounds collider;
 	public RaycastOrigins raycastOrigins;
 
 	@Override
-	public void awake() {		// Awake in order to get the BoxCollider2D component before CameraFollow
-		collider = support.GetComponent<BoxCollider2D> ();
+	public void awake() throws Exception {		// Awake in order to get the BoxCollider2D component before CameraFollow
+		collider = support.collisionBounds;
+		if (collider.getNbPoints() != 4) {
+			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");
+		}
 	}
 
 	@Override
 	public void start() {
 		calculateRay();
-	}
-
-	public void updateRaycastOrigins() {
-		Bounds bounds = collider.bounds;
-		bounds.Expand (skinWidth * -2);		// Reduce the bounds
-
-		raycastOrigins.bottomLeft = new Vector2 (bounds.min.x, bounds.min.y);
-		raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
-		raycastOrigins.topLeft = new Vector2 (bounds.min.x, bounds.max.y);
-		raycastOrigins.topRight = new Vector2 (bounds.max.x, bounds.max.y);
 	}
 		
 	public void calculateRay() {
@@ -52,6 +45,16 @@ public class RaycastController extends MonoBehavior {
 		bounds.Expand (skinWidth * -2);
 		horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
 		verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+	}
+	
+	public void updateRaycastOrigins() {
+		Bounds bounds = collider.bounds;
+		bounds.Expand (skinWidth * -2);		// Reduce the bounds
+
+		raycastOrigins.bottomLeft = new Vector2 (bounds.min.x, bounds.min.y);
+		raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
+		raycastOrigins.topLeft = new Vector2 (bounds.min.x, bounds.max.y);
+		raycastOrigins.topRight = new Vector2 (bounds.max.x, bounds.max.y);
 	}
 
 }

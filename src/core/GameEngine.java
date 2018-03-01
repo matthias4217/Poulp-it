@@ -25,7 +25,7 @@ public class GameEngine {
 
 	public GameEngine(int nbPlayers) throws MultipleGameEngineException {
 		if (alreadyExist) {
-			throw new MultipleGameEngineException("One instance of GameEngine already exists");
+			throw new MultipleGameEngineException();
 		}
 		alreadyExist = true;
 		
