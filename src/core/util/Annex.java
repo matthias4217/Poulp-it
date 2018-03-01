@@ -1,12 +1,17 @@
 package core.util;
 
 /**
- * This class stores many diverse methods such as math ones.
+ * This class stores many diverse constantes and methods such as math ones.
  * 
  * @author Raph
  *
  */
-public final class AnnexMethods {
+public final class Annex {
+	
+	public static float DEG2RAD = (float) Math.PI / 180;
+	
+	
+	
 	
 	public static float clamp(float value, float a, float b) {
 		/* Return value clamped between a and b. */

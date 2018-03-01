@@ -21,10 +21,16 @@ public final class Vector2 {
 		
 	
 	public Vector2 add(Vector2 vectorToAdd) {
-		/* Add two vectors. 
+		/* Add two vectors.
 		 * NOT IN PLACE
 		 */
 		return new Vector2(this.x + vectorToAdd.x, this.y + vectorToAdd.y);
+	}
+	
+	public void translate(Vector2 translation) {
+		/* Apply translation to this Vector2 */
+		this.x += translation.x;
+		this.y += translation.y;
 	}
 	
 	public Vector2 multiply(float factor) {
