@@ -119,7 +119,7 @@ public class Controller extends RaycastController {
 		float rayLength = Math.abs(moveAmount.y) + skinWidth;		// The more we are moving, the longer the rays are
 
 		for (int i = 0; i < verticalRayCount; i++) {
-
+ 
 			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
