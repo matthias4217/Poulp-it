@@ -12,29 +12,19 @@ import core.util.*;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		Vector2 test = new Vector2(1, 1);
-		System.out.println(test.norm());
-		Vector2 test2 = test.normalize();
-		System.out.println(test2);
-		System.out.println(test2.norm());
-
-		Vector2[] truc_t = new Vector2[2];
-		truc_t[0] = test;
-		truc_t[1] = test2;
-
-		CollisionBounds truc = new CollisionBounds(truc_t);
-		System.out.println(truc);
+		Vector2 test = new Vector2(1, 2);
+		changeVector(test);
+		System.out.println(test);
+		
 
 
 
 	}
 
-
-
-
-
-
-
-
+	
+	static void changeVector(Vector2 maBite) {
+		maBite.x = 5;
+	}
+	
+	
 }
-

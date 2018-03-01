@@ -12,17 +12,10 @@ package core.util;
  */
 public class CollisionBox extends CollisionBounds {
 
-
-	@Override
-	public int getNbPoints () {
-		return 4;
-	}
-
-
-
 	/* Constructor */
 	public CollisionBox(Vector2 originPoint, float width, float height) {
 		super();
+		nbPoints = 4;
 		Vector2[] pointsArray = new Vector2[4];
 		pointsArray[0] = originPoint;
 		pointsArray[1] = originPoint.add(Vector2.up.multiply(height));
@@ -31,4 +24,12 @@ public class CollisionBox extends CollisionBounds {
 		setPointsArray(pointsArray);
 	}
 	
+	
+	public float getWidth() {
+		return pointsArray[3].x - pointsArray[0].x;
+	}
+	
+	public float getHeight() {
+		return pointsArray[1].y - pointsArray[1].y;
+	}
 }

@@ -15,15 +15,15 @@ import core.exceptions.InvalidArgumentsException;
  */
 public class CollisionBounds {
 
-	private Vector2[] pointsArray;
+	protected Vector2[] pointsArray;
 	public Vector2 getPoint(int i) {
 		return pointsArray[i];
 	}
-	public void setPointsArray(Vector2[] pointsArray) {
+	protected void setPointsArray(Vector2[] pointsArray) {
 		this.pointsArray = pointsArray;
 	}
 
-	private int nbPoints;
+	protected int nbPoints;
 	public int getNbPoints() {
 		return nbPoints;
 	}
@@ -39,8 +39,8 @@ public class CollisionBounds {
 		nbPoints = pointsArray.length;
 	}
 
-	public CollisionBounds() {
-
+	protected CollisionBounds() {
+		/* This constructor is used by the subclass CollisionBox */
 	}
 
 

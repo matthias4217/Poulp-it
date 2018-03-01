@@ -23,7 +23,7 @@ public class Controller extends RaycastController {
 	public void start() {
 		super.start();
 		collisions.faceDir = 1;
-
+		
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
@@ -42,16 +42,16 @@ public class Controller extends RaycastController {
 		playerInput = input;
 
 		if (moveAmount.y < 0) {
-			descendSlope(ref moveAmount);
+			descendSlope(moveAmount);
 		}
 
 		if (moveAmount.x != 0) {
 			collisions.faceDir = (int) Math.signum(moveAmount.x);
 		}
 
-		horizontalCollisions (ref moveAmount);
+		horizontalCollisions (moveAmount);
 		if (moveAmount.y != 0) {
-			verticalCollisions (ref moveAmount);
+			verticalCollisions (moveAmount);
 		}
 
 		transform.Translate (moveAmount);
@@ -61,11 +61,11 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void horizontalCollisions(ref Vector2 moveAmount) {
+	void horizontalCollisions(Vector2 moveAmount) {
 		float directionX = collisions.faceDir;
-		float rayLength = Mathf.Abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
+		float rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
 
-		if (Mathf.Abs(moveAmount.x) < skinWidth) {
+		if (Math.abs(moveAmount.x) < skinWidth) {
 			rayLength = 2*skinWidth;
 		}
 
