@@ -1,5 +1,7 @@
 package core.util;
 
+import java.util.Arrays;
+
 import core.exceptions.InvalidArgumentsException;
 
 /**
@@ -39,8 +41,17 @@ public class CollisionBounds {
 		nbPoints = pointsArray.length;
 	}
 
+	/* blank constructor used for heritage (subclass just have to put `super()`
+	 *  at the top of their constructors
+	 */
 	public CollisionBounds() {
 
+	}
+
+	public String toString() {
+		String txt = "nb_points: " + Integer.toString(nbPoints) + " ; "
+	+ Arrays.toString(pointsArray);
+		return txt;
 	}
 
 
