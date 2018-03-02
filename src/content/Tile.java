@@ -3,6 +3,7 @@
  */
 package content;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import core.util.Vector2;
@@ -23,11 +24,17 @@ public class Tile {
 	 */
 	public Image sprite;
 	public TileType type;
+	public int tilesize;
 
-	public Tile(Vector2 position, Image sprite, TileType type) {
+	public Tile(Vector2 position, String sprite_location, int tilesize, TileType type) {
 		this.position = position;
+		this.sprite = new Image(sprite_location, tilesize, tilesize, false, false);
 		this.type = type;
-		this.sprite = sprite;
+	}
+
+	public void render(GraphicsContext gc) {
+		/* Render this Sprite on the GraphicsContext gc. */
+		gc.drawImage(sprite, position.x * tilesize, position.y * tilesize);
 	}
 
 	/*

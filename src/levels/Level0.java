@@ -3,7 +3,6 @@
  */
 package levels;
 
-import javafx.scene.image.Image;
 
 import content.Tile;
 import content.Tile.TileType;
@@ -16,8 +15,10 @@ import core.util.Vector2;
 public class Level0 {
 
 
-	public Tile[] tiles = new Tile[2];
-	Tile tile_0 = new Tile(new Vector2(0, 0), new Image("resources/tile-down.png"), TileType.SQUARE);
-	Tile tiles_1 = new Tile(new Vector2(1,0), new Image("resources/tile-down.png"), TileType.SQUARE);
+	public static Tile[] tiles = new Tile[2];
 
+	public void init() {
+		tiles[0] = new Tile(new Vector2(0, 0), "resources/tile-down.png", 32, TileType.SQUARE);
+		tiles[1] = new Tile(new Vector2(1, 0), "resources/tile-down.png", 32, TileType.SQUARE);
+	}
 }

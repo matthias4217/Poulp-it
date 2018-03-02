@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.LinkedList;
 
 import content.GameObject;
+import content.Tile;
 import core.GameEngine;
 
 /**
@@ -19,9 +20,13 @@ public class GraphicManager {
 	public void render(GraphicsContext gc) {
 		// Shows the game on screen
 		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;
+		Tile[] tiles = GameEngine.tiles;
 		for (GameObject gameObject: allGameObjects) {
 			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc);
+		}
+		for (Tile tile: tiles) {
+			tile.render(gc);
 		}
 	}
 
