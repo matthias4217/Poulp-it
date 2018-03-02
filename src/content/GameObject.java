@@ -23,8 +23,8 @@ public class GameObject {
 	// Collection<components> ?
 
 
-	public GameObject(float x, float y, Image sprite) {
-		this.position = new Vector2(x, y);
+	public GameObject(Vector2 position, Image sprite) {
+		this.position = position;
 		this.sprite = sprite;
 		scripts = new LinkedList<MonoBehavior>();
 	}

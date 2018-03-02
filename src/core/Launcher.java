@@ -65,13 +65,13 @@ public class Launcher extends Application {
 		stage.show();
 
 
-		// If we implements a menu, that's probably around here
+		// If we implement a menu, that's probably around here
 
 
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 1;
+		int nbPlayers = 5;
 		gameEngine.init(nbPlayers);
 		gc.drawImage(background, 0, 0);
 
@@ -81,7 +81,7 @@ public class Launcher extends Application {
 				/* handle is called in each frame while the timer is active */
 
 				gameEngine.update();
-				graphicManager.render(gc);
+				graphicManager.render(gc); 
 
 			}
 		};

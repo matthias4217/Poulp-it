@@ -38,8 +38,8 @@ public class GameEngine {
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Player playerI = new Player(10, null);
-			playerI.position = new Vector2(10 * (i+1), 20*(i+1));
+			Vector2 spawnPosition = new Vector2(10*(i+1), 20*(i+1));
+			Player playerI = new Player(spawnPosition, 10, null);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
 			System.out.println("Added player at " + playerI.position);
@@ -85,12 +85,8 @@ public class GameEngine {
 			for (Line line: gameObject.collider.pointsArray) {
 				checkCollision(ray, line);
 			}
-			}
 		}
-
-
 	}
-
 
 
 }
