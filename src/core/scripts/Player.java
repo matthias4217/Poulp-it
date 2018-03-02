@@ -38,7 +38,7 @@ public class Player extends MonoBehavior {
 	boolean wallSliding;
 	int wallDirX;	// wall on left or right
 
-	void Start() {
+	public void start() {
 		controller = GetComponent<Controller2D> ();
 
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex,2);
@@ -47,7 +47,7 @@ public class Player extends MonoBehavior {
 	}
 
 	@Override
-	void update() {
+	public void update() {
 		calculateVelocity ();
 		handleWallSliding ();
 
@@ -131,7 +131,7 @@ public class Player extends MonoBehavior {
 
 	void calculateVelocity() {
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Math.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+		velocity.x = Math.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 		velocity.y += gravity * Time.deltaTime;
 	}
 }

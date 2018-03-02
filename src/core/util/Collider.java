@@ -7,7 +7,7 @@ import core.exceptions.InvalidArgumentsException;
 /**
  * This class represents a collision mask.
  * In practice, this is simply a list of points which define a polygon.
- * If you want rectangular bounds, use the subclass CollisionBox.
+ * If you want rectangular bounds, use the subclass BoxCollider.
  * The user is trusted to create valid forms.
  *
  * Note: A line (two points) is valid.
@@ -15,24 +15,24 @@ import core.exceptions.InvalidArgumentsException;
  * @author Raph
  *
  */
-public class CollisionBounds {
+public class Collider {
 
-	private Vector2[] pointsArray;
+	protected Vector2[] pointsArray;
 	public Vector2 getPoint(int i) {
 		return pointsArray[i];
 	}
-	public void setPointsArray(Vector2[] pointsArray) {
+	protected void setPointsArray(Vector2[] pointsArray) {
 		this.pointsArray = pointsArray;
 	}
 
-	private int nbPoints;
+	protected int nbPoints;
 	public int getNbPoints() {
 		return nbPoints;
 	}
 
 
 	/* Constructor */
-	public CollisionBounds(Vector2[] pointsArray) throws InvalidArgumentsException {
+	public Collider(Vector2[] pointsArray) throws InvalidArgumentsException {
 		if (pointsArray.length < 2) {
 			throw new InvalidArgumentsException("The array of points for a CollisionBounds must be at least two");
 		}
@@ -41,11 +41,8 @@ public class CollisionBounds {
 		nbPoints = pointsArray.length;
 	}
 
-	/* blank constructor used for heritage (subclass just have to put `super()`
-	 *  at the top of their constructors
-	 */
-	public CollisionBounds() {
-
+	protected Collider() {
+		/* This constructor is only used by the subclass BoxCollider. */
 	}
 
 	public String toString() {

@@ -11,54 +11,48 @@ import core.util.*;
  */
 public class RaycastController extends MonoBehavior {
 	
-	public String collisionLayer;					// Indicates which cast is 
+	public String collisionLayer;					// Indicates on which layer the Rays will detect things
 
 	public final float PERCENT_SKIN = 0.015f;		// Percentage of the object bounds that is skin
 	protected float skinWidth;
 
-	public int horizontalRayCount;					// Number of horizontal ray
-	public int verticalRayCount;					// Number of vertical ray
+	protected int horizontalRayCount;				// Number of horizontal ray
+	protected int verticalRayCount;					// Number of vertical ray
+	protected float horizontalRaySpacing;			// 
+	protected float verticalRaySpacing;				// 
 
-	protected float horizontalRaySpacing;
-	protected float verticalRaySpacing;
-	
-	public CollisionBounds collider;
+	public BoxCollider collider;
 	public RaycastOrigins raycastOrigins;
 
 	@Override
-	public void awake() throws Exception {		// Awake in order to get the BoxCollider2D component before CameraFollow
-		collider = support.collisionBounds;
-		if (collider.getNbPoints() != 4) {
+	public void awake() throws InvalidBoxColliderException {		// @@@ awake() instead of start() to get the Collider before CameraFollow
+		try {
+			collider = (BoxCollider) support.collider;
+		}
+		catch (ClassCastException exception) {
 			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");
 		}
 	}
 
 	@Override
 	public void start() {
-		calculateRay();
-	}
-		
-	public void calculateRay() {
-		Bounds bounds = collider.bounds;
-		skinWidth = PERCENT_SKIN * Math.min(bounds.size.x, bounds.size.y);
-
-		bounds.Expand (skinWidth * -2);
-		horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-		verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+		// Calculating rays
+		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
+		horizontalRaySpacing = (collider.getHeight() - 2*skinWidth) / (horizontalRayCount - 1);
+		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);
 	}
 	
 	public void updateRaycastOrigins() {
-		Bounds bounds = collider.bounds;
-		bounds.Expand (skinWidth * -2);		// Reduce the bounds
-
-		raycastOrigins.bottomLeft = new Vector2 (bounds.min.x, bounds.min.y);
-		raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
-		raycastOrigins.topLeft = new Vector2 (bounds.min.x, bounds.max.y);
-		raycastOrigins.topRight = new Vector2 (bounds.max.x, bounds.max.y);
+		// Code pas super lisible, mais en réalité pas compliqué...
+		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
+		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);
+		raycastOrigins.bottomLeft = collider.getBottomLeft().add(shift1);;
+		raycastOrigins.bottomRight = collider.getBottomRight().add(shift2.reverse());
+		raycastOrigins.topLeft = collider.getTopLeft().add(shift2);
+		raycastOrigins.topRight = collider.getTopRight().add(shift1.reverse());
 	}
 
 }
-
 
 
 

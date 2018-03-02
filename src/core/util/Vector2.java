@@ -21,10 +21,16 @@ public final class Vector2 {
 		
 	
 	public Vector2 add(Vector2 vectorToAdd) {
-		/* Add two vectors. 
+		/* Add two vectors.
 		 * NOT IN PLACE
 		 */
 		return new Vector2(this.x + vectorToAdd.x, this.y + vectorToAdd.y);
+	}
+	
+	public void translate(Vector2 translation) {
+		/* Apply translation to this Vector2 */
+		this.x += translation.x;
+		this.y += translation.y;
 	}
 	
 	public Vector2 multiply(float factor) {
@@ -32,6 +38,11 @@ public final class Vector2 {
 		 * NOT IN PLACE
 		 */
 		return new Vector2(factor * x, factor * y);
+	}
+	
+	public Vector2 reverse() {
+		/* Return -thisVector2 */
+		return new Vector2(-x, -y);
 	}
 	
 	public float norm() {
@@ -49,11 +60,11 @@ public final class Vector2 {
 	
 	
 	
-	public static Vector2 zero	= new Vector2(0, 0);
-	public static Vector2 up	= new Vector2(0, 1);
-	public static Vector2 down	= new Vector2(0, -1);
-	public static Vector2 left	= new Vector2(-1, 0);
-	public static Vector2 right	= new Vector2(1, 0);
+	public static final Vector2 zero	= new Vector2(0, 0);
+	public static final Vector2 up	= new Vector2(0, 1);
+	public static final Vector2 down	= new Vector2(0, -1);
+	public static final Vector2 left	= new Vector2(-1, 0);
+	public static final Vector2 right	= new Vector2(1, 0);
 	
 	
 	
