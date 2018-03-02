@@ -4,8 +4,7 @@
 package content;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-
+import javafx.scene.image.ImageView;
 import core.util.Vector2;
 
 /**
@@ -22,19 +21,28 @@ public class Tile {
 	/* it is linked to an image, but the image must not be duplicated
 	 * for now I don't care, just to test the implementation
 	 */
-	public Image sprite;
+	public ImageView sprite;
 	public TileType type;
 	public int tilesize;
 
-	public Tile(Vector2 position, String sprite_location, int tilesize, TileType type) {
+	public Tile(Vector2 position, ImageView imageview, int tilesize, TileType type) {
 		this.position = position;
-		this.sprite = new Image(sprite_location, tilesize, tilesize, false, false);
+		this.sprite = imageview;
+		this.tilesize = tilesize;
 		this.type = type;
 	}
 
 	public void render(GraphicsContext gc) {
-		/* Render this Sprite on the GraphicsContext gc. */
-		gc.drawImage(sprite, position.x * tilesize, position.y * tilesize);
+		/* Render this Sprite on the GraphicsContext gc.
+		 * It may be optimized if we don't do a getImage()
+		 */
+		System.out.println("x: " + position.x * tilesize + ", y: " + position.y * tilesize);
+		gc.drawImage(sprite.getImage(), position.x * tilesize,
+				position.y * tilesize);
+	}
+
+	public String toString() {
+		return type.toString() + " : " + position.toString();
 	}
 
 	/*

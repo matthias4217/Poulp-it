@@ -19,15 +19,19 @@ public class GraphicManager {
 
 	public void render(GraphicsContext gc) {
 		// Shows the game on screen
-		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;
+
 		Tile[] tiles = GameEngine.tiles;
+		for (Tile tile: tiles) {
+			System.out.println("Rendering tile " + tile);
+			tile.render(gc);
+		}
+
+		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;
 		for (GameObject gameObject: allGameObjects) {
 			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc);
 		}
-		for (Tile tile: tiles) {
-			tile.render(gc);
-		}
+
 	}
 
 

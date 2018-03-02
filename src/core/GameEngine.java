@@ -39,7 +39,9 @@ public class GameEngine {
 		/* Initialize the game */
 
 		// Imports the level
-		tiles = Level0.tiles;
+		Level0 lvl0 = new Level0();
+		tiles = lvl0.tiles;
+		System.out.println(tiles);
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
