@@ -1,5 +1,7 @@
 package core.util;
 
+import java.util.Arrays;
+
 import core.exceptions.InvalidArgumentsException;
 
 /**
@@ -41,6 +43,12 @@ public class Collider {
 
 	protected Collider() {
 		/* This constructor is only used by the subclass BoxCollider. */
+	}
+
+	public String toString() {
+		String txt = "nb_points: " + Integer.toString(nbPoints) + " ; "
+	+ Arrays.toString(pointsArray);
+		return txt;
 	}
 
 
