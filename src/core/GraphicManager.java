@@ -1,17 +1,25 @@
-/**
- * 
- */
 package core;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
- * @author Raphaël
  * Client
- * This class communicate with the GameEngine on the serveur and draw on the client' screen with the received data.
+ * This class communicates with the GameEngine on the server, and draw on the client' screen with the received data.
+ * 
+ * @author Raph
+ * 
  */
 public class GraphicManager {
+
+	public void render(GraphicsContext gc) {
+		// Affiche le jeu Ã  l'Ã©cran
+		
+	}
+	
+	
 	/* 
 	 * Gestion des event clavier
-	 * Envoi des données au GameEngine
+	 * Envoi des donnï¿½es au GameEngine
 	 * 
 	 * Interface utilisateur
 	 * Affichage
@@ -20,4 +28,5 @@ public class GraphicManager {
 	 * 
 	 * 
 	 */
+
 }
