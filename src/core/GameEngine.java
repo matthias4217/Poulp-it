@@ -11,7 +11,7 @@ import core.util.*;
 
 /**
  * Manage the flow of the game; one instance.
- * 
+ *
  * @author Raph
  *
  */
@@ -39,23 +39,25 @@ public class GameEngine {
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Player playerI = new Player(10, null);
+			playerI.position = new Vector2(10 * (i+1), 20*(i+1));
 			players[i] = playerI;
 			allGameObjects.add(playerI);
+			System.out.println("Added player at " + playerI.position);
 		}
 
 		// ----
-		
-		
+
+
 
 	}
 
-	
-	
-	
+
+
+
 	public void update() {
 		/* Called each frame */
-		
-		
+
+
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
 			gameManager.update();
@@ -68,7 +70,7 @@ public class GameEngine {
 		}
 	}
 
-	
+
 
 
 
