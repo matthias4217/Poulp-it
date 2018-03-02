@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
  *
  * @author matthias
  *
- * Controller class manging the inputs
+ * Controller class managing the inputs
  */
 public class Controller {
 

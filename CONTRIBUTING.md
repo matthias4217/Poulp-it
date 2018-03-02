@@ -25,6 +25,7 @@
   		les listes des divers éléments (par exemples, les armes, les collectables, etc)
   * core : tout ce qui fait partie du coeur du programme.
   		On trouve notamment le Launcher, le GameEngine et le GraphicManager
+                * Launcher : point d'entrée du jeu, exécuté au départ
   		* core.exceptions : les exceptions personnalisées qu'on a créé
   		* core.scripts : tous les scripts qui peuvent être associées à des GameObjects 
   		* core.util : toutes les classes utilitaires utilisées (exemple : Vector2)
