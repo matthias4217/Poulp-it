@@ -81,7 +81,7 @@ public class Launcher extends Application {
 				/* handle is called in each frame while the timer is active */
 
 				gameEngine.update();
-				graphicManager.render(gc);
+				graphicManager.render(gc); 
 
 			}
 		};
