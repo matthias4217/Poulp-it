@@ -88,7 +88,7 @@ public final class Vector2 {
 	 * @return the angle between u and v in degree
 	 */
 	public static float angle(Vector2 u, Vector2 v) {
-		return Math.acos(a);
+		return Math.acos(Vector2.dotProduct(u, v) / (u.norm() * v.norm());
 	}
 	
 }

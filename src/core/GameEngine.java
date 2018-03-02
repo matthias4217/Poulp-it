@@ -87,7 +87,7 @@ public class GameEngine {
 	 * Cast a ray starting from rayOrigin, in direction and with a specified length.
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
-	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, String collisionMask) {
+	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, String collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
 		for (GameObject gameObject: allGameObjects) {
 			if (gameObject.getLayer() = collisionMask) {
