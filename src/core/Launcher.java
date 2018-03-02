@@ -65,7 +65,7 @@ public class Launcher extends Application {
 		stage.show();
 
 
-		// If we implements a menu, that's probably around here
+		// If we implement a menu, that's probably around here
 
 
 		// Initialization of the game

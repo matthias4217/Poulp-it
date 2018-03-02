@@ -1,6 +1,8 @@
 package content;
 
 import java.util.LinkedList;
+
+import core.util.Vector2;
 import javafx.scene.image.Image;
 
 /**
@@ -23,12 +25,10 @@ public class Player extends GameObject {
 
 	LinkedList<State> states;		// List of states affecting the Player
 
-	Image sprite = new Image("resources/ball-of-goo-2018-02-03.png");
 
 
-
-	public Player(int maxHP, Weapon weapon) {
-		super();
+	public Player(Vector2 position, int maxHP, Weapon weapon) {
+		super(position, new Image("resources/ball-of-goo-2018-02-03.png"));
 		this.hp = maxHP;
 		this.maxHP = maxHP;
 		this.weapon = weapon;
@@ -41,7 +41,7 @@ public class Player extends GameObject {
 
 	@Override
 	public String toString() {
-		return "Player {hp: " +Integer.toString(hp) + position.toString() + "}";
+		return "Player {hp: " + Integer.toString(hp) + position.toString() + "}";
 	}
 
 

@@ -85,12 +85,8 @@ public class GameEngine {
 			for (Line line: gameObject.collider.pointsArray) {
 				checkCollision(ray, line);
 			}
-			}
 		}
-
-
 	}
-
 
 
 }
