@@ -92,7 +92,7 @@ public class Launcher extends Application {
 	@Override
 	public void stop() {
 		/* Is called when the window is closed */
-		System.out.println("C'est fini.");
+		System.out.println("Game closed");
 
 	}
 
