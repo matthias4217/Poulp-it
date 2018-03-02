@@ -31,7 +31,15 @@
   		* core.util : toutes les classes utilitaires utilisées (exemple : Vector2)
   * resources : les ressources qui ne sont pas du code. Typiquement les sprites
   
-  
+## À propos des éléments de jeu ##
+
+  * GameManager est l'interface implémentée par tout élément faisant gérant un aspect du jeu.
+  		Il est updaté chaque frame par le GameEngine.
+  * GameObject est la superclasse pour tous les éléments de jeu qui :
+  		- ont une position dans l'espace
+  		- ont une apparence (méthode void render())
+  	À un GameObject est attaché une liste de scripts décrivant sont comportement et étant exécutés chaque frame.
+  * Obstacle est la classe qui désigne les éléments n'ayant pas de scripts et étant @@@
   
  
 ## Git ##

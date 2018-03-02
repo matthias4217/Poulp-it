@@ -82,6 +82,9 @@ public class GameEngine {
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, String collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
 		for (GameObject gameObject: allGameObjects) {
+			if (gameObject.getLayer() = collisionMask) {
+				
+			}
 			for (Line line: gameObject.collider.pointsArray) {
 				checkCollision(ray, line);
 			}

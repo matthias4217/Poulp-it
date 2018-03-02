@@ -17,6 +17,10 @@ public class GameObject {
 	public Vector2 position;
 	public Collider collider;
 	public Image sprite;
+	protected String layer;			//
+	public String getLayer() {
+		return layer;
+	}
 
 	public LinkedList<MonoBehavior> scripts;
 
@@ -28,10 +32,6 @@ public class GameObject {
 		this.sprite = sprite;
 		scripts = new LinkedList<MonoBehavior>();
 	}
-	public GameObject() {
-		this(null, null);
-	}
-
 
 
 	public void render(GraphicsContext gc) {
