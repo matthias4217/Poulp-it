@@ -39,6 +39,7 @@ public class Player extends GameObject {
 		hp--;
 	}
 
+	@Override
 	public String toString() {
 		return "Player {hp: " +Integer.toString(hp) + position.toString() + "}";
 	}
