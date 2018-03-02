@@ -16,7 +16,6 @@ public class Ray {
 	private Vector2 originPoint;
 	private Vector2 endingPoint;
 	
-	
 	/**
 	 * @param originPoint
 	 * @param direction
@@ -30,7 +29,6 @@ public class Ray {
 		this.originPoint = originPoint;
 		this.endingPoint = originPoint.add(direction.normalize().multiply(length));
 	}
-	
 	
 	
 }

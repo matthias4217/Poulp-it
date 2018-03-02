@@ -10,20 +10,17 @@ import core.util.specific.CollisionInfo;
  *
  */
 //@TODO: make traversable platform more logical (currently, they are traversable but have side walls)
-
 public class Controller extends RaycastController {
 
 	public float maxSlopeAngle = 80;		// The maximum slope angle that can be climbed or descended (obviously in degree)
 
-	public CollisionInfo collisions;
-	
+	public CollisionInfo collisions;	
 	public Vector2 playerInput;
 
 	@Override
 	public void start() {
 		super.start();
-		collisions.faceDir = 1;
-		
+		collisions.faceDir = 1;	
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
@@ -73,17 +70,18 @@ public class Controller extends RaycastController {
 		for (int i = 0; i < horizontalRayCount; i++) {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
-			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+			RaycastHit hit = Ray.Raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
 
 			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
-			if (hit) {
+			if (hit != null) {		// If something was hit
 
-				if (hit.distance == 0) {	// If we're actually IN an obstacle; @@@ BTW has to be changed in order to crush the character.
+				//@Deprecated: we can't be in an obstacle
+				if (hit.getDistance() == 0) {	// If we're actually IN an obstacle; @@@ BTW has to be changed in order to crush the character.
 					continue;
 				}
 
-				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
 
 				if (i == 0 && slopeAngle <= maxSlopeAngle) {
 					if (collisions.descendingSlope) {
@@ -92,10 +90,10 @@ public class Controller extends RaycastController {
 					}
 					float distanceToSlopeStart = 0;
 					if (slopeAngle != collisions.slopeAngleOld) {
-						distanceToSlopeStart = hit.distance - skinWidth;
+						distanceToSlopeStart = hit.getDistance() - skinWidth;
 						moveAmount.x -= distanceToSlopeStart * directionX;
 					}
-					climbSlope(moveAmount, slopeAngle, hit.normal);
+					climbSlope(moveAmount, slopeAngle, hit.getNormal());
 					moveAmount.x += distanceToSlopeStart * directionX;
 				}
 
@@ -104,7 +102,7 @@ public class Controller extends RaycastController {
 					rayLength = hit.distance;		// Reducing the lenght of the next rays casted to avoid collisions further than this one
 
 					if (collisions.climbingSlope) {
-						moveAmount.y = Math.tan(collisions.slopeAngle * Math.Deg2Rad) * Math.abs(moveAmount.x);
+						moveAmount.y = (float) (Math.tan(collisions.slopeAngle * Annex.DEG2RAD) * Math.abs(moveAmount.x));
 					}
 
 					collisions.left = (directionX == -1);
@@ -122,7 +120,7 @@ public class Controller extends RaycastController {
  
 			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
-			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
 
 			//Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 

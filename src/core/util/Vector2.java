@@ -40,6 +40,11 @@ public final class Vector2 {
 		return new Vector2(factor * x, factor * y);
 	}
 	
+	public Vector2 reverse() {
+		/* Return -thisVector2 */
+		return new Vector2(-x, -y);
+	}
+	
 	public float norm() {
 		/* Return the norm of this Vector2 */
 		return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
@@ -55,11 +60,11 @@ public final class Vector2 {
 	
 	
 	
-	public static Vector2 zero	= new Vector2(0, 0);
-	public static Vector2 up	= new Vector2(0, 1);
-	public static Vector2 down	= new Vector2(0, -1);
-	public static Vector2 left	= new Vector2(-1, 0);
-	public static Vector2 right	= new Vector2(1, 0);
+	public static final Vector2 zero	= new Vector2(0, 0);
+	public static final Vector2 up	= new Vector2(0, 1);
+	public static final Vector2 down	= new Vector2(0, -1);
+	public static final Vector2 left	= new Vector2(-1, 0);
+	public static final Vector2 right	= new Vector2(1, 0);
 	
 	
 	

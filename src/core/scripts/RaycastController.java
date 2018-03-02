@@ -21,15 +21,15 @@ public class RaycastController extends MonoBehavior {
 	protected float horizontalRaySpacing;			// 
 	protected float verticalRaySpacing;				// 
 
-	public CollisionBox collider;
+	public BoxCollider collider;
 	public RaycastOrigins raycastOrigins;
 
 	@Override
-	public void awake() throws Exception {		// Awake in order to get the BoxCollider2D component before CameraFollow
+	public void awake() throws InvalidBoxColliderException {		// @@@ awake() instead of start() to get the Collider before CameraFollow
 		try {
-			collider = (CollisionBox) support.collisionBounds;
+			collider = (BoxCollider) support.collider;
 		}
-		catch (CastException e) {
+		catch (ClassCastException exception) {
 			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");
 		}
 	}
@@ -43,20 +43,16 @@ public class RaycastController extends MonoBehavior {
 	}
 	
 	public void updateRaycastOrigins() {
-		bounds.Expand (skinWidth * -2);		// Reduce the bounds
-		
-		
-		
-		
-		
-		raycastOrigins.bottomLeft = new Vector2 (bounds.min.x, bounds.min.y);
-		raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
-		raycastOrigins.topLeft = new Vector2 (bounds.min.x, bounds.max.y);
-		raycastOrigins.topRight = new Vector2 (bounds.max.x, bounds.max.y);
+		// Code pas super lisible, mais en réalité pas compliqué...
+		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
+		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);
+		raycastOrigins.bottomLeft = collider.getBottomLeft().add(shift1);;
+		raycastOrigins.bottomRight = collider.getBottomRight().add(shift2.reverse());
+		raycastOrigins.topLeft = collider.getTopLeft().add(shift2);
+		raycastOrigins.topRight = collider.getTopRight().add(shift1.reverse());
 	}
 
 }
-
 
 
 
