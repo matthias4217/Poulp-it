@@ -29,7 +29,7 @@ public class GameObject {
 		scripts = new LinkedList<MonoBehavior>();
 	}
 	public GameObject() {
-		this(0f, 0f, null);
+		this(null, null);
 	}
 
 

@@ -80,8 +80,9 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active */
 
+				gc.drawImage(background, 0, 0);
 				gameEngine.update();
-				graphicManager.render(gc); 
+				graphicManager.render(gc);
 
 			}
 		};
