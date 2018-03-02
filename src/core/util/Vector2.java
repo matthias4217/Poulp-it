@@ -9,6 +9,8 @@ package core.util;
  * @author Raph
  * 
  */
+
+// @TODO Organiser cette classe et la documenter correctement
 public final class Vector2 {
 
 	public float x;
@@ -20,11 +22,15 @@ public final class Vector2 {
 	}
 		
 	
-	public Vector2 add(Vector2 vectorToAdd) {
+	public Vector2 add(Vector2 toAdd) {
 		/* Add two vectors.
 		 * NOT IN PLACE
 		 */
-		return new Vector2(this.x + vectorToAdd.x, this.y + vectorToAdd.y);
+		return new Vector2(this.x + toAdd.x, this.y + toAdd.y);
+	}
+	
+	public Vector2 minus(Vector2 toSubstract) {
+		return new Vector2(this.x - toSubstract.x, this.y - toSubstract.y);
 	}
 	
 	public void translate(Vector2 translation) {
@@ -58,10 +64,17 @@ public final class Vector2 {
 		return new Vector2(this.x / norm, this.y / norm);
 	}
 	
+	public static float distance(Vector2 u, Vector2 v) {
+		return (new Vector2(v.x - u.x, v.y - u.y)).norm();
+	}
+	
+	public static float dotProduct(Vector2 u, Vector2 v) {
+		return u.x*v.x + u.y*v.y; 
+	}
 	
 	
 	public static final Vector2 zero	= new Vector2(0, 0);
-	public static final Vector2 up	= new Vector2(0, 1);
+	public static final Vector2 up		= new Vector2(0, 1);
 	public static final Vector2 down	= new Vector2(0, -1);
 	public static final Vector2 left	= new Vector2(-1, 0);
 	public static final Vector2 right	= new Vector2(1, 0);
