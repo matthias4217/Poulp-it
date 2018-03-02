@@ -12,19 +12,19 @@ import core.util.*;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		Vector2 test = new Vector2(1, 2);
-		changeVector(test);
-		System.out.println(test);
+		Vector2 test1 = new Vector2(1,1);
+		Vector2 test2 = null;
 		
+		
+		if (null) {
+			
+		}
 
 
 
 	}
 
 	
-	static void changeVector(Vector2 maBite) {
-		maBite.x = 5;
-	}
 	
 	
 }

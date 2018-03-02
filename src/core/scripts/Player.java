@@ -131,7 +131,7 @@ public class Player extends MonoBehavior {
 
 	void calculateVelocity() {
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Math.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+		velocity.x = Math.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 		velocity.y += gravity * Time.deltaTime;
 	}
 }

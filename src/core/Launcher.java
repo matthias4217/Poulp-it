@@ -13,7 +13,7 @@ import core.exceptions.MultipleGameEngineException;
 /**
  * This is the starting point of the program.
  * Launcher extends Application and thus has a start method called.
- * This class must stay clean and only call other methods.
+ * This class should stay clean and only call other methods.
  * 
  * @author Raph
  * 
@@ -38,7 +38,6 @@ public class Launcher extends Application {
 
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException {
-
 		// Initialization of the window
 		stage.setTitle(WINDOW_TITLE);
 		stage.setResizable(false); 
@@ -55,16 +54,15 @@ public class Launcher extends Application {
 		
 	
 		// Initialization of the game
-		int nbPlayers = 1;
-		GameEngine gameEngine = new GameEngine(nbPlayers);
+		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		gameEngine.init();
+		int nbPlayers = 1;
+		gameEngine.init(nbPlayers);
 
 
 		AnimationTimer timer = new AnimationTimer() {
-			@Override
-			public void handle(long now) {
-				/* Is called in each frame while the timer is active */
+			@Override public void handle(long now) {
+				/* handle is called in each frame while the timer is active */
 				gc.drawImage(background, 0, 0);
 				
 				gameEngine.update();
@@ -79,7 +77,7 @@ public class Launcher extends Application {
 	@Override
 	public void stop() {
 		/* Is called when the window is closed */
-		
+		System.out.println("C'est fini.");
 		
 	}
 
