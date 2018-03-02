@@ -71,7 +71,7 @@ public class Launcher extends Application {
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 1;
+		int nbPlayers = 5;
 		gameEngine.init(nbPlayers);
 		gc.drawImage(background, 0, 0);
 
