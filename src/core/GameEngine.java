@@ -5,9 +5,11 @@ import java.util.LinkedList;
 import content.GameManager;
 import content.GameObject;
 import content.Player;
+import content.Tile;
 import core.exceptions.MultipleGameEngineException;
 import core.scripts.MonoBehavior;
 import core.util.*;
+import levels.Level0;
 
 /**
  * Manage the flow of the game; one instance.
@@ -22,6 +24,7 @@ public class GameEngine {
 	static LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 	Player[] players;		// Convenient access to the players (since the array contains references)
+	static Tile[] tiles;
 
 
 	/* Constructor */
@@ -34,6 +37,11 @@ public class GameEngine {
 
 	public void init(int nbPlayers) {
 		/* Initialize the game */
+
+		// Imports the level
+		Level0 lvl0 = new Level0();
+		tiles = lvl0.tiles;
+		System.out.println(tiles);
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
