@@ -18,6 +18,7 @@ import levels.Level;
  */
 public class LevelFileParser {
 
+	private static String theme;
 	private static int tilesize;
 
 	private static char[][] level_text;
@@ -44,6 +45,7 @@ public class LevelFileParser {
 		// the size of the attribute tilesize
 		int tilesizelength = "tilesize:".length();
 		int levellength = "level:".length();
+		int themelength = "theme:".length();
 
 		/*
 		 * false if not between the brackets,
@@ -56,9 +58,11 @@ public class LevelFileParser {
 		System.out.println("Beginning level parsing...");
 		for (String line: stringArray) {
 			if (line.trim().charAt(0) != '#') {
-				System.out.println("-------------------");
-				System.out.println(line);
-				System.out.println("In level: " + inLevel);
+				/*
+				 * System.out.println("-------------------");
+				 * System.out.println(line);
+				 * System.out.println("In level: " + inLevel);
+				 */
 
 				if (!inLevel && line.substring(0, Math.min(tilesizelength, line.length())).equals("tilesize:")) {
 					/*
@@ -71,7 +75,17 @@ public class LevelFileParser {
 					System.out.println("Adding tilesize...");
 					tilesize = Integer.parseInt(line.substring(tilesizelength).trim());
 				}
-				//TODO Need to manage the case of 'level:'
+				else if (!inLevel && line.substring(0, Math.min(themelength, line.length())).equals("theme:")) {
+					/*
+					 *  the end of the substring should be the end of the line
+					 *  and after, we strip the blanks from it with trim()
+					 *
+					 *  As we can see, the last 'theme:' in the file wins !
+					 */
+					System.out.println("Adding theme...");
+					theme = line.substring(themelength).trim();
+					//TODO We need to check whether the theme is 'right' (=it exists)
+				}
 				else if (!inLevel && line.substring(0, Math.min(levellength, line.length())).equals("level:")) {
 					/*
 					 *  now, we search for the '{'
@@ -90,8 +104,9 @@ public class LevelFileParser {
 				else if (inLevel) {
 					char[] line_chars = new char[line.length()];
 					for (int i = 0; i < line.length(); i++) {
-						System.out.println("char " + line.charAt(i) + " (" +
-					line_nbr + "," + i + ")");
+						/* System.out.println("char " + line.charAt(i) + " (" +
+					* line_nbr + "," + i + ")");
+					*/
 						// Problem : we *must* define level_text beforehand
 						// I guess we should make a list of array, and then convert it ?
 						line_chars[i] = line.charAt(i);
@@ -133,7 +148,28 @@ public class LevelFileParser {
 	}
 
 	public Level level() {
-		return new Level();
+		// Variables used
+		int max_i = level_text.length; // height of the char[][]
+		int max_j = level_text[0].length; // width of the char[][]
+
+		/*
+		 * Now, the objects...
+		 */
+		// We've got the theme
+		Level level = new Level();
+		/*
+		 * Aaaand we need to know how many tiles will be added to level.tiles
+		 */
+		for (int i = 0; i < max_i; i++) {
+			for (int j = 0; j< max_j; j++) {
+				char c = level_text[i][j];
+				if (c =='x') { // square
+					// we need to check the surroundings, to see how it connects
+
+				}
+			}
+		}
+		return level;
 	}
 
 	public String toString() {
