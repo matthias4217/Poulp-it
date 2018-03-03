@@ -9,7 +9,7 @@ package content;
  *
  */
 public interface GameManager {
-	public void update();
+	public void apply();
 	/* Is called every frame */
 	
 }
