@@ -10,6 +10,7 @@ import content.Tile;
 import core.exceptions.MultipleGameEngineException;
 import core.scripts.MonoBehavior;
 import core.util.*;
+import levels.Level;
 import levels.Level0;
 
 /**
@@ -48,11 +49,13 @@ public class GameEngine {
 		*/
 		LevelFileParser levelParser = new LevelFileParser("/home/mondrak/eclipse-workspace/projet-dev/levels/level0.txt");
 		System.out.println("levelparser: " + levelParser);
+		Level level = levelParser.toLevel();
+		tiles = level.tiles;
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2(10*(i+1), 20*(i+1));
+			Vector2 spawnPosition = new Vector2(50*(i+1), 100*(i+1));
 			Player playerI = new Player(spawnPosition, 10, null);
 			players[i] = playerI;
 			allGameObjects.add(playerI);

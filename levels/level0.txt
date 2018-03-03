@@ -5,6 +5,7 @@
 #
 # tilesize
 tilesize: 32
+theme: simplegrey
 #
 # Level :
 level:{

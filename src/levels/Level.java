@@ -10,5 +10,5 @@ import content.Tile;
  *
  */
 public class Level {
-	public static Tile[] tiles;
+	public Tile[] tiles;
 }
