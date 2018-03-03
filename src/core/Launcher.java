@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 
 import core.exceptions.MultipleGameEngineException;
 
@@ -51,7 +52,7 @@ public class Launcher extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) throws MultipleGameEngineException {
+	public void start(Stage stage) throws MultipleGameEngineException, IOException {
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + "×" + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);

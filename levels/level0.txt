@@ -1,0 +1,21 @@
+### Level0
+#
+# All lines beginning with a '#' are ommited
+# Empty lines _matter_
+#
+# tilesize
+tilesize: 32
+#
+# Level :
+level:{
+xxxxxxxxxxxxxxxxxxx
+x                 x
+x                 x
+x      xxxxxxx    x
+x                 xx
+xxxxxx           xx
+x          /xx    x     
+x         /xx     x
+x        /xxx     x
+xxxxxxxxxxxxxxxxxxx
+}
