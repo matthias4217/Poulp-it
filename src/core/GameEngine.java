@@ -77,13 +77,11 @@ public class GameEngine {
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.update();
+			gameManager.apply();
 		}
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			for (MonoBehavior script: gameObject.scripts) {
-				script.update();
-			}
+			gameObject.update();
 		}
 	}
 
@@ -96,10 +94,11 @@ public class GameEngine {
 	 * Cast a ray starting from rayOrigin, in direction and with a specified length.
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
-	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, String collisionMask) {
+	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
 		for (GameObject gameObject: allGameObjects) {
-			if (gameObject.getLayer() = collisionMask) {
+
+			if (gameObject.layer == collisionMask) {
 
 			}
 			for (Line line: gameObject.collider.pointsArray) {

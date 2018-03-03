@@ -13,6 +13,7 @@ import core.GameEngine;
  * This class communicates with the GameEngine on the server, and draw on the client' screen with the received data.
  *
  * @author Raph
+ * @author matthias
  *
  */
 public class GraphicManager {

@@ -7,7 +7,7 @@
   * On ne suit pas les conventions Javadoc, qui sont vraiment trop extrêmes,
   		mais chaque classe, chaque méthode, chaque attribut est documenté... 
   * ...sauf si c'est vraiment explicite.
-  * On utilise @Override : l'annotation est à mettre au dessus d'une méthode surchargée afin d'éviter des erreurs
+  * On utilise @Override : l'annotation est à mettre en en-tête de toute méthode surchargée
   * Raphaël : je mets "@@@" à un endroit où il y a un truc à faire
 
 
@@ -27,19 +27,28 @@
   		On trouve notamment le Launcher, le GameEngine et le GraphicManager
                 * Launcher : point d'entrée du jeu, exécuté au départ
   		* core.exceptions : les exceptions personnalisées qu'on a créé
-  		* core.scripts : tous les scripts qui peuvent être associées à des GameObjects 
+  		* core.scripts : tous les scripts qui peuvent être associées à des GameObjects
   		* core.util : toutes les classes utilitaires utilisées (exemple : Vector2)
-  * resources : les ressources qui ne sont pas du code. Typiquement les sprites
-  
-## À propos des éléments de jeu ##
+  * resources : les ressources qui ne sont pas du code. Typiquement les sprites et les audios
 
-  * GameManager est l'interface implémentée par tout élément faisant gérant un aspect du jeu.
-  		Il est updaté chaque frame par le GameEngine.
+
+## À propos du fonctionnement global ##
+
+  * Le Launcher initialise le programme, la fenêtre et crée une instance de GameEngine et de GraphicManager
+  	Un Animation Timer se charge d'exécuter le GameEngine à chaque frame et
+  	d'afficher ce qu'il faut à l'écran par le GraphicManager.
+  * À chaque frame, le GameEngine est updaté, c'est-à-dire qu'il applique les effets de tous les GameManager,
+    puis qu'il update les GameObjects.  
+
+  * GameManager est l'interface implémentée par tout élément faisant gérant un aspect du jeu (exemple, gestionnaire de score)
   * GameObject est la superclasse pour tous les éléments de jeu qui :
   		- ont une position dans l'espace
   		- ont une apparence (méthode void render())
-  	À un GameObject est attaché une liste de scripts décrivant sont comportement et étant exécutés chaque frame.
-  * Obstacle est la classe qui désigne les éléments n'ayant pas de scripts et étant @@@
+  	À un GameObject est attaché une liste de scripts caractérisant son comportement.
+  	Par défaut, l'update d'un GameObject signifie que tous ses scripts sont updaté, mais il est possible de personnaliser cela en 	surchargeant cette méthode.
+  * Un script est un objet héritant de la classe MonoBehavior. Il possède notamment les méthodes start()@@@ et update().
+  
+
   
  
 ## Git ##

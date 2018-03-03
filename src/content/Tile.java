@@ -16,16 +16,13 @@ public class Tile {
 	 */
 	public static final float TILE_SIZE = 10f;
 
-
-
-
 	/*
-	 * It can be converted to the position of non-tile objects by multiplying
-	 * it by TILE_SIZE, which IS defined HERE
+	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE
 	 */
 	private Vector2 position;
 
-	/* It is linked to an image, but the image must not be duplicated
+	/*
+	 * It is linked to an image, but the image must not be duplicated
 	 * for now I don't care, just to test the implementation
 	 */
 	public ImageView sprite;
@@ -43,10 +40,11 @@ public class Tile {
 	}
 
 
+	/*
+	 * Render this Sprite on the GraphicsContext gc.
+	 * It may be optimized if we don't do a getImage()
+	 */
 	public void render(GraphicsContext gc) {
-		/* Render this Sprite on the GraphicsContext gc.
-		 * It may be optimized if we don't do a getImage()
-		 */
 		System.out.println("x: " + position.x + ", y: " + position.y);
 		gc.drawImage(sprite.getImage(), position.x,	position.y);
 	}
@@ -55,9 +53,6 @@ public class Tile {
 	public String toString() {
 		return type.toString() + " : " + position.toString();
 	}
-
-
-
 
 
 	/*
