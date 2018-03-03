@@ -1,6 +1,5 @@
 package core;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.animation.AnimationTimer;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,7 +17,7 @@ import core.exceptions.MultipleGameEngineException;
 /**
  * This is the starting point of the program.
  * Launcher extends Application and thus has a start method called.
- * This class should stay clean and only call other methods.
+ * This class should stay relatively clean and only call other methods.
  *
  * @author Raph
  *
