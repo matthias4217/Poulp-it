@@ -1,5 +1,6 @@
 package core;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import content.GameManager;
@@ -35,13 +36,18 @@ public class GameEngine {
 		alreadyExist = true;
 	}
 
-	public void init(int nbPlayers) {
+	public void init(int nbPlayers) throws IOException {
 		/* Initialize the game */
 
 		// Imports the level
+		System.out.println("Beginning level importation...");
+		/*
 		Level0 lvl0 = new Level0();
 		tiles = lvl0.tiles;
 		System.out.println(tiles);
+		*/
+		LevelFileParser levelParser = new LevelFileParser("/home/mondrak/eclipse-workspace/projet-dev/levels/level0.txt");
+		System.out.println("levelparser: " + levelParser);
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
@@ -91,7 +97,7 @@ public class GameEngine {
 		Ray ray = new Ray(rayOrigin, direction, length);
 		for (GameObject gameObject: allGameObjects) {
 			if (gameObject.getLayer() = collisionMask) {
-				
+
 			}
 			for (Line line: gameObject.collider.pointsArray) {
 				checkCollision(ray, line);
