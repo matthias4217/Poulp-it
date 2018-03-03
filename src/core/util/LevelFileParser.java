@@ -10,6 +10,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import content.Tile;
+import content.Tile.TileType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import levels.Level;
 
 /**
@@ -147,7 +151,7 @@ public class LevelFileParser {
 		}
 	}
 
-	public Level level() {
+	public Level toLevel() {
 		// Variables used
 		int max_i = level_text.length; // height of the char[][]
 		int max_j = level_text[0].length; // width of the char[][]
@@ -155,19 +159,75 @@ public class LevelFileParser {
 		/*
 		 * Now, the objects...
 		 */
-		// We've got the theme
-		Level level = new Level();
+		// Images :
 		/*
-		 * Aaaand we need to know how many tiles will be added to level.tiles
+		 *  We've got the theme
+		 *  So we load the corresponding images and make some imageViews
 		 */
+		System.out.println(theme);
+		ImageView tileSurfaceTop = new ImageView(new Image("resources/tiles/"
+		 + theme + "/tile-surface-top.png"));
+		ImageView tileTriangleDownRight = new ImageView(new Image("resources/tiles/"
+				 + theme + "/triangle_down_right.png"));
+		ImageView tileTriangleDownLeft= new ImageView(new Image("resources/tiles/"
+				 + theme + "/triangle_down_left.png"));
+		ImageView tileTriangleTopLeft = new ImageView(new Image("resources/tiles/"
+				 + theme + "/triangle_top_left.png"));
+		ImageView tileTriangleTopRight = new ImageView(new Image("resources/tiles/"
+				 + theme + "/triangle_top_right.png"));
+
+
+		Level level = new Level();
+		List<Tile> list_tiles = new ArrayList<Tile>();
+		// the following tile won't be used, it's just so that the IDE won't yell
+		Tile tile = new Tile(0, 0, tileSurfaceTop, TileType.SQUARE);
 		for (int i = 0; i < max_i; i++) {
 			for (int j = 0; j< max_j; j++) {
 				char c = level_text[i][j];
+				boolean tilefound = false;
 				if (c =='x') { // square
 					// we need to check the surroundings, to see how it connects
+					// for now, all will be the same
+					tile = new Tile(j, i, tileSurfaceTop, TileType.SQUARE);
+					tilefound = true;
+				}
+				else if (c=='/') {
+					tile = new Tile(j, i, tileTriangleDownRight, TileType.TRIANGLE_DOWN_RIGHT);
+					tilefound = true;
+				}
+				else if (c=='\\') {
+					tile = new Tile(j, i, tileTriangleDownLeft, TileType.TRIANGLE_DOWN_LEFT);
+					tilefound = true;
+				}
+				else if (c=='v') {
+					tile = new Tile(j, i, tileTriangleTopLeft, TileType.TRIANGLE_TOP_LEFT);
+					tilefound = true;
+				}
+				else if (c=='u') {
+					tile = new Tile(j, i, tileTriangleTopRight, TileType.TRIANGLE_TOP_RIGHT);
+					tilefound = true;
+				}
+				else {
+					System.out.println("Char '" + c + "' ignored");
+				}
 
+				if (tilefound) {
+					System.out.println("Char '" + c + "' not ignored");
+					list_tiles.add(tile);
 				}
 			}
+		}
+		System.out.println(list_tiles.getClass().getName());
+		System.out.println(list_tiles.toArray().getClass().getName());
+
+		/*
+		 * Ce serait bien de faire
+		 * level.tiles = (Tile[]) list_tiles.toArray();
+		 */
+
+		level.tiles = new Tile[list_tiles.size()];
+		for (int i = 0; i < list_tiles.size(); i++) {
+			level.tiles[i] = list_tiles.get(i);
 		}
 		return level;
 	}
