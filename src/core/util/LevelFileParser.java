@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import levels.Level;
@@ -50,6 +51,8 @@ public class LevelFileParser {
 		 */
 		boolean inLevel = false;
 		int line_nbr = 0;
+		List<char[]> tiles_list = new ArrayList<char[]>();
+
 		System.out.println("Beginning level parsing...");
 		for (String line: stringArray) {
 			if (line.trim().charAt(0) != '#') {
@@ -81,21 +84,50 @@ public class LevelFileParser {
 
 				}
 				else if (inLevel && line.trim().equals("}")) { // we are in the level
+					System.out.println("Finished treating level");
 					inLevel = false;
 					}
 				else if (inLevel) {
+					char[] line_chars = new char[line.length()];
 					for (int i = 0; i < line.length(); i++) {
 						System.out.println("char " + line.charAt(i) + " (" +
 					line_nbr + "," + i + ")");
 						// Problem : we *must* define level_text beforehand
-						level_text[line_nbr][i] = line.charAt(i);
+						// I guess we should make a list of array, and then convert it ?
+						line_chars[i] = line.charAt(i);
 						// case
 					}
+
+					tiles_list.add(line_nbr, line_chars);
 					line_nbr ++;
 				}
 				else {
 					System.out.println("Line not treated :" + line);
 				}
+			}
+		}
+		/*
+		 * Now, we have to convert tiles_list, an ArrayList<char[]>
+		 * to level_text, a char[][]
+		 * And the following doesn't work :
+		 * level_text = (char[][]) tiles_list.toArray();
+		 * So either I make it work
+		 * Or I code a dedicated conversion function
+		 *
+		 * Create a char[][] of size tiles_list.size() × max(tiles_list[i].length)
+		 */
+		int max = 0;
+		for (char[] line: tiles_list) {
+			max = Math.max(line.length, max);
+		}
+		level_text = new char[tiles_list.size()][max];
+		// then we fill level_text !
+		int j;
+		for (int i = 0; i < tiles_list.size(); i++) {
+			j = 0;
+			for (char c: tiles_list.get(i)) {
+				level_text[i][j] = c;
+				j++;
 			}
 		}
 	}
@@ -105,7 +137,16 @@ public class LevelFileParser {
 	}
 
 	public String toString() {
-		return level_text.toString();
+		String level_parser_txt = "";
+		String line;
+		for (char[] charline: level_text) {
+			line = "";
+			for (char c: charline) {
+				line = line + c;
+			}
+			level_parser_txt = level_parser_txt + "\n" + line;
+		}
+		return level_parser_txt;
 	}
 
 }
