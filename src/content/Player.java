@@ -28,7 +28,7 @@ public class Player extends GameObject {
 
 
 	public Player(Vector2 position, int maxHP, Weapon weapon) {
-		super(position, new Image("resources/ball-of-goo-2018-02-03.png"));
+		super(position, new Image("resources/graphic/ball-of-goo-2018-02-03.png", Tile.TILE_SIZE, Tile.TILE_SIZE, false, false));
 		this.hp = maxHP;
 		this.maxHP = maxHP;
 		this.weapon = weapon;

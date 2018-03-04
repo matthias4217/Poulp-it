@@ -1,5 +1,6 @@
 /**
- *
+ * Obsolete class, use only for tests
+ * Prefer using level0.txt and the LevelFileParser
  */
 package levels;
 

@@ -23,7 +23,6 @@ import levels.Level;
 public class LevelFileParser {
 
 	private static String theme;
-	private static int tilesize;
 
 	private static char[][] level_text;
 
@@ -46,8 +45,7 @@ public class LevelFileParser {
 		 * if it begins with tilesize: we add the tilesize
 		 * the level is 'level:' and then enclosed in brackets
 		 */
-		// the size of the attribute tilesize
-		int tilesizelength = "tilesize:".length();
+		// The size of the ttributes recognized
 		int levellength = "level:".length();
 		int themelength = "theme:".length();
 
@@ -68,18 +66,7 @@ public class LevelFileParser {
 				 * System.out.println("In level: " + inLevel);
 				 */
 
-				if (!inLevel && line.substring(0, Math.min(tilesizelength, line.length())).equals("tilesize:")) {
-					/*
-					 *  the end of the substring should be the end of the line
-					 *  and after, we strip the blanks from it with trim()
-					 *  And then, we convert it to an Integer !
-					 *
-					 *  As we can see, the last 'tilesize:' in the file wins !
-					 */
-					System.out.println("Adding tilesize...");
-					tilesize = Integer.parseInt(line.substring(tilesizelength).trim());
-				}
-				else if (!inLevel && line.substring(0, Math.min(themelength, line.length())).equals("theme:")) {
+				if (!inLevel && line.substring(0, Math.min(themelength, line.length())).equals("theme:")) {
 					/*
 					 *  the end of the substring should be the end of the line
 					 *  and after, we strip the blanks from it with trim()
@@ -164,17 +151,19 @@ public class LevelFileParser {
 		 *  We've got the theme
 		 *  So we load the corresponding images and make some imageViews
 		 */
+		// We get the TILE_SIZE
+		float tilesize = Tile.TILE_SIZE;
 		System.out.println(theme);
 		ImageView tileSurfaceTop = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-top.png"));
+		 + theme + "/tile-surface-top.png", tilesize, tilesize, false, false));
 		ImageView tileTriangleDownRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle_down_right.png"));
+				 + theme + "/triangle_down_right.png", tilesize, tilesize, false, false));
 		ImageView tileTriangleDownLeft= new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle_down_left.png"));
+				 + theme + "/triangle_down_left.png", tilesize, tilesize, false, false));
 		ImageView tileTriangleTopLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle_top_left.png"));
+				 + theme + "/triangle_top_left.png", tilesize, tilesize, false, false));
 		ImageView tileTriangleTopRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle_top_right.png"));
+				 + theme + "/triangle_top_right.png", tilesize, tilesize, false, false));
 
 
 		Level level = new Level();
