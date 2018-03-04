@@ -14,7 +14,7 @@ public class Tile {
 	 * The size of the side of a tile in the gamespace.
 	 * This constant makes the link between the float coordinates used by the game engine and the discrete nature of tiles.
 	 */
-	public static final float TILE_SIZE = 10f;
+	public static final float TILE_SIZE = 20f;
 
 	/*
 	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE
@@ -45,7 +45,7 @@ public class Tile {
 	 * It may be optimized if we don't do a getImage()
 	 */
 	public void render(GraphicsContext gc) {
-		System.out.println("x: " + position.x + ", y: " + position.y);
+		//System.out.println("x: " + position.x + ", y: " + position.y);
 		gc.drawImage(sprite.getImage(), position.x,	position.y);
 	}
 
