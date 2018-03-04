@@ -13,9 +13,9 @@ xxxxxxxxxxxxxxxxxxx
 x                 x
 x                 x
 x      xxxxxxx    x
-x                 xx
-xxxxxx           xx
-x          /xx    x     
+x                 x
+x                xx
+xxxxxxxx   /xxx   x     
 x         /xx     x
 x        /xxx     x
 xxxxxxxxxxxxxxxxxxx
