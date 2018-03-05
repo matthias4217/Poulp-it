@@ -48,7 +48,7 @@ public class GameEngine {
 		System.out.println(tiles);
 		*/
 		LevelFileParser levelParser = new LevelFileParser("/home/mondrak/eclipse-workspace/projet-dev/levels/level0.txt");
-		System.out.println("levelparser: " + levelParser);
+		// System.out.println("levelparser: " + levelParser);
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
 
