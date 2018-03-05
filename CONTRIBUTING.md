@@ -49,7 +49,13 @@
   * Un script est un objet héritant de la classe MonoBehavior. Il possède notamment les méthodes start()@@@ et update().
   
 
-  
+## Textures ##
+
+  * Pour créer un thème de tiles :
+    * Créer un dossier ayant le nom de votre thème dans src/resources/tiles
+    * Ajouter les tiles avec les mêmes noms que le pack de base `simplegrey`, sans en oublier (sinon, bug du jeu)
+    * Dans le champs `theme:` du fichier de level, y mettre le nom de votre pack
+
  
 ## Git ##
 
