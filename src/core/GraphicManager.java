@@ -23,13 +23,13 @@ public class GraphicManager {
 
 		Tile[] tiles = GameEngine.tiles;
 		for (Tile tile: tiles) {
-			System.out.println("Rendering tile " + tile);
+			// System.out.println("Rendering tile " + tile);
 			tile.render(gc);
 		}
 
 		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;
 		for (GameObject gameObject: allGameObjects) {
-			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
+			// System.out.println("Rendering " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc);
 		}
 
