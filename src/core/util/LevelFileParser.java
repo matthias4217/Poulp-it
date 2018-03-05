@@ -159,7 +159,13 @@ public class LevelFileParser {
 				 + theme + "/tile-plain.png", tilesize, tilesize, false, false));
 		// surface-simple
 		ImageView tileSurfaceTop = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-top.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-top.png", tilesize, tilesize, false, false));
+		ImageView tileSurfaceDown= new ImageView(new Image("resources/tiles/"
+				 + theme + "/tile-surface-down.png", tilesize, tilesize, false, false));
+		ImageView tileSurfaceLeft = new ImageView(new Image("resources/tiles/"
+				 + theme + "/tile-surface-left.png", tilesize, tilesize, false, false));
+		ImageView tileSurfaceRight = new ImageView(new Image("resources/tiles/"
+				 + theme + "/tile-surface-right.png", tilesize, tilesize, false, false));
 		// surface-double
 		ImageView tileSurfaceDoubleDownRight = new ImageView(new Image("resources/tiles/"
 		 + theme + "/tile-surface-double-down-right.png", tilesize, tilesize, false, false));
@@ -208,7 +214,7 @@ public class LevelFileParser {
 					 *
 					 * Method :
 					 * first, count number of direct neighbours (not in diagonal)
-					 * case 0: quadriple, easy
+					 * case 0: quadruple, easy
 					 * case 1: triple, depends on the neighbour
 					 * case 2: double
 					 * case 3: surface
@@ -248,10 +254,10 @@ public class LevelFileParser {
 					        	else if (curRow < i) {
 					        		neighbours.add(neighbourPosition.DOWN);
 					        	}
-					        	else if (curRow < j) {
+					        	else if (curCol < j) {
 					        		neighbours.add(neighbourPosition.LEFT);
 					        	}
-					        	else if (curRow > j) {
+					        	else if (curCol > j) {
 					        		neighbours.add(neighbourPosition.RIGHT);
 					        	}
 					        }
@@ -262,6 +268,19 @@ public class LevelFileParser {
 						tile = new Tile(j, i, tileSurfaceQuadruple, TileType.SQUARE);
 						break;
 					case 1:
+                                                /*
+                                                 * Supposing X is the char we're working onto :
+                                                 * x
+                                                 * xX
+                                                 *
+                                                 * We've got to add a collider
+                                                 * line to the side of the tile
+                                                 * opposed to the one it's attached
+                                                 * to
+                                                 * And one to the side with which
+                                                 * there is an angle
+                                                 * And extend the last one
+                                                 */
 						neighbourPosition n = neighbours.get(0);
 						switch (n) {
 						case UP:
@@ -271,7 +290,6 @@ public class LevelFileParser {
 							tile = new Tile(j, i, tileSurfaceTripleDown, TileType.SQUARE);
 							break;
 						case LEFT:
-							System.out.println("Left !");
 							tile = new Tile(j, i, tileSurfaceTripleLeft, TileType.SQUARE);
 							break;
 						case RIGHT:
@@ -280,10 +298,41 @@ public class LevelFileParser {
 						}
 						break;
 					case 2:
+						/*
+						 * Not a hard problem for the textures, we just need to make 6 cases
+						 */
 						tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
 						break;
 					case 3:
-						tile = new Tile(j, i, tileSurfaceTop, TileType.SQUARE);
+						List<neighbourPosition> temp = new ArrayList<neighbourPosition>(4);
+						temp.add(neighbourPosition.UP);
+						temp.add(neighbourPosition.DOWN);
+						temp.add(neighbourPosition.LEFT);
+						temp.add(neighbourPosition.RIGHT);
+						for (int nIndex = 0; nIndex < 3; nIndex++) {
+							temp.remove(neighbours.get(nIndex));
+						}
+						switch (temp.get(0)) {
+						case UP:
+							tile = new Tile(j, i, tileSurfaceTop, TileType.SQUARE);
+							break;
+						case DOWN:
+							tile = new Tile(j, i, tileSurfaceDown, TileType.SQUARE);
+							break;
+						case LEFT:
+							tile = new Tile(j, i, tileSurfaceLeft, TileType.SQUARE);
+							break;
+						case RIGHT:
+							tile = new Tile(j, i, tileSurfaceRight, TileType.SQUARE);
+							break;
+					}
+                                                /*
+                                                 * xxx
+                                                 * xX
+                                                 * xx
+                                                 *
+                                                 * We need to add/extend one collider
+                                                 */
 						break;
 					case 4:
 						tile = new Tile(j, i, tilePlain, TileType.SQUARE);
