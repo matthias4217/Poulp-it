@@ -1,6 +1,5 @@
 package core;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,16 +7,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.animation.AnimationTimer;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 
 import core.exceptions.MultipleGameEngineException;
 
 /**
  * This is the starting point of the program.
  * Launcher extends Application and thus has a start method called.
- * This class should stay clean and only call other methods.
+ * This class should stay relatively clean and only call other methods.
  *
  * @author Raph
  *
@@ -51,7 +52,7 @@ public class Launcher extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) throws MultipleGameEngineException {
+	public void start(Stage stage) throws MultipleGameEngineException, IOException {
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + "×" + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
@@ -61,7 +62,7 @@ public class Launcher extends Application {
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("resources/background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		Image background = new Image("resources/graphic/background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 
 
@@ -71,7 +72,7 @@ public class Launcher extends Application {
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 5;
+		int nbPlayers = 1;
 		gameEngine.init(nbPlayers);
 		gc.drawImage(background, 0, 0);
 

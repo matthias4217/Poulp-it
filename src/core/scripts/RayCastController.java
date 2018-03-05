@@ -9,7 +9,7 @@ import core.util.*;
  * @author Raph
  * 
  */
-public class RaycastController extends MonoBehavior {
+public class RayCastController extends MonoBehavior {
 	
 	public String collisionLayer;					// Indicates on which layer the Rays will detect things
 
@@ -42,7 +42,7 @@ public class RaycastController extends MonoBehavior {
 		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);
 	}
 	
-	public void updateRaycastOrigins() {
+	public void updateRayCastOrigins() {
 		// Code pas super lisible, mais en réalité pas compliqué...
 		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
 		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);

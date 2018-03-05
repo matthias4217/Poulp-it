@@ -41,9 +41,9 @@ public class Player extends MonoBehavior {
 	public void start() {
 		controller = GetComponent<Controller2D> ();
 
-		gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex,2);
-		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+		gravity = -2 * maxJumpHeight / Math.pow(timeToJumpApex, 2);
+		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
+		minJumpVelocity = Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import content.GameObject;
  * @author Raph
  *
  */
-public class RaycastHit {
+public class RayCastHit {
 	
 	private GameObject gameObjectHit;	// A reference to the GameObject whose collider was hit
 	private float distance;				// The distance from the ray origin to the impact point
