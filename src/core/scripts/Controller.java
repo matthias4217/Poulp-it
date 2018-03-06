@@ -66,7 +66,11 @@ public class Controller extends RayCastController {
 		for (int i = 0; i < horizontalRayCount; i++) {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
+<<<<<<< HEAD
 			RayCastHit hit = Ray.rayCast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
+=======
+			RaycastHit hit = GameEngine.rayCast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
+>>>>>>> refs/remotes/origin/01.03.3
 
 			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
@@ -120,7 +124,7 @@ public class Controller extends RayCastController {
 
 			//Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
-			if (hit != null) {
+			if (hit != null) {		// If something was hit
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.
 				if (hit.collider.tag == "traversable") {
 					if (directionY == 1 || hit.getDistance() == 0) {		// 
@@ -186,17 +190,19 @@ public class Controller extends RayCastController {
 	void descendSlope(Vector2 moveAmount) {
 		RayCastHit maxSlopeHitLeft = GameEngine.rayCast (raycastOrigins.bottomLeft, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 		RayCastHit maxSlopeHitRight = GameEngine.rayCast (raycastOrigins.bottomRight, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
+
 		if (maxSlopeHitLeft ^ maxSlopeHitRight) {		// xor
-			SlideDownMaxSlope (maxSlopeHitLeft, moveAmount);
-			SlideDownMaxSlope (maxSlopeHitRight, moveAmount);
+			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
+			slideDownMaxSlope(maxSlopeHitRight, moveAmount);
 		}
 
 		if (!collisions.slidingDownMaxSlope) {
 			float directionX = Math.signum(moveAmount.x);
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
-			RayCastHit hit = GameEngine.rayCast (rayOrigin, Vector2.down, Float.POSITIVE_INFINITY, collisionMask);
 
+			RayCastHit hit = GameEngine.rayCast (rayOrigin, Vector2.down, Float.POSITIVE_INFINITY, collisionMask);
 			if (hit != null) {
+
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
 				if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle) {
 					if (Math.signum(hit.getNormal().x) == directionX) {
@@ -218,6 +224,7 @@ public class Controller extends RayCastController {
 	}
 
 	void slideDownMaxSlope(RayCastHit hit, Vector2 moveAmount) {
+
 
 		if (hit != null) {
 			float slopeAngle = Vector2.angle (hit.getNormal(), Vector2.up);
