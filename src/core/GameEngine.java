@@ -1,12 +1,16 @@
 package core;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import content.GameManager;
 import content.GameObject;
+import content.Layer;
 import content.Player;
 import content.Tile;
+import content.Tile.TileType;
 import core.exceptions.MultipleGameEngineException;
 import core.scripts.MonoBehavior;
 import core.util.*;
@@ -48,9 +52,11 @@ public class GameEngine {
 		System.out.println(tiles);
 		*/
 		LevelFileParser levelParser = new LevelFileParser("levels/level0.txt");
-		// System.out.println("levelparser: " + levelParser);
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
+		InfoTile[][] grid = levelParser.levelGrid;
+
+		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];

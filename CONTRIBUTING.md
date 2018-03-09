@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Contribution #
 
 ## Conventions de code ##

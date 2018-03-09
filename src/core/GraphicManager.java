@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import content.GameObject;
 import content.Tile;
-import core.GameEngine;
 
 /**
  * Client

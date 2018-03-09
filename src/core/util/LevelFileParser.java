@@ -9,8 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedList;
 import java.util.List;
 
+import content.GameObject;
 import content.Tile;
 import content.Tile.TileType;
 import javafx.scene.image.Image;
@@ -25,8 +27,15 @@ public class LevelFileParser {
 
 	private static String theme;
 
-	private static char[][] level_text;
+	public static InfoTile[][] levelGrid;
+	
+	private static HashMap<char, TileType> = new HashMap<char, TileType>();
 
+	/**
+	 * 
+	 * @param file
+	 * @throws IOException
+	 */
 	public LevelFileParser(String file) throws IOException {
 		/*
 		 * open the file
@@ -115,9 +124,9 @@ public class LevelFileParser {
 		}
 		/*
 		 * Now, we have to convert tiles_list, an ArrayList<char[]>
-		 * to level_text, a char[][]
+		 * to levelGrid, a char[][]
 		 * And the following doesn't work :
-		 * level_text = (char[][]) tiles_list.toArray();
+		 * levelGrid = (char[][]) tiles_list.toArray();
 		 * So either I make it work
 		 * Or I code a dedicated conversion function
 		 *
@@ -127,13 +136,32 @@ public class LevelFileParser {
 		for (char[] line: tiles_list) {
 			max = Math.max(line.length, max);
 		}
-		level_text = new char[tiles_list.size()][max];
-		// then we fill level_text !
+		levelGrid = new InfoTile[tiles_list.size()][max];
+		// then we fill levelGrid !
+		
 		int j;
 		for (int i = 0; i < tiles_list.size(); i++) {
 			j = 0;
 			for (char c: tiles_list.get(i)) {
-				level_text[i][j] = c;
+				switch(c) {
+					case 'x':
+						levelGrid[i][j] = new InfoTile(TileType.SQUARE, new LinkedList<GameObject>());
+						break;
+					case '/':
+						levelGrid[i][j].tileType = TileType.TRIANGLE_DOWN_RIGHT;
+						break;
+					case '\\':
+						levelGrid[i][j].tileType = TileType.TRIANGLE_DOWN_LEFT;
+						break;
+					case 'u':
+						levelGrid[i][j].tileType = TileType.TRIANGLE_TOP_RIGHT;
+						break;
+					case 'v':
+						levelGrid[i][j].tileType = TileType.TRIANGLE_TOP_LEFT;
+						break;
+					default:
+						//System.out.println(level_text[i][j]);
+				}
 				j++;
 			}
 		}
@@ -141,8 +169,8 @@ public class LevelFileParser {
 
 	public Level toLevel() {
 		// Variables used
-		int max_i = level_text.length - 1; // height of the char[][]
-		int max_j = level_text[0].length - 1; // width of the char[][]
+		int max_i = levelGrid.length - 1; // height of the char[][]
+		int max_j = levelGrid[0].length - 1; // width of the char[][]
 
 		/*
 		 * Now, the objects...
@@ -212,9 +240,9 @@ public class LevelFileParser {
 
 		for (int i = 0; i < max_i + 1; i++) {
 			for (int j = 0; j< max_j + 1; j++) {
-				char c = level_text[i][j];
+				TileType type = levelGrid[i][j].tileType;
 				boolean tilefound = false;
-				if (c =='x') { // square
+				if (type == TileType.SQUARE) { // square
 					/*
 					 * we need to check the surroundings, to see how it connects
 					 * So we will consider all its nine surroundings :
@@ -247,8 +275,8 @@ public class LevelFileParser {
 					int colStart  = Math.max( j - 1, 0   );
 					int colFinish = Math.min( j + 1, max_j);
 
-					for ( int curRow = rowStart; curRow <= rowFinish; curRow++ ) {
-					    for ( int curCol = colStart; curCol <= colFinish; curCol++ ) {
+					for (int curRow = rowStart; curRow <= rowFinish; curRow++ ) {
+					    for (int curCol = colStart; curCol <= colFinish; curCol++ ) {
 
 					    	/*
 					    	 * The if condition is a bit messy
@@ -257,8 +285,7 @@ public class LevelFileParser {
 					    	 */
 					        if (((curRow == i && curCol != j) ||
 					        		(curRow != i && curCol == j))
-					        		&& (level_text[curRow][curCol] != ' ' &&
-							        		level_text[curRow][curCol] != '\u0000')) {
+					        		&& (levelGrid[curRow][curCol] != null)) {
 					        	nbrDirectNeighbours ++;
 					        	// then we detect where the neighbours are
 					        	if (curRow > i) {
@@ -401,19 +428,19 @@ public class LevelFileParser {
 					}
 					tilefound = true;
 				}
-				else if (c=='/') {
+				else if (type == TileType.TRIANGLE_DOWN_RIGHT) {
 					tile = new Tile(j, i, tileTriangleDownRight, TileType.TRIANGLE_DOWN_RIGHT);
 					tilefound = true;
 				}
-				else if (c=='\\') {
+				else if (type == TileType.TRIANGLE_DOWN_LEFT) {
 					tile = new Tile(j, i, tileTriangleDownLeft, TileType.TRIANGLE_DOWN_LEFT);
 					tilefound = true;
 				}
-				else if (c=='v') {
+				else if (type == TileType.TRIANGLE_TOP_LEFT) {
 					tile = new Tile(j, i, tileTriangleTopLeft, TileType.TRIANGLE_TOP_LEFT);
 					tilefound = true;
 				}
-				else if (c=='u') {
+				else if (type == TileType.TRIANGLE_TOP_RIGHT) {
 					tile = new Tile(j, i, tileTriangleTopRight, TileType.TRIANGLE_TOP_RIGHT);
 					tilefound = true;
 				}
@@ -445,10 +472,10 @@ public class LevelFileParser {
 	public String toString() {
 		String level_parser_txt = "";
 		String line;
-		for (char[] charline: level_text) {
+		for (InfoTile[] typeline: levelGrid) {
 			line = "";
-			for (char c: charline) {
-				line = line + c;
+			for (InfoTile type: typeline) {
+				line = line + type.tileType;
 			}
 			level_parser_txt = level_parser_txt + "\n" + line;
 		}
