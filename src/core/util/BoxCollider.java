@@ -10,6 +10,7 @@ package core.util;
  * @author Raph
  *
  */
+@Deprecated
 public class BoxCollider extends Collider {
 
 	/* Constructor */

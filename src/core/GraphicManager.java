@@ -16,35 +16,33 @@ import content.Tile;
  *
  */
 public class GraphicManager {
-
+	
+	
+	// @@@ TODO
+	
+	
+	
+	/**
+	 * Render the game on the GraphicsContext gc.
+	 * 
+	 * @param gc
+	 */
 	public void render(GraphicsContext gc) {
-		// Shows the game on screen
 
+		/*
 		Tile[] tiles = GameEngine.tiles;
 		for (Tile tile: tiles) {
 			// System.out.println("Rendering tile " + tile);
 			tile.render(gc);
 		}
+		*/
 
 		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;
 		for (GameObject gameObject: allGameObjects) {
-			// System.out.println("Rendering " + gameObject + " on " + gameObject.position);
+			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc);
 		}
 
 	}
-
-
-	/*
-	 * Manage keyboard events
-	 * Envoi des donn�es au GameEngine
-	 *
-	 * Interface utilisateur
-	 * Affichage
-	 *
-	 *
-	 *
-	 *
-	 */
 
 }

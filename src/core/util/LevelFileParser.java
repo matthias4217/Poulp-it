@@ -1,6 +1,3 @@
-/**
- *
- */
 package core.util;
 
 import java.io.IOException;
@@ -9,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,6 +18,8 @@ import javafx.scene.image.ImageView;
 import levels.Level;
 
 /**
+ * Parser object designed to transform a level as a txt file into a Level object
+ * 
  * @author matthias
  *
  */
@@ -29,15 +29,20 @@ public class LevelFileParser {
 
 	public static InfoTile[][] levelGrid;
 	
-	private static HashMap<char, TileType> = new HashMap<char, TileType>();
+	/**
+	 * The HashMap used to link the txt file to the game representation
+	 */
+	private static HashMap<Character, TileType> correspondance = new HashMap<Character, TileType>();
 
+	
+	
 	/**
 	 * 
 	 * @param file
 	 * @throws IOException
 	 */
 	public LevelFileParser(String file) throws IOException {
-		/*
+		/*t
 		 * open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
@@ -55,7 +60,7 @@ public class LevelFileParser {
 		 * if it begins with tilesize: we add the tilesize
 		 * the level is 'level:' and then enclosed in brackets
 		 */
-		// The size of the ttributes recognized
+		// The size of the attributes recognized
 		int levellength = "level:".length();
 		int themelength = "theme:".length();
 
@@ -140,6 +145,8 @@ public class LevelFileParser {
 		// then we fill levelGrid !
 		
 		int j;
+		
+		// Raph: ça m'a l'air moche
 		for (int i = 0; i < tiles_list.size(); i++) {
 			j = 0;
 			for (char c: tiles_list.get(i)) {
@@ -167,6 +174,11 @@ public class LevelFileParser {
 		}
 	}
 
+	/**
+	 * @@@ Documentation required
+	 * 
+	 * @return
+	 */
 	public Level toLevel() {
 		// Variables used
 		int max_i = levelGrid.length - 1; // height of the char[][]
@@ -469,6 +481,9 @@ public class LevelFileParser {
 		return level;
 	}
 
+	
+	
+	@Override
 	public String toString() {
 		String level_parser_txt = "";
 		String line;
@@ -482,8 +497,16 @@ public class LevelFileParser {
 		return level_parser_txt;
 	}
 
+	
+	
 	// For now, no indirect (on a diagonal) neighbour
-	enum neighbourPosition {
+	/**
+	 * @@@ doc
+	 * 
+	 * @author matthias
+	 *
+	 */
+	private enum neighbourPosition {
 		UP, DOWN, RIGHT, LEFT
 	}
 }

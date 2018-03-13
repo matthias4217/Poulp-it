@@ -1,16 +1,16 @@
 package core.util;
 
 /**
- * This class stores diverse constantes and methods such as math ones.
+ * This class stores diverse constants and methods such as math ones.
  * 
  * @author Raph
  *
  */
 public final class Annex {
 	
-	/* CONSTANTES */
+	/* CONSTANTS */
 	
-	public static final float DEG2RAD = (float) Math.PI / 180;
+	public static final float DEG2RAD = (float) Math.PI / 180;		// Multiplicative factor to convert degree to radian
 	
 	
 	
@@ -25,10 +25,11 @@ public final class Annex {
 	}
 	
 	/**
-	 * Indicates if the line segments [A; B] and [C; D] intersect
+	 * Indicates if the line segments [A; B] and [C; D] do intersect
+	 * @Todo gérer le cas de colinéarité
 	 */
 	public static boolean checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
-		/* Explication
+		/* Explication:
 		 * When ABC not aligned, if CD = w1.CA + w2.CB, then
 		 * it is true iff (w1+w2 >= 1 && w1, w2 >= 0)
 		 * */		
@@ -40,9 +41,7 @@ public final class Annex {
 		System.out.println(w2);
 		return w1>=0 && w2>=0 && w1+w2>=1;
 	}
-	
-	
-	
+		
 	
 	
 	// Given three colinear Vector2s p, q, r, the function checks if

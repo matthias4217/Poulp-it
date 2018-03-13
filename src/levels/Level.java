@@ -1,6 +1,3 @@
-/**
- *
- */
 package levels;
 
 import content.Tile;

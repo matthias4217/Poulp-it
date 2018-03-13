@@ -25,10 +25,7 @@ import core.exceptions.MultipleGameEngineException;
  */
 public class Launcher extends Application {
 
-	/*
-	 * Problems may happen in case of multi-monitors.
-	 */
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
 	/**
 	 * SCALE is the variable which may need some adjustments.
@@ -36,6 +33,7 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9;
 	double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	
 	static final String WINDOW_TITLE = "Hardcore Rodeo 96 !!!";
 
 
@@ -73,18 +71,17 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
-		gameEngine.init(nbPlayers);
+		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
 
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override public void handle(long now) {
-				/* handle is called in each frame while the timer is active */
-
+				/* handle is called in each frame while the timer is active. */
 				gc.drawImage(background, 0, 0);
 				gameEngine.update();
 				graphicManager.render(gc);
-
+				
 			}
 		};
 		timer.start();

@@ -66,11 +66,9 @@ public class Controller extends RayCastController {
 		for (int i = 0; i < horizontalRayCount; i++) {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
-<<<<<<< HEAD
+			
 			RayCastHit hit = Ray.rayCast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
-=======
-			RaycastHit hit = GameEngine.rayCast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
->>>>>>> refs/remotes/origin/01.03.3
+
 
 			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 

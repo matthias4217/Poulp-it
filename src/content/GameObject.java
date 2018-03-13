@@ -8,6 +8,7 @@ import core.scripts.MonoBehavior;
 
 /**
  * Superclass for any game element in a scene which has a spatial position and is renderable.
+ * Example: Player
  *
  * @author Raph
  *
@@ -15,11 +16,11 @@ import core.scripts.MonoBehavior;
 public class GameObject {
 
 	public Vector2 position;
-	public Collider collider;
 	public Image sprite;
 	public Layer layer;
-
-	public LinkedList<MonoBehavior> scripts;
+	
+	public Collider collider;
+	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describe its behavior
 
 	
 	
@@ -34,13 +35,6 @@ public class GameObject {
 	}
 
 
-	
-	/**
-	 * Render this Sprite on the GraphicsContext gc.
-	 */
-	public void render(GraphicsContext gc) {
-		gc.drawImage(sprite, position.x, position.y);
-	}
 
 	/**
 	 * The update method called by the GameEngine.
@@ -55,6 +49,15 @@ public class GameObject {
 		for (MonoBehavior script: scripts) {
 			script.update();
 		}
+	}
+	
+	
+	
+	/**
+	 * Render this Sprite on the GraphicsContext gc.
+	 */
+	public void render(GraphicsContext gc) {
+		gc.drawImage(sprite, position.x, position.y);
 	}
 	
 	

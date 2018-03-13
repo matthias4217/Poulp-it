@@ -30,7 +30,8 @@ public class GameEngine {
 	static LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 	Player[] players;		// Convenient access to the players (since the array contains references)
-	static Tile[] tiles;
+	static Tile[] tiles;		//
+	
 
 
 	/* Constructor */
@@ -40,10 +41,16 @@ public class GameEngine {
 		}
 		alreadyExist = true;
 	}
+	
 
-	public void init(int nbPlayers) throws IOException {
-		/* Initialize the game */
-
+	/**
+	 * Initialize the game
+	 * 
+	 * @param nbPlayers
+	 * @throws IOException
+	 */
+	public void init(int nbPlayers, String levelName) throws IOException {
+		
 		// Imports the level
 		System.out.println("Beginning level importation...");
 		/*
@@ -51,10 +58,14 @@ public class GameEngine {
 		tiles = lvl0.tiles;
 		System.out.println(tiles);
 		*/
-		LevelFileParser levelParser = new LevelFileParser("levels/level0.txt");
+		
+		/*
+		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
+		*/
+
 
 		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
@@ -75,23 +86,22 @@ public class GameEngine {
 	}
 
 
-
-
+	/**
+	 * Called each frame
+	 */
 	public void update() {
-		/* Called each frame */
-
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
 			gameManager.apply();
 		}
+		
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
 			gameObject.update();
 		}
+	
 	}
-
-
 
 
 

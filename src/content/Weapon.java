@@ -8,4 +8,6 @@ package content;
  */
 public class Weapon {
 
+	
+	
 }

@@ -12,8 +12,8 @@ public class RayCastHit {
 	
 	private GameObject gameObjectHit;	// A reference to the GameObject whose collider was hit
 	private float distance;				// The distance from the ray origin to the impact point
-	private Vector2 normal;				// The normal Vector2 of the hit surface
-	// Vector2 impactPoint;
+	private Vector2 normal;				// The normal Vector2 of the line hit
+	//? Vector2 impactPoint;
 	
 	public GameObject getGameObjectHit() {
 		return gameObjectHit;
@@ -27,6 +27,9 @@ public class RayCastHit {
 	
 	
 	
+	public RayCastHit() {
+		// @@@ TODO : Constructor
+	}
 	
 	
 	
