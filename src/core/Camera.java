@@ -1,18 +1,43 @@
-package core.scripts;
+package core;
 
 import core.util.Vector2;
-import core.util.specific.Bounds;
-import core.util.specific.FocusArea;
 
 /**
- * @@@
+ * This class manages the game camera.
+ * It has a position which is updated each frame.
  * 
  * @author Raph
  *
  */
-public class CameraFollow extends MonoBehavior {
+public class Camera {
 
-	public Controller target;
+	private Vector2 currentPosition;
+	
+	
+	
+	public Vector2 update() {
+		
+		Vector2 newPosition = new Vector2(0, 0);		//
+		
+		
+		
+		
+		
+		
+		
+		return newPosition;
+	}
+	
+	
+	
+	
+}
+
+
+/*
+
+
+public Controller target;
 	public float verticalOffset;
 	public float lookAheadDstX;
 	public float lookSmoothTimeX;
@@ -69,7 +94,7 @@ public class CameraFollow extends MonoBehavior {
 
 
 class FocusArea {
-	/* Class which represents the focus area of the camera around its target. */
+	/* Class which represents the focus area of the camera around its target. 
 
 	public Vector2 center;			// The center of the area
 	public Vector2 velocity;		// @@@
@@ -109,3 +134,9 @@ class FocusArea {
 		velocity = new Vector2 (shiftX, shiftY);
 	}
 }
+
+
+
+
+
+*/

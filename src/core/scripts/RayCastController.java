@@ -6,7 +6,7 @@ import core.util.*;
 /**
  * This script is attached to a RECTANGULAR object
  * 
- * @author Raph
+ * @author Not Raph
  * 
  */
 public class RayCastController extends MonoBehavior {

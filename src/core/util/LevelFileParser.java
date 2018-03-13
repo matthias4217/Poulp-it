@@ -21,7 +21,7 @@ import levels.Level;
  * Parser object designed to transform a level as a txt file into a Level object
  * 
  * @author matthias
- *
+ * 
  */
 public class LevelFileParser {
 
@@ -32,7 +32,7 @@ public class LevelFileParser {
 	/**
 	 * The HashMap used to link the txt file to the game representation
 	 */
-	private static HashMap<Character, TileType> correspondance = new HashMap<Character, TileType>();
+	private static HashMap<Character, TileType> association = new HashMap<Character, TileType>();
 
 	
 	
@@ -42,7 +42,7 @@ public class LevelFileParser {
 	 * @throws IOException
 	 */
 	public LevelFileParser(String file) throws IOException {
-		/*t
+		/*
 		 * open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
@@ -53,7 +53,7 @@ public class LevelFileParser {
 		System.out.println(stringArray);
 
 		/*
-		 * Now the parsing begins
+		 * Now the parsing begins (dramatic music)
 		 * What do we do ?
 		 * we read each line
 		 * if it begins with #, we ignore it
@@ -61,8 +61,8 @@ public class LevelFileParser {
 		 * the level is 'level:' and then enclosed in brackets
 		 */
 		// The size of the attributes recognized
-		int levellength = "level:".length();
-		int themelength = "theme:".length();
+		int levelLength = "level:".length();
+		int themeLength = "theme:".length();
 
 		/*
 		 * false if not between the brackets,
@@ -81,7 +81,7 @@ public class LevelFileParser {
 				 * System.out.println("In level: " + inLevel);
 				 */
 
-				if (!inLevel && line.substring(0, Math.min(themelength, line.length())).equals("theme:")) {
+				if (!inLevel && line.substring(0, Math.min(themeLength, line.length())).equals("theme:")) {
 					/*
 					 *  the end of the substring should be the end of the line
 					 *  and after, we strip the blanks from it with trim()
@@ -89,16 +89,16 @@ public class LevelFileParser {
 					 *  As we can see, the last 'theme:' in the file wins !
 					 */
 					System.out.println("Adding theme...");
-					theme = line.substring(themelength).trim();
+					theme = line.substring(themeLength).trim();
 					//TODO We need to check whether the theme is 'right' (=it exists)
 				}
-				else if (!inLevel && line.substring(0, Math.min(levellength, line.length())).equals("level:")) {
+				else if (!inLevel && line.substring(0, Math.min(levelLength, line.length())).equals("level:")) {
 					/*
 					 *  now, we search for the '{'
 					 *  which will be on the same line
 					 */
 					System.out.println("Level text found");
-					if (line.substring(levellength).trim().equals("{")) {
+					if (line.substring(levelLength).trim().equals("{")) {
 						inLevel = true;
 					}
 
@@ -150,23 +150,25 @@ public class LevelFileParser {
 		for (int i = 0; i < tiles_list.size(); i++) {
 			j = 0;
 			for (char c: tiles_list.get(i)) {
+				// levelGrid[i][j] = new InfoTile(association.getValue(c));
 				switch(c) {
 					case 'x':
-						levelGrid[i][j] = new InfoTile(TileType.SQUARE, new LinkedList<GameObject>());
+						levelGrid[i][j] = new InfoTile(TileType.SQUARE);
 						break;
 					case '/':
-						levelGrid[i][j].tileType = TileType.TRIANGLE_DOWN_RIGHT;
+						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_DOWN_RIGHT);
 						break;
 					case '\\':
-						levelGrid[i][j].tileType = TileType.TRIANGLE_DOWN_LEFT;
+						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_DOWN_LEFT);
 						break;
 					case 'u':
-						levelGrid[i][j].tileType = TileType.TRIANGLE_TOP_RIGHT;
+						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_TOP_RIGHT);
 						break;
 					case 'v':
-						levelGrid[i][j].tileType = TileType.TRIANGLE_TOP_LEFT;
-						break;
+						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_TOP_LEFT);
+						break;					
 					default:
+						levelGrid[i][j] = new InfoTile(TileType.SQUARE); /// !!!!!!!!!!!!!!!!
 						//System.out.println(level_text[i][j]);
 				}
 				j++;
@@ -193,56 +195,56 @@ public class LevelFileParser {
 		 *  So we load the corresponding images and make some imageViews
 		 */
 		// We get the TILE_SIZE
-		float tilesize = Tile.TILE_SIZE;
+		float tileSize = Tile.TILE_SIZE;
 		//System.out.println(theme);
 
 		//SQUARE
-		ImageView tilePlain = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-plain.png", tilesize, tilesize, false, false));
+		ImageView tilePlain = new ImageView(new Image("resources/tiles/" +
+				 theme + "/tile-plain.png", tileSize, tileSize, false, false));
 		// surface-simple
 		ImageView tileSurfaceTop = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-top.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-top.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDown= new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-down.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-left.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-right.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-right.png", tileSize, tileSize, false, false));
 		// surface-double
 		ImageView tileSurfaceDoubleDownLeft = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-double-down-left.png", tilesize, tilesize, false, false));
+		 + theme + "/tile-surface-double-down-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleDownRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-down-right.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-double-down-right.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleLeftRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-left-right.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-double-left-right.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopDown = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-down.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-double-top-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-left.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-double-top-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-right.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-double-top-right.png", tileSize, tileSize, false, false));
 		// surface-triple
 		ImageView tileSurfaceTripleDown = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-down.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-triple-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleTop = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-top.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-triple-top.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-left.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-triple-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-right.png", tilesize, tilesize, false, false));
+				 + theme + "/tile-surface-triple-right.png", tileSize, tileSize, false, false));
 		// surface-quadruple
 		ImageView tileSurfaceQuadruple = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-quadruple.png", tilesize, tilesize, false, false));
+		 + theme + "/tile-surface-quadruple.png", tileSize, tileSize, false, false));
 
 		// TRIANGLE
 		ImageView tileTriangleDownRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-down-right.png", tilesize, tilesize, false, false));
+				 + theme + "/triangle-down-right.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleDownLeft= new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-down-left.png", tilesize, tilesize, false, false));
+				 + theme + "/triangle-down-left.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleTopLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-top-left.png", tilesize, tilesize, false, false));
+				 + theme + "/triangle-top-left.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleTopRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-top-right.png", tilesize, tilesize, false, false));
+				 + theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
 
 
 		Level level = new Level();
@@ -251,8 +253,15 @@ public class LevelFileParser {
 		Tile tile = new Tile(0, 0, tileSurfaceTop, TileType.SQUARE);
 
 		for (int i = 0; i < max_i + 1; i++) {
-			for (int j = 0; j< max_j + 1; j++) {
-				TileType type = levelGrid[i][j].tileType;
+			for (int j = 0; j < max_j + 1; j++) {
+				TileType type;
+				try {
+					type = levelGrid[i][j].tileType;
+				} catch (NullPointerException exception) {
+					type = TileType.TRIANGLE_TOP_RIGHT;
+				}
+				
+				
 				boolean tilefound = false;
 				if (type == TileType.SQUARE) { // square
 					/*

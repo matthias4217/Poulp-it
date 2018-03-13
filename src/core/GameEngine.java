@@ -59,12 +59,12 @@ public class GameEngine {
 		System.out.println(tiles);
 		*/
 		
-		/*
+		
 		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
-		*/
+		
 
 
 		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();

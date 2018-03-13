@@ -5,7 +5,7 @@ import core.util.*;
 /**
  * @@@
  * 
- * @author Raph
+ * @author Not Raph
  *
  */
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
@@ -38,6 +38,7 @@ public class Player extends MonoBehavior {
 	boolean wallSliding;
 	int wallDirX;	// wall on left or right
 
+	@Override
 	public void start() {
 		controller = GetComponent<Controller2D> ();
 

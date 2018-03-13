@@ -6,7 +6,7 @@ import core.util.*;
 /**
  * @@@
  * 
- * @author Raph
+ * @author Not Raph
  *
  */
 //@TODO: make traversable platform more logical (currently, they are traversable but have side walls)
