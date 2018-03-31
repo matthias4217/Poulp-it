@@ -26,7 +26,7 @@ public final class Annex {
 
 	/**
 	 * Indicates if the line segments [A; B] and [C; D] do intersect
-	 * @Todo gérer le cas de colinéarité
+	 * TODO gérer le cas de colinéarité
 	 */
 	public static boolean checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
 		/* Explication:
@@ -96,26 +96,34 @@ public final class Annex {
 	}
 
 
+	
+	/**
+	 * https://en.wikipedia.org/wiki/Smoothstep
+	 */
+	public static float smootherstep(float x) {
+		x = clamp(x, 0, 1);
+		return x * x * x * (x * (x * 6 - 15) + 10);
+	}
+	
 
-	public static float SmoothDamp (float current, float target, Float currentVelocity,
-			float smoothTime, float maxSpeed, float deltaTime) {
-		
+	@Deprecated
+	public static float smoothDamp (float current, float target, Float currentVelocity,
+			float smoothTime, float deltaTime) {
+
 		float num = 2f / smoothTime;
 		float num2 = num * deltaTime;
 		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
 		float num4 = current - target;
-		float num6 = maxSpeed * smoothTime;
-		num4 = clamp (num4, -num6, num6);
 		target = current - num4;
-		float num7 = (currentVelocity + num * num4) * deltaTime;
-		currentVelocity = (currentVelocity - num * num7) * num3;
-		float num8 = target + (num4 + num7) * num3;
-		if (target - current > 0f == num8 > target)
-		{
-			num8 = target;
-			currentVelocity = (num8 - target) / deltaTime;
+		float num5 = (currentVelocity + num * num4) * deltaTime;
+		currentVelocity = (currentVelocity - num * num5) * num3;
+		float num6 = target + (num4 + num5) * num3;
+		
+		if ((target > current) == (num6 > target)) {
+			num6 = target;
+			currentVelocity = 0f;
 		}
-		return num8;
+		return num6;
 	}
 
 

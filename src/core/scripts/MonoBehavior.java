@@ -12,7 +12,6 @@ import core.exceptions.InvalidBoxColliderException;
  * Inspired by the functionning of the Unity Engine.
  *
  */
-// TODO document this class
 public abstract class MonoBehavior {
 
 	/**
@@ -21,11 +20,17 @@ public abstract class MonoBehavior {
 
 	private GameObject support;
 
-
+	public GameObject getSupport() {
+		return support;
+	}
+	
+	
+	
 	public MonoBehavior(GameObject support) {
-		super();
+		/* Constructor */
 		this.support = support;
 	}
+
 
 	/*
 	 * awake is called once when the script instance is being loaded.
@@ -51,20 +56,10 @@ public abstract class MonoBehavior {
 	/**
 	 * Same as update but the lateUpdate methods are called after all updates are done.
 	 *
-	 * @param deltaTime
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 */
 	public void lateUpdate(long deltaTime) {}
 
 
-	public GameObject getSupport() {
-		return support;
-	}
-
-	/**
-	 * @param support the support to set
-	 */
-	public void setSupport(GameObject support) {
-		this.support = support;
-	}
 
 }
