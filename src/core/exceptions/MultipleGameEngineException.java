@@ -2,9 +2,10 @@ package core.exceptions;
 
 /**
  * Exception raised when trying to instanciate several GameEngines.
- * (actually probably useless =|)
+ * (actually probably useless =/)
  * 
  * @author Raph
+ * @see GameEngine
  *
  */
 

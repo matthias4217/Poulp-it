@@ -4,37 +4,76 @@ import java.util.LinkedList;
 import core.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import core.Info;
 import core.scripts.MonoBehavior;
 
 /**
  * Superclass for any game element in a scene which has a spatial position and is renderable.
+ * Example: Player
  *
  * @author Raph
  *
  */
-public class GameObject {
+public abstract class GameObject {
 
 	public Vector2 position;
-	public Collider collider;
 	public Image sprite;
 	public Layer layer;
+	public Tag tag;
 
-	public LinkedList<MonoBehavior> scripts;
+	public Collider collider;
+	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describes its behavior
 
-	
-	
+
+
 	public GameObject(Vector2 position, Image sprite) {
-		this(position, sprite, Layer.DEFAULT);
+		this(position, sprite, Layer.DEFAULT, Tag.DEFAULT);
 	}
-	
-	public GameObject(Vector2 position, Image sprite, Layer layer) {
+
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag) {
 		this.position = position;
 		this.sprite = sprite;
+		this.layer = layer;
+		this.tag = tag;
 		scripts = new LinkedList<MonoBehavior>();
 	}
 
 
-	
+
+	/**
+	 * Set this GameObject as the support of all its scripts.
+	 */
+	public void setSupport() {
+		for (MonoBehavior script: scripts) {
+			script.setSupport(this);
+		}
+	}
+
+
+	/**
+	 * The update method called by the GameEngine.
+	 * By default, it updates all the scripts attached to this.
+	 * For a more specific behavior, this method has to be overriden.
+	 *
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @param info
+	 */
+	public void update(long deltaTime, Info info) {
+		updateAllScripts(deltaTime, info);
+	}
+
+	/**
+	 *
+	 * @param deltaTime : long
+	 * @param info : Info that the Launcher sends to the GameManager
+	 */
+	protected final void updateAllScripts(long deltaTime, Info info) {
+		for (MonoBehavior script: scripts) {
+			script.update(deltaTime, info);
+		}
+	}
+
+
 	/**
 	 * Render this Sprite on the GraphicsContext gc.
 	 */
@@ -42,26 +81,23 @@ public class GameObject {
 		gc.drawImage(sprite, position.x, position.y);
 	}
 
-	/**
-	 * The update method called by the GameEngine.
-	 * By default, it updates all the scripts attached to this.
-	 * For a different behavior, this method has to be overriden.
-	 */
-	public void update() {
-		updateAllScripts();
-	}
-	
-	protected final void updateAllScripts() {
-		for (MonoBehavior script: scripts) {
-			script.update();
-		}
-	}
-	
-	
-	
+
+
 	@Override
 	public String toString() {
-		return this.position.toString() + collider.toString();
+		return this.position.toString() + collider.toString();		//
 	}
+
+
+
+
+	public enum Tag {
+		DEFAULT,
+		TRAVERSABLE,
+
+
+
+	}
+
 
 }
