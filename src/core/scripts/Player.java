@@ -5,7 +5,7 @@ import core.util.*;
 /**
  * @@@
  * 
- * @author Not Raph
+ * @author Sebastian Lague, arranged by Raph
  *
  */
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
@@ -38,25 +38,27 @@ public class Player extends MonoBehavior {
 	boolean wallSliding;
 	int wallDirX;	// wall on left or right
 
+
+
 	@Override
 	public void start() {
-		controller = GetComponent<Controller2D> ();
+		//controller = this.support.controller;
 
-		gravity = -2 * maxJumpHeight / Math.pow(timeToJumpApex, 2);
+		gravity = (float) (-2 * maxJumpHeight / Math.pow(timeToJumpApex, 2));
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
-		minJumpVelocity = Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
+		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override
-	public void update() {
-		calculateVelocity ();
-		handleWallSliding ();
+	public void update(long deltaTime) {
+		calculateVelocity (deltaTime);
+		handleWallSliding (deltaTime);
 
-		controller.Move (velocity * Time.deltaTime, directionalInput);
+		controller.move (velocity.multiply(deltaTime), directionalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
-				velocity.y += controller.collisions.slopeNormal.y * -gravity * Time.deltaTime;		// modulation of the vertical acceleration according to the slope
+				velocity.y += controller.collisions.slopeNormal.y * -gravity * deltaTime;		// modulation of the vertical acceleration according to the slope
 			} else {
 				velocity.y = 0;		// To avoid "accumulating" gravity
 			}
@@ -101,7 +103,7 @@ public class Player extends MonoBehavior {
 	}
 		
 
-	void handleWallSliding() {
+	void handleWallSliding(long deltaTime) {
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
@@ -116,7 +118,7 @@ public class Player extends MonoBehavior {
 				velocity.x = 0;
 
 				if (directionalInput.x != wallDirX && directionalInput.x != 0) {
-					timeToWallUnstick -= Time.deltaTime;
+					timeToWallUnstick -= deltaTime;
 				}
 				else {
 					timeToWallUnstick = wallStickTime;	// Reset
@@ -130,9 +132,9 @@ public class Player extends MonoBehavior {
 
 	}
 
-	void calculateVelocity() {
+	void calculateVelocity(long deltaTime) {
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Math.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
-		velocity.y += gravity * Time.deltaTime;
+		velocity.x = Annex.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+		velocity.y += gravity * deltaTime;
 	}
 }

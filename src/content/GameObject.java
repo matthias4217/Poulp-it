@@ -17,10 +17,10 @@ public class GameObject {
 
 	public Vector2 position;
 	public Image sprite;
-	public Layer layer;
+//	public Layer layer;
 	
 	public Collider collider;
-	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describe its behavior
+	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describes its behavior
 
 	
 	
@@ -39,18 +39,19 @@ public class GameObject {
 	/**
 	 * The update method called by the GameEngine.
 	 * By default, it updates all the scripts attached to this.
-	 * For a different behavior, this method has to be overriden.
+	 * For a more specific behavior, this method has to be overriden.
+	 * 
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 */
-	public void update() {
-		updateAllScripts();
+	public void update(long deltaTime) {
+		updateAllScripts(deltaTime);
 	}
 	
-	protected final void updateAllScripts() {
+	protected final void updateAllScripts(long deltaTime) {
 		for (MonoBehavior script: scripts) {
-			script.update();
+			script.update(deltaTime);
 		}
 	}
-	
 	
 	
 	/**
@@ -64,7 +65,7 @@ public class GameObject {
 	
 	@Override
 	public String toString() {
-		return this.position.toString() + collider.toString();
+		return this.position.toString() + collider.toString();		//
 	}
 
 }

@@ -4,9 +4,9 @@ import core.exceptions.InvalidBoxColliderException;
 import core.util.*;
 
 /**
- * This script is attached to a RECTANGULAR object
+ * This script must be attached to a RECTANGULAR object
  * 
- * @author Not Raph
+ * @author Sebastian Lague, arranged by Raph
  * 
  */
 public class RayCastController extends MonoBehavior {
@@ -24,19 +24,18 @@ public class RayCastController extends MonoBehavior {
 	public BoxCollider collider;
 	public RaycastOrigins raycastOrigins;
 
+
+	
 	@Override
-	public void awake() throws InvalidBoxColliderException {		// @@@ awake() instead of start() to get the Collider before CameraFollow
+	public void start() throws InvalidBoxColliderException {
 		try {
 			collider = (BoxCollider) support.collider;
 		}
 		catch (ClassCastException exception) {
 			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");
 		}
-	}
 
-	@Override
-	public void start() {
-		// Calculating rays
+		//Calculating rays
 		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
 		horizontalRaySpacing = (collider.getHeight() - 2*skinWidth) / (horizontalRayCount - 1);
 		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);

@@ -18,7 +18,7 @@ import levels.Level;
 import levels.Level0;
 
 /**
- * Manage the flow of the game; one instance.
+ * Manages the flow of the game; one instance.
  *
  * @author Raph
  *
@@ -47,6 +47,7 @@ public class GameEngine {
 	 * Initialize the game
 	 * 
 	 * @param nbPlayers
+	 * @param levelName
 	 * @throws IOException
 	 */
 	public void init(int nbPlayers, String levelName) throws IOException {
@@ -64,9 +65,9 @@ public class GameEngine {
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
-		
 
 
+		/* A map which associates to each tile what GameObject is there */
 		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 		// Setting up the players array and adding the players to the GameObjects list
@@ -82,23 +83,24 @@ public class GameEngine {
 		// ----
 
 
-
 	}
 
 
 	/**
 	 * Called each frame
+	 * 
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 */
-	public void update() {
+	public void update(long deltaTime) {
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply();
+			gameManager.apply(deltaTime);
 		}
 		
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update();
+			gameObject.update(deltaTime);
 		}
 	
 	}
@@ -109,6 +111,8 @@ public class GameEngine {
 	/**
 	 * Cast a ray starting from rayOrigin, in direction and with a specified length.
 	 * @return a RaycastHit containing the information about what was hit by the ray.
+	 * 
+	 * @@@ TODO !!
 	 */
 	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);

@@ -34,7 +34,7 @@ public class Launcher extends Application {
 	double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 	
-	static final String WINDOW_TITLE = "Hardcore Rodeo 96 !!!";
+	static final String WINDOW_TITLE = "Hook Battle";
 
 
 
@@ -52,7 +52,7 @@ public class Launcher extends Application {
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException, IOException {
 		// Initialization of the window
-		System.out.println(WINDOW_WIDTH + "×" + WINDOW_HEIGHT);
+		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
 		stage.setResizable(false);
 		Group group0 = new Group();
@@ -64,7 +64,7 @@ public class Launcher extends Application {
 		stage.show();
 
 
-		// If we implement a menu, that's probably around here
+		// If we implement a menu, that's probably around here.
 
 
 		// Initialization of the game
@@ -79,7 +79,7 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 				gc.drawImage(background, 0, 0);
-				gameEngine.update();
+				gameEngine.update(now);
 				graphicManager.render(gc);
 				
 			}

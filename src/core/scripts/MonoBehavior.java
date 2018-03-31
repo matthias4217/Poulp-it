@@ -5,12 +5,13 @@ import core.exceptions.InvalidBoxColliderException;
 
 /**
  * Superclass for all scripts which can be added to a GameObject.
- * A script describe the behavior of a GameObject and is updated each frame
+ * A script describes the behavior of a GameObject and is updated each frame
  * 
  * @author Raph
  * Inspired by the functionning of the Unity Engine.
  *
  */
+// TODO document this class
 public abstract class MonoBehavior {
 	
 	GameObject support;			// The GameObject to which the script is attached
@@ -23,12 +24,9 @@ public abstract class MonoBehavior {
 	 */
 	public void awake() throws InvalidBoxColliderException {}
 	
-	/**
-	 * 
-	 */
-	public void start() {}
+	public void start() throws InvalidBoxColliderException {}
 	
-	public void update() {}
+	public void update(long deltaTime) {}
 	
 	public void lateUpdate() {}
 	

@@ -72,6 +72,7 @@ public class Tile {
 	 * Enumeration of the different possible Tiles
 	 */
 	public enum TileType {
+		EMPTY,
 		SQUARE,
 		TRIANGLE_TOP_RIGHT,
 		TRIANGLE_TOP_LEFT,

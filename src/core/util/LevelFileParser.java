@@ -7,10 +7,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
-import content.GameObject;
 import content.Tile;
 import content.Tile.TileType;
 import javafx.scene.image.Image;
@@ -25,15 +23,31 @@ import levels.Level;
  */
 public class LevelFileParser {
 
-	private static String theme;
-
-	public static InfoTile[][] levelGrid;
-	
 	/**
 	 * The HashMap used to link the txt file to the game representation
 	 */
-	private static HashMap<Character, TileType> association = new HashMap<Character, TileType>();
-
+	private static HashMap<Character, TileType> associations;
+	
+	private void initializeAssociations() {
+		associations = new HashMap<Character, TileType>();
+		associations.put(' ', TileType.EMPTY);
+		associations.put('x', TileType.SQUARE);
+		associations.put('/', TileType.TRIANGLE_DOWN_RIGHT);
+		associations.put('\\', TileType.TRIANGLE_DOWN_LEFT);
+		associations.put('u', TileType.TRIANGLE_TOP_RIGHT);
+		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
+	}
+	
+	// The text that identifies the different informations in the txt file
+	public static final String LEVEL = "level:";
+	public static final String THEME = "theme:";
+	
+	
+	
+	
+	private String theme;
+	public InfoTile[][] levelGrid;
+	
 	
 	
 	/**
@@ -43,14 +57,16 @@ public class LevelFileParser {
 	 */
 	public LevelFileParser(String file) throws IOException {
 		/*
-		 * open the file
+		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
-		Path file_path = FileSystems.getDefault().getPath(file);
-		System.out.println("Path to the level: " + file_path);
+		initializeAssociations();			
+		
+		Path filePath = FileSystems.getDefault().getPath(file);
+		System.out.println("Path to the level: " + filePath);
+		@Deprecated
 		List<String> stringArray;
-		stringArray = Files.readAllLines(file_path);
-		System.out.println(stringArray);
+		stringArray = Files.readAllLines(filePath);
 
 		/*
 		 * Now the parsing begins (dramatic music)
@@ -60,28 +76,24 @@ public class LevelFileParser {
 		 * if it begins with tilesize: we add the tilesize
 		 * the level is 'level:' and then enclosed in brackets
 		 */
-		// The size of the attributes recognized
-		int levelLength = "level:".length();
-		int themeLength = "theme:".length();
 
 		/*
 		 * false if not between the brackets,
 		 * true if in
 		 */
 		boolean inLevel = false;
-		int line_nbr = 0;
-		List<char[]> tiles_list = new ArrayList<char[]>();
+		int lineNbr = 0;
+		List<char[]> tilesList = new ArrayList<char[]>();
 
 		System.out.println("Beginning level parsing...");
-		for (String line: stringArray) {
+		for (String line: Files.readAllLines(filePath)) {
 			if (line.trim().charAt(0) != '#') {
-				/*
-				 * System.out.println("-------------------");
-				 * System.out.println(line);
-				 * System.out.println("In level: " + inLevel);
-				 */
 
-				if (!inLevel && line.substring(0, Math.min(themeLength, line.length())).equals("theme:")) {
+//				System.out.println("-------------------");
+//				System.out.println(line);
+//				System.out.println("In level: " + inLevel);
+
+				if (!inLevel && line.substring(0, Math.min(THEME.length(), line.length())).equals(THEME)) {
 					/*
 					 *  the end of the substring should be the end of the line
 					 *  and after, we strip the blanks from it with trim()
@@ -89,41 +101,44 @@ public class LevelFileParser {
 					 *  As we can see, the last 'theme:' in the file wins !
 					 */
 					System.out.println("Adding theme...");
-					theme = line.substring(themeLength).trim();
+					theme = line.substring(THEME.length()).trim();
 					//TODO We need to check whether the theme is 'right' (=it exists)
 				}
-				else if (!inLevel && line.substring(0, Math.min(levelLength, line.length())).equals("level:")) {
+				else if (!inLevel && line.substring(0, Math.min(LEVEL.length(), line.length())).equals(LEVEL)) {
 					/*
 					 *  now, we search for the '{'
 					 *  which will be on the same line
 					 */
 					System.out.println("Level text found");
-					if (line.substring(levelLength).trim().equals("{")) {
+					if (line.substring(LEVEL.length()).trim().equals("{")) {
 						inLevel = true;
 					}
 
 				}
-				else if (inLevel && line.trim().equals("}")) { // we are in the level
+				else if (inLevel && line.trim().equals("}")) { 		// we are in the level
 					System.out.println("Finished treating level");
 					inLevel = false;
 					}
 				else if (inLevel) {
-					char[] line_chars = new char[line.length()];
+					char[] lineChars = new char[line.length()];
 					for (int i = 0; i < line.length(); i++) {
+						
+						// raph : On peut pas faire plus simple ??
+						
 						/* System.out.println("char " + line.charAt(i) + " (" +
 					* line_nbr + "," + i + ")");
 					*/
 						// Problem : we *must* define level_text beforehand
 						// I guess we should make a list of array, and then convert it ?
-						line_chars[i] = line.charAt(i);
+						lineChars[i] = line.charAt(i);
 						// case
 					}
 
-					tiles_list.add(line_nbr, line_chars);
-					line_nbr ++;
+					tilesList.add(lineNbr, lineChars);
+					lineNbr++;
 				}
 				else {
-					System.out.println("Line not treated :" + line);
+					System.out.println("Line not treated: \"" + line + "\"");
 				}
 			}
 		}
@@ -138,19 +153,20 @@ public class LevelFileParser {
 		 * Create a char[][] of size tiles_list.size() × max(tiles_list[i].length)
 		 */
 		int max = 0;
-		for (char[] line: tiles_list) {
+		for (char[] line: tilesList) {
 			max = Math.max(line.length, max);
 		}
-		levelGrid = new InfoTile[tiles_list.size()][max];
+		levelGrid = new InfoTile[tilesList.size()][max];
 		// then we fill levelGrid !
 		
 		int j;
 		
 		// Raph: ça m'a l'air moche
-		for (int i = 0; i < tiles_list.size(); i++) {
+		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
-			for (char c: tiles_list.get(i)) {
-				// levelGrid[i][j] = new InfoTile(association.getValue(c));
+			for (char c: tilesList.get(i)) {
+				levelGrid[i][j] = new InfoTile(associations.get(c));
+				/*
 				switch(c) {
 					case 'x':
 						levelGrid[i][j] = new InfoTile(TileType.SQUARE);
@@ -171,13 +187,14 @@ public class LevelFileParser {
 						levelGrid[i][j] = new InfoTile(TileType.SQUARE); /// !!!!!!!!!!!!!!!!
 						//System.out.println(level_text[i][j]);
 				}
+				*/
 				j++;
 			}
 		}
 	}
 
 	/**
-	 * @@@ Documentation required
+	 * @@@ TODO Documentation required
 	 * 
 	 * @return
 	 */

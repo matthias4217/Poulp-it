@@ -12,8 +12,10 @@ public interface GameManager {
 
 	/**
 	 * Must be overridden; called every frame.
+	 * 
+	 * @param deltaTime		
 	 */
-	public void apply();
+	public void apply(long deltaTime);
 	
 	
 }
