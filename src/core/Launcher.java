@@ -33,7 +33,7 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9;
 	double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
-	
+
 	static final String WINDOW_TITLE = "Hook Battle";
 
 
@@ -73,15 +73,17 @@ public class Launcher extends Application {
 		int nbPlayers = 1;
 		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
+		Info info = new Info();
 
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 				gc.drawImage(background, 0, 0);
-				gameEngine.update(now);
+				stage.getScene().setOnKeyPressed(info.eventHandler); //get the player input
+				gameEngine.update(now, info);
 				graphicManager.render(gc);
-				
+
 			}
 		};
 		timer.start();

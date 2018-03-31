@@ -1,10 +1,11 @@
 package core.scripts;
 
+import core.Info;
 import core.util.*;
 
 /**
- * 
- * 
+ *
+ *
  * @author Sebastian Lague, arranged by Raph
  *
  */
@@ -28,7 +29,7 @@ public class PlayerScript extends MonoBehavior {
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
-	Vector2 velocity;
+	Vector2 velocity = new Vector2(0,0);
 	float velocityXSmoothing;
 
 	Vector2 directionalInput;
@@ -36,9 +37,12 @@ public class PlayerScript extends MonoBehavior {
 	float timeToWallUnstick;	// The amount of time remaining before unsticking to a wall
 	int wallDirX;	// wall on left or right
 
-	Controller controller;
 
-	
+	public static float maxSlopeAngle;
+
+	Controller controller = new Controller(support);
+
+
 
 	@Override
 	public void start() {
@@ -50,9 +54,11 @@ public class PlayerScript extends MonoBehavior {
 	}
 
 	@Override
-	public void update(long deltaTime) {
+	public void update(long deltaTime, Info info) {
+		setDirectionalInput(info.playerInput);
 		calculateVelocity (deltaTime);
 		handleWallSliding (deltaTime);
+		System.out.println("directionalInput" + directionalInput);
 
 		controller.move (velocity.multiply(deltaTime), directionalInput);
 
@@ -101,9 +107,11 @@ public class PlayerScript extends MonoBehavior {
 			velocity.y = minJumpVelocity;
 		}
 	}
-		
+
 
 	void handleWallSliding(long deltaTime) {
+		System.out.println("truc");
+		System.out.println(controller.collisions);
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
@@ -133,8 +141,10 @@ public class PlayerScript extends MonoBehavior {
 	}
 
 	void calculateVelocity(long deltaTime) {
+		System.out.println(directionalInput);
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
+		// I've commented the following line for tests
+		velocity.x = targetVelocityX; //Annex.SmoothDamp (velocity.x, targetVelocityX, /*ref*/ velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
 		velocity.y += gravity * deltaTime;
 	}
 }
