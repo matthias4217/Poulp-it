@@ -23,6 +23,11 @@ public abstract class MonoBehavior {
 
 
 
+	public MonoBehavior(GameObject support) {
+		super();
+		this.support = support;
+	}
+
 	/*
 	 * awake is called once when the script instance is being loaded.
 	 *

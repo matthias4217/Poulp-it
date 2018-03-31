@@ -1,5 +1,6 @@
 package core.scripts;
 
+import content.GameObject;
 import core.Info;
 import core.util.*;
 
@@ -11,6 +12,7 @@ import core.util.*;
  */
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehavior {
+
 
 	public float moveSpeed = 6;
 	public float maxJumpHeight = 4;
@@ -42,7 +44,10 @@ public class PlayerScript extends MonoBehavior {
 
 	Controller controller = new Controller(support);
 
-
+	public PlayerScript(GameObject support) {
+		super(support);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void start() {

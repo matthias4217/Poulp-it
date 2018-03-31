@@ -1,5 +1,6 @@
 package core.scripts;
 
+import content.GameObject;
 import core.exceptions.InvalidBoxColliderException;
 import core.util.*;
 
@@ -26,8 +27,8 @@ public class RaycastController extends MonoBehavior {
 
 
 
-	public RaycastController() {
-		super();
+	public RaycastController(GameObject support) {
+		super(support);
 		collider = new BoxCollider(new Vector2(0,0), PERCENT_SKIN, PERCENT_SKIN);
 		raycastOrigins = new RaycastOrigins();
 	}

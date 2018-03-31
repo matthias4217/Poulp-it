@@ -25,6 +25,10 @@ public class Controller extends RaycastController {
 
 
 
+	/**
+	 *  As mentionned in MonoBehavior, support is the object to which
+	 *  Controller is attached
+	 */
 	public Controller(GameObject support) {
 		super();
 		collisions = new CollisionInfo();

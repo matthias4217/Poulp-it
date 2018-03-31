@@ -37,8 +37,8 @@ public class Player extends GameObject {
 		this.maxHP = maxHP;
 		this.hp = maxHP;
 		this.weapon = weapon;
-		scripts.add(new Controller());
-		scripts.add(new PlayerScript());
+		scripts.add(new Controller(this));
+		scripts.add(new PlayerScript(this));
 	}
 
 
