@@ -38,14 +38,14 @@ public abstract class GameObject {
 		scripts = new LinkedList<MonoBehavior>();
 	}
 
-	
-	
+
+
 	/**
 	 * Set this GameObject as the support of all its scripts.
 	 */
 	public void setSupport() {
 		for (MonoBehavior script: scripts) {
-			script.support = this;
+			script.setSupport(this);
 		}
 	}
 

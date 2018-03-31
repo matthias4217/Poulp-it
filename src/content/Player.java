@@ -1,13 +1,6 @@
 package content;
 
 import java.util.LinkedList;
-<<<<<<< HEAD
-=======
-
-import core.scripts.Controller;
-import core.scripts.PlayerScript;
-import core.util.Vector2;
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 import javafx.scene.image.Image;
 import core.scripts.Controller;
 import core.scripts.PlayerScript;
@@ -43,20 +36,12 @@ public class Player extends GameObject {
 		this.maxHP = maxHP;
 		this.hp = maxHP;
 		this.weapon = weapon;
-<<<<<<< HEAD
-		this.scripts.add(new PlayerScript());
-		this.scripts.add(new Controller());
-=======
-		scripts.add(new Controller());
-		scripts.add(new PlayerScript());
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
+		this.scripts.add(new Controller(this));
+		this.scripts.add(new PlayerScript(this));
 	}
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 	public void reduceHP() {
 		hp--;
 	}

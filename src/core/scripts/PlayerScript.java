@@ -1,5 +1,6 @@
 package core.scripts;
 
+import content.GameObject;
 import core.Info;
 import core.util.*;
 
@@ -12,12 +13,14 @@ import core.util.*;
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehavior {
 
+
 	public static float moveSpeed = 6;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
 	public static float accelerationTimeAirborne = .2f;	// Amount of inertia while airborne (set to 0 for no inertia)
 	public static float accelerationTimeGrounded = .1f;	// Amount of inertia while grounded (set to 0 for no inertia)
+
 
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
 	public static Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
@@ -40,9 +43,12 @@ public class PlayerScript extends MonoBehavior {
 
 	public static float maxSlopeAngle;
 
-	Controller controller = new Controller(support);
+	Controller controller = new Controller(getSupport());
 
-
+	public PlayerScript(GameObject support) {
+		super(support);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void start() {

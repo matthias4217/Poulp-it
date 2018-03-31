@@ -119,13 +119,8 @@ public class GameEngine {
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
-<<<<<<< HEAD
-	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
-		
-=======
-	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
+	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {

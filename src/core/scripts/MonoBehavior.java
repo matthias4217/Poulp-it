@@ -18,18 +18,15 @@ public abstract class MonoBehavior {
 	/**
 	 * The GameObject to which the script is attached
 	 */
-<<<<<<< HEAD
+
 	private GameObject support;
-	
-	
-	
-=======
-	GameObject support;
 
 
+	public MonoBehavior(GameObject support) {
+		super();
+		this.support = support;
+	}
 
-
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 	/*
 	 * awake is called once when the script instance is being loaded.
 	 *
@@ -58,20 +55,16 @@ public abstract class MonoBehavior {
 	 */
 	public void lateUpdate(long deltaTime) {}
 
-<<<<<<< HEAD
-	
-	
+
+	public GameObject getSupport() {
+		return support;
+	}
+
 	/**
 	 * @param support the support to set
 	 */
 	public void setSupport(GameObject support) {
 		this.support = support;
 	}
-	
-	
-	
-=======
 
-
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 }

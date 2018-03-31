@@ -25,10 +25,13 @@ public class Controller extends RaycastController {
 
 
 
+	/**
+	 *  As mentionned in MonoBehavior, support is the object to which
+	 *  Controller is attached
+	 */
 	public Controller(GameObject support) {
-		super();
+		super(support);
 		collisions = new CollisionInfo();
-		this.support = support;
 	}
 
 	@Override
@@ -82,13 +85,8 @@ public class Controller extends RaycastController {
 		for (int i = 0; i < horizontalRayCount; i++) {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
-<<<<<<< HEAD
-			
 			RaycastHit hit = GameEngine.raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
-=======
 
-			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
->>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 
 
 			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
