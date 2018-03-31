@@ -3,6 +3,7 @@ package core.scripts;
 import core.GameEngine;
 import core.exceptions.InvalidBoxColliderException;
 import content.Layer;
+import content.GameObject;
 import content.GameObject.Tag;
 import core.util.*;
 import javafx.event.EventHandler;
@@ -22,6 +23,13 @@ public class Controller extends RaycastController {
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
 
+
+
+	public Controller(GameObject support) {
+		super();
+		collisions = new CollisionInfo();
+		this.support = support;
+	}
 
 	@Override
 	public void start() throws InvalidBoxColliderException {
@@ -89,7 +97,7 @@ public class Controller extends RaycastController {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
 
-				if (i == 0 && slopeAngle <= maxSlopeAngle) {
+				if (i == 0 && slopeAngle <= PlayerScript.maxSlopeAngle) {
 					if (collisions.descendingSlope) {
 						collisions.descendingSlope = false;
 						moveAmount = collisions.moveAmountOld;
@@ -103,7 +111,7 @@ public class Controller extends RaycastController {
 					moveAmount.x += distanceToSlopeStart * directionX;
 				}
 
-				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
+				if (!collisions.climbingSlope || slopeAngle > PlayerScript.maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
 					rayLength = hit.getDistance();		// Reducing the lenght of the next rays casted to avoid collisions further than this one
 
@@ -210,7 +218,7 @@ public class Controller extends RaycastController {
 			if (hit != null) {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
-				if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle) {
+				if (slopeAngle != 0 && slopeAngle <= PlayerScript.maxSlopeAngle) {
 					if (Math.signum(hit.getNormal().x) == directionX) {
 						if (hit.getDistance() - skinWidth <= Math.tan(slopeAngle * Annex.DEG2RAD) * Math.abs(moveAmount.x)) {
 							float moveDistance = Math.abs(moveAmount.x);
@@ -234,7 +242,7 @@ public class Controller extends RaycastController {
 
 		if (hit != null) {
 			float slopeAngle = Vector2.angle (hit.getNormal(), Vector2.up);
-			if (slopeAngle > maxSlopeAngle) {
+			if (slopeAngle > PlayerScript.maxSlopeAngle) {
 				moveAmount.x = (float) (Math.signum(hit.getNormal().x) * (Math.abs(moveAmount.y) - hit.getDistance()) /
 						Math.tan(slopeAngle * Annex.DEG2RAD));
 
@@ -247,42 +255,6 @@ public class Controller extends RaycastController {
 
 	void resetFallingThroughPlatform() {
 		collisions.fallingThroughPlatform = false;
-	}
-
-
-}
-
-
-
-
-
-
-class CollisionInfo {
-	/* Structure which stores information about a detected collision. */
-
-	public boolean above, below;				// | Tell in which directions there is collision
-	public boolean left, right;					// |
-
-	public boolean climbingSlope;				// Is the Object climbing a slope
-	public boolean descendingSlope;				// Is the Object descending a slope
-	public boolean slidingDownMaxSlope;			// Indicates if the Object is currently falling from a maxAngleSlope ; @@@ On va surement le supprimer
-
-	public float slopeAngle, slopeAngleOld;		// Angle of the slope encountered and previous one
-	public Vector2 slopeNormal;					// The normal vector to the slope @@@ (en vrai je sais pas trop à quoi ça sert)
-	public Vector2 moveAmountOld;				// @@@
-	public int faceDir;							// Direction faced by the Object: -1->left, 1->right
-	public boolean fallingThroughPlatform;
-
-	public void reset() {
-		above = below = false;
-		left = right = false;
-		climbingSlope = false;
-		descendingSlope = false;
-		slidingDownMaxSlope = false;
-		slopeNormal = Vector2.zero;
-
-		slopeAngleOld = slopeAngle;
-		slopeAngle = 0;
 	}
 
 

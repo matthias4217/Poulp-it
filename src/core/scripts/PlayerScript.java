@@ -37,7 +37,10 @@ public class PlayerScript extends MonoBehavior {
 	float timeToWallUnstick;	// The amount of time remaining before unsticking to a wall
 	int wallDirX;	// wall on left or right
 
-	Controller controller;
+
+	public static float maxSlopeAngle;
+
+	Controller controller = new Controller(support);
 
 
 
@@ -107,6 +110,8 @@ public class PlayerScript extends MonoBehavior {
 
 
 	void handleWallSliding(long deltaTime) {
+		System.out.println("truc");
+		System.out.println(controller.collisions);
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
