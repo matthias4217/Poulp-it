@@ -5,25 +5,28 @@ import core.exceptions.InvalidBoxColliderException;
 import content.Layer;
 import content.GameObject.Tag;
 import core.util.*;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @@@
- * 
+ *
  * @author Sebastian Lague, arranged by Raph
  *
  */
-//@TODO: make traversable platform more logical (currently, they are traversable but have side walls)
+//TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
 
 	public Layer collisionMask;
-	
+
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
+
 
 	@Override
 	public void start() throws InvalidBoxColliderException {
 		super.start();
-		collisions.faceDir = 1;	
+		collisions.faceDir = 1;
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
@@ -34,7 +37,7 @@ public class Controller extends RaycastController {
 	}
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) {
 		updateRayCastOrigins();
-
+		System.out.println("Input " + input);
 		collisions.reset();
 		collisions.moveAmountOld = moveAmount;
 		playerInput = input;
@@ -71,7 +74,7 @@ public class Controller extends RaycastController {
 		for (int i = 0; i < horizontalRayCount; i++) {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
-			
+
 			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
 
 
@@ -120,7 +123,7 @@ public class Controller extends RaycastController {
 		float rayLength = Math.abs(moveAmount.y) + skinWidth;		// The more we are moving, the longer the rays are
 
 		for (int i = 0; i < verticalRayCount; i++) {
- 
+
 			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
 			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
@@ -130,7 +133,7 @@ public class Controller extends RaycastController {
 			if (hit != null) {		// If something was hit
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.
 				if (hit.getGameObjectHit().tag == Tag.TRAVERSABLE) {
-					if (directionY == 1 || hit.getDistance() == 0) {		// 
+					if (directionY == 1 || hit.getDistance() == 0) {		//
 						continue;
 					}
 					if (collisions.fallingThroughPlatform) {
@@ -138,7 +141,7 @@ public class Controller extends RaycastController {
 					}
 					if (playerInput.y == -1) {
 						collisions.fallingThroughPlatform = true;
-						Invoke("resetFallingThroughPlatform",.5f);		// 
+						Invoke("resetFallingThroughPlatform",.5f);		//
 						continue;
 					}
 				}
@@ -256,7 +259,7 @@ public class Controller extends RaycastController {
 
 class CollisionInfo {
 	/* Structure which stores information about a detected collision. */
-	
+
 	public boolean above, below;				// | Tell in which directions there is collision
 	public boolean left, right;					// |
 
@@ -281,4 +284,6 @@ class CollisionInfo {
 		slopeAngleOld = slopeAngle;
 		slopeAngle = 0;
 	}
+
+
 }
