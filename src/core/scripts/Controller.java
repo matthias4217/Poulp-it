@@ -16,14 +16,14 @@ import core.util.*;
 public class Controller extends RaycastController {
 
 	public Layer collisionMask;
-	
+
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
 
 	@Override
 	public void start() throws InvalidBoxColliderException {
 		super.start();
-		collisions.faceDir = 1;	
+		collisions.faceDir = 1;
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
