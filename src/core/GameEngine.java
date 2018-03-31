@@ -31,7 +31,7 @@ public class GameEngine {
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 	Player[] players;		// Convenient access to the players (since the array contains references)
 	static Tile[] tiles;		//
-	
+
 
 
 	/* Constructor */
@@ -41,17 +41,17 @@ public class GameEngine {
 		}
 		alreadyExist = true;
 	}
-	
+
 
 	/**
 	 * Initialize the game
-	 * 
+	 *
 	 * @param nbPlayers
 	 * @param levelName
 	 * @throws IOException
 	 */
 	public void init(int nbPlayers, String levelName) throws IOException {
-		
+
 		// Imports the level
 		System.out.println("Beginning level importation...");
 		/*
@@ -59,8 +59,8 @@ public class GameEngine {
 		tiles = lvl0.tiles;
 		System.out.println(tiles);
 		*/
-		
-		
+
+
 		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
@@ -80,6 +80,7 @@ public class GameEngine {
 			System.out.println("Added player at " + playerI.position);
 		}
 
+
 		// ----
 
 
@@ -88,40 +89,45 @@ public class GameEngine {
 
 	/**
 	 * Called each frame
-	 * 
+	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 */
-	public void update(long deltaTime) {
-
+	public void update(long deltaTime, Info info) {
+		System.out.println(info);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime);
+			gameManager.apply(deltaTime, info);
 		}
-		
+
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime);
+			gameObject.update(deltaTime, info);
 		}
-	
+
 	}
 
 
 
 
 	/**
-	 * Cast a ray starting which can detect collisions 
-	 * 
+	 * Cast a ray starting which can detect collisions
+	 *
 	 * @param rayOrigin		The origin of the ray in absolute coordinates
 	 * @param direction		The direction the ray is cast
-	 * @param length		The lenght of the ray
+	 * @param length		The length of the ray
 	 * @param collisionMask	The Layer on which collisions will be detected
-	 * 
+	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
+<<<<<<< HEAD
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		
+=======
+	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
+
+>>>>>>> branch 'develop' of https://github.com/matthias4217/hardcore-rodeo-96
 		Ray ray = new Ray(rayOrigin, direction, length);
-		
+
 		for (GameObject gameObject: allGameObjects) {
 
 			if (gameObject.layer == collisionMask) {
@@ -131,15 +137,15 @@ public class GameEngine {
 				checkCollision(ray, line);
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
+
+
 	}
 
 
