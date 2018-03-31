@@ -118,7 +118,7 @@ public class GameEngine {
 	 * 
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
-	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
+	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		
 		Ray ray = new Ray(rayOrigin, direction, length);
 		

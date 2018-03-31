@@ -8,7 +8,7 @@ import content.GameObject;
  * @author Raph
  *
  */
-public class RayCastHit {
+public class RaycastHit {
 	
 	private GameObject gameObjectHit;	// A reference to the GameObject whose collider was hit
 	
@@ -30,7 +30,7 @@ public class RayCastHit {
 	
 	
 	
-	public RayCastHit() {
+	public RaycastHit() {
 		// @@@ TODO : Constructor
 	}
 	

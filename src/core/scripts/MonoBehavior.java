@@ -17,7 +17,7 @@ public abstract class MonoBehavior {
 	/**
 	 * The GameObject to which the script is attached
 	 */
-	GameObject support;
+	private GameObject support;
 	
 	
 	
@@ -48,6 +48,15 @@ public abstract class MonoBehavior {
 	 * @param deltaTime
 	 */
 	public void lateUpdate(long deltaTime) {}
+
+	
+	
+	/**
+	 * @param support the support to set
+	 */
+	public void setSupport(GameObject support) {
+		this.support = support;
+	}
 	
 	
 	

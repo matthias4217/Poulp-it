@@ -1,9 +1,10 @@
 package content;
 
 import java.util.LinkedList;
-
-import core.util.Vector2;
 import javafx.scene.image.Image;
+import core.scripts.Controller;
+import core.scripts.PlayerScript;
+import core.util.Vector2;
 
 /**
  * This class represents a Player.
@@ -35,10 +36,11 @@ public class Player extends GameObject {
 		this.maxHP = maxHP;
 		this.hp = maxHP;
 		this.weapon = weapon;
+		this.scripts.add(new PlayerScript());
+		this.scripts.add(new Controller());
 	}
 
 
-	
 	public void reduceHP() {
 		hp--;
 	}

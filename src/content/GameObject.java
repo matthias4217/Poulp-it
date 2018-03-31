@@ -13,7 +13,7 @@ import core.scripts.MonoBehavior;
  * @author Raph
  *
  */
-public class GameObject {
+public abstract class GameObject {
 
 	public Vector2 position;
 	public Image sprite;
@@ -23,8 +23,8 @@ public class GameObject {
 	public Collider collider;
 	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describes its behavior
 
-	
-	
+
+
 	public GameObject(Vector2 position, Image sprite) {
 		this(position, sprite, Layer.DEFAULT, Tag.DEFAULT);
 	}
@@ -37,6 +37,16 @@ public class GameObject {
 		scripts = new LinkedList<MonoBehavior>();
 	}
 
+	
+	
+	/**
+	 * Set this GameObject as the support of all its scripts.
+	 */
+	public void setSupport() {
+		for (MonoBehavior script: scripts) {
+			script.support = this;
+		}
+	}
 
 
 	/**

@@ -11,19 +11,19 @@ import core.util.*;
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehavior {
 
-	public float moveSpeed = 6;
-	public float maxJumpHeight = 4;
-	public float minJumpHeight = 1;
-	public float timeToJumpApex = .4f;
-	public float accelerationTimeAirborne = .2f;	// Amount of inertia while airborne (set to 0 for no inertia)
-	public float accelerationTimeGrounded = .1f;	// Amount of inertia while grounded (set to 0 for no inertia)
+	public static float moveSpeed = 6;
+	public static float maxJumpHeight = 4;
+	public static float minJumpHeight = 1;
+	public static float timeToJumpApex = .4f;
+	public static float accelerationTimeAirborne = .2f;	// Amount of inertia while airborne (set to 0 for no inertia)
+	public static float accelerationTimeGrounded = .1f;	// Amount of inertia while grounded (set to 0 for no inertia)
 
-	public Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
-	public Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
-	public Vector2 wallLeap;						// Force applied to jump when wall-jumping away from the wall
+	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
+	public static Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
+	public static Vector2 wallLeap;						// Force applied to jump when wall-jumping away from the wall
 
-	public float wallSlideSpeedMax = 3;
-	public float wallStickTime = .25f;				// Time the player will stay stuck against a wall when inputing away from it; useful to perform wallLeap
+	public static float wallSlideSpeedMax = 3;
+	public static float wallStickTime = .25f;				// Time the player will stay stuck against a wall when inputing away from it; useful to perform wallLeap
 
 	float gravity;
 	float maxJumpVelocity;
@@ -42,7 +42,7 @@ public class PlayerScript extends MonoBehavior {
 
 	@Override
 	public void start() {
-		//controller = this.support.controller;
+		//controller = this.support.scripts.controller;
 
 		gravity = (float) (-2 * maxJumpHeight / Math.pow(timeToJumpApex, 2));
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;

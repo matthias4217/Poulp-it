@@ -29,7 +29,7 @@ public class RaycastController extends MonoBehavior {
 	@Override
 	public void start() throws InvalidBoxColliderException {
 		try {
-			collider = (BoxCollider) support.collider;
+			collider = (BoxCollider) getSupport().collider;
 		}
 		catch (ClassCastException exception) {
 			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");

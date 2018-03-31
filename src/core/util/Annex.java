@@ -7,23 +7,23 @@ package core.util;
  *
  */
 public final class Annex {
-	
+
 	/* CONSTANTS */
-	
+
 	public static final float DEG2RAD = (float) Math.PI / 180;		// Multiplicative factor to convert degree to radian
-	
-	
-	
-	
+
+
+
+
 	/* METHODS */
-	
+
 	/**
 	 * @return value clamped between a and b
 	 */
 	public static float clamp(float value, float a, float b) {
 		return Math.max(a, Math.min(b, value));	
 	}
-	
+
 	/**
 	 * Indicates if the line segments [A; B] and [C; D] do intersect
 	 * @Todo gérer le cas de colinéarité
@@ -41,17 +41,17 @@ public final class Annex {
 		System.out.println(w2);
 		return w1>=0 && w2>=0 && w1+w2>=1;
 	}
-		
-	
-	
+
+
+
 	// Given three colinear Vector2s p, q, r, the function checks if
 	// Vector2 q lies on line segment 'pr'
 	boolean onSegment(Vector2 a, Vector2 b, Vector2 p)
 	{
-	    return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
-	        b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
+		return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
+				b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
 	}
-	 
+
 	// To find orientation of ordered triplet (p, q, r).
 	// The function returns following values
 	// 0 --> p, q and r are colinear
@@ -59,41 +59,72 @@ public final class Annex {
 	// -1 --> Counterclockwise
 	float orientation(Vector2 p, Vector2 q, Vector2 r)
 	{
-	    // See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
-	    // for details of below formula.
-	    return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
+		// See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
+		// for details of below formula.
+		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
 	}
-	 
+
 	// The main function that returns true if line segment 'p1q1'
 	// and 'p2q2' intersect.
 	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
 	{
-	    // Find the four orientations needed for general and
-	    // special cases
-	    float o1 = orientation(p1, q1, p2);
-	    float o2 = orientation(p1, q1, q2);
-	    float o3 = orientation(p2, q2, p1);
-	    float o4 = orientation(p2, q2, q1);
-	 
-	    // General case
-	    if (o1 != o2 && o3 != o4)
-	        return true;
-	 
-	    // Special Cases
-	    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
-	    if (o1 == 0 && onSegment(p1, p2, q1)) return true;
-	 
-	    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
-	    if (o2 == 0 && onSegment(p1, q2, q1)) return true;
-	 
-	    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
-	    if (o3 == 0 && onSegment(p2, p1, q2)) return true;
-	 
-	     // p2, q2 and q1 are colinear and q1 lies on segment p2q2
-	    if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-	 
-	    return false; // Doesn't fall in any of the above cases
+		// Find the four orientations needed for general and
+		// special cases
+		float o1 = orientation(p1, q1, p2);
+		float o2 = orientation(p1, q1, q2);
+		float o3 = orientation(p2, q2, p1);
+		float o4 = orientation(p2, q2, q1);
+
+		// General case
+		if (o1 != o2 && o3 != o4)
+			return true;
+
+		// Special Cases
+		// p1, q1 and p2 are colinear and p2 lies on segment p1q1
+		if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+
+		// p1, q1 and p2 are colinear and q2 lies on segment p1q1
+		if (o2 == 0 && onSegment(p1, q2, q1)) return true;
+
+		// p2, q2 and p1 are colinear and p1 lies on segment p2q2
+		if (o3 == 0 && onSegment(p2, p1, q2)) return true;
+
+		// p2, q2 and q1 are colinear and q1 lies on segment p2q2
+		if (o4 == 0 && onSegment(p2, q1, q2)) return true;
+
+		return false; // Doesn't fall in any of the above cases
 	}
-	
+
+
+
+	public static float SmoothDamp (float current, float target, Float currentVelocity,
+			float smoothTime, float maxSpeed, float deltaTime) {
+		
+		float num = 2f / smoothTime;
+		float num2 = num * deltaTime;
+		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
+		float num4 = current - target;
+		float num6 = maxSpeed * smoothTime;
+		num4 = clamp (num4, -num6, num6);
+		target = current - num4;
+		float num7 = (currentVelocity + num * num4) * deltaTime;
+		currentVelocity = (currentVelocity - num * num7) * num3;
+		float num8 = target + (num4 + num7) * num3;
+		if (target - current > 0f == num8 > target)
+		{
+			num8 = target;
+			currentVelocity = (num8 - target) / deltaTime;
+		}
+		return num8;
+	}
+
+
+
+
+
+
+
+
+
 
 }
