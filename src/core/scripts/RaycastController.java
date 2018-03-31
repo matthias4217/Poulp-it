@@ -9,7 +9,7 @@ import core.util.*;
  * @author Sebastian Lague, arranged by Raph
  * 
  */
-public class RayCastController extends MonoBehavior {
+public class RaycastController extends MonoBehavior {
 	
 	public String collisionLayer;					// Indicates on which layer the Rays will detect things
 

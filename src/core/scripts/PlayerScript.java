@@ -3,13 +3,13 @@ package core.scripts;
 import core.util.*;
 
 /**
- * @@@
+ * 
  * 
  * @author Sebastian Lague, arranged by Raph
  *
  */
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
-public class Player extends MonoBehavior {
+public class PlayerScript extends MonoBehavior {
 
 	public float moveSpeed = 6;
 	public float maxJumpHeight = 4;
@@ -24,7 +24,6 @@ public class Player extends MonoBehavior {
 
 	public float wallSlideSpeedMax = 3;
 	public float wallStickTime = .25f;				// Time the player will stay stuck against a wall when inputing away from it; useful to perform wallLeap
-	float timeToWallUnstick;
 
 	float gravity;
 	float maxJumpVelocity;
@@ -32,13 +31,14 @@ public class Player extends MonoBehavior {
 	Vector2 velocity;
 	float velocityXSmoothing;
 
-	Controller controller;
-
 	Vector2 directionalInput;
 	boolean wallSliding;
+	float timeToWallUnstick;	// The amount of time remaining before unsticking to a wall
 	int wallDirX;	// wall on left or right
 
+	Controller controller;
 
+	
 
 	@Override
 	public void start() {

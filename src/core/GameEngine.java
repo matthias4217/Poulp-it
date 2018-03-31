@@ -109,13 +109,19 @@ public class GameEngine {
 
 
 	/**
-	 * Cast a ray starting from rayOrigin, in direction and with a specified length.
-	 * @return a RaycastHit containing the information about what was hit by the ray.
+	 * Cast a ray starting which can detect collisions 
 	 * 
-	 * @@@ TODO !!
+	 * @param rayOrigin		The origin of the ray in absolute coordinates
+	 * @param direction		The direction the ray is cast
+	 * @param length		The lenght of the ray
+	 * @param collisionMask	The Layer on which collisions will be detected
+	 * 
+	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
 	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
+		
 		Ray ray = new Ray(rayOrigin, direction, length);
+		
 		for (GameObject gameObject: allGameObjects) {
 
 			if (gameObject.layer == collisionMask) {
@@ -125,6 +131,15 @@ public class GameEngine {
 				checkCollision(ray, line);
 			}
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 

@@ -1,6 +1,9 @@
 package core.scripts;
 
 import core.GameEngine;
+import core.exceptions.InvalidBoxColliderException;
+import content.Layer;
+import content.GameObject.Tag;
 import core.util.*;
 
 /**
@@ -10,13 +13,15 @@ import core.util.*;
  *
  */
 //@TODO: make traversable platform more logical (currently, they are traversable but have side walls)
-public class Controller extends RayCastController {
+public class Controller extends RaycastController {
 
-	public CollisionInfo collisions;	
+	public Layer collisionMask;
+	
+	public CollisionInfo collisions;
 	public Vector2 playerInput;
 
 	@Override
-	public void start() {
+	public void start() throws InvalidBoxColliderException {
 		super.start();
 		collisions.faceDir = 1;	
 	}
@@ -67,7 +72,7 @@ public class Controller extends RayCastController {
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin.translate(Vector2.up.multiply(horizontalRaySpacing * i));
 			
-			RayCastHit hit = Ray.rayCast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
+			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
 
 
 			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
@@ -118,13 +123,13 @@ public class Controller extends RayCastController {
  
 			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
-			RayCastHit hit = GameEngine.rayCast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
+			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
 
 			//Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
 			if (hit != null) {		// If something was hit
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.
-				if (hit.collider.tag == "traversable") {
+				if (hit.getGameObjectHit().tag == Tag.TRAVERSABLE) {
 					if (directionY == 1 || hit.getDistance() == 0) {		// 
 						continue;
 					}
@@ -156,7 +161,7 @@ public class Controller extends RayCastController {
 
 			Vector2 rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight).add(
 					Vector2.up.multiply(moveAmount.y));
-			RayCastHit hit = GameEngine.rayCast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+			RayCastHit hit = GameEngine.raycast(rayOrigin, Vector2.right.multiply(directionX), rayLength, collisionMask);
 
 			if (hit != null) {
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
@@ -186,8 +191,8 @@ public class Controller extends RayCastController {
 	}
 
 	void descendSlope(Vector2 moveAmount) {
-		RayCastHit maxSlopeHitLeft = GameEngine.rayCast (raycastOrigins.bottomLeft, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
-		RayCastHit maxSlopeHitRight = GameEngine.rayCast (raycastOrigins.bottomRight, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
+		RayCastHit maxSlopeHitLeft = GameEngine.raycast (raycastOrigins.bottomLeft, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
+		RayCastHit maxSlopeHitRight = GameEngine.raycast (raycastOrigins.bottomRight, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 
 		if (maxSlopeHitLeft ^ maxSlopeHitRight) {		// xor
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
@@ -198,7 +203,7 @@ public class Controller extends RayCastController {
 			float directionX = Math.signum(moveAmount.x);
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
 
-			RayCastHit hit = GameEngine.rayCast (rayOrigin, Vector2.down, Float.POSITIVE_INFINITY, collisionMask);
+			RayCastHit hit = GameEngine.raycast (rayOrigin, Vector2.down, Float.POSITIVE_INFINITY, collisionMask);
 			if (hit != null) {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);

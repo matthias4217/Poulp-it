@@ -17,7 +17,8 @@ public class GameObject {
 
 	public Vector2 position;
 	public Image sprite;
-//	public Layer layer;
+	public Layer layer;
+	public Tag tag;
 	
 	public Collider collider;
 	public LinkedList<MonoBehavior> scripts;		// The list of scripts attached to the GameObject which describes its behavior
@@ -25,12 +26,14 @@ public class GameObject {
 	
 	
 	public GameObject(Vector2 position, Image sprite) {
-		this(position, sprite, Layer.DEFAULT);
+		this(position, sprite, Layer.DEFAULT, Tag.DEFAULT);
 	}
 	
-	public GameObject(Vector2 position, Image sprite, Layer layer) {
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag) {
 		this.position = position;
 		this.sprite = sprite;
+		this.layer = layer;
+		this.tag = tag;
 		scripts = new LinkedList<MonoBehavior>();
 	}
 
@@ -68,4 +71,16 @@ public class GameObject {
 		return this.position.toString() + collider.toString();		//
 	}
 
+	
+	
+	
+	public enum Tag {
+		DEFAULT,
+		TRAVERSABLE,
+		
+		
+		
+	}
+	
+	
 }

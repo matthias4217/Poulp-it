@@ -14,21 +14,41 @@ import core.exceptions.InvalidBoxColliderException;
 // TODO document this class
 public abstract class MonoBehavior {
 	
-	GameObject support;			// The GameObject to which the script is attached
+	/**
+	 * The GameObject to which the script is attached
+	 */
+	GameObject support;
+	
 	
 	
 	/*
-	 * awake is called when the script instance is being loaded.
+	 * awake is called once when the script instance is being loaded.
 	 * 
 	 * awake is called before start. 
 	 */
 	public void awake() throws InvalidBoxColliderException {}
 	
+	/**
+	 * Is called after awake(), once when the script instance is being loaded. 
+	 * 
+	 * @throws InvalidBoxColliderException
+	 */
 	public void start() throws InvalidBoxColliderException {}
 	
+	/**
+	 * Is called every frame the support GameObject is active.
+	 * 
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 */
 	public void update(long deltaTime) {}
 	
-	public void lateUpdate() {}
+	/**
+	 * Same as update but the lateUpdate methods are called after all updates are done.
+	 * 
+	 * @param deltaTime
+	 */
+	public void lateUpdate(long deltaTime) {}
+	
 	
 	
 }
