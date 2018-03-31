@@ -3,11 +3,9 @@
 # All lines beginning with a '#' are ommited
 # Empty lines _matter_
 #
-# tilesize
 tilesize: 32
 theme: simplegrey
 #
-# Level :
 level:{
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x                       x
@@ -15,7 +13,7 @@ x                       x
 x      xxxxxxx          x
 x                       x
 x                      xx
-xxxxxxxx   /xxx         x     
+xxxxxxxx   /xxx         x
 x         /xx           x
 x        /xxx           x
 x        xxxx           x

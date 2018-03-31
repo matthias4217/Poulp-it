@@ -1,12 +1,16 @@
 package core;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import content.GameManager;
 import content.GameObject;
+import content.Layer;
 import content.Player;
 import content.Tile;
+import content.Tile.TileType;
 import core.exceptions.MultipleGameEngineException;
 import core.scripts.MonoBehavior;
 import core.util.*;
@@ -14,7 +18,7 @@ import levels.Level;
 import levels.Level0;
 
 /**
- * Manage the flow of the game; one instance.
+ * Manages the flow of the game; one instance.
  *
  * @author Raph
  *
@@ -26,7 +30,8 @@ public class GameEngine {
 	static LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 	Player[] players;		// Convenient access to the players (since the array contains references)
-	static Tile[] tiles;
+	static Tile[] tiles;		//
+
 
 
 	/* Constructor */
@@ -37,8 +42,15 @@ public class GameEngine {
 		alreadyExist = true;
 	}
 
-	public void init(int nbPlayers) throws IOException {
-		/* Initialize the game */
+
+	/**
+	 * Initialize the game
+	 *
+	 * @param nbPlayers
+	 * @param levelName
+	 * @throws IOException
+	 */
+	public void init(int nbPlayers, String levelName) throws IOException {
 
 		// Imports the level
 		System.out.println("Beginning level importation...");
@@ -47,10 +59,16 @@ public class GameEngine {
 		tiles = lvl0.tiles;
 		System.out.println(tiles);
 		*/
-		LevelFileParser levelParser = new LevelFileParser("/home/mondrak/eclipse-workspace/projet-dev/levels/level0.txt");
-		// System.out.println("levelparser: " + levelParser);
+
+
+		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
+		InfoTile[][] grid = levelParser.levelGrid;
+
+
+		/* A map which associates to each tile what GameObject is there */
+		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 		// Setting up the players array and adding the players to the GameObjects list
 		players = new Player[nbPlayers];
@@ -62,40 +80,49 @@ public class GameEngine {
 			System.out.println("Added player at " + playerI.position);
 		}
 
+
 		// ----
 
 
-
 	}
 
 
-
-
-	public void update() {
-		/* Called each frame */
-
-
+	/**
+	 * Called each frame
+	 *
+	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 */
+	public void update(long deltaTime, Info info) {
+		System.out.println(info);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply();
+			gameManager.apply(deltaTime, info);
 		}
+
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update();
+			gameObject.update(deltaTime, info);
 		}
+
 	}
-
-
 
 
 
 
 	/**
-	 * Cast a ray starting from rayOrigin, in direction and with a specified length.
+	 * Cast a ray starting which can detect collisions
+	 *
+	 * @param rayOrigin		The origin of the ray in absolute coordinates
+	 * @param direction		The direction the ray is cast
+	 * @param length		The length of the ray
+	 * @param collisionMask	The Layer on which collisions will be detected
+	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 */
-	public static RayCastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
+
+	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
+
 		for (GameObject gameObject: allGameObjects) {
 
 			if (gameObject.layer == collisionMask) {
@@ -105,6 +132,15 @@ public class GameEngine {
 				checkCollision(ray, line);
 			}
 		}
+
+
+
+
+
+
+
+
+
 	}
 
 

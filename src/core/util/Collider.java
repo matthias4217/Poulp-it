@@ -15,6 +15,7 @@ import core.exceptions.InvalidArgumentsException;
  * @author Raph
  *
  */
+// Not sure if necessary
 public class Collider {
 
 	protected Vector2[] pointsArray;

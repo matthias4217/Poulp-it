@@ -9,35 +9,43 @@ package core.util;
  * @author Raph
  * 
  */
-public final class Vector2 {
+
+// @TODO Organiser cette classe et la documenter correctement
+public class Vector2 {
 
 	public float x;
 	public float y;
 
+	/* Constructor */
 	public Vector2(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 		
 	
-	public Vector2 add(Vector2 vectorToAdd) {
+	
+	public Vector2 add(Vector2 toAdd) {
 		/* Add two vectors.
 		 * NOT IN PLACE
 		 */
-		return new Vector2(this.x + vectorToAdd.x, this.y + vectorToAdd.y);
+		return new Vector2(this.x + toAdd.x, this.y + toAdd.y);
+	}
+	
+	public Vector2 minus(Vector2 toSubstract) {
+		return new Vector2(this.x - toSubstract.x, this.y - toSubstract.y);
 	}
 	
 	public void translate(Vector2 translation) {
-		/* Apply translation to this Vector2 */
+		/* Apply translation to this Vector2. */
 		this.x += translation.x;
 		this.y += translation.y;
 	}
 	
-	public Vector2 multiply(float factor) {
-		/* Return the product of this vector by the scalar factor. 
+	public Vector2 multiply(float scalar) {
+		/* Return the product of this vector by the scalar scalar. 
 		 * NOT IN PLACE
 		 */
-		return new Vector2(factor * x, factor * y);
+		return new Vector2(scalar * x, scalar * y);
 	}
 	
 	public Vector2 reverse() {
@@ -46,8 +54,8 @@ public final class Vector2 {
 	}
 	
 	public float norm() {
-		/* Return the norm of this Vector2 */
-		return (float)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+		/* Return the norm of this Vector2. */
+		return (float)Math.sqrt(x*x + y*y);
 	}
 	
 	public Vector2 normalize() {
@@ -56,6 +64,24 @@ public final class Vector2 {
 		 */
 		float norm = this.norm();
 		return new Vector2(this.x / norm, this.y / norm);
+	}
+	
+	
+	
+	public static float distance(Vector2 u, Vector2 v) {
+		/* Return the distance between u and v. */
+		return (new Vector2(v.x - u.x, v.y - u.y)).norm();
+		
+	}
+	
+	public static float dotProduct(Vector2 u, Vector2 v) {
+		/* Return the dot product between u and v. */
+		return u.x * v.x + u.y * v.y;
+	}
+	
+	public static float angle(Vector2 u, Vector2 v) {
+		/* Return the angle in radian between u and v. */
+		return (float) Math.acos(Vector2.dotProduct(u, v) / (u.norm() * v.norm()));
 	}
 	
 	
@@ -78,17 +104,6 @@ public final class Vector2 {
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
-	}
-
-
-	/**
-	 * @@@ pas testé
-	 * @param normal
-	 * @param up2
-	 * @return the angle between u and v in degree
-	 */
-	public static float angle(Vector2 u, Vector2 v) {
-		return Math.acos(Vector2.dotProduct(u, v) / (u.norm() * v.norm());
 	}
 	
 }

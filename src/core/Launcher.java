@@ -25,10 +25,7 @@ import core.exceptions.MultipleGameEngineException;
  */
 public class Launcher extends Application {
 
-	/*
-	 * Problems may happen in case of multi-monitors.
-	 */
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
 	/**
 	 * SCALE is the variable which may need some adjustments.
@@ -36,7 +33,8 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9;
 	double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
-	static final String WINDOW_TITLE = "Hardcore Rodeo 96 !!!";
+
+	static final String WINDOW_TITLE = "Hook Battle";
 
 
 
@@ -54,7 +52,7 @@ public class Launcher extends Application {
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException, IOException {
 		// Initialization of the window
-		System.out.println(WINDOW_WIDTH + "×" + WINDOW_HEIGHT);
+		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
 		stage.setResizable(false);
 		Group group0 = new Group();
@@ -66,23 +64,24 @@ public class Launcher extends Application {
 		stage.show();
 
 
-		// If we implement a menu, that's probably around here
+		// If we implement a menu, that's probably around here.
 
 
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
-		gameEngine.init(nbPlayers);
+		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
+		Info info = new Info();
 
 
 		AnimationTimer timer = new AnimationTimer() {
 			@Override public void handle(long now) {
-				/* handle is called in each frame while the timer is active */
-
+				/* handle is called in each frame while the timer is active. */
 				gc.drawImage(background, 0, 0);
-				gameEngine.update();
+				stage.getScene().setOnKeyPressed(info.eventHandler); //get the player input
+				gameEngine.update(now, info);
 				graphicManager.render(gc);
 
 			}

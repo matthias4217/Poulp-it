@@ -8,10 +8,8 @@ package content;
  *
  */
 public enum Layer {
-	DEFAULT
-	
-	
-	
+	DEFAULT,
+		
 	
 	
 	
