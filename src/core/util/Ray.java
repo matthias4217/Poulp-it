@@ -13,19 +13,20 @@ import core.exceptions.InvalidArgumentsException;
  */
 public class Ray {
 	
-	private Vector2 originPoint;
-	private Vector2 endingPoint;
+	public Vector2 originPoint;
+	public Vector2 endingPoint;
 	
 	/**
 	 * @param originPoint
 	 * @param direction
 	 * @param length
+	 * 
+	 * @throws InvalidArgumentsException if direction is null
 	 */
 	public Ray(Vector2 originPoint, Vector2 direction, float length) throws InvalidArgumentsException {
 		if (direction == Vector2.zero) {
 			throw new InvalidArgumentsException("direction vector is null");
 		}
-		
 		this.originPoint = originPoint;
 		this.endingPoint = originPoint.add(direction.normalize().multiply(length));
 	}

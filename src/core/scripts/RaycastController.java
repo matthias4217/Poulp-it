@@ -27,7 +27,7 @@ public class RaycastController extends MonoBehavior {
 
 
 
-	public RaycastController(GameObject support) {
+	public RaycastController(GameObject support) throws InvalidBoxColliderException {
 		super(support);
 		collider = new BoxCollider(new Vector2(0,0), PERCENT_SKIN, PERCENT_SKIN);
 		raycastOrigins = new RaycastOrigins();
@@ -49,7 +49,7 @@ public class RaycastController extends MonoBehavior {
 	}
 
 	public void updateRayCastOrigins() {
-		// Code pas super lisible, mais en réalité pas compliqué...
+		// Code pas super lisible avec Java, mais en réalité pas compliqué...
 		// "Not very readable"... you bet !
 		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
 		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);

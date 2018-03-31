@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import core.exceptions.InvalidArgumentsException;
+import core.exceptions.InvalidBoxColliderException;
 import core.exceptions.MultipleGameEngineException;
 
 /**
@@ -50,7 +52,7 @@ public class Launcher extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) throws MultipleGameEngineException, IOException {
+	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidBoxColliderException {
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
@@ -80,8 +82,13 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 				gc.drawImage(background, 0, 0);
-				stage.getScene().setOnKeyPressed(info.eventHandler); //get the player input
-				gameEngine.update(now, info);
+				stage.getScene().setOnKeyPressed(info.eventHandler);	// getting the player input
+				try {
+					gameEngine.update(now, info);
+				} catch (InvalidArgumentsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				graphicManager.render(gc);
 
 			}

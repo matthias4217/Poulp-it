@@ -100,14 +100,23 @@ public final class Annex {
 	/**
 	 * https://en.wikipedia.org/wiki/Smoothstep
 	 */
-	public static float smootherstep(float x) {
+	public static float smoothStep(float x) {
 		x = clamp(x, 0, 1);
-		return x * x * x * (x * (x * 6 - 15) + 10);
+		return x * x * (3 - 2*x);
 	}
 	
+	public static float smootherStep(float x) {
+		x = clamp(x, 0, 1);
+		return x * x * x * (x * (6*x - 15) + 10);
+	}
 
+	/**
+	 * The function used by UnityEngine
+	 * 
+	 * @author Not me
+	 */
 	@Deprecated
-	public static float smoothDamp (float current, float target, Float currentVelocity,
+	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
 			float smoothTime, float deltaTime) {
 
 		float num = 2f / smoothTime;
@@ -115,13 +124,13 @@ public final class Annex {
 		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
 		float num4 = current - target;
 		target = current - num4;
-		float num5 = (currentVelocity + num * num4) * deltaTime;
-		currentVelocity = (currentVelocity - num * num5) * num3;
+		float num5 = (currentVelocity.value + num * num4) * deltaTime;
+		currentVelocity.value = (currentVelocity.value - num * num5) * num3;
 		float num6 = target + (num4 + num5) * num3;
 		
 		if ((target > current) == (num6 > target)) {
 			num6 = target;
-			currentVelocity = 0f;
+			currentVelocity.value = 0f;
 		}
 		return num6;
 	}

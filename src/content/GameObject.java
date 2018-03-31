@@ -5,6 +5,7 @@ import core.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import core.Info;
+import core.exceptions.InvalidArgumentsException;
 import core.scripts.MonoBehavior;
 
 /**
@@ -41,24 +42,15 @@ public abstract class GameObject {
 
 
 	/**
-	 * Set this GameObject as the support of all its scripts.
-	 */
-	public void setSupport() {
-		for (MonoBehavior script: scripts) {
-			script.setSupport(this);
-		}
-	}
-
-
-	/**
 	 * The update method called by the GameEngine.
 	 * By default, it updates all the scripts attached to this.
 	 * For a more specific behavior, this method has to be overriden.
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 * @param info
+	 * @throws InvalidArgumentsException 
 	 */
-	public void update(long deltaTime, Info info) {
+	public void update(long deltaTime, Info info) throws InvalidArgumentsException {
 		updateAllScripts(deltaTime, info);
 	}
 
@@ -66,8 +58,9 @@ public abstract class GameObject {
 	 *
 	 * @param deltaTime : long
 	 * @param info : Info that the Launcher sends to the GameManager
+	 * @throws InvalidArgumentsException 
 	 */
-	protected final void updateAllScripts(long deltaTime, Info info) {
+	protected final void updateAllScripts(long deltaTime, Info info) throws InvalidArgumentsException {
 		for (MonoBehavior script: scripts) {
 			script.update(deltaTime, info);
 		}

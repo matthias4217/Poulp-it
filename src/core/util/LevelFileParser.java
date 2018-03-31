@@ -38,11 +38,9 @@ public class LevelFileParser {
 		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
 	}
 	
-	// The text that identifies the different informations in the txt file
+	// The texts that identifies the different informations in the txt file
 	public static final String LEVEL = "level:";
 	public static final String THEME = "theme:";
-	
-	
 	
 	
 	private String theme;
@@ -60,13 +58,13 @@ public class LevelFileParser {
 		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
-		initializeAssociations();			
+		initializeAssociations();
 		
 		Path filePath = FileSystems.getDefault().getPath(file);
 		System.out.println("Path to the level: " + filePath);
+		
 		@Deprecated
-		List<String> stringArray;
-		stringArray = Files.readAllLines(filePath);
+		List<String> stringArray = Files.readAllLines(filePath);
 
 		/*
 		 * Now the parsing begins (dramatic music)
@@ -102,7 +100,7 @@ public class LevelFileParser {
 					 */
 					System.out.println("Adding theme...");
 					theme = line.substring(THEME.length()).trim();
-					//TODO We need to check whether the theme is 'right' (=it exists)
+					// TODO We need to check whether the theme is 'right' (=it exists)
 				}
 				else if (!inLevel && line.substring(0, Math.min(LEVEL.length(), line.length())).equals(LEVEL)) {
 					/*

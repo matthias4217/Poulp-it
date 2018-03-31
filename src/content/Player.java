@@ -2,6 +2,7 @@ package content;
 
 import java.util.LinkedList;
 import javafx.scene.image.Image;
+import core.exceptions.InvalidBoxColliderException;
 import core.scripts.Controller;
 import core.scripts.PlayerScript;
 import core.util.Vector2;
@@ -31,7 +32,7 @@ public class Player extends GameObject {
 
 
 
-	public Player(Vector2 position, int maxHP, Weapon weapon) {
+	public Player(Vector2 position, int maxHP, Weapon weapon) throws InvalidBoxColliderException {
 		super(position, new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false));
 		this.maxHP = maxHP;
 		this.hp = maxHP;

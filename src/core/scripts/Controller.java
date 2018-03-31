@@ -1,6 +1,7 @@
 package core.scripts;
 
 import core.GameEngine;
+import core.exceptions.InvalidArgumentsException;
 import core.exceptions.InvalidBoxColliderException;
 import content.Layer;
 import content.GameObject;
@@ -17,19 +18,24 @@ import javafx.scene.input.KeyEvent;
  */
 //TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
-
+	
 	public Layer collisionMask;
 
+	public static float maxSlopeAngle;
+	
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
+	
+	
 
 
 
 	/**
 	 *  As mentionned in MonoBehavior, support is the object to which
 	 *  Controller is attached
+	 * @throws InvalidBoxColliderException 
 	 */
-	public Controller(GameObject support) {
+	public Controller(GameObject support) throws InvalidBoxColliderException {
 		super(support);
 		collisions = new CollisionInfo();
 	}
@@ -40,13 +46,13 @@ public class Controller extends RaycastController {
 		collisions.faceDir = 1;
 	}
 
-	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
+	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {		// Called when not related to some inputs
 		move(moveAmount, Vector2.zero, standingOnPlatform);
 	}
-	public void move(Vector2 moveAmount, Vector2 input) {
+	public void move(Vector2 moveAmount, Vector2 input) throws InvalidArgumentsException {
 		move(moveAmount, input, false);
 	}
-	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) {
+	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
 		System.out.println("Input " + input);
 		collisions.reset();
@@ -61,7 +67,7 @@ public class Controller extends RaycastController {
 			collisions.faceDir = (int) Math.signum(moveAmount.x);
 		}
 
-		horizontalCollisions (moveAmount);
+		horizontalCollisions(moveAmount);
 		if (moveAmount.y != 0) {
 			verticalCollisions(moveAmount);
 		}
@@ -74,7 +80,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void horizontalCollisions(Vector2 moveAmount) {
+	void horizontalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionX = collisions.faceDir;
 		float rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
 
@@ -100,7 +106,7 @@ public class Controller extends RaycastController {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
 
-				if (i == 0 && slopeAngle <= PlayerScript.maxSlopeAngle) {
+				if (i == 0 && slopeAngle <= maxSlopeAngle) {
 					if (collisions.descendingSlope) {
 						collisions.descendingSlope = false;
 						moveAmount = collisions.moveAmountOld;
@@ -114,7 +120,7 @@ public class Controller extends RaycastController {
 					moveAmount.x += distanceToSlopeStart * directionX;
 				}
 
-				if (!collisions.climbingSlope || slopeAngle > PlayerScript.maxSlopeAngle) {
+				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
 					rayLength = hit.getDistance();		// Reducing the lenght of the next rays casted to avoid collisions further than this one
 
@@ -129,7 +135,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void verticalCollisions(Vector2 moveAmount) {
+	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionY = Math.signum(moveAmount.y);
 		float rayLength = Math.abs(moveAmount.y) + skinWidth;		// The more we are moving, the longer the rays are
 
@@ -152,7 +158,7 @@ public class Controller extends RaycastController {
 					}
 					if (playerInput.y == -1) {
 						collisions.fallingThroughPlatform = true;
-						Invoke("resetFallingThroughPlatform",.5f);		//
+//						Invoke("resetFallingThroughPlatform",.5f);		//
 						continue;
 					}
 				}
@@ -204,11 +210,11 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void descendSlope(Vector2 moveAmount) {
+	void descendSlope(Vector2 moveAmount) throws InvalidArgumentsException {
 		RaycastHit maxSlopeHitLeft = GameEngine.raycast (raycastOrigins.bottomLeft, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 		RaycastHit maxSlopeHitRight = GameEngine.raycast (raycastOrigins.bottomRight, Vector2.down, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 
-		if (maxSlopeHitLeft ^ maxSlopeHitRight) {		// xor
+		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {		// xor
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
 			slideDownMaxSlope(maxSlopeHitRight, moveAmount);
 		}
@@ -221,7 +227,7 @@ public class Controller extends RaycastController {
 			if (hit != null) {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.up);
-				if (slopeAngle != 0 && slopeAngle <= PlayerScript.maxSlopeAngle) {
+				if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle) {
 					if (Math.signum(hit.getNormal().x) == directionX) {
 						if (hit.getDistance() - skinWidth <= Math.tan(slopeAngle * Annex.DEG2RAD) * Math.abs(moveAmount.x)) {
 							float moveDistance = Math.abs(moveAmount.x);
@@ -242,10 +248,9 @@ public class Controller extends RaycastController {
 
 	void slideDownMaxSlope(RaycastHit hit, Vector2 moveAmount) {
 
-
 		if (hit != null) {
 			float slopeAngle = Vector2.angle (hit.getNormal(), Vector2.up);
-			if (slopeAngle > PlayerScript.maxSlopeAngle) {
+			if (slopeAngle > maxSlopeAngle) {
 				moveAmount.x = (float) (Math.signum(hit.getNormal().x) * (Math.abs(moveAmount.y) - hit.getDistance()) /
 						Math.tan(slopeAngle * Annex.DEG2RAD));
 

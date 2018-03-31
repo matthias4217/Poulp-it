@@ -14,9 +14,10 @@ import javafx.scene.input.KeyEvent;
 
 public class Info {
 
+	public Vector2 playerInput = Vector2.zero;
 
-	public Vector2 playerInput = new Vector2(0,0);
-
+	
+	
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
 			switch(event.getCode()) {
@@ -45,8 +46,11 @@ public class Info {
 		}
 	};
 
+
+
 	@Override
 	public String toString() {
 		return "Info [playerInput=" + playerInput + ", eventHandler=" + eventHandler + "]";
 	}
+	
 }

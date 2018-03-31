@@ -10,7 +10,7 @@ class CollisionInfo {
 
 	public boolean climbingSlope;				// Is the Object climbing a slope
 	public boolean descendingSlope;				// Is the Object descending a slope
-	public boolean slidingDownMaxSlope;			// Indicates if the Object is currently falling from a maxAngleSlope ; @@@ On va surement le supprimer
+	public boolean slidingDownMaxSlope;			// Indicates if the Object is currently falling from a maxAngleSlope
 
 	public float slopeAngle, slopeAngleOld;		// Angle of the slope encountered and previous one
 	public Vector2 slopeNormal;					// The normal vector to the slope @@@ (en vrai je sais pas trop à quoi ça sert)
@@ -21,10 +21,8 @@ class CollisionInfo {
 
 
 	public CollisionInfo() {
-		super();
 		reset();
 	}
-
 
 
 	public void reset() {
@@ -38,6 +36,5 @@ class CollisionInfo {
 		slopeAngleOld = slopeAngle;
 		slopeAngle = 0;
 	}
-
 
 }

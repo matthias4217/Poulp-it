@@ -2,6 +2,7 @@ package core.scripts;
 
 import content.GameObject;
 import core.Info;
+import core.exceptions.InvalidArgumentsException;
 import core.exceptions.InvalidBoxColliderException;
 
 /**
@@ -26,9 +27,10 @@ public abstract class MonoBehavior {
 	
 	
 	
-	public MonoBehavior(GameObject support) {
+	public MonoBehavior(GameObject support) throws InvalidBoxColliderException {
 		/* Constructor */
 		this.support = support;
+		start();
 	}
 
 
@@ -50,15 +52,16 @@ public abstract class MonoBehavior {
 	 * Is called every frame the support GameObject is active.
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @throws InvalidArgumentsException 
 	 */
-	public void update(long deltaTime, Info info) {}
+	public void update(long deltaTime, Info info) throws InvalidArgumentsException {}
 
 	/**
 	 * Same as update but the lateUpdate methods are called after all updates are done.
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 */
-	public void lateUpdate(long deltaTime) {}
+	public void lateUpdate(long deltaTime, Info info) {}
 
 
 

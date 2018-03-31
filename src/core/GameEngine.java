@@ -11,6 +11,8 @@ import content.Layer;
 import content.Player;
 import content.Tile;
 import content.Tile.TileType;
+import core.exceptions.InvalidArgumentsException;
+import core.exceptions.InvalidBoxColliderException;
 import core.exceptions.MultipleGameEngineException;
 import core.scripts.MonoBehavior;
 import core.util.*;
@@ -49,8 +51,9 @@ public class GameEngine {
 	 * @param nbPlayers
 	 * @param levelName
 	 * @throws IOException
+	 * @throws InvalidBoxColliderException 
 	 */
-	public void init(int nbPlayers, String levelName) throws IOException {
+	public void init(int nbPlayers, String levelName) throws IOException, InvalidBoxColliderException {
 
 		// Imports the level
 		System.out.println("Beginning level importation...");
@@ -91,8 +94,9 @@ public class GameEngine {
 	 * Called each frame
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @throws InvalidArgumentsException 
 	 */
-	public void update(long deltaTime, Info info) {
+	public void update(long deltaTime, Info info) throws InvalidArgumentsException {
 		System.out.println(info);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
@@ -118,9 +122,12 @@ public class GameEngine {
 	 * @param collisionMask	The Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
+	 * 
+	 * @throws InvalidArgumentsException if direction is null
 	 */
 
-	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) {
+	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
+		
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {
@@ -134,15 +141,14 @@ public class GameEngine {
 			}
 			*/
 		}
-
-
-
-
-
-
-
-
-
+		
+		
+		
+		
+		
+		
+		
+		return null;
 	}
 
 
