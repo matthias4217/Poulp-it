@@ -1,9 +1,7 @@
 package core.scripts;
 
-import content.GameObject;
-import core.Info;
+import core.GameInformation;
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 import core.util.*;
 
 /**
@@ -15,12 +13,12 @@ import core.util.*;
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehavior {
 
-	public static float moveSpeed = 6;
+	public static float moveSpeed = 6f;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
-	public static float accelerationTimeAirborne = .2f;		// Amount of inertia while airborne (set to 0 for no inertia)
-	public static float accelerationTimeGrounded = .1f;		// Amount of inertia while grounded (set to 0 for no inertia)
+	public static float accelerationTimeAirborne = 0f;		// Amount of inertia while airborne (set to 0 for no inertia)
+	public static float accelerationTimeGrounded = 0f;		// Amount of inertia while grounded (set to 0 for no inertia)
 
 
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
@@ -45,23 +43,22 @@ public class PlayerScript extends MonoBehavior {
 
 	
 	
-	public PlayerScript(GameObject support) throws InvalidBoxColliderException {
-		super(support);
+	public PlayerScript() {
 	}
-	
-	
+
+
 	@Override
 	public void start() {
-		controller = (Controller) getSupport().scripts.get(0);		// =/
+		controller = (Controller) getSupport().scripts.get(1);		// XXX
 
-		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
+		gravity = (float) (/*-*/2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override
-	public void update(long deltaTime, Info info) throws InvalidArgumentsException {
-		setDirectionalInput(info.playerInput);
+	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+		setDirectionalInput(gameInformation.playerInput);
 		calculateVelocity (deltaTime);
 		handleWallSliding (deltaTime);
 		System.out.println("directionalInput" + directionalInput);
@@ -82,14 +79,14 @@ public class PlayerScript extends MonoBehavior {
 		directionalInput = input;
 	}
 
-	void calculateVelocity(long deltaTime) {
+	void calculateVelocity(float deltaTime) {
 		System.out.println(directionalInput);
 		float targetVelocityX = directionalInput.x * moveSpeed;
 		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;
 	}
 
-	void handleWallSliding(long deltaTime) {
+	void handleWallSliding(float deltaTime) {
 		System.out.println("truc");
 		System.out.println(controller.collisions);
 		wallDirX = (controller.collisions.left) ? -1 : 1;

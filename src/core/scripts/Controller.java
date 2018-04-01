@@ -2,13 +2,10 @@ package core.scripts;
 
 import core.GameEngine;
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 import content.Layer;
 import content.GameObject;
 import content.GameObject.Tag;
 import core.util.*;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 
 /**
  * @@@
@@ -16,7 +13,7 @@ import javafx.scene.input.KeyEvent;
  * @author Sebastian Lague, arranged by Raph
  *
  */
-//TODO make traversable platform more logical (currently, they are traversable but have side walls)
+// TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
 	
 	public Layer collisionMask;
@@ -35,13 +32,12 @@ public class Controller extends RaycastController {
 	 *  Controller is attached
 	 * @throws InvalidBoxColliderException 
 	 */
-	public Controller(GameObject support) throws InvalidBoxColliderException {
-		super(support);
+	public Controller() {
 		collisions = new CollisionInfo();
 	}
 
 	@Override
-	public void start() throws InvalidBoxColliderException {
+	public void start() {
 		super.start();
 		collisions.faceDir = 1;
 	}

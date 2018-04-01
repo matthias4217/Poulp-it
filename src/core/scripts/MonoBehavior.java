@@ -1,9 +1,8 @@
 package core.scripts;
 
 import content.GameObject;
-import core.Info;
+import core.GameInformation;
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 
 /**
  * Superclass for all scripts which can be added to a GameObject.
@@ -25,43 +24,34 @@ public abstract class MonoBehavior {
 		return support;
 	}
 	
-	
-	
-	public MonoBehavior(GameObject support) throws InvalidBoxColliderException {
-		/* Constructor */
+	public void setSupport(GameObject support) {
 		this.support = support;
-		start();
 	}
 
 
-	/*
-	 * awake is called once when the script instance is being loaded.
-	 *
-	 * awake is called before start.
-	 */
-	public void awake() throws InvalidBoxColliderException {}
+
 
 	/**
 	 * Is called after awake(), once when the script instance is being loaded.
 	 *
 	 * @throws InvalidBoxColliderException
 	 */
-	public void start() throws InvalidBoxColliderException {}
+	public void start() {}
 
 	/**
 	 * Is called every frame the support GameObject is active.
 	 *
-	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @param deltaTime		The time in seconds it took to complete the last frame
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(long deltaTime, Info info) throws InvalidArgumentsException {}
+	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {}
 
 	/**
 	 * Same as update but the lateUpdate methods are called after all updates are done.
 	 *
-	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @param deltaTime		The time in seconds it took to complete the last frame
 	 */
-	public void lateUpdate(long deltaTime, Info info) {}
+	public void lateUpdate(long deltaTime, GameInformation gameInformation) {}
 
 
 

@@ -2,9 +2,10 @@ package content;
 
 import java.util.LinkedList;
 import javafx.scene.image.Image;
-import core.exceptions.InvalidBoxColliderException;
 import core.scripts.Controller;
+import core.scripts.MonoBehavior;
 import core.scripts.PlayerScript;
+import core.util.BoxCollider;
 import core.util.Vector2;
 
 /**
@@ -17,28 +18,35 @@ import core.util.Vector2;
 public class Player extends GameObject {
 
 	static final String SPRITE_PATH = "resources/graphic/ball-of-goo-2018-02-03.png";
+	
 
-
-
+	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
+	Weapon weapon;
+	
 	private int hp;				// The current amount of HP the player has
 	public int getHp() {
 		return hp;
 	}
 
-	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
-	Weapon weapon;
-
-	LinkedList<State> states;	// List of states affecting the Player
 
 
+	/**
+	 * Private method required to bypass the annoying fact that super() has to be called first in the constructor
+	 */
+	protected static LinkedList<MonoBehavior> generateScriptsList() {
+		LinkedList<MonoBehavior> result = new LinkedList<MonoBehavior>();
+		result.add(new PlayerScript());
+		result.add(new Controller());
+		return result;
+	}	
 
-	public Player(Vector2 position, int maxHP, Weapon weapon) throws InvalidBoxColliderException {
-		super(position, new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false));
+
+	public Player(Vector2 position, int maxHP, Weapon weapon) {
+		super(position, new BoxCollider(5, 5), new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
+				Layer.DEFAULT, Tag.DEFAULT, generateScriptsList());
 		this.maxHP = maxHP;
 		this.hp = maxHP;
 		this.weapon = weapon;
-		this.scripts.add(new Controller(this));
-		this.scripts.add(new PlayerScript(this));
 	}
 
 

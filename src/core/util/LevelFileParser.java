@@ -159,7 +159,6 @@ public class LevelFileParser {
 		
 		int j;
 		
-		// Raph: ça m'a l'air moche
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {

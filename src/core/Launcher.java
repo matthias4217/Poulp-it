@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.io.IOException;
 
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 import core.exceptions.MultipleGameEngineException;
 
 /**
@@ -52,7 +51,7 @@ public class Launcher extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidBoxColliderException {
+	public void start(Stage stage) throws MultipleGameEngineException, IOException {
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
@@ -75,32 +74,40 @@ public class Launcher extends Application {
 		int nbPlayers = 1;
 		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
-		Info info = new Info();
+		GameInformation gameInformation = new GameInformation();
 
 
 		AnimationTimer timer = new AnimationTimer() {
+			long oldNow = System.nanoTime();
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
-				gc.drawImage(background, 0, 0);
-				stage.getScene().setOnKeyPressed(info.eventHandler);	// getting the player input
-				try {
-					gameEngine.update(now, info);
-				} catch (InvalidArgumentsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				graphicManager.render(gc);
+				
 
+				gc.drawImage(background, 0, 0);
+				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);	// getting the player input
+				
+				float deltaTime = (now - oldNow) * 0.000000001f;
+				System.out.println("Time elapsed (s) since the last frame: " + deltaTime);
+				oldNow = now;
+
+				try {
+					gameEngine.update(deltaTime, gameInformation);
+				} catch (InvalidArgumentsException e) {}
+				graphicManager.render(gc);
+				
+				System.out.print(System.lineSeparator());
+				
 			}
 		};
 		timer.start();
 	}
 
 
+
 	@Override
 	public void stop() {
 		/* Is called when the window is closed */
-		System.out.println("Game closed");
+		System.out.println("Game closed =(");
 
 	}
 

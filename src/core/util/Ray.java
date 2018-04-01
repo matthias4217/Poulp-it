@@ -25,7 +25,8 @@ public class Ray {
 	 */
 	public Ray(Vector2 originPoint, Vector2 direction, float length) throws InvalidArgumentsException {
 		if (direction == Vector2.zero) {
-			throw new InvalidArgumentsException("direction vector is null");
+			// ↓ Cette exception me fait chier : elle se transmet absolument partout alors qu'elle est pas importante 
+//			throw new InvalidArgumentsException("direction vector is null");
 		}
 		this.originPoint = originPoint;
 		this.endingPoint = originPoint.add(direction.normalize().multiply(length));
