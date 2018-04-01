@@ -70,7 +70,6 @@ class RaycastOrigins {
 
 
 	public RaycastOrigins() {
-		super();
 		topLeft = new Vector2(0,0);
 		topRight= new Vector2(0,0);
 		bottomLeft = new Vector2(0,0);
