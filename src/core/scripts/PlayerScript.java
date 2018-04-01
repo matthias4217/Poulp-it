@@ -43,15 +43,17 @@ public class PlayerScript extends MonoBehavior {
 
 	Controller controller;
 
-	
-	
+
+
 	public PlayerScript(GameObject support) throws InvalidBoxColliderException {
 		super(support);
 	}
-	
-	
+
+
 	@Override
 	public void start() {
+		// we should make a getComponent iterating on the components list
+		// w/ try/catch
 		controller = (Controller) getSupport().scripts.get(0);		// =/
 
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
@@ -77,7 +79,7 @@ public class PlayerScript extends MonoBehavior {
 		}
 	}
 
-	
+
 	public void setDirectionalInput (Vector2 input) {
 		directionalInput = input;
 	}
@@ -120,7 +122,7 @@ public class PlayerScript extends MonoBehavior {
 
 	}
 
-	
+
 	public void onJumpInputDown() {
 		if (wallSliding) {
 			if (wallDirX == directionalInput.x) {

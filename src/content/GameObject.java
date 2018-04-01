@@ -37,6 +37,11 @@ public abstract class GameObject {
 		this.layer = layer;
 		this.tag = tag;
 		scripts = new LinkedList<MonoBehavior>();
+		/*
+		 * first launch constructors of all scripts,
+		 * then
+		 * start all the script
+		 */
 	}
 
 
@@ -48,7 +53,7 @@ public abstract class GameObject {
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
 	 * @param info
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
 	public void update(long deltaTime, Info info) throws InvalidArgumentsException {
 		updateAllScripts(deltaTime, info);
@@ -58,7 +63,7 @@ public abstract class GameObject {
 	 *
 	 * @param deltaTime : long
 	 * @param info : Info that the Launcher sends to the GameManager
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
 	protected final void updateAllScripts(long deltaTime, Info info) throws InvalidArgumentsException {
 		for (MonoBehavior script: scripts) {

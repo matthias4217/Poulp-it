@@ -18,22 +18,22 @@ import javafx.scene.input.KeyEvent;
  */
 //TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
-	
+
 	public Layer collisionMask;
 
 	public static float maxSlopeAngle;
-	
+
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
-	
-	
+
+
 
 
 
 	/**
-	 *  As mentionned in MonoBehavior, support is the object to which
+	 *  As mentioned in MonoBehavior, support is the object to which
 	 *  Controller is attached
-	 * @throws InvalidBoxColliderException 
+	 * @throws InvalidBoxColliderException
 	 */
 	public Controller(GameObject support) throws InvalidBoxColliderException {
 		super(support);
