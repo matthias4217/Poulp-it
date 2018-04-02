@@ -82,15 +82,15 @@ public class Launcher extends Application {
 			long oldNow = System.nanoTime();
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
-				
+
 
 				gc.drawImage(background, 0, 0);
-				
+
 				gameInformation.playerInput = Vector2.zero;
 				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);		// getting the player input
 				gameInformation.playerInput = Vector2.zero;
 				System.out.println("Etat de input avant d'aller dans les objets : " + gameInformation.playerInput);		// WTF ?!
-				
+
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
@@ -99,9 +99,9 @@ public class Launcher extends Application {
 					gameEngine.update(deltaTime, gameInformation);
 				} catch (InvalidArgumentsException e) {}
 				graphicManager.render(gc);
-				
+
 				System.out.print(System.lineSeparator());
-				
+
 			}
 		};
 		timer.start();
