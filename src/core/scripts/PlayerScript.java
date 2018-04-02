@@ -34,7 +34,7 @@ public class PlayerScript extends MonoBehavior {
 	Vector2 velocity = Vector2.zero;
 	MutableFloat velocityXSmoothing = new MutableFloat(0);
 
-	Vector2 directionalInput;
+	Vector2 directionalInput = Vector2.zero;
 	boolean wallSliding;
 	float timeToWallUnstick;	// The amount of time remaining before unsticking from a wall
 	int wallDirX;	// wall on left or right
@@ -43,8 +43,7 @@ public class PlayerScript extends MonoBehavior {
 
 	
 	
-	public PlayerScript() {
-	}
+	public PlayerScript() {}
 
 
 	@Override
@@ -61,7 +60,7 @@ public class PlayerScript extends MonoBehavior {
 		setDirectionalInput(gameInformation.playerInput);
 		calculateVelocity (deltaTime);
 		handleWallSliding (deltaTime);
-		System.out.println("directionalInput" + directionalInput);
+		System.out.println("directionalInput: " + directionalInput);
 
 		controller.move(velocity.multiply(deltaTime), directionalInput);
 
@@ -76,19 +75,18 @@ public class PlayerScript extends MonoBehavior {
 
 	
 	public void setDirectionalInput (Vector2 input) {
-		directionalInput = input;
+		directionalInput = new Vector2(input.x, input.y);
 	}
 
 	void calculateVelocity(float deltaTime) {
-		System.out.println(directionalInput);
+		System.out.println("Calculating velocity");
 		float targetVelocityX = directionalInput.x * moveSpeed;
 		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;
 	}
 
 	void handleWallSliding(float deltaTime) {
-		System.out.println("truc");
-		System.out.println(controller.collisions);
+		System.out.println("Handling wall sliding");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {

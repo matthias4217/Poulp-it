@@ -106,7 +106,8 @@ public class GameEngine {
 	 * @throws InvalidArgumentsException 
 	 */
 	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		System.out.println(gameInformation);
+		
+		System.out.println("Current GameInformation:" + gameInformation);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
 			gameManager.apply(deltaTime, gameInformation);

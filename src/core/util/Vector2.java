@@ -10,7 +10,7 @@ package core.util;
  * 
  */
 
-// @TODO Organiser cette classe et la documenter correctement
+// TODO Organiser cette classe et la documenter correctement
 public class Vector2 {
 
 	public float x;

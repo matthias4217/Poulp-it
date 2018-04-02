@@ -32,26 +32,23 @@ public class GameInformation {
 		public void handle(KeyEvent event) {
 			switch(event.getCode()) {
 			case LEFT:
-				playerInput.x = -1;
-				playerInput.y = 0;
+				playerInput = Vector2.left;
 				break;
 			case RIGHT:
-				playerInput.x = 1;
-				playerInput.y = 0;
+				playerInput = Vector2.right;
 				break;
 			case UP:
-				playerInput.x = 0;
-				playerInput.y = 1;
+				playerInput = Vector2.up;
 				break;
 			case DOWN:
-				playerInput.x = 0;
-				playerInput.y = -1;
+				playerInput = Vector2.down;
 				break;
 			case SPACE:
-				playerInput.x = -1;
-				playerInput.y = 0;
+
 				break;
-			default:	break;
+			default:
+
+				break;
 			}
 		}
 	};

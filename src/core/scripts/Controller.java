@@ -50,7 +50,7 @@ public class Controller extends RaycastController {
 	}
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
-		System.out.println("Input " + input);
+		System.out.println("input " + input);
 		collisions.reset();
 		collisions.moveAmountOld = moveAmount;
 		playerInput = input;
@@ -141,7 +141,7 @@ public class Controller extends RaycastController {
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
 
-			//Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
+			// Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
 			if (hit != null) {		// If something was hit
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.

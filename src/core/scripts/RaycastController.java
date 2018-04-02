@@ -41,8 +41,6 @@ public class RaycastController extends MonoBehavior {
 		}
 
 		// Calculating rays
-		System.out.println("Le support de ce script est : " + getSupport());
-		System.out.println("Collider is null ? " + (collider == null));
 		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
 		horizontalRaySpacing = (collider.getHeight() - 2*skinWidth) / (horizontalRayCount - 1);
 		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);

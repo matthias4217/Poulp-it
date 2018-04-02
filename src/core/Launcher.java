@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
+import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
@@ -84,10 +85,14 @@ public class Launcher extends Application {
 				
 
 				gc.drawImage(background, 0, 0);
-				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);	// getting the player input
+				
+				gameInformation.playerInput = Vector2.zero;
+				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);		// getting the player input
+				gameInformation.playerInput = Vector2.zero;
+				System.out.println("Etat de input avant d'aller dans les objets : " + gameInformation.playerInput);		// WTF ?!
 				
 				float deltaTime = (now - oldNow) * 0.000000001f;
-				System.out.println("Time elapsed (s) since the last frame: " + deltaTime);
+				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
 
 				try {
