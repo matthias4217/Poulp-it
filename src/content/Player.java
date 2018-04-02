@@ -3,7 +3,7 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.image.Image;
 import core.scripts.Controller;
-import core.scripts.MonoBehavior;
+import core.scripts.MonoBehaviour;
 import core.scripts.PlayerScript;
 import core.util.BoxCollider;
 import core.util.Vector2;
@@ -33,8 +33,8 @@ public class Player extends GameObject {
 	/**
 	 * Private method required to bypass the annoying fact that super() has to be called first in the constructor
 	 */
-	protected static LinkedList<MonoBehavior> generateScriptsList() {
-		LinkedList<MonoBehavior> result = new LinkedList<MonoBehavior>();
+	protected static LinkedList<MonoBehaviour> generateScriptsList() {
+		LinkedList<MonoBehaviour> result = new LinkedList<MonoBehaviour>();
 		result.add(new PlayerScript());
 		result.add(new Controller());
 		return result;

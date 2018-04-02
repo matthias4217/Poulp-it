@@ -88,7 +88,7 @@ public class Launcher extends Application {
 
 				gameInformation.playerInput = Vector2.zero;
 				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);		// getting the player input
-				gameInformation.playerInput = Vector2.zero;
+//				gameInformation.playerInput = Vector2.zero;
 				System.out.println("Etat de input avant d'aller dans les objets : " + gameInformation.playerInput);		// WTF ?!
 
 				float deltaTime = (now - oldNow) * 0.000000001f;

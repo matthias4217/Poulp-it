@@ -11,7 +11,7 @@ import core.util.*;
  *
  */
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
-public class PlayerScript extends MonoBehavior {
+public class PlayerScript extends MonoBehaviour {
 
 	public static float moveSpeed = 6f;
 	public static float maxJumpHeight = 4;
@@ -81,7 +81,8 @@ public class PlayerScript extends MonoBehavior {
 	void calculateVelocity(float deltaTime) {
 		System.out.println("Calculating velocity");
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+//		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = targetVelocityX;
 		velocity.y += gravity * deltaTime;
 	}
 

@@ -12,7 +12,7 @@ import core.exceptions.InvalidArgumentsException;
  * Inspired by the functionning of the Unity Engine.
  *
  */
-public abstract class MonoBehavior {
+public abstract class MonoBehaviour {
 
 	/**
 	 * The GameObject to which the script is attached
@@ -32,9 +32,8 @@ public abstract class MonoBehavior {
 
 
 	/**
-	 * Is called after awake(), once when the script instance is being loaded.
-	 *
-	 * @throws InvalidBoxColliderException
+	 * Is called once when a GameObject with this script is instanciated
+	 * 
 	 */
 	public void start() {}
 

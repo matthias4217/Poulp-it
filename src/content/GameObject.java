@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import core.GameInformation;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
-import core.scripts.MonoBehavior;
+import core.scripts.MonoBehaviour;
 
 /**
  * Superclass for any game element in a scene which has a spatial position and is renderable.
@@ -47,7 +47,7 @@ public abstract class GameObject {
 	/**
 	 * The list of scripts attached to the GameObject which describes its behavior
 	 */
-	public LinkedList<MonoBehavior> scripts;
+	public LinkedList<MonoBehaviour> scripts;
 
 
 	/**
@@ -57,8 +57,8 @@ public abstract class GameObject {
 	 * 
 	 * @return		an empty list by default (if not overridden)
 	 */
-	protected static LinkedList<MonoBehavior> generateScriptsList() {
-		return new LinkedList<MonoBehavior>();
+	protected static LinkedList<MonoBehaviour> generateScriptsList() {
+		return new LinkedList<MonoBehaviour>();
 	}
 	
 	
@@ -74,7 +74,7 @@ public abstract class GameObject {
 	 * @param tag
 	 * @param scripts		The list of script attached to this GameObject
 	 */
-	public GameObject(Vector2 position, Collider collider, Image sprite, Layer layer, Tag tag, LinkedList<MonoBehavior> scripts) {
+	public GameObject(Vector2 position, Collider collider, Image sprite, Layer layer, Tag tag, LinkedList<MonoBehaviour> scripts) {
 		this.position = position;
 		this.collider = collider;
 		this.sprite = sprite;
@@ -83,12 +83,12 @@ public abstract class GameObject {
 		this.scripts = scripts;
 		
 		// Setting the right support reference for each script
-		for (MonoBehavior script: this.scripts) {
+		for (MonoBehaviour script: this.scripts) {
 			script.setSupport(this);
 		}
 		
 		// Starting all scripts
-		for (MonoBehavior script: this.scripts) {
+		for (MonoBehaviour script: this.scripts) {
 			script.start();
 		}
 		
@@ -116,7 +116,7 @@ public abstract class GameObject {
 	 * @throws InvalidArgumentsException 
 	 */
 	protected final void updateAllScripts(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		for (MonoBehavior script: scripts) {
+		for (MonoBehaviour script: scripts) {
 			script.update(deltaTime, gameInformation);
 		}
 	}
