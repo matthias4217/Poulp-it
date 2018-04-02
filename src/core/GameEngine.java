@@ -9,6 +9,7 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.Player;
+import content.Tile;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -28,17 +29,19 @@ public class GameEngine {
 	 * The list of all active GameManagers currently on the scene
 	 */
 	static LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
-	
+
 	/**
 	 * The list of all active GameObjects currently on the scene
 	 */
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
-	
+
 	/**
 	 * A convenient access to the players (since the array contains references)
 	 */
 	Player[] players;
-	
+
+	static Tile[] tiles;
+
 	/**
 	 * A map which associates to each tile what GameObject is there
 	 */
@@ -77,7 +80,7 @@ public class GameEngine {
 
 		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
-//		tiles = level.tiles;
+		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
 
 
