@@ -32,7 +32,7 @@ public class CollisionInfo {
 		climbingSlope = false;
 		descendingSlope = false;
 		slidingDownMaxSlope = false;
-		slopeNormal = Vector2.zero;
+		slopeNormal = Vector2.ZERO();
 
 		slopeAngleOld = slopeAngle;
 		slopeAngle = 0;

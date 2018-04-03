@@ -25,29 +25,29 @@ public class GameInformation {
 	/**
 	 * The last input of the player
 	 */
-	public Vector2 playerInput = Vector2.zero;
+	public Vector2 playerInput = Vector2.ZERO();
 
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
 			switch(event.getCode()) {
 			case LEFT:
-				playerInput = Vector2.left;
+				playerInput = Vector2.LEFT();
 				break;
 			case RIGHT:
-				playerInput = Vector2.right;
+				playerInput = Vector2.RIGHT();
 				break;
 			case UP:
-				playerInput = Vector2.up;
+				playerInput = Vector2.UP();
 				break;
 			case DOWN:
-				playerInput = Vector2.down;
+				playerInput = Vector2.DOWN();
 				break;
 			case SPACE:
 
 				break;
 			default:
-
+				playerInput = Vector2.ZERO();
 				break;
 			}
 		}

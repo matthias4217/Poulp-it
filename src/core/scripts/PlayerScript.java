@@ -13,7 +13,7 @@ import core.util.*;
 //@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehaviour {
 
-	public static float moveSpeed = 6f;
+	public static float moveSpeed = 120f;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
@@ -31,10 +31,10 @@ public class PlayerScript extends MonoBehaviour {
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
-	Vector2 velocity = Vector2.zero;
+	Vector2 velocity = Vector2.ZERO();
 	MutableFloat velocityXSmoothing = new MutableFloat(0);
 
-	Vector2 directionalInput = Vector2.zero;
+	Vector2 directionalInput = Vector2.ZERO();
 	boolean wallSliding;
 	float timeToWallUnstick;	// The amount of time remaining before unsticking from a wall
 	int wallDirX;	// wall on left or right
@@ -75,7 +75,7 @@ public class PlayerScript extends MonoBehaviour {
 
 
 	public void setDirectionalInput (Vector2 input) {
-		directionalInput = new Vector2(input.x, input.y);
+		directionalInput = new Vector2(input.x, input.y);		// XXX
 	}
 
 	void calculateVelocity(float deltaTime) {

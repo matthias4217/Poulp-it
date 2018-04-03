@@ -86,11 +86,11 @@ public class Vector2 {
 	
 	
 	
-	public static final Vector2 zero	= new Vector2(0, 0);
-	public static final Vector2 up		= new Vector2(0, 1);
-	public static final Vector2 down	= new Vector2(0, -1);
-	public static final Vector2 left	= new Vector2(-1, 0);
-	public static final Vector2 right	= new Vector2(1, 0);
+	public static final Vector2 ZERO()	{	return new Vector2(0, 0);	}
+	public static final Vector2 UP()	{	return new Vector2(0, 1);	}
+	public static final Vector2 DOWN()	{	return new Vector2(0, -1);	}
+	public static final Vector2 LEFT()	{	return new Vector2(-1, 0);	}
+	public static final Vector2 RIGHT()	{	return new Vector2(1, 0);	}
 	
 	
 	

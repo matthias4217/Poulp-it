@@ -90,7 +90,7 @@ public abstract class GameObject {
 		for (MonoBehaviour script: this.scripts) {
 			script.start();
 		}
-		
+
 	}
 
 

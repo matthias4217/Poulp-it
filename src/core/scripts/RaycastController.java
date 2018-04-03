@@ -52,10 +52,11 @@ public class RaycastController extends MonoBehaviour {
 		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
 		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);
 		System.out.println("collider " + collider);
-		raycastOrigins.bottomLeft = collider.getBottomLeft().add(shift1);;
-		raycastOrigins.bottomRight = collider.getBottomRight().add(shift2.reverse());
 		raycastOrigins.topLeft = collider.getTopLeft().add(shift2);
 		raycastOrigins.topRight = collider.getTopRight().add(shift1.reverse());
+		raycastOrigins.bottomLeft = collider.getBottomLeft().add(shift1);;
+		raycastOrigins.bottomRight = collider.getBottomRight().add(shift2.reverse());
+		System.out.println(raycastOrigins);
 	}
 
 }
@@ -69,8 +70,13 @@ class RaycastOrigins {
 	public Vector2 bottomLeft, bottomRight;
 
 	public RaycastOrigins() {
-		topLeft = topRight = Vector2.zero;
-		bottomLeft = bottomRight = Vector2.zero;
+		topLeft = topRight = Vector2.ZERO();
+		bottomLeft = bottomRight = Vector2.ZERO();
+	}
+	
+	
+	@Override public String toString() {
+		return "RaycastOrigins[topLeft" + topLeft + "; topRight"+ topRight + "; bottomLeft" + bottomLeft + "; bottomRight" + bottomRight + "]";
 	}
 
 }

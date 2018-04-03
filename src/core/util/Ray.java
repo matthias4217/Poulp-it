@@ -24,7 +24,7 @@ public class Ray {
 	 * @throws InvalidArgumentsException if direction is null
 	 */
 	public Ray(Vector2 originPoint, Vector2 direction, float length) throws InvalidArgumentsException {
-		if (direction == Vector2.zero) {
+		if (direction == Vector2.ZERO()) {
 			// ↓ Cette exception me fait chier : elle se transmet absolument partout alors qu'elle est pas importante 
 //			throw new InvalidArgumentsException("direction vector is null");
 		}
