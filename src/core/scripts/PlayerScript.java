@@ -73,7 +73,7 @@ public class PlayerScript extends MonoBehaviour {
 		}
 	}
 
-	
+
 	public void setDirectionalInput (Vector2 input) {
 		directionalInput = new Vector2(input.x, input.y);
 	}
@@ -81,7 +81,7 @@ public class PlayerScript extends MonoBehaviour {
 	void calculateVelocity(float deltaTime) {
 		System.out.println("Calculating velocity");
 		float targetVelocityX = directionalInput.x * moveSpeed;
-//		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
 		velocity.x = targetVelocityX;
 		velocity.y += gravity * deltaTime;
 	}

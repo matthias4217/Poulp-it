@@ -27,7 +27,7 @@ public class LevelFileParser {
 	 * The HashMap used to link the txt file to the game representation
 	 */
 	private static HashMap<Character, TileType> associations;
-	
+
 	private void initializeAssociations() {
 		associations = new HashMap<Character, TileType>();
 		associations.put(' ', TileType.EMPTY);
@@ -37,7 +37,7 @@ public class LevelFileParser {
 		associations.put('u', TileType.TRIANGLE_TOP_RIGHT);
 		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
 	}
-	
+
 	// The texts that identifies the different informations in the txt file
 	public static final String LEVEL = "level:";
 	public static final String THEME = "theme:";
@@ -45,9 +45,9 @@ public class LevelFileParser {
 	
 	private String theme;
 	public InfoTile[][] levelGrid;
-	
-	
-	
+
+
+
 	/**
 	 * 
 	 * @param file

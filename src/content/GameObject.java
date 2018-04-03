@@ -60,10 +60,9 @@ public abstract class GameObject {
 	protected static LinkedList<MonoBehaviour> generateScriptsList() {
 		return new LinkedList<MonoBehaviour>();
 	}
-	
-	
-	
-	
+
+
+
 	/**
 	 * Standard constructor for a GameObject.
 	 * All scripts are initialized at the end of this instanciation.
@@ -81,7 +80,7 @@ public abstract class GameObject {
 		this.layer = layer;
 		this.tag = tag;
 		this.scripts = scripts;
-		
+
 		// Setting the right support reference for each script
 		for (MonoBehaviour script: this.scripts) {
 			script.setSupport(this);

@@ -16,12 +16,12 @@ import content.Tile;
  *
  */
 public class GraphicManager {
-	
-	
+
+
 	// @@@ TODO
-	
-	
-	
+
+
+
 	/**
 	 * Render the game on the GraphicsContext gc.
 	 * 
@@ -29,14 +29,14 @@ public class GraphicManager {
 	 */
 	public void render(GraphicsContext gc) {
 
-		
+
 		Tile[] tiles = GameEngine.tiles;
 		for (Tile tile: tiles) {
 			// System.out.println("Rendering tile " + tile);
 			tile.render(gc);
 		}
 
-		
+
 
 		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;		//
 		for (GameObject gameObject: allGameObjects) {

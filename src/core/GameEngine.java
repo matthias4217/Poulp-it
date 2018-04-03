@@ -40,6 +40,7 @@ public class GameEngine {
 	 */
 	Player[] players;
 
+	@Deprecated
 	static Tile[] tiles;
 
 	/**

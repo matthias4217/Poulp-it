@@ -38,7 +38,7 @@ public class Player extends GameObject {
 		result.add(new PlayerScript());
 		result.add(new Controller());
 		return result;
-	}	
+	}
 
 
 	public Player(Vector2 position, int maxHP, Weapon weapon) {
