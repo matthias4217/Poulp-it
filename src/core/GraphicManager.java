@@ -1,11 +1,11 @@
 package core;
 
 import javafx.scene.canvas.GraphicsContext;
+import levels.Tile;
 
 import java.util.LinkedList;
 
 import content.GameObject;
-import content.Tile;
 
 /**
  * Client

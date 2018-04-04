@@ -2,6 +2,7 @@ package content;
 
 import java.util.LinkedList;
 import javafx.scene.image.Image;
+import levels.Tile;
 import core.scripts.Controller;
 import core.scripts.MonoBehaviour;
 import core.scripts.PlayerScript;
