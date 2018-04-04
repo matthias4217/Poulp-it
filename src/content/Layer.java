@@ -1,7 +1,7 @@
 package content;
 
 /**
- * The different layers a GameObject can be on.
+ * The different layers GameObjects can be on.
  * Especially used for collisions
  * 
  * @author Raph
@@ -9,8 +9,7 @@ package content;
  */
 public enum Layer {
 	DEFAULT,
-		
-	
-	
-	
+
+
+
 }

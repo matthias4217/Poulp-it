@@ -2,9 +2,6 @@ package core;
 
 import javafx.scene.canvas.GraphicsContext;
 import levels.Tile;
-
-import java.util.LinkedList;
-
 import content.GameObject;
 
 /**
@@ -25,25 +22,25 @@ public class GraphicManager {
 	/**
 	 * Render the game on the GraphicsContext gc.
 	 *
-	 * @param gc
+	 * @param gc - the GraphicContext on which the rendering will be done
 	 */
 	public void render(GraphicsContext gc) {
 
+		System.out.println("Rendering...");
 
-		Tile[] tiles = GameEngine.level.tileList;
-		for (Tile tile: tiles) {
-			// System.out.println("Rendering tile " + tile);
+		for (Tile tile: GameEngine.level.tileList) {		// XXX
 			tile.render(gc);
 		}
 
-
-
-		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;		//
-		for (GameObject gameObject: allGameObjects) {
-			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
+		for (GameObject gameObject: GameEngine.allGameObjects) {		// XXX
+			System.out.println("Rendering GameObject " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc);
 		}
 
+
+
 	}
+
+
 
 }

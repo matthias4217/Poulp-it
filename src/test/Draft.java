@@ -12,11 +12,24 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		testAngle();
+		System.out.println(test(1, 2, 5));
+		
+		
 		
 
 	}
 
+	public static int test(int... entiers) {
+		int result = 0;
+		for (int x: entiers) {
+			result += x;
+		}
+		return result;
+	}
+	
+	
+	
+	
 	
 	public static void testIntersection() {
 		Vector2 A = new Vector2(2, 2);

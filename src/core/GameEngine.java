@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
@@ -12,13 +11,11 @@ import content.Player;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
-import levels.InfoTile;
 import levels.Level;
-import levels.OldLevel;
-import levels.Tile;
 
 /**
- * Manages the flow of the game; one instance.
+ * Manages the flow of the game; one instance, located on the server.
+ * TODO more precise and detailed description
  *
  * @author Raph
  *
@@ -48,6 +45,7 @@ public class GameEngine {
 	/**
 	 * A map which associates to each tile what GameObject is there
 	 */
+	@Deprecated
 	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
@@ -64,7 +62,7 @@ public class GameEngine {
 
 
 	/**
-	 * Initialize the game
+	 * Initializes the game
 	 *
 	 * @param nbPlayers
 	 * @param levelName
@@ -79,16 +77,16 @@ public class GameEngine {
 		//InfoTile[][] grid = level.infoTileMatrix;
 
 
-
-		// Setting up the players array and adding the Players to the allGameObjects list
+		// Instanciating players and adding them to the players array
+		System.out.println("Instanciating players...");
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2(50*(i+1), 100*(i+1));
-			Player playerI = new Player(spawnPosition, 10, null);
+			Vector2 spawnPosition = new Vector2(500*(i+1), 50*(i+1));
+			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
-//			System.out.println("Added player at " + playerI.position);
 		}
+		System.out.println("Players instanciation finished");
 
 
 		// ----
@@ -98,22 +96,26 @@ public class GameEngine {
 
 
 	/**
-	 * Called each frame
+	 * This method is called each frame of the game and updates all game elements.
+	 * This also updates the GameInformation object in order to then transmit the new state of the game to the clients.
 	 *
-	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
-	 * @throws InvalidArgumentsException
+	 * @param deltaTime 		- the time in seconds it took to complete the last frame
+	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
+	 * @param gameInformation	- the current state of the game
+	 *
 	 */
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) throws InvalidArgumentsException {
 
-		System.out.println("Current GameInformation:" + gameInformation);
+		System.out.println("Current GameInformation:" + playerInput);
+
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, gameInformation);
+			gameManager.apply(deltaTime, playerInput);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, gameInformation);
+			gameObject.update(deltaTime, playerInput);
 		}
 
 	}
@@ -121,13 +123,14 @@ public class GameEngine {
 
 
 
+
 	/**
-	 * Cast a ray starting which can detect collisions
+	 * Casts a ray which can detect collisions
 	 *
-	 * @param rayOrigin		The origin of the ray in absolute coordinates
-	 * @param direction		The direction the ray is cast
-	 * @param length		The length of the ray
-	 * @param collisionMask	The Layer on which collisions will be detected
+	 * @param rayOrigin		- the origin of the ray in absolute coordinates
+	 * @param direction		- the direction in which the ray is cast
+	 * @param length		- the length of the ray
+	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 *
@@ -135,7 +138,7 @@ public class GameEngine {
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
-
+		// TODO
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {
@@ -158,6 +161,7 @@ public class GameEngine {
 
 		return null;
 	}
+
 
 
 }

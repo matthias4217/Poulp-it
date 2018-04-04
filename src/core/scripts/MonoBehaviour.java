@@ -1,15 +1,15 @@
 package core.scripts;
 
 import content.GameObject;
-import core.GameInformation;
+import core.PlayerInput;
+import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 
 /**
  * Superclass for all scripts which can be added to a GameObject.
- * A script describes the behavior of a GameObject and is updated each frame
+ * A script describes the behaviour of a GameObject and is updated each frame.
  *
- * @author Raph
- * Inspired by the functionning of the Unity Engine.
+ * @author Raph, inspired by the functionning of the Unity Engine.
  *
  */
 public abstract class MonoBehaviour {
@@ -17,40 +17,34 @@ public abstract class MonoBehaviour {
 	/**
 	 * The GameObject to which the script is attached
 	 */
-
-	private GameObject support;
-
-	public GameObject getSupport() {
-		return support;
-	}
-	
-	public void setSupport(GameObject support) {
-		this.support = support;
-	}
+	public GameObject support;
 
 
 
 
 	/**
-	 * Is called once when a GameObject with this script is instanciated
+	 * Is called once when a GameObject with this script is instanciated.
 	 * 
 	 */
 	public void start() {}
 
+
 	/**
 	 * Is called every frame the support GameObject is active.
 	 *
-	 * @param deltaTime		The time in seconds it took to complete the last frame
+	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {}
+	public void update(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {}
+
 
 	/**
 	 * Same as update but the lateUpdate methods are called after all updates are done.
 	 *
-	 * @param deltaTime		The time in seconds it took to complete the last frame
+	 * @param deltaTime- the time in seconds it took to complete the last frame
 	 */
-	public void lateUpdate(long deltaTime, GameInformation gameInformation) {}
+	@Unused
+	public void lateUpdate(long deltaTime, PlayerInput gameInformation) {}
 
 
 

@@ -1,19 +1,19 @@
 package core.scripts;
 
-import core.GameInformation;
-import core.exceptions.InvalidArgumentsException;
+import core.PlayerInput;
 import core.util.*;
+import core.exceptions.InvalidArgumentsException;
 
 /**
- *
+ * TODO document here
  *
  * @author Sebastian Lague, arranged by Raph
  *
  */
-//@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
+// TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehaviour {
 
-	public static float moveSpeed = 6f;
+	public static float moveSpeed = 60f;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
@@ -31,10 +31,9 @@ public class PlayerScript extends MonoBehaviour {
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
-	Vector2 velocity = Vector2.zero;
-	MutableFloat velocityXSmoothing = new MutableFloat(0);
+	Vector2 velocity = Vector2.ZERO();
+	MutableFloat velocityXSmoothing = new MutableFloat(0f);
 
-	Vector2 directionalInput = Vector2.zero;
 	boolean wallSliding;
 	float timeToWallUnstick;	// The amount of time remaining before unsticking from a wall
 	int wallDirX;	// wall on left or right
@@ -47,7 +46,7 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void start() {
-		controller = (Controller) getSupport().scripts.get(1);		// XXX
+		controller = (Controller) support.scripts.get(1);		// XXX
 
 		gravity = (float) (/*-*/2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
@@ -55,17 +54,16 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		setDirectionalInput(gameInformation.playerInput);
-		calculateVelocity (deltaTime);
-		handleWallSliding (deltaTime);
-		System.out.println("directionalInput: " + directionalInput);
+	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+		calculateVelocity (deltaTime, playerInput.directionnalInput);
+		handleWallSliding (deltaTime, playerInput.directionnalInput);
 
-		controller.move(velocity.multiply(deltaTime), directionalInput);
+		controller.move(velocity.multiply(deltaTime), playerInput.directionnalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
-				velocity.y += controller.collisions.slopeNormal.y * -gravity * deltaTime;		// modulation of the vertical acceleration according to the slope
+				// Modulation of the vertical acceleration according to the slope
+				velocity.y += controller.collisions.slopeNormal.y * -gravity * deltaTime;
 			} else {
 				velocity.y = 0;		// To avoid "accumulating" gravity
 			}
@@ -73,20 +71,18 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 
-	public void setDirectionalInput (Vector2 input) {
-		directionalInput = new Vector2(input.x, input.y);
-	}
-
-	void calculateVelocity(float deltaTime) {
-		System.out.println("Calculating velocity");
+	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
+		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
-		velocity.x = targetVelocityX;
+		//
+//		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = targetVelocityX;		// Currently, we immediately reach the targetvelocity (no inertiaa then)
+		//
 		velocity.y += gravity * deltaTime;
 	}
 
-	void handleWallSliding(float deltaTime) {
-		System.out.println("Handling wall sliding");
+	void handleWallSliding(float deltaTime, Vector2 directionalInput) {
+		System.out.println("Handling wall sliding...");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {

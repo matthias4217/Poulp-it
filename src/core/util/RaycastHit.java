@@ -10,20 +10,32 @@ import content.GameObject;
  */
 public class RaycastHit {
 
-	private GameObject gameObjectHit;	// A reference to the GameObject whose collider was hit
+	/**
+	 * A reference to the GameObject which was hit; null if what was hit isn't a GameObject
+	 */
+	private GameObject gameObjectHit;
 
-	// ↑ not yet correct because tile can be detected too
+	/**
+	 * The distance from the ray origin to the impact point
+	 */
+	private float distance;
 
-	private float distance;				// The distance from the ray origin to the impact point
-	private Vector2 normal;				// The normal Vector2 of the line hit
+	/**
+	 * The normal Vector2 of the line hit
+	 */
+	private Vector2 normal;
+
 	//? Vector2 impactPoint;
+
 
 	public GameObject getGameObjectHit() {
 		return gameObjectHit;
 	}
+	
 	public float getDistance() {
 		return distance;
 	}
+	
 	public Vector2 getNormal() {
 		return normal;
 	}
@@ -31,7 +43,7 @@ public class RaycastHit {
 
 
 	public RaycastHit() {
-		// @@@ TODO : Constructor
+		// TODO : Constructor
 	}
 
 
