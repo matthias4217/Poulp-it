@@ -1,19 +1,19 @@
 package core.scripts;
 
 import core.GameInformation;
-import core.exceptions.InvalidArgumentsException;
 import core.util.*;
+import core.exceptions.InvalidArgumentsException;
 
 /**
- *
+ * TODO
  *
  * @author Sebastian Lague, arranged by Raph
  *
  */
-//@TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
+// TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehaviour {
 
-	public static float moveSpeed = 120f;
+	public static float moveSpeed = 60f;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
@@ -32,7 +32,7 @@ public class PlayerScript extends MonoBehaviour {
 	float maxJumpVelocity;
 	float minJumpVelocity;
 	Vector2 velocity = Vector2.ZERO();
-	MutableFloat velocityXSmoothing = new MutableFloat(0);
+	MutableFloat velocityXSmoothing = new MutableFloat(0f);
 
 	Vector2 directionalInput = Vector2.ZERO();
 	boolean wallSliding;
@@ -48,7 +48,7 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void start() {
-		controller = (Controller) getSupport().scripts.get(1);		// XXX
+		controller = (Controller) support.scripts.get(1);		// XXX
 
 		gravity = (float) (/*-*/2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
@@ -60,13 +60,13 @@ public class PlayerScript extends MonoBehaviour {
 		setDirectionalInput(gameInformation.playerInput);
 		calculateVelocity (deltaTime);
 		handleWallSliding (deltaTime);
-		System.out.println("directionalInput: " + directionalInput);
 
 		controller.move(velocity.multiply(deltaTime), directionalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
-				velocity.y += controller.collisions.slopeNormal.y * -gravity * deltaTime;		// modulation of the vertical acceleration according to the slope
+				// Modulation of the vertical acceleration according to the slope
+				velocity.y += controller.collisions.slopeNormal.y * -gravity * deltaTime;
 			} else {
 				velocity.y = 0;		// To avoid "accumulating" gravity
 			}
@@ -75,19 +75,21 @@ public class PlayerScript extends MonoBehaviour {
 
 
 	public void setDirectionalInput (Vector2 input) {
-		directionalInput = new Vector2(input.x, input.y);		// XXX
+		directionalInput = input;
 	}
 
 	void calculateVelocity(float deltaTime) {
-		System.out.println("Calculating velocity");
+		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
-		velocity.x = targetVelocityX;
+		//
+//		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = targetVelocityX;		// Currently, we immediately reach the targetvelocity (no inertiaa then)
+		//
 		velocity.y += gravity * deltaTime;
 	}
 
 	void handleWallSliding(float deltaTime) {
-		System.out.println("Handling wall sliding");
+		System.out.println("Handling wall sliding...");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
@@ -116,7 +118,7 @@ public class PlayerScript extends MonoBehaviour {
 
 	}
 
-	
+
 	public void onJumpInputDown() {
 		if (wallSliding) {
 			if (wallDirX == directionalInput.x) {

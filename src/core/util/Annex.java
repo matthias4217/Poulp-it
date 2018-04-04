@@ -18,28 +18,39 @@ public final class Annex {
 	/* METHODS */
 
 	/**
+	 * Clamp a value between a minimum float and a maximum float value. 
+	 * 
+	 * @param value
+	 * @param a
+	 * @param b
 	 * @return value clamped between a and b
 	 */
 	public static float clamp(float value, float a, float b) {
 		return Math.max(a, Math.min(b, value));	
 	}
 
+
 	/**
-	 * Indicates if the line segments [A; B] and [C; D] do intersect
+	 * Indicates if the line segments [A; B] and [C; D] do intersect.
 	 * TODO gérer le cas de colinéarité
 	 */
 	public static boolean checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
 		/* Explication:
 		 * When ABC not aligned, if CD = w1.CA + w2.CB, then
-		 * it is true iff (w1+w2 >= 1 && w1, w2 >= 0)
-		 * */		
+		 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
+		 */
 		float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
 				((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
-		System.out.println(w1);
 		float w2 = (D.y - C.y - w1*(B.y - C.y)) /
 				(A.y - C.y);
-		System.out.println(w2);
 		return w1>=0 && w2>=0 && w1+w2>=1;
+		
+		
+		/* 
+		 * Si jamais le cas colinéaire n'est pas pris en compte pour les collision, alors
+		 * bloc try qui échouera si colinéarité
+		 * et bloc catch qui dit osef
+		 */
 	}
 
 
@@ -96,7 +107,9 @@ public final class Annex {
 	}
 
 
-	
+
+
+
 	/**
 	 * https://en.wikipedia.org/wiki/Smoothstep
 	 */
@@ -104,18 +117,24 @@ public final class Annex {
 		x = clamp(x, 0, 1);
 		return x * x * (3 - 2*x);
 	}
-	
+
 	public static float smootherStep(float x) {
 		x = clamp(x, 0, 1);
 		return x * x * x * (x * (6*x - 15) + 10);
 	}
 
+
 	/**
-	 * The function used by UnityEngine
+	 * Gradually changes a value over time.
 	 * 
-	 * @author Not me
+	 * @param current			- the current state of the value
+	 * @param target			- the target value
+	 * @param currentVelocity	- a mutable float keeping track of the current progression
+	 * @param smoothTime		- the approximative time it will take to reach the target
+	 * @param deltaTime			- the time since the last call of this function
+	 * 
+	 * @author Not me, taken from the Unity Engine
 	 */
-	@Deprecated
 	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
 			float smoothTime, float deltaTime) {
 

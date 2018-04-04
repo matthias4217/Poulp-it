@@ -22,6 +22,7 @@ public class Vector2 {
 	}
 
 
+	// DÉGUEU, mais je vois pas comment faire autrement =|
 	public static final Vector2 ZERO()	{	return new Vector2(0, 0);	}
 	public static final Vector2 UP()	{	return new Vector2(0, 1);	}
 	public static final Vector2 DOWN()	{	return new Vector2(0, -1);	}
@@ -48,7 +49,7 @@ public class Vector2 {
 
 	/**
 	 * Applies a translation to this Vector2 (in-place).
-	 * @param translation
+	 * @param translation - the translation to apply to thisVector2
 	 */
 	public void translate(Vector2 translation) {
 		this.x += translation.x;
@@ -121,10 +122,10 @@ public class Vector2 {
 		Vector2 toCompareVector = (Vector2) toCompare;
 		return (toCompareVector.x == this.x && toCompareVector.y == this.y);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
-	
+
 }

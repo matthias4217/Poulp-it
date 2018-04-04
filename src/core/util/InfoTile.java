@@ -1,12 +1,11 @@
 package core.util;
 
 import java.util.LinkedList;
-
 import content.Tile.TileType;
 import content.GameObject;
 
 /**
- * @@@
+ * This class stores the information about a tile
  * 
  * @author Raph
  *

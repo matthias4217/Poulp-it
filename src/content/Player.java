@@ -1,12 +1,11 @@
 package content;
 
-import java.util.LinkedList;
 import javafx.scene.image.Image;
-import core.scripts.Controller;
-import core.scripts.MonoBehaviour;
-import core.scripts.PlayerScript;
 import core.util.BoxCollider;
 import core.util.Vector2;
+import core.scripts.PlayerScript;
+import core.scripts.Controller;
+
 
 /**
  * This class represents a Player.
@@ -24,26 +23,24 @@ public class Player extends GameObject {
 	Weapon weapon;
 	
 	private int hp;				// The current amount of HP the player has
+	
 	public int getHp() {
 		return hp;
 	}
 
 
 
-	/**
-	 * Private method required to bypass the annoying fact that super() has to be called first in the constructor
-	 */
-	protected static LinkedList<MonoBehaviour> generateScriptsList() {
-		LinkedList<MonoBehaviour> result = new LinkedList<MonoBehaviour>();
-		result.add(new PlayerScript());
-		result.add(new Controller());
-		return result;
-	}
-
 
 	public Player(Vector2 position, int maxHP, Weapon weapon) {
-		super(position, new BoxCollider(5, 5), new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
-				Layer.DEFAULT, Tag.DEFAULT, generateScriptsList());
+		super(position,
+				new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
+				Layer.DEFAULT,
+				Tag.DEFAULT,
+				new BoxCollider(5, 5),		//
+
+				new PlayerScript(),
+				new Controller());
+
 		this.maxHP = maxHP;
 		this.hp = maxHP;
 		this.weapon = weapon;
@@ -57,9 +54,8 @@ public class Player extends GameObject {
 
 
 
-	@Override
-	public String toString() {
-		return "Player {HP: " + Integer.toString(hp) + "; Position: " + position.toString() + "}";
+	@Override public String toString() {
+		return "Player [HP: " + hp + "; Position: " + position + "; Collider " + collider + "]";
 	}
 
 }

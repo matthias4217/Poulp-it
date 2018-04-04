@@ -4,9 +4,7 @@
 
   * We code in english t(-_-t) !
   * Cochez "Generate comments" quand vous créez une nouvelle classe SVP pour qu'on ait les mêmes templates.
-  * On ne suit pas les conventions Javadoc, qui sont vraiment trop extrêmes,
-  		mais chaque classe, chaque méthode, chaque attribut est documenté... 
-  * ...sauf si c'est vraiment explicite.
+  * Chaque classe, chaque méthode, chaque attribut est documenté, sauf si c'est vraiment explicite.
   * Les méthodes sont documentées au dessus
   * On utilise @Override : l'annotation est à mettre en en-tête de toute méthode surchargée
 

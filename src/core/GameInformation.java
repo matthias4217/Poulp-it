@@ -1,12 +1,12 @@
 package core;
 
-import core.util.Vector2;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import core.util.Vector2;
 
 /**
- * A class which encapsulate various information about the current state of the game
- * Collect the data from the Launcher to pass them to the GameEngine
+ * A class which encapsulate various information about the current state of the game.
+ * Collect the data from the Launcher to pass them to the GameEngine.		// XXX different functionning with client/server
  *
  * @author matthias
  *
@@ -21,7 +21,7 @@ public class GameInformation {
 	 * The time in seconds it took to complete the last frame
 	 */
 	public float deltaTime;
-	
+
 	/**
 	 * The last input of the player
 	 */
@@ -55,9 +55,8 @@ public class GameInformation {
 
 
 
-	@Override
-	public String toString() {
-		return "Info [playerInput=" + playerInput + ", eventHandler=" + eventHandler + "]";
+	@Override public String toString() {
+		return "GameInformation [deltaTime=" + deltaTime + "; playerInput=" + playerInput + "; eventHandler=" + eventHandler + "]";
 	}
-	
+
 }

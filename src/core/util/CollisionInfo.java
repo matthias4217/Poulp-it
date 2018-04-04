@@ -3,21 +3,22 @@ package core.util;
 /**
  * A class which stores information related to collision of a GameObject.
  *
+ * @author Sebastian Lague
  */
 public class CollisionInfo {
 
-	public boolean above, below;				// | Tell in which directions there is collision
+	public boolean above, below;				// | Tell in which directions there are collisions
 	public boolean left, right;					// |
 
-	public boolean climbingSlope;				// Is the Object climbing a slope
-	public boolean descendingSlope;				// Is the Object descending a slope
+	public boolean climbingSlope;				// Is the GameObject climbing a slope
+	public boolean descendingSlope;				// Is the GameObject descending a slope
 	public boolean slidingDownMaxSlope;			// Indicates if the Object is currently falling from a maxAngleSlope
 
 	public float slopeAngle, slopeAngleOld;		// Angle of the slope encountered and previous one
 	public Vector2 slopeNormal;					// The normal vector to the slope @@@ (en vrai je sais pas trop à quoi ça sert)
-	public Vector2 moveAmountOld;				// @@@
-	public int faceDir;							// Direction faced by the Object: -1->left, 1->right
-	public boolean fallingThroughPlatform;
+	public Vector2 moveAmountOld;				// MoveAmount of the GameObject in the previous frame
+	public int faceDir;							// Direction faced by the GameObject: -1->left, 1->right
+	public boolean fallingThroughPlatform;		// Is the GameObject currently falling through a platform
 
 
 

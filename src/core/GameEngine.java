@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
@@ -46,6 +45,7 @@ public class GameEngine {
 	/**
 	 * A map which associates to each tile what GameObject is there
 	 */
+	@Deprecated
 	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
@@ -62,7 +62,7 @@ public class GameEngine {
 
 
 	/**
-	 * Initialize the game
+	 * Initializes the game
 	 *
 	 * @param nbPlayers
 	 * @param levelName
@@ -72,29 +72,21 @@ public class GameEngine {
 
 		// Importing the level
 		System.out.println("Beginning level importation...");
-		/*
-		Level0 lvl0 = new Level0();
-		tiles = lvl0.tiles;
-		System.out.println(tiles);
-		*/
-
-
 		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
 		Level level = levelParser.toLevel();
 		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
 
-
-
-		// Setting up the players array and adding the Players to the allGameObjects list
+		// Instanciating players and adding them to the players array
+		System.out.println("Instanciating players...");
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2(50*(i+1), 100*(i+1));
+			Vector2 spawnPosition = new Vector2(500*(i+1), 50*(i+1));
 			Player playerI = new Player(spawnPosition, 10, null);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
-//			System.out.println("Added player at " + playerI.position);
 		}
+		System.out.println("Players instanciation finished");
 
 
 		// ----
@@ -104,14 +96,15 @@ public class GameEngine {
 
 
 	/**
-	 * Called each frame
+	 * Called each frame; updates all game elements
 	 *
-	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
+	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @throws InvalidArgumentsException 
 	 */
 	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		
+
 		System.out.println("Current GameInformation:" + gameInformation);
+
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
 			gameManager.apply(deltaTime, gameInformation);
@@ -127,13 +120,14 @@ public class GameEngine {
 
 
 
+
 	/**
-	 * Cast a ray starting which can detect collisions
+	 * Casts a ray which can detect collisions
 	 *
-	 * @param rayOrigin		The origin of the ray in absolute coordinates
-	 * @param direction		The direction the ray is cast
-	 * @param length		The length of the ray
-	 * @param collisionMask	The Layer on which collisions will be detected
+	 * @param rayOrigin		- the origin of the ray in absolute coordinates
+	 * @param direction		- the direction in which the ray is cast
+	 * @param length		- the length of the ray
+	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
 	 * 
@@ -141,7 +135,7 @@ public class GameEngine {
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
-		
+		// TODO
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {
@@ -164,6 +158,7 @@ public class GameEngine {
 		
 		return null;
 	}
+
 
 
 }

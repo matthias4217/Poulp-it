@@ -8,14 +8,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
-import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
@@ -51,8 +48,10 @@ public class Launcher extends Application {
 		launch(args);
 	}
 
+
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException, IOException {
+
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
@@ -75,6 +74,7 @@ public class Launcher extends Application {
 		int nbPlayers = 1;
 		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
+
 		GameInformation gameInformation = new GameInformation();
 
 
@@ -83,25 +83,25 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 
-
 				gc.drawImage(background, 0, 0);
+
 				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);		// getting the player input.
+
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
-				
+
 				try {
 					gameEngine.update(deltaTime, gameInformation);
-				} catch (InvalidArgumentsException e) {}
-				graphicManager.render(gc);
-				
-				System.out.print(System.lineSeparator());
+				} catch (InvalidArgumentsException e) {	e.printStackTrace();	}
 
+				graphicManager.render(gc);
+
+				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 			}
 		};
 		timer.start();
 	}
-
 
 
 	@Override

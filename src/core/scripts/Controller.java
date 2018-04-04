@@ -1,37 +1,31 @@
 package core.scripts;
 
 import core.GameEngine;
-import core.exceptions.InvalidArgumentsException;
 import content.Layer;
-import content.GameObject;
 import content.GameObject.Tag;
 import core.util.*;
+import core.exceptions.InvalidArgumentsException;
 
 /**
- * @@@
+ * @@@ TODO
  *
  * @author Sebastian Lague, arranged by Raph
  *
  */
-// TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
-	
+
 	public Layer collisionMask;
 
 	public static float maxSlopeAngle;
-	
+
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
-	
-	
 
 
 
-	/**
-	 *  As mentionned in MonoBehavior, support is the object to which
-	 *  Controller is attached
-	 * @throws InvalidBoxColliderException 
-	 */
+
+
+	/* Constructor */
 	public Controller() {
 		collisions = new CollisionInfo();
 	}
@@ -50,7 +44,6 @@ public class Controller extends RaycastController {
 	}
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
-		System.out.println("input " + input);
 		collisions.reset();
 		collisions.moveAmountOld = moveAmount;
 		playerInput = input;
@@ -69,7 +62,7 @@ public class Controller extends RaycastController {
 		}
 
 		// Moving
-		getSupport().position.translate(moveAmount);
+		support.position.translate(moveAmount);
 
 		if (standingOnPlatform) {
 			collisions.below = true;

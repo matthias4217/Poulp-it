@@ -1,16 +1,13 @@
 package content;
 
 import java.util.LinkedList;
-
-import org.junit.jupiter.migrationsupport.rules.adapter.GenericBeforeAndAfterAdvice;
-
-import core.util.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import core.GameInformation;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import core.scripts.MonoBehaviour;
+import core.util.*;
 
 /**
  * Superclass for any game element in a scene which has a spatial position and is renderable.
@@ -40,12 +37,12 @@ public abstract class GameObject {
 	public Tag tag;
 
 	/**
-	 * The collider used to detect collisions against this GameObject; null if this can't be collided with
+	 * The collider used to detect collisions against this GameObject; null if this GameObject can't be collided with
 	 */
 	public Collider collider;
 	
 	/**
-	 * The list of scripts attached to the GameObject which describes its behavior
+	 * A list of scripts attached to this GameObject, which describe its behaviour
 	 */
 	public LinkedList<MonoBehaviour> scripts;
 
@@ -67,27 +64,28 @@ public abstract class GameObject {
 	 * Standard constructor for a GameObject.
 	 * All scripts are initialized at the end of this instanciation.
 	 * 
-	 * @param position		The position in global coordinates where this will spawn
-	 * @param sprite
+	 * @param position	- the position in global coordinates where the GameObject will spawn
+	 * @param sprite	- the sprite which will represent the GameObject
 	 * @param layer
 	 * @param tag
-	 * @param scripts		The list of script attached to this GameObject
+	 * @param collider	- the Collider of the GameObject; set null if the GameObject can't be collided with 
+	 * @param scripts	- the scripts attached to this GameObject
 	 */
-	public GameObject(Vector2 position, Collider collider, Image sprite, Layer layer, Tag tag, LinkedList<MonoBehaviour> scripts) {
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour... scripts) {
 		this.position = position;
-		this.collider = collider;
 		this.sprite = sprite;
 		this.layer = layer;
 		this.tag = tag;
-		this.scripts = scripts;
-
-		// Setting the right support reference for each script
-		for (MonoBehaviour script: this.scripts) {
-			script.setSupport(this);
-		}
+		this.collider = collider;
 		
-		// Starting all scripts
-		for (MonoBehaviour script: this.scripts) {
+		this.scripts = new LinkedList<MonoBehaviour>();
+		for (MonoBehaviour script: scripts) {
+			script.support = this;		// Setting the right support reference for the script
+			this.scripts.add(script);
+		}
+
+		// Starting all scripts 
+		for (MonoBehaviour script: this.scripts) {		// NOTE: it's important that this loop comes AFTER the previous one
 			script.start();
 		}
 
@@ -98,9 +96,9 @@ public abstract class GameObject {
 	/**
 	 * The update method called by the GameEngine.
 	 * By default, it updates all the scripts attached to this.
-	 * This method can be overriden for a more specific behavior.
+	 * This method can be overriden for a more specific behaviour.
 	 *
-	 * @param deltaTime		
+	 * @param deltaTime
 	 * @param gameInformation
 	 * @throws InvalidArgumentsException 
 	 */
@@ -110,8 +108,8 @@ public abstract class GameObject {
 
 	/**
 	 *
-	 * @param deltaTime		The time in seconds it took to complete the last frame
-	 * @param gameInformation : Info that the Launcher sends to the GameManager
+	 * @param deltaTime			- the time in seconds it took to complete the last frame
+	 * @param gameInformation 	- Info that the Launcher sends to the GameManager
 	 * @throws InvalidArgumentsException 
 	 */
 	protected final void updateAllScripts(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
@@ -130,18 +128,16 @@ public abstract class GameObject {
 
 
 
-	@Override
-	public String toString() {
-		return this.position.toString() + collider.toString();		//
+	@Override public String toString() {
+		return "GameObject [Position " + this.position + "; Collider " + collider + "]";
 	}
 
 
 
 
-	public enum Tag {
+	public enum Tag {		// MOVE that to content ???
 		DEFAULT,
 		TRAVERSABLE,
-
 
 
 	}
