@@ -13,7 +13,7 @@ public class Level {
 
 	public TileType[][] grid;
 
-	
+
 	// TODO constructeur, lien avec LevelFileParser, etc
 	// En gros, la représentation est extrêmement simple, mais sa construction demande de rajouter des lignes de codes
 
