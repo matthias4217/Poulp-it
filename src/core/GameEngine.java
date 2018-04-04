@@ -83,7 +83,7 @@ public class GameEngine {
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition = new Vector2(500*(i+1), 50*(i+1));
-			Player playerI = new Player(spawnPosition, 10, null);
+			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
 		}
