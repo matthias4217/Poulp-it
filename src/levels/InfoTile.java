@@ -1,4 +1,4 @@
-package core.util;
+package levels;
 
 import java.util.LinkedList;
 
@@ -7,7 +7,7 @@ import levels.Tile.TileType;
 
 /**
  * @@@
- * 
+ *
  * @author Raph
  *
  */
@@ -15,9 +15,9 @@ public final class InfoTile {
 
 	public TileType tileType;
 	LinkedList<GameObject> gameObjects;
-	
-	
-	
+
+
+
 	/**
 	 * @param tileType
 	 */

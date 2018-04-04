@@ -24,13 +24,13 @@ public class GraphicManager {
 
 	/**
 	 * Render the game on the GraphicsContext gc.
-	 * 
+	 *
 	 * @param gc
 	 */
 	public void render(GraphicsContext gc) {
 
 
-		Tile[] tiles = GameEngine.tiles;
+		Tile[] tiles = GameEngine.level.tileList;
 		for (Tile tile: tiles) {
 			// System.out.println("Rendering tile " + tile);
 			tile.render(gc);
