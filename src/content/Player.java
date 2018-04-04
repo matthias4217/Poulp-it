@@ -20,7 +20,6 @@ public class Player extends GameObject {
 	
 
 	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
-	Weapon weapon;
 	
 	private int hp;				// The current amount of HP the player has
 	
@@ -31,7 +30,7 @@ public class Player extends GameObject {
 
 
 
-	public Player(Vector2 position, int maxHP, Weapon weapon) {
+	public Player(Vector2 position, int maxHP) {
 		super(position,
 				new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
 				Layer.DEFAULT,
@@ -43,7 +42,6 @@ public class Player extends GameObject {
 
 		this.maxHP = maxHP;
 		this.hp = maxHP;
-		this.weapon = weapon;
 	}
 
 

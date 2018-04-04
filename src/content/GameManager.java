@@ -1,6 +1,6 @@
 package content;
 
-import core.GameInformation;
+import core.PlayerInput;
 
 /**
  * Interface implemented by any object which does something in the game without being a graphical element.
@@ -18,7 +18,7 @@ public interface GameManager {
 	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @param gameInformation
 	 */
-	public void apply(float deltaTime, GameInformation gameInformation);
+	public void apply(float deltaTime, PlayerInput gameInformation);
 
 
 }

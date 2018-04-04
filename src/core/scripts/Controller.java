@@ -2,7 +2,7 @@ package core.scripts;
 
 import core.GameEngine;
 import content.Layer;
-import content.GameObject.Tag;
+import content.Tag;
 import core.util.*;
 import core.exceptions.InvalidArgumentsException;
 

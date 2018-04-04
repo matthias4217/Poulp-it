@@ -75,6 +75,8 @@ public class Launcher extends Application {
 		gameEngine.init(nbPlayers, "level0");
 		gc.drawImage(background, 0, 0);
 
+		PlayerInput playerInput = new PlayerInput();
+		
 		GameInformation gameInformation = new GameInformation();
 
 
@@ -85,14 +87,14 @@ public class Launcher extends Application {
 
 				gc.drawImage(background, 0, 0);
 
-				stage.getScene().setOnKeyPressed(gameInformation.eventHandler);		// getting the player input.
+				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
 
 				try {
-					gameEngine.update(deltaTime, gameInformation);
+					gameEngine.update(deltaTime, playerInput, gameInformation);
 				} catch (InvalidArgumentsException e) {	e.printStackTrace();	}
 
 				graphicManager.render(gc);

@@ -1,11 +1,11 @@
 package core.scripts;
 
-import core.GameInformation;
+import core.PlayerInput;
 import core.util.*;
 import core.exceptions.InvalidArgumentsException;
 
 /**
- * TODO
+ * TODO document here
  *
  * @author Sebastian Lague, arranged by Raph
  *
@@ -34,7 +34,6 @@ public class PlayerScript extends MonoBehaviour {
 	Vector2 velocity = Vector2.ZERO();
 	MutableFloat velocityXSmoothing = new MutableFloat(0f);
 
-	Vector2 directionalInput = Vector2.ZERO();
 	boolean wallSliding;
 	float timeToWallUnstick;	// The amount of time remaining before unsticking from a wall
 	int wallDirX;	// wall on left or right
@@ -56,12 +55,11 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		setDirectionalInput(gameInformation.playerInput);
-		calculateVelocity (deltaTime);
-		handleWallSliding (deltaTime);
+	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+		calculateVelocity (deltaTime, playerInput.directionnalInput);
+		handleWallSliding (deltaTime, playerInput.directionnalInput);
 
-		controller.move(velocity.multiply(deltaTime), directionalInput);
+		controller.move(velocity.multiply(deltaTime), playerInput.directionnalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
@@ -74,11 +72,7 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 
-	public void setDirectionalInput (Vector2 input) {
-		directionalInput = input;
-	}
-
-	void calculateVelocity(float deltaTime) {
+	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
 		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
 		//
@@ -88,7 +82,7 @@ public class PlayerScript extends MonoBehaviour {
 		velocity.y += gravity * deltaTime;
 	}
 
-	void handleWallSliding(float deltaTime) {
+	void handleWallSliding(float deltaTime, Vector2 directionalInput) {
 		System.out.println("Handling wall sliding...");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;

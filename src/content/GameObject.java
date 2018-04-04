@@ -3,7 +3,7 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import core.GameInformation;
+import core.PlayerInput;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import core.scripts.MonoBehaviour;
@@ -102,7 +102,7 @@ public abstract class GameObject {
 	 * @param gameInformation
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
 		updateAllScripts(deltaTime, gameInformation);
 	}
 
@@ -112,7 +112,7 @@ public abstract class GameObject {
 	 * @param gameInformation 	- Info that the Launcher sends to the GameManager
 	 * @throws InvalidArgumentsException 
 	 */
-	protected final void updateAllScripts(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+	protected final void updateAllScripts(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
 		for (MonoBehaviour script: scripts) {
 			script.update(deltaTime, gameInformation);
 		}

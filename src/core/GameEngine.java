@@ -15,7 +15,8 @@ import core.util.*;
 import levels.Level;
 
 /**
- * Manages the flow of the game; one instance.
+ * Manages the flow of the game; one instance, located on the server.
+ * TODO more precise and detailed description
  *
  * @author Raph
  *
@@ -96,23 +97,26 @@ public class GameEngine {
 
 
 	/**
-	 * Called each frame; updates all game elements
+	 * This method is called each frame of the game and updates all game elements.
+	 * This also updates the GameInformation object in order to then transmit the new state of the game to the clients.
 	 *
-	 * @param deltaTime - the time in seconds it took to complete the last frame
-	 * @throws InvalidArgumentsException 
+	 * @param deltaTime 		- the time in seconds it took to complete the last frame
+	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
+	 * @param gameInformation	- the current state of the game
+	 *  
 	 */
-	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) throws InvalidArgumentsException {
 
-		System.out.println("Current GameInformation:" + gameInformation);
+		System.out.println("Current GameInformation:" + playerInput);
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, gameInformation);
+			gameManager.apply(deltaTime, playerInput);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, gameInformation);
+			gameObject.update(deltaTime, playerInput);
 		}
 
 	}

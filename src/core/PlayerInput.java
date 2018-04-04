@@ -5,49 +5,39 @@ import javafx.scene.input.KeyEvent;
 import core.util.Vector2;
 
 /**
- * A class which encapsulate various information about the current state of the game.
- * Collect the data from the Launcher to pass them to the GameEngine.		// XXX different functionning with client/server
+ * This class represents the input of a player sent by a client to the server.
  *
  * @author matthias
  *
  */
-
-// TODO make inputs more general (class playerInput ?)
-// also consider several players
-
-public class GameInformation {
+public class PlayerInput {
 
 	/**
-	 * The time in seconds it took to complete the last frame
+	 * The inputs relative to the direction
 	 */
-	public float deltaTime;
-
-	/**
-	 * The last input of the player
-	 */
-	public Vector2 playerInput = Vector2.ZERO();
+	public Vector2 directionnalInput = Vector2.ZERO();
 
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
 			switch(event.getCode()) {
 			case LEFT:
-				playerInput = Vector2.LEFT();
+				directionnalInput = Vector2.LEFT();
 				break;
 			case RIGHT:
-				playerInput = Vector2.RIGHT();
+				directionnalInput = Vector2.RIGHT();
 				break;
 			case UP:
-				playerInput = Vector2.UP();
+				directionnalInput = Vector2.UP();
 				break;
 			case DOWN:
-				playerInput = Vector2.DOWN();
+				directionnalInput = Vector2.DOWN();
 				break;
 			case SPACE:
 
 				break;
 			default:
-				playerInput = Vector2.ZERO();
+				directionnalInput = Vector2.ZERO();
 				break;
 			}
 		}
@@ -56,7 +46,7 @@ public class GameInformation {
 
 
 	@Override public String toString() {
-		return "GameInformation [deltaTime=" + deltaTime + "; playerInput=" + playerInput + "; eventHandler=" + eventHandler + "]";
+		return "PlayerInput [directionalInput=" + directionnalInput + "; eventHandler=" + eventHandler + "]";
 	}
 
 }
