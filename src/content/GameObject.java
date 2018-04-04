@@ -133,14 +133,4 @@ public abstract class GameObject {
 	}
 
 
-
-
-	public enum Tag {		// MOVE that to content ???
-		DEFAULT,
-		TRAVERSABLE,
-
-
-	}
-
-
 }
