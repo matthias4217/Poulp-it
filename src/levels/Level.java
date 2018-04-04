@@ -1,4 +1,4 @@
-package core.util;
+package levels;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -11,8 +11,6 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import levels.OldLevel;
-import levels.Tile;
 import levels.Tile.TileType;
 
 /**
@@ -36,7 +34,8 @@ public class Level {
 	public Tile[] tileList;
 
 	/**
-	 * The HashMap used to link the txt file to the game representation
+	 * The HashMap used to link the charccters in the txt file to the game
+	 * representation
 	 */
 	private static HashMap<Character, TileType> associations;
 
@@ -85,22 +84,13 @@ public class Level {
 		 * the level is 'level:' and then enclosed in brackets
 		 */
 
-		/*
-		 * false if not between the brackets,
-		 * true if in
-		 */
-		boolean inLevel = false;
+		boolean inLevel = false; // false outside the brackets, true inside
 		int lineNbr = 0;
 		List<char[]> tilesList = new ArrayList<char[]>();
 
 		System.out.println("Beginning level parsing...");
 		for (String line: Files.readAllLines(filePath)) {
 			if (line.trim().charAt(0) != '#') {
-
-//				System.out.println("-------------------");
-//				System.out.println(line);
-//				System.out.println("In level: " + inLevel);
-
 				if (!inLevel && line.substring(0, Math.min(THEME.length(), line.length())).equals(THEME)) {
 					/*
 					 *  the end of the substring should be the end of the line
@@ -167,6 +157,7 @@ public class Level {
 				j++;
 			}
 		}
+		toLevel();
 	}
 
 	/**
@@ -174,7 +165,7 @@ public class Level {
 	 *
 	 * @return
 	 */
-	public OldLevel toLevel() {
+	public void toLevel() {
 		// Variables used
 		int max_i = infoTileMatrix.length - 1; // height of the char[][]
 		int max_j = infoTileMatrix[0].length - 1; // width of the char[][]
@@ -240,8 +231,7 @@ public class Level {
 				 + theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
 
 
-		OldLevel level = new OldLevel();
-		List<Tile> list_tiles = new ArrayList<Tile>();
+		List<Tile> listTiles = new ArrayList<Tile>();
 		// the following tile won't be used, it's just so that the IDE won't yell
 		Tile tile = new Tile(0, 0, tileSurfaceTop, TileType.SQUARE);
 
@@ -463,23 +453,22 @@ public class Level {
 
 				if (tilefound) {
 					//System.out.println("Char '" + c + "' not ignored");
-					list_tiles.add(tile);
+					listTiles.add(tile);
 				}
 			}
 		}
-		System.out.println(list_tiles.getClass().getName());
-		System.out.println(list_tiles.toArray().getClass().getName());
+		System.out.println(listTiles.getClass().getName());
+		System.out.println(listTiles.toArray().getClass().getName());
 
 		/*
 		 * Ce serait bien de faire
 		 * level.tiles = (Tile[]) list_tiles.toArray();
 		 */
 
-		level.tiles = new Tile[list_tiles.size()];
-		for (int i = 0; i < list_tiles.size(); i++) {
-			level.tiles[i] = list_tiles.get(i);
+		tileList = new Tile[listTiles.size()];
+		for (int i = 0; i < listTiles.size(); i++) {
+			tileList[i] = listTiles.get(i);
 		}
-		return level;
 	}
 
 

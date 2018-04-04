@@ -12,6 +12,8 @@ import content.Player;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
+import levels.InfoTile;
+import levels.Level;
 import levels.OldLevel;
 import levels.Tile;
 
@@ -40,8 +42,8 @@ public class GameEngine {
 	 */
 	Player[] players;
 
-	@Deprecated
-	static Tile[] tiles; // will be replaced by a level object
+
+	static Level level;
 
 	/**
 	 * A map which associates to each tile what GameObject is there
@@ -72,17 +74,9 @@ public class GameEngine {
 
 		// Importing the level
 		System.out.println("Beginning level importation...");
-		/*
-		Level0 lvl0 = new Level0();
-		tiles = lvl0.tiles;
-		System.out.println(tiles);
-		*/
-
-
-		Level levelParser = new Level("levels/" + levelName + ".txt");
-		OldLevel level = levelParser.toLevel();
-		tiles = level.tiles;
-		InfoTile[][] grid = levelParser.infoTileMatrix;
+		level = new Level("levels/" + levelName + ".txt");
+		//tiles = level.tileList;
+		//InfoTile[][] grid = level.infoTileMatrix;
 
 
 
