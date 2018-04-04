@@ -12,7 +12,7 @@ import content.Tile;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
-import levels.Level;
+import levels.LevelOld;
 
 /**
  * Manages the flow of the game; one instance, located on the server.
@@ -44,9 +44,9 @@ public class GameEngine {
 	static Tile[] tiles;
 
 	/**
-	 * A map which associates to each tile what GameObject is there
+	 * A map which associates to tiles that contains GameObjects to these GameObjects.
+	 * It is used to detect collisions other than those with the level itself.
 	 */
-	@Deprecated
 	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
@@ -74,7 +74,7 @@ public class GameEngine {
 		// Importing the level
 		System.out.println("Beginning level importation...");
 		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
-		Level level = levelParser.toLevel();
+		LevelOld level = levelParser.toLevel();
 		tiles = level.tiles;
 		InfoTile[][] grid = levelParser.levelGrid;
 

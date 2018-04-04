@@ -13,7 +13,7 @@ import content.Tile;
 import content.Tile.TileType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import levels.Level;
+import levels.LevelOld;
 
 /**
  * Parser object designed to transform a level as a txt file into a Level object
@@ -195,7 +195,7 @@ public class LevelFileParser {
 	 * 
 	 * @return
 	 */
-	public Level toLevel() {
+	public LevelOld toLevel() {
 		// Variables used
 		int max_i = levelGrid.length - 1; // height of the char[][]
 		int max_j = levelGrid[0].length - 1; // width of the char[][]
@@ -261,7 +261,7 @@ public class LevelFileParser {
 				 + theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
 
 
-		Level level = new Level();
+		LevelOld level = new LevelOld();
 		List<Tile> list_tiles = new ArrayList<Tile>();
 		// the following tile won't be used, it's just so that the IDE won't yell
 		Tile tile = new Tile(0, 0, tileSurfaceTop, TileType.SQUARE);

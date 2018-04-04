@@ -1,16 +1,21 @@
 package levels;
 
-import content.Tile;
+import content.Tile.TileType;
 
 /**
- * @author matthias
+ * This class represents a level with a grid of InfoTile:
+ * 	each case of the grid stores the type of tile it contains
  * 
- * Obsolete, won't be used
+ * @author Raph
  *
  */
 public class Level {
-	public Tile[] tiles;
-	public String theme;
+
+	public TileType[][] grid;
+
 	
-	
+	// TODO constructeur, lien avec LevelFileParser, etc
+	// En gros, la représentation est extrêmement simple, mais sa construction demande de rajouter des lignes de codes
+
+
 }
