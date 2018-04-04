@@ -14,7 +14,8 @@ import javafx.scene.image.ImageView;
 import levels.Tile.TileType;
 
 /**
- * Parser object designed to transform a level as a txt file into a Level object
+ * This class represents a level with a matrix of Tiles:
+ * 	each case of the grid stores the type of tile it contains
  *
  * @author matthias
  *
@@ -28,11 +29,10 @@ public class Level {
 	public TileType[][] tileMatrix;
 
 	/**
-	 * List of Tiles,
-	 * for rendering only
+	 * List of Tiles, used for rendering only
 	 */
 	public Tile[] tileList;
-
+    
 	/**
 	 * The HashMap used to link the characters in the txt file to the game
 	 * representation
@@ -473,8 +473,7 @@ public class Level {
 
 
 
-	@Override
-	public String toString() {
+	@Override public String toString() {
 		String level_parser_txt = "";
 		String line;
 		for (TileType[] typeline: tileMatrix) {
@@ -491,7 +490,7 @@ public class Level {
 
 	// For now, no indirect (on a diagonal) neighbour
 	/**
-	 * @@@ doc
+	 * @@@ TODO doc
 	 *
 	 * @author matthias
 	 *
