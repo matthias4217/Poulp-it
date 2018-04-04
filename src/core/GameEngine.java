@@ -9,15 +9,11 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.Player;
-import content.Tile;
-import content.Tile.TileType;
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 import core.exceptions.MultipleGameEngineException;
-import core.scripts.MonoBehavior;
 import core.util.*;
-import levels.Level;
-import levels.Level0;
+import levels.OldLevel;
+import levels.Tile;
 
 /**
  * Manages the flow of the game; one instance.
@@ -29,14 +25,34 @@ public class GameEngine {
 
 	private static boolean alreadyExist = false;		// To ensure there can be only one instance of GameEngine created
 
+	/**
+	 * The list of all active GameManagers currently on the scene
+	 */
 	static LinkedList<GameManager> allGameManagers = new LinkedList<GameManager>();
+
+	/**
+	 * The list of all active GameObjects currently on the scene
+	 */
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
-	Player[] players;		// Convenient access to the players (since the array contains references)
-	static Tile[] tiles;		//
+
+	/**
+	 * A convenient access to the players (since the array contains references)
+	 */
+	Player[] players;
+
+	@Deprecated
+	static Tile[] tiles; // will be replaced by a level object
+
+	/**
+	 * A map which associates to each tile what GameObject is there
+	 */
+	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
 
-	/* Constructor */
+	/**
+	 * Constructor
+	 */
 	public GameEngine() throws MultipleGameEngineException {
 		if (alreadyExist) {
 			throw new MultipleGameEngineException();
@@ -51,11 +67,10 @@ public class GameEngine {
 	 * @param nbPlayers
 	 * @param levelName
 	 * @throws IOException
-	 * @throws InvalidBoxColliderException 
 	 */
-	public void init(int nbPlayers, String levelName) throws IOException, InvalidBoxColliderException {
+	public void init(int nbPlayers, String levelName) throws IOException {
 
-		// Imports the level
+		// Importing the level
 		System.out.println("Beginning level importation...");
 		/*
 		Level0 lvl0 = new Level0();
@@ -64,23 +79,21 @@ public class GameEngine {
 		*/
 
 
-		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
-		Level level = levelParser.toLevel();
+		Level levelParser = new Level("levels/" + levelName + ".txt");
+		OldLevel level = levelParser.toLevel();
 		tiles = level.tiles;
-		InfoTile[][] grid = levelParser.levelGrid;
+		InfoTile[][] grid = levelParser.infoTileMatrix;
 
 
-		/* A map which associates to each tile what GameObject is there */
-		Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
-		// Setting up the players array and adding the players to the GameObjects list
+		// Setting up the players array and adding the Players to the allGameObjects list
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition = new Vector2(50*(i+1), 100*(i+1));
 			Player playerI = new Player(spawnPosition, 10, null);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
-			System.out.println("Added player at " + playerI.position);
+//			System.out.println("Added player at " + playerI.position);
 		}
 
 
@@ -94,18 +107,19 @@ public class GameEngine {
 	 * Called each frame
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
-	public void update(long deltaTime, Info info) throws InvalidArgumentsException {
-		System.out.println(info);
+	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
+
+		System.out.println("Current GameInformation:" + gameInformation);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, info);
+			gameManager.apply(deltaTime, gameInformation);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, info);
+			gameObject.update(deltaTime, gameInformation);
 		}
 
 	}
@@ -122,12 +136,12 @@ public class GameEngine {
 	 * @param collisionMask	The Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
-	 * 
+	 *
 	 * @throws InvalidArgumentsException if direction is null
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
-		
+
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {
@@ -141,13 +155,13 @@ public class GameEngine {
 			}
 			*/
 		}
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		return null;
 	}
 

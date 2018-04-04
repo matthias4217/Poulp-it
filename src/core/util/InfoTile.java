@@ -2,8 +2,8 @@ package core.util;
 
 import java.util.LinkedList;
 
-import content.Tile.TileType;
 import content.GameObject;
+import levels.Tile.TileType;
 
 /**
  * @@@

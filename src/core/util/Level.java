@@ -9,25 +9,37 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 
-import content.Tile;
-import content.Tile.TileType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import levels.Level;
+import levels.OldLevel;
+import levels.Tile;
+import levels.Tile.TileType;
 
 /**
  * Parser object designed to transform a level as a txt file into a Level object
- * 
+ *
  * @author matthias
- * 
+ *
  */
-public class LevelFileParser {
+public class Level {
+
+	/**
+	 * The grid of Tiles,
+	 * for the physics of the world
+	 */
+	public InfoTile[][] infoTileMatrix;
+
+	/**
+	 * List of Tiles,
+	 * for rendering only
+	 */
+	public Tile[] tileList;
 
 	/**
 	 * The HashMap used to link the txt file to the game representation
 	 */
 	private static HashMap<Character, TileType> associations;
-	
+
 	private void initializeAssociations() {
 		associations = new HashMap<Character, TileType>();
 		associations.put(' ', TileType.EMPTY);
@@ -37,34 +49,32 @@ public class LevelFileParser {
 		associations.put('u', TileType.TRIANGLE_TOP_RIGHT);
 		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
 	}
-	
-	// The texts that identifies the different informations in the txt file
+
+	/**
+	 *  The texts that identifies the different informations in the txt file
+	 */
 	public static final String LEVEL = "level:";
 	public static final String THEME = "theme:";
-	
-	
+
+
 	private String theme;
-	public InfoTile[][] levelGrid;
-	
-	
-	
+
+
+
 	/**
-	 * 
+	 *
 	 * @param file
 	 * @throws IOException
 	 */
-	public LevelFileParser(String file) throws IOException {
+	public Level(String file) throws IOException {
 		/*
 		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
 		initializeAssociations();
-		
+
 		Path filePath = FileSystems.getDefault().getPath(file);
 		System.out.println("Path to the level: " + filePath);
-		
-		@Deprecated
-		List<String> stringArray = Files.readAllLines(filePath);
 
 		/*
 		 * Now the parsing begins (dramatic music)
@@ -120,16 +130,7 @@ public class LevelFileParser {
 				else if (inLevel) {
 					char[] lineChars = new char[line.length()];
 					for (int i = 0; i < line.length(); i++) {
-						
-						// raph : On peut pas faire plus simple ??
-						
-						/* System.out.println("char " + line.charAt(i) + " (" +
-					* line_nbr + "," + i + ")");
-					*/
-						// Problem : we *must* define level_text beforehand
-						// I guess we should make a list of array, and then convert it ?
 						lineChars[i] = line.charAt(i);
-						// case
 					}
 
 					tilesList.add(lineNbr, lineChars);
@@ -141,7 +142,7 @@ public class LevelFileParser {
 			}
 		}
 		/*
-		 * Now, we have to convert tiles_list, an ArrayList<char[]>
+		 * Now, we have to convert tilesList, an ArrayList<char[]>
 		 * to levelGrid, a char[][]
 		 * And the following doesn't work :
 		 * levelGrid = (char[][]) tiles_list.toArray();
@@ -154,38 +155,15 @@ public class LevelFileParser {
 		for (char[] line: tilesList) {
 			max = Math.max(line.length, max);
 		}
-		levelGrid = new InfoTile[tilesList.size()][max];
-		// then we fill levelGrid !
-		
+		infoTileMatrix = new InfoTile[tilesList.size()][max];
+		// then we fill infoTileMatrix !
+
 		int j;
-		
-		// Raph: ça m'a l'air moche
+
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {
-				levelGrid[i][j] = new InfoTile(associations.get(c));
-				/*
-				switch(c) {
-					case 'x':
-						levelGrid[i][j] = new InfoTile(TileType.SQUARE);
-						break;
-					case '/':
-						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_DOWN_RIGHT);
-						break;
-					case '\\':
-						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_DOWN_LEFT);
-						break;
-					case 'u':
-						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_TOP_RIGHT);
-						break;
-					case 'v':
-						levelGrid[i][j] = new InfoTile(TileType.TRIANGLE_TOP_LEFT);
-						break;					
-					default:
-						levelGrid[i][j] = new InfoTile(TileType.SQUARE); /// !!!!!!!!!!!!!!!!
-						//System.out.println(level_text[i][j]);
-				}
-				*/
+				infoTileMatrix[i][j] = new InfoTile(associations.get(c));
 				j++;
 			}
 		}
@@ -193,13 +171,13 @@ public class LevelFileParser {
 
 	/**
 	 * @@@ TODO Documentation required
-	 * 
+	 *
 	 * @return
 	 */
-	public Level toLevel() {
+	public OldLevel toLevel() {
 		// Variables used
-		int max_i = levelGrid.length - 1; // height of the char[][]
-		int max_j = levelGrid[0].length - 1; // width of the char[][]
+		int max_i = infoTileMatrix.length - 1; // height of the char[][]
+		int max_j = infoTileMatrix[0].length - 1; // width of the char[][]
 
 		/*
 		 * Now, the objects...
@@ -262,7 +240,7 @@ public class LevelFileParser {
 				 + theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
 
 
-		Level level = new Level();
+		OldLevel level = new OldLevel();
 		List<Tile> list_tiles = new ArrayList<Tile>();
 		// the following tile won't be used, it's just so that the IDE won't yell
 		Tile tile = new Tile(0, 0, tileSurfaceTop, TileType.SQUARE);
@@ -271,12 +249,11 @@ public class LevelFileParser {
 			for (int j = 0; j < max_j + 1; j++) {
 				TileType type;
 				try {
-					type = levelGrid[i][j].tileType;
+					type = infoTileMatrix[i][j].tileType;
 				} catch (NullPointerException exception) {
-					type = TileType.TRIANGLE_TOP_RIGHT;
+					type = TileType.EMPTY;
 				}
-				
-				
+
 				boolean tilefound = false;
 				if (type == TileType.SQUARE) { // square
 					/*
@@ -321,7 +298,7 @@ public class LevelFileParser {
 					    	 */
 					        if (((curRow == i && curCol != j) ||
 					        		(curRow != i && curCol == j))
-					        		&& (levelGrid[curRow][curCol] != null)) {
+					        		&& (infoTileMatrix[curRow][curCol].tileType != TileType.EMPTY)) {
 					        	nbrDirectNeighbours ++;
 					        	// then we detect where the neighbours are
 					        	if (curRow > i) {
@@ -505,13 +482,13 @@ public class LevelFileParser {
 		return level;
 	}
 
-	
-	
+
+
 	@Override
 	public String toString() {
 		String level_parser_txt = "";
 		String line;
-		for (InfoTile[] typeline: levelGrid) {
+		for (InfoTile[] typeline: infoTileMatrix) {
 			line = "";
 			for (InfoTile type: typeline) {
 				line = line + type.tileType;
@@ -521,12 +498,12 @@ public class LevelFileParser {
 		return level_parser_txt;
 	}
 
-	
-	
+
+
 	// For now, no indirect (on a diagonal) neighbour
 	/**
 	 * @@@ doc
-	 * 
+	 *
 	 * @author matthias
 	 *
 	 */

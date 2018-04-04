@@ -1,6 +1,6 @@
 package content;
 
-import core.Info;
+import core.GameInformation;
 
 /**
  * Interface implemented by any object which does something in the game without being a graphical element.
@@ -15,10 +15,10 @@ public interface GameManager {
 	/**
 	 * Must be overridden; called every frame.
 	 *
-	 * @param deltaTime
-	 * @param info
+	 * @param deltaTime		The time in seconds it took to complete the last frame
+	 * @param gameInformation
 	 */
-	public void apply(long deltaTime, Info info);
+	public void apply(float deltaTime, GameInformation gameInformation);
 
 
 }

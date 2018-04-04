@@ -10,7 +10,7 @@ package core.util;
  * 
  */
 
-// @TODO Organiser cette classe et la documenter correctement
+// TODO Organiser cette classe et la documenter correctement
 public class Vector2 {
 
 	public float x;
@@ -55,7 +55,7 @@ public class Vector2 {
 	
 	public float norm() {
 		/* Return the norm of this Vector2. */
-		return (float)Math.sqrt(x*x + y*y);
+		return (float) Math.sqrt(x*x + y*y);
 	}
 	
 	public Vector2 normalize() {

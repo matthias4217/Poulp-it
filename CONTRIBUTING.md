@@ -45,8 +45,8 @@
   		- ont une position dans l'espace
   		- ont une apparence (méthode void render())
   	À un GameObject est attaché une liste de scripts caractérisant son comportement.
-  	Par défaut, l'update d'un GameObject signifie que tous ses scripts sont updatés, mais il est possible de personnaliser cela en 	surchargeant cette méthode.
-  * Un script est un objet héritant de la classe MonoBehavior. Il possède notamment les méthodes start()@@@ et update().
+  	Par défaut, l'update d'un GameObject signifie que tous ses scripts sont updatés, mais il est possible de personnaliser cela en surchargeant cette méthode.
+  * Un script est un objet héritant de la classe MonoBehaviour. Il possède notamment les méthodes start() et update().
   
 
 ## Textures ##

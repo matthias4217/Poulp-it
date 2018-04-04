@@ -1,7 +1,5 @@
 package core.scripts;
 
-import content.GameObject;
-import core.exceptions.InvalidBoxColliderException;
 import core.util.*;
 
 /**
@@ -10,7 +8,7 @@ import core.util.*;
  * @author Sebastian Lague, arranged by Raph
  *
  */
-public class RaycastController extends MonoBehavior {
+public class RaycastController extends MonoBehaviour {
 
 	public String collisionLayer;					// Indicates on which layer the Rays will detect things
 
@@ -27,22 +25,23 @@ public class RaycastController extends MonoBehavior {
 
 
 
-	public RaycastController(GameObject support) throws InvalidBoxColliderException {
-		super(support);
-		collider = new BoxCollider(new Vector2(0,0), PERCENT_SKIN, PERCENT_SKIN);
+	public RaycastController() {
 		raycastOrigins = new RaycastOrigins();
 	}
 
+
 	@Override
-	public void start() throws InvalidBoxColliderException {
+	public void start() {
 		try {
 			collider = (BoxCollider) getSupport().collider;
 		}
 		catch (ClassCastException exception) {
-			throw new InvalidBoxColliderException("RaycastController on a non rectangular GameObject");
+			System.out.println("INVALID COLLIDER");
+			exception.printStackTrace();
 		}
 
-		//Calculating rays
+		// Calculating rays
+		
 		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
 		horizontalRaySpacing = (collider.getHeight() - 2*skinWidth) / (horizontalRayCount - 1);
 		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);
@@ -64,16 +63,15 @@ public class RaycastController extends MonoBehavior {
 
 
 
+
 class RaycastOrigins {
+
 	public Vector2 topLeft, topRight;
 	public Vector2 bottomLeft, bottomRight;
 
-
 	public RaycastOrigins() {
-		topLeft = new Vector2(0,0);
-		topRight= new Vector2(0,0);
-		bottomLeft = new Vector2(0,0);
-		bottomRight = new Vector2(0,0);
+		topLeft = topRight = Vector2.zero;
+		bottomLeft = bottomRight = Vector2.zero;
 	}
 
 }

@@ -1,9 +1,10 @@
-package core.scripts;
+package core.util;
 
-import core.util.Vector2;
-
-class CollisionInfo {
-	/* Structure which stores information about a detected collision. */
+/**
+ * A class which stores information related to collision of a GameObject.
+ *
+ */
+public class CollisionInfo {
 
 	public boolean above, below;				// | Tell in which directions there is collision
 	public boolean left, right;					// |

@@ -46,9 +46,11 @@ public class Collider {
 		/* This constructor is only used by the subclass BoxCollider. */
 	}
 
+	
+	
+	@Override
 	public String toString() {
-		String txt = "nb_points: " + Integer.toString(nbPoints) + " ; "
-	+ Arrays.toString(pointsArray);
+		String txt = "Collider [" + nbPoints + " points: "	+ Arrays.toString(pointsArray);
 		return txt;
 	}
 

@@ -2,13 +2,10 @@ package core.scripts;
 
 import core.GameEngine;
 import core.exceptions.InvalidArgumentsException;
-import core.exceptions.InvalidBoxColliderException;
 import content.Layer;
 import content.GameObject;
 import content.GameObject.Tag;
 import core.util.*;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
 
 /**
  * @@@
@@ -16,7 +13,7 @@ import javafx.scene.input.KeyEvent;
  * @author Sebastian Lague, arranged by Raph
  *
  */
-//TODO make traversable platform more logical (currently, they are traversable but have side walls)
+// TODO make traversable platform more logical (currently, they are traversable but have side walls)
 public class Controller extends RaycastController {
 
 	public Layer collisionMask;
@@ -35,13 +32,12 @@ public class Controller extends RaycastController {
 	 *  Controller is attached
 	 * @throws InvalidBoxColliderException
 	 */
-	public Controller(GameObject support) throws InvalidBoxColliderException {
-		super(support);
+	public Controller() {
 		collisions = new CollisionInfo();
 	}
 
 	@Override
-	public void start() throws InvalidBoxColliderException {
+	public void start() {
 		super.start();
 		collisions.faceDir = 1;
 	}
@@ -54,7 +50,7 @@ public class Controller extends RaycastController {
 	}
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
-		System.out.println("Input " + input);
+		System.out.println("input " + input);
 		collisions.reset();
 		collisions.moveAmountOld = moveAmount;
 		playerInput = input;
@@ -145,7 +141,7 @@ public class Controller extends RaycastController {
 			rayOrigin.translate(Vector2.right.multiply(verticalRaySpacing * i + moveAmount.x));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, Vector2.up.multiply(directionY), rayLength, collisionMask);
 
-			//Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
+			// Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
 			if (hit != null) {		// If something was hit
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.

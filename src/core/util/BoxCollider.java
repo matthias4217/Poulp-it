@@ -10,14 +10,14 @@ package core.util;
 public class BoxCollider extends Collider {
 
 	/* Constructor */
-	public BoxCollider(Vector2 originPoint, float width, float height) {
+	public BoxCollider(float width, float height) {
 		super();
 		nbPoints = 4;
 		Vector2[] pointsArray = new Vector2[4];
-		pointsArray[0] = originPoint;
-		pointsArray[1] = originPoint.add(Vector2.up.multiply(height));
-		pointsArray[2] = originPoint.add(new Vector2(width, height));
-		pointsArray[3] = originPoint.add(Vector2.right.multiply(width));
+		pointsArray[0] = new Vector2(width/2, height/2);
+		pointsArray[1] = new Vector2(-width/2, height/2);
+		pointsArray[2] = new Vector2(-width/2, -height/2);
+		pointsArray[3] = new Vector2(width/2, -height/2);
 		setPointsArray(pointsArray);
 	}
 	
