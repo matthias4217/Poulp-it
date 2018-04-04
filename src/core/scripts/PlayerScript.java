@@ -17,8 +17,8 @@ public class PlayerScript extends MonoBehaviour {
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
-	public static float accelerationTimeAirborne = 0f;		// Amount of inertia while airborne (set to 0 for no inertia)
-	public static float accelerationTimeGrounded = 0f;		// Amount of inertia while grounded (set to 0 for no inertia)
+	public static float accelerationTimeAirborne = 1f;		// Amount of inertia while airborne (set to 0 for no inertia)
+	public static float accelerationTimeGrounded = 1f;		// Amount of inertia while grounded (set to 0 for no inertia)
 
 
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
@@ -75,8 +75,8 @@ public class PlayerScript extends MonoBehaviour {
 		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
 		//
-//		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
-		velocity.x = targetVelocityX;		// Currently, we immediately reach the targetvelocity (no inertiaa then)
+		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+//		velocity.x = targetVelocityX;		// Currently, we immediately reach the targetvelocity (no inertia then)
 		//
 		velocity.y += gravity * deltaTime;
 	}

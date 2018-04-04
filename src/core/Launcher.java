@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
+import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
