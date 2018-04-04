@@ -1,4 +1,4 @@
-package content;
+package levels;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
@@ -6,7 +6,7 @@ import core.util.Vector2;
 
 /**
  * Class which represents a tile.
- * 
+ *
  * @author matthias
  *
  */
@@ -20,6 +20,8 @@ public class Tile {
 
 	/*
 	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE.
+	 *
+	 * Is it just the position in the grid ? (tileMatrix in Level)
 	 */
 	private Vector2 position;
 
@@ -35,11 +37,11 @@ public class Tile {
 	public TileType type;
 
 
-	
+
 	/**
 	 * @param xInt			The x coordinate on a grid of this Tile
 	 * @param yInt			The y coordinate on a grid of this Tile
-	 * @param imageView		The appearance of this Tile				@@@ Can be automatically linked to TileType 
+	 * @param imageView		The appearance of this Tile				@@@ Can be automatically linked to TileType
 	 * @param type			The type of the Tile
 	 */
 	public Tile(int xInt, int yInt, ImageView imageView, TileType type) {
@@ -49,7 +51,7 @@ public class Tile {
 	}
 
 
-	
+
 	/*
 	 * Render this Sprite on the GraphicsContext gc.
 	 * It may be optimized if we don't use getImage()
@@ -60,13 +62,13 @@ public class Tile {
 	}
 
 
-	
+
 	@Override
 	public String toString() {
 		return type.toString() + ": " + position.toString();
 	}
 
-	
+
 
 	/*
 	 * Enumeration of the different possible Tiles

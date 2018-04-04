@@ -9,11 +9,11 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.Player;
-import content.Tile;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
-import levels.Level;
+import levels.OldLevel;
+import levels.Tile;
 
 /**
  * Manages the flow of the game; one instance.
@@ -40,7 +40,7 @@ public class GameEngine {
 	 */
 	Player[] players;
 
-	static Tile[] tiles;
+	static Tile[] tiles; // will be replaced by a level object
 
 	/**
 	 * A map which associates to each tile what GameObject is there
@@ -78,10 +78,10 @@ public class GameEngine {
 		*/
 
 
-		LevelFileParser levelParser = new LevelFileParser("levels/" + levelName + ".txt");
-		Level level = levelParser.toLevel();
+		Level levelParser = new Level("levels/" + levelName + ".txt");
+		OldLevel level = levelParser.toLevel();
 		tiles = level.tiles;
-		InfoTile[][] grid = levelParser.levelGrid;
+		InfoTile[][] grid = levelParser.infoTileMatrix;
 
 
 
@@ -106,10 +106,10 @@ public class GameEngine {
 	 * Called each frame
 	 *
 	 * @param deltaTime		The timestamp of the current frame given in nanoseconds
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
 	public void update(float deltaTime, GameInformation gameInformation) throws InvalidArgumentsException {
-		
+
 		System.out.println("Current GameInformation:" + gameInformation);
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
@@ -135,12 +135,12 @@ public class GameEngine {
 	 * @param collisionMask	The Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
-	 * 
+	 *
 	 * @throws InvalidArgumentsException if direction is null
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
-		
+
 		Ray ray = new Ray(rayOrigin, direction, length);
 
 		for (GameObject gameObject: allGameObjects) {
@@ -154,13 +154,13 @@ public class GameEngine {
 			}
 			*/
 		}
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
 		return null;
 	}
 
