@@ -22,7 +22,7 @@ import levels.Level;
  */
 public class GameEngine {
 
-	private static boolean alreadyExist = false;		// To ensure there can be only one instance of GameEngine created
+	private static boolean alreadyExist = false;	// To ensure there can be only one instance of GameEngine created
 
 	/**
 	 * The list of all active GameManagers currently on the scene
@@ -45,7 +45,6 @@ public class GameEngine {
 	/**
 	 * A map which associates to each tile what GameObject is there
 	 */
-	@Deprecated
 	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
