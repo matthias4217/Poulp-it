@@ -25,23 +25,24 @@ public class BoxCollider extends Collider {
 	public float getWidth() {
 		return pointsArray[3].x - pointsArray[0].x;
 	}
-	
+
 	public float getHeight() {
 		return pointsArray[1].y - pointsArray[1].y;
 	}
-	
-	public Vector2 getBottomLeft() {
+
+
+	public Vector2 getTopRight() {
 		return pointsArray[0];
 	}
-	
+
 	public Vector2 getTopLeft() {
 		return pointsArray[1];
 	}
-	
-	public Vector2 getTopRight() {
+
+	public Vector2 getBottomLeft() {
 		return pointsArray[2];
 	}
-	
+
 	public Vector2 getBottomRight() {
 		return pointsArray[3];
 	}

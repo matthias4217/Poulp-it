@@ -36,7 +36,7 @@ public class Player extends GameObject {
 				new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
 				Layer.DEFAULT,
 				Tag.DEFAULT,
-				new BoxCollider(5, 5),		//
+				new BoxCollider(4, 4),		//
 
 				new PlayerScript(),
 				new Controller());

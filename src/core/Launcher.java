@@ -13,6 +13,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
+import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
@@ -93,9 +94,7 @@ public class Launcher extends Application {
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
 
-				try {
-					gameEngine.update(deltaTime, playerInput, gameInformation);
-				} catch (InvalidArgumentsException e) {	e.printStackTrace();	}
+				gameEngine.update(deltaTime, playerInput, gameInformation);
 
 				graphicManager.render(gc);
 

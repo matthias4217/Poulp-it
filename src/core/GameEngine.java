@@ -11,6 +11,7 @@ import content.Player;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
+import core.util.Ray.Direction;
 import levels.Level;
 
 /**
@@ -22,7 +23,7 @@ import levels.Level;
  */
 public class GameEngine {
 
-	private static boolean alreadyExist = false;		// To ensure there can be only one instance of GameEngine created
+	private static boolean alreadyExist = false;	// To ensure there can be only one instance of GameEngine created
 
 	/**
 	 * The list of all active GameManagers currently on the scene
@@ -37,15 +38,20 @@ public class GameEngine {
 	/**
 	 * A convenient access to the players (since the array contains references)
 	 */
-	Player[] players;
+	static Player[] players;
 
 
 	static Level level;
 
 	/**
+	 * The lenght of a tile in window coordinates.
+	 * It is changed in order to change the zoom of the camera.
+	 */
+	static float tileSize = 32;
+
+	/**
 	 * A map which associates to each tile what GameObject is there
 	 */
-	@Deprecated
 	static Map<int[], LinkedList<GameObject>> gridReferences = new HashMap<int[], LinkedList<GameObject>>();
 
 
@@ -104,7 +110,7 @@ public class GameEngine {
 	 * @param gameInformation	- the current state of the game
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) {
 
 		System.out.println("Current GameInformation:" + playerInput);
 
@@ -133,26 +139,44 @@ public class GameEngine {
 	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
-	 *
-	 * @throws InvalidArgumentsException if direction is null
 	 */
 
-	public static RaycastHit raycast(Vector2 rayOrigin, Vector2 direction, float length, Layer collisionMask) throws InvalidArgumentsException {
-		// TODO
+	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask) {
 		Ray ray = new Ray(rayOrigin, direction, length);
+		// The coordinates in the grid this ray is casted from
+		int[] tileOrigin = toGridCoordinates(rayOrigin);
 
-		for (GameObject gameObject: allGameObjects) {
+		System.out.println("Raycast from tile: " + tileOrigin[0] + ", " + tileOrigin[1]);
+		// The coordinates in the grid this ray ends
+		int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
 
-			if (gameObject.layer == collisionMask) {
+		// Now we traverse the tiles line from tileOrigin to tileEnding.
 
+		// Moving horizontally or vertically?
+		int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1; 
+		int fixed = tileOrigin[1-var];		// The index of the column or row which is fixed
+
+		int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? 1 : -1;
+
+		for (int k = tileOrigin[var]; k < tileEnding[var]; k += increment) {
+			// Setting the current tile
+			int[] currentTile = {(1-var)*k + var*fixed, var*k + (1-var)*fixed};
+
+			// Collisions with other GameObjects
+			if (gridReferences.containsKey(currentTile)) {		// If the current tile contains GameObject(s)
+				for (GameObject gameObject: gridReferences.get(currentTile)) {
+					ray.collision(gameObject);
+				}
 			}
-			/*
-			for (Line line: gameObject.collider.pointsArray) {
-				checkCollision(ray, line);
-			}
-			*/
+
+
+			// Collisions with tiles
+
+
+
+
+
 		}
-
 
 
 
@@ -161,6 +185,17 @@ public class GameEngine {
 
 		return null;
 	}
+
+	/**
+	 * @param A
+	 * @return the grid coordinates corresponding with the position of the point A
+	 */
+	private static int[] toGridCoordinates(Vector2 A) {
+		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor(A.y / tileSize)};
+		return result;
+	}
+
+
 
 
 

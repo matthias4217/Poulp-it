@@ -3,7 +3,8 @@ package core.scripts;
 import core.util.*;
 
 /**
- * TODO
+ * Superclass for all scripts which rely on raycasts to detect collisions.
+ * The rays are cast from the edge of the collider of a gameObject.
  * This script must be attached to a RECTANGULAR object
  *
  * @author Sebastian Lague, arranged by Raph
@@ -16,10 +17,10 @@ public class RaycastController extends MonoBehaviour {
 	public static final float PERCENT_SKIN = 0.015f;		// Percentage of the object bounds that is skin
 	protected float skinWidth;
 
-	protected float horizontalRaySpacing;			//
-	protected float verticalRaySpacing;				//
-	protected int horizontalRayCount;				// Number of horizontal rays
-	protected int verticalRayCount;					// Number of vertical rays
+	protected int horizontalRayCount = 4;			// Number of horizontal rays
+	protected int verticalRayCount = 4;				// Number of vertical rays
+	protected float horizontalRaySpacing;			// The distance between two adjacent horizontal rays
+	protected float verticalRaySpacing;				// The distance between two adjacent vertical rays
 
 	public BoxCollider collider;
 	public RaycastOrigins raycastOrigins;
@@ -44,13 +45,13 @@ public class RaycastController extends MonoBehaviour {
 		// Calculating rays
 		
 		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
-		horizontalRaySpacing = (collider.getHeight() - 2*skinWidth) / (horizontalRayCount - 1);
-		verticalRaySpacing = (collider.getWidth() - 2*skinWidth) / (verticalRayCount - 1);
+		horizontalRaySpacing = (collider.getWidth() - 2*skinWidth) / (horizontalRayCount - 1);
+		verticalRaySpacing = (collider.getHeight() - 2*skinWidth) / (verticalRayCount - 1);
 	}
 
 
 	public void updateRayCastOrigins() {
-		// Code pas super lisible avec Java, mais en réalité pas compliqué...
+		// Code pas super lisible en Java, mais en réalité pas compliqué...
 		// "Not very readable"... you bet !
 		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
 		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);

@@ -30,27 +30,40 @@ public final class Annex {
 	}
 
 
-	/**
-	 * Indicates if the line segments [A; B] and [C; D] do intersect.
-	 * TODO gérer le cas de colinéarité
+	/*
+	 * Indicates if the line segments [A; B] and [C; D] do intersect in the case ABC are not aligned.
+	 * This method is used  
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
 	 */
-	public static boolean checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
-		/* Explication:
-		 * When ABC not aligned, if CD = w1.CA + w2.CB, then
-		 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
-		 */
-		float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
-				((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
-		float w2 = (D.y - C.y - w1*(B.y - C.y)) /
-				(A.y - C.y);
-		return w1>=0 && w2>=0 && w1+w2>=1;
-		
-		
-		/* 
-		 * Si jamais le cas colinéaire n'est pas pris en compte pour les collision, alors
-		 * bloc try qui échouera si colinéarité
-		 * et bloc catch qui dit osef
-		 */
+	public static Vector2 checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+		try {
+			/* Explication:
+			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
+			 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
+			 */
+			float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
+					((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
+			float w2 = (D.y - C.y - w1*(B.y - C.y)) / (A.y - C.y);
+			
+			if (w1>=0 && w2>=0 && w1+w2>=1) {
+				// In the case of intersection, return the intersection point
+				float q = A.x*B.y - A.y*B.x;
+				float r = C.x*D.y - C.y*D.x;
+				float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
+				
+				return new Vector2(
+						(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
+						(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
+			}
+			return null;
+		} catch (ArithmeticException e) {		// Happens when ABC are colinear
+			return null;
+		}
 	}
 
 
@@ -146,7 +159,7 @@ public final class Annex {
 		float num5 = (currentVelocity.value + num * num4) * deltaTime;
 		currentVelocity.value = (currentVelocity.value - num * num5) * num3;
 		float num6 = target + (num4 + num5) * num3;
-		
+
 		if ((target > current) == (num6 > target)) {
 			num6 = target;
 			currentVelocity.value = 0f;

@@ -14,7 +14,8 @@ import javafx.scene.image.ImageView;
 import levels.Tile.TileType;
 
 /**
- * Parser object designed to transform a level as a txt file into a Level object
+ * This class represents a level with a matrix of Tiles:
+ * 	each case of the grid stores the type of tile it contains
  *
  * @author matthias
  *
@@ -25,16 +26,15 @@ public class Level {
 	 * The grid of Tiles,
 	 * for the physics of the world
 	 */
-	public InfoTile[][] infoTileMatrix;
+	public TileType[][] tileMatrix;
 
 	/**
-	 * List of Tiles,
-	 * for rendering only
+	 * List of Tiles, used for rendering only
 	 */
 	public Tile[] tileList;
-
+    
 	/**
-	 * The HashMap used to link the charccters in the txt file to the game
+	 * The HashMap used to link the characters in the txt file to the game
 	 * representation
 	 */
 	private static HashMap<Character, TileType> associations;
@@ -145,7 +145,7 @@ public class Level {
 		for (char[] line: tilesList) {
 			max = Math.max(line.length, max);
 		}
-		infoTileMatrix = new InfoTile[tilesList.size()][max];
+		tileMatrix = new TileType[tilesList.size()][max];
 		// then we fill infoTileMatrix !
 
 		int j;
@@ -153,7 +153,7 @@ public class Level {
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {
-				infoTileMatrix[i][j] = new InfoTile(associations.get(c));
+				tileMatrix[i][j] = associations.get(c);
 				j++;
 			}
 		}
@@ -167,8 +167,8 @@ public class Level {
 	 */
 	public void toLevel() {
 		// Variables used
-		int max_i = infoTileMatrix.length - 1; // height of the char[][]
-		int max_j = infoTileMatrix[0].length - 1; // width of the char[][]
+		int max_i = tileMatrix.length - 1; // height of the char[][]
+		int max_j = tileMatrix[0].length - 1; // width of the char[][]
 
 		/*
 		 * Now, the objects...
@@ -239,7 +239,7 @@ public class Level {
 			for (int j = 0; j < max_j + 1; j++) {
 				TileType type;
 				try {
-					type = infoTileMatrix[i][j].tileType;
+					type = tileMatrix[i][j];
 				} catch (NullPointerException exception) {
 					type = TileType.EMPTY;
 				}
@@ -288,7 +288,7 @@ public class Level {
 					    	 */
 					        if (((curRow == i && curCol != j) ||
 					        		(curRow != i && curCol == j))
-					        		&& (infoTileMatrix[curRow][curCol].tileType != TileType.EMPTY)) {
+					        		&& (tileMatrix[curRow][curCol] != TileType.EMPTY)) {
 					        	nbrDirectNeighbours ++;
 					        	// then we detect where the neighbours are
 					        	if (curRow > i) {
@@ -473,14 +473,13 @@ public class Level {
 
 
 
-	@Override
-	public String toString() {
+	@Override public String toString() {
 		String level_parser_txt = "";
 		String line;
-		for (InfoTile[] typeline: infoTileMatrix) {
+		for (TileType[] typeline: tileMatrix) {
 			line = "";
-			for (InfoTile type: typeline) {
-				line = line + type.tileType;
+			for (TileType type: typeline) {
+				line = line + type;
 			}
 			level_parser_txt = level_parser_txt + "\n" + line;
 		}
@@ -491,7 +490,7 @@ public class Level {
 
 	// For now, no indirect (on a diagonal) neighbour
 	/**
-	 * @@@ doc
+	 * @@@ TODO doc
 	 *
 	 * @author matthias
 	 *
