@@ -17,6 +17,7 @@ public class PlayerInput {
 	 */
 	public Vector2 directionnalInput = Vector2.ZERO();
 
+	//KeyEvent.getEventType returns the event type
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {

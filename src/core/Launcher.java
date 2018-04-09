@@ -76,7 +76,7 @@ public class Launcher extends Application {
 		gc.drawImage(background, 0, 0);
 
 		PlayerInput playerInput = new PlayerInput();
-		
+
 		GameInformation gameInformation = new GameInformation();
 
 
