@@ -168,7 +168,7 @@ public class GameEngine {
 					ray.collision(gameObject);
 				}
 			}
-
+	
 
 			// Collisions with tiles
 
