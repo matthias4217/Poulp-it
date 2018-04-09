@@ -77,7 +77,7 @@ public class Launcher extends Application {
 		gc.drawImage(background, 0, 0);
 
 		PlayerInput playerInput = new PlayerInput();
-		
+
 		GameInformation gameInformation = new GameInformation();
 
 
@@ -94,9 +94,7 @@ public class Launcher extends Application {
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
 
-				try {
-					gameEngine.update(deltaTime, playerInput, gameInformation);
-				} catch (InvalidArgumentsException e) {	e.printStackTrace();	}
+				gameEngine.update(deltaTime, playerInput, gameInformation);
 
 				graphicManager.render(gc);
 

@@ -54,6 +54,7 @@ public abstract class GameObject {
 	 *
 	 * @return		an empty list by default (if not overridden)
 	 */
+	 @Deprecated
 	protected static LinkedList<MonoBehaviour> generateScriptsList() {
 		return new LinkedList<MonoBehaviour>();
 	}
@@ -108,7 +109,7 @@ public abstract class GameObject {
 	 * @param gameInformation
 	 * @throws InvalidArgumentsException
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput gameInformation) {
 		updateAllScripts(deltaTime, gameInformation);
 	}
 
@@ -118,7 +119,7 @@ public abstract class GameObject {
 	 * @param gameInformation 	- Info that the Launcher sends to the GameManager
 	 * @throws InvalidArgumentsException
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
+	protected final void updateAllScripts(float deltaTime, PlayerInput gameInformation) {
 		for (MonoBehaviour script: scripts) {
 			script.update(deltaTime, gameInformation);
 		}

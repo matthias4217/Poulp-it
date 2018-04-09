@@ -5,7 +5,8 @@ import core.util.*;
 import core.exceptions.InvalidArgumentsException;
 
 /**
- * TODO document here
+ * This script contains all movement parameters of a Player, and describes its general behaviour.
+ * It relies on a Controller script which manages the movement.
  *
  * @author Sebastian Lague, arranged by Raph
  *
@@ -41,6 +42,7 @@ public class PlayerScript extends MonoBehaviour {
 	Controller controller;
 
 
+	/* Constructor */
 	public PlayerScript() {}
 
 
@@ -49,13 +51,12 @@ public class PlayerScript extends MonoBehaviour {
 		controller = (Controller) support.scripts.get(1);		// XXX
 
 		gravity = (float) (/*-*/2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-		gravity = 0f;
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput) {
 		calculateVelocity (deltaTime, playerInput.directionnalInput);
 		handleWallSliding (deltaTime, playerInput.directionnalInput);
 

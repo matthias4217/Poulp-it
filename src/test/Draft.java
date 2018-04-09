@@ -12,7 +12,7 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		System.out.println(test(1, 2, 5));
+		System.out.println(5/0);
 		
 		
 		

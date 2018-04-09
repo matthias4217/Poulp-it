@@ -1,11 +1,11 @@
 package core.util;
 
+import content.GameObject;
 import core.exceptions.InvalidArgumentsException;
 
 /**
  * This class represents a Ray, which is used to detect collisions with GameObjects.
- * A Ray has a finite length.
- * 
+ * A Ray is always a pure vertical or pure horizontal line.
  * In practice, what is stored are simply two points.
  * 
  * @author Raph
@@ -13,9 +13,14 @@ import core.exceptions.InvalidArgumentsException;
  */
 public class Ray {
 	
-	public Vector2 originPoint;
-	public Vector2 endingPoint;
-	
+	private Vector2 originPoint;
+	private Vector2 endingPoint;
+
+	public Vector2 getEndingPoint() {
+		return endingPoint;
+	}
+
+
 	/**
 	 * @param originPoint
 	 * @param direction
@@ -23,13 +28,61 @@ public class Ray {
 	 * 
 	 * @throws InvalidArgumentsException if direction is null
 	 */
-	public Ray(Vector2 originPoint, Vector2 direction, float length) throws InvalidArgumentsException {
-		if (direction == Vector2.ZERO()) {
-			throw new InvalidArgumentsException("direction vector is null");
-		}
+	public Ray(Vector2 originPoint, Direction dir, float length) {
 		this.originPoint = originPoint;
-		this.endingPoint = originPoint.add(direction.normalize().multiply(length));
+		switch (dir) {
+		case UP:
+			this.endingPoint = originPoint.add(new Vector2(0, length));
+			break;
+		case DOWN:
+			this.endingPoint = originPoint.add(new Vector2(0, -length));
+			break;
+		case LEFT:
+			this.endingPoint = originPoint.add(new Vector2(-length, 0));
+			break;
+		case RIGHT:
+			this.endingPoint = originPoint.add(new Vector2(length, 0));
+			break;
+		default:
+			break;
+		}
+		
 	}
 
+
+	/**
+	 * Check if there is a collision between this ray and a GameObject.
+	 * If this is the case, updates this ray by setting its endingPoint to the intersection point.
+	 * 
+	 * @param gameObject	- The gameObject to check collision with
+	 */
+	public void collision(GameObject gameObject) {
+		Collider collider = gameObject.collider;
+		if (collider == null) {
+			return;
+		}
+		for (int i = 0; i < collider.getNbPoints(); i++) {
+			//
+			//Annex.checkcollider.getPoint(i)
+			
+			
+		}
+
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	public enum Direction {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
 
 }

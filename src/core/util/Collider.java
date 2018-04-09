@@ -18,11 +18,11 @@ import core.exceptions.InvalidArgumentsException;
 public class Collider {
 
 	protected Vector2[] pointsArray;
-	
+
 	public Vector2 getPoint(int i) {
 		return pointsArray[i];
 	}
-	
+
 	protected void setPointsArray(Vector2[] pointsArray) {
 		/* Used by subclass BoxCollider */
 		this.pointsArray = pointsArray;
@@ -49,6 +49,7 @@ public class Collider {
 	protected Collider() {
 		/* This constructor is only used by the subclass BoxCollider. */
 	}
+
 
 
 
