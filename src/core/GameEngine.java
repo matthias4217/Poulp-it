@@ -153,7 +153,7 @@ public class GameEngine {
 		// Now we traverse the tiles line from tileOrigin to tileEnding.
 
 		// Moving horizontally or vertically?
-		int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1;
+		int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1; 
 		int fixed = tileOrigin[1-var];		// The index of the column or row which is fixed
 
 		int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? 1 : -1;
