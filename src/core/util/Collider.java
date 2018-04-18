@@ -22,6 +22,10 @@ import javafx.scene.paint.Color;
 // Not sure if necessary =/
 public class Collider /*implements Renderable*/ {
 
+	public static final Color RENDER_COLOR = Color.GREEN;
+
+
+
 	protected Vector2[] pointsArray;
 	protected int nbPoints;
 
@@ -74,7 +78,7 @@ public class Collider /*implements Renderable*/ {
 			yPoints[i] = Launcher.WINDOW_HEIGHT - center.y - pointsArray[i].y;
 		}
 
-		gc.setStroke(Color.GREEN);
+		gc.setStroke(RENDER_COLOR);
 		gc.strokePolygon(xPoints, yPoints, nbPoints);
 	}
 
