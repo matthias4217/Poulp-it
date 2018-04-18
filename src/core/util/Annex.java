@@ -151,6 +151,9 @@ public final class Annex {
 	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
 			float smoothTime, float deltaTime) {
 
+		if (smoothTime == 0) {		// If no damping
+			return target;
+		}
 		float num = 2f / smoothTime;
 		float num2 = num * deltaTime;
 		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);

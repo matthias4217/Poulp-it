@@ -170,7 +170,7 @@ public class Controller extends RaycastController {
 			float directionX = Math.signum(moveAmount.x);
 			rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
 
-			
+
 			Vector2 rayOrigin = support.position.add(
 					((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight));
 			rayOrigin.translate(Vector2.UP().multiply(moveAmount.y));
