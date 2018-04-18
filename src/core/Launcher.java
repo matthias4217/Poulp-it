@@ -7,6 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import java.awt.Dimension;
@@ -127,11 +129,12 @@ public class Launcher extends Application {
 
 				timeToFramerateDisplay -= deltaTime;
 				if (timeToFramerateDisplay <= 0) {
-					framerate = (int) (1 / deltaTime); 
-					timeToFramerateDisplay = 0.2f;
+					framerate = Math.min(60, (int) (1 / deltaTime)); 
+					timeToFramerateDisplay = 0.1f;
 				}
-				gc.setStroke(Color.LIME);
-				gc.strokeText(Integer.toString(framerate), 10, 20);
+				gc.setFont(Font.font("Helvetica", FontWeight.SEMI_BOLD, 12));
+				gc.setFill(Color.LIME);
+				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
 		timer.start();
