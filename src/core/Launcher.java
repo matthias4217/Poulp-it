@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import java.awt.Dimension;
@@ -71,12 +72,12 @@ public class Launcher extends Application {
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 2;
+		int nbPlayers = 1;
 		String level = "level0";
 		gameEngine.init(nbPlayers, level);
 
 		PlayerInput playerInput = new PlayerInput();
-		
+
 		/* 
 		 * gameInformation contains the information which is sent top the clientd each frame.
 		 * It is updated each frame by the GameEngine.
@@ -95,14 +96,16 @@ public class Launcher extends Application {
 				gc.strokePolyline(xPoints, yPoints, 3);
 			}
 		};
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		AnimationTimer timer = new AnimationTimer() {
 			long oldNow = System.nanoTime();
+			float timeToFramerateDisplay = 0f;
+			int framerate;
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 
@@ -121,6 +124,14 @@ public class Launcher extends Application {
 
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+				timeToFramerateDisplay -= deltaTime;
+				if (timeToFramerateDisplay <= 0) {
+					framerate = (int) (1 / deltaTime); 
+					timeToFramerateDisplay = 0.2f;
+				}
+				gc.setStroke(Color.LIME);
+				gc.strokeText(Integer.toString(framerate), 10, 20);
 			}
 		};
 		timer.start();

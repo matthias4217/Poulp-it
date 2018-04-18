@@ -2,7 +2,6 @@ package levels;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
-import core.Launcher;
 import core.util.Vector2;
 
 /**
@@ -11,7 +10,6 @@ import core.util.Vector2;
  * @author matthias
  *
  */
-
 public class Tile {
 
 	/**
