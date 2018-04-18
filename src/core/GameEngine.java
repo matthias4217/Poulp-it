@@ -92,6 +92,7 @@ public class GameEngine {
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);

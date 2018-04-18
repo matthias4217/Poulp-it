@@ -14,8 +14,7 @@ import content.GameObject;
  */
 public class GraphicManager {
 
-
-	// @@@ TODO
+	public static boolean debugVisible = true;
 
 
 
@@ -35,9 +34,11 @@ public class GraphicManager {
 			System.out.println("Rendering GameObject " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc, windowWidth, windowHeight);
 		}
-		
-		for (Renderable gizmo: GameEngine.debugElements) {
-			gizmo.render(gc, windowWidth, windowHeight);
+
+		if (debugVisible) {
+			for (Renderable gizmo: GameEngine.debugElements) {
+				gizmo.render(gc, windowWidth, windowHeight);
+			}
 		}
 
 

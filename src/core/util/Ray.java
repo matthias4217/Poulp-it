@@ -16,7 +16,9 @@ import javafx.scene.paint.Color;
  */
 public class Ray implements Renderable {
 	
-	public static final Color renderColor = Color.RED;
+	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
+	public static final float RENDER_LENGTH_MULTIPLIER = 10;		// The lenght multiplier for screen rendering 
+	
 	
 	
 	private Vector2 originPoint;
@@ -82,8 +84,11 @@ public class Ray implements Renderable {
 	 * Render this ray in the GraphicContext gc
 	 */
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
-		gc.setStroke(renderColor);
-		gc.strokeLine(originPoint.x, windowHeight - originPoint.y, endingPoint.x, windowHeight - endingPoint.y);
+		gc.setStroke(RENDER_COLOR);
+		gc.strokeLine(originPoint.x,
+				windowHeight - originPoint.y,
+				originPoint.x + RENDER_LENGTH_MULTIPLIER * (endingPoint.x - originPoint.x),
+				windowHeight - (originPoint.y + RENDER_LENGTH_MULTIPLIER * (endingPoint.y - originPoint.y)));
 	}
 
 

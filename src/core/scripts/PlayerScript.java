@@ -14,7 +14,7 @@ import core.exceptions.InvalidArgumentsException;
 // TODO: Wall slide not activated when not moving toward the wall (preferably enable design choice)
 public class PlayerScript extends MonoBehaviour {
 
-	public static float moveSpeed = 200f;
+	public static float moveSpeed = 500f;
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;

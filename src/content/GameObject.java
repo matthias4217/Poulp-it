@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import core.GameEngine;
+import core.GraphicManager;
 import core.Launcher;
 import core.PlayerInput;
 import core.Renderable;
@@ -126,7 +127,9 @@ public abstract class GameObject implements Renderable {
 	 */
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		gc.drawImage(sprite, position.x, windowHeight - position.y);
-		collider.render(gc, position);
+		if (GraphicManager.debugVisible) {
+			collider.render(gc, position);
+		}
 	}
 
 
