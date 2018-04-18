@@ -11,9 +11,7 @@ import javafx.animation.AnimationTimer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
-import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
-import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
@@ -25,14 +23,14 @@ import core.util.Vector2;
  */
 public class Launcher extends Application {
 
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
 	/**
-	 * SCALE is the variable which may need some adjustments.
+	 * SCALE is the variable which may need some adjustments.	@@@ XXX
 	 */
-	static final double SCALE = 0.9;
-	double WINDOW_WIDTH = SCALE * screenSize.getWidth();
-	double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	static final float SCALE = 0.9f;
+	public static float WINDOW_WIDTH = (float) (SCALE * screenSize.getWidth());
+	public static float WINDOW_HEIGHT = (float) (SCALE * screenSize.getHeight());
 
 	static final String WINDOW_TITLE = "Hook Battle";
 
@@ -46,6 +44,7 @@ public class Launcher extends Application {
 		 * - waiting for Platform.exit() or last window closed
 		 * - stop() is called
 		 */
+		System.out.println("Starting the program");
 		launch(args);
 	}
 
@@ -73,22 +72,43 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
-		gameEngine.init(nbPlayers, "level0");
-		gc.drawImage(background, 0, 0);
+		String level = "level0";
+		gameEngine.init(nbPlayers, level);
 
 		PlayerInput playerInput = new PlayerInput();
-
+		
+		/* 
+		 * gameInformation contains the information which is sent top the clientd each frame.
+		 * It is updated each frame by the GameEngine.
+		 */
 		GameInformation gameInformation = new GameInformation();
 
 
+		AnimationTimer timerTest = new AnimationTimer() {
+			@Override public void handle(long now) {
+				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+				double[] xPoints = {50.0, 75.0, 100.0};
+				double[] yPoints = {50.0, 200.0, 50.0};
+				gc.strokePolyline(xPoints, yPoints, 3);
+			}
+		};
+		
+		
+		
+		
+		
+		
 		AnimationTimer timer = new AnimationTimer() {
 			long oldNow = System.nanoTime();
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 
+				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
+
 				gc.drawImage(background, 0, 0);
 
 				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+				stage.getScene().setOnKeyReleased(playerInput.eventHandler);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
@@ -97,8 +117,6 @@ public class Launcher extends Application {
 				gameEngine.update(deltaTime, playerInput, gameInformation);
 
 				graphicManager.render(gc);
-
-				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 			}
 		};
 		timer.start();

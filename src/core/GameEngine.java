@@ -8,7 +8,6 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.Player;
-import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
 import core.util.Ray.Direction;
@@ -83,11 +82,11 @@ public class GameEngine {
 		//InfoTile[][] grid = level.infoTileMatrix;
 
 
-		// Instanciating players and adding them to the players array
+		// Instantiating players and adding them to the players array
 		System.out.println("Instanciating players...");
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2(500*(i+1), 50*(i+1));
+			Vector2 spawnPosition = new Vector2(Launcher.WINDOW_WIDTH / 2, Launcher.WINDOW_HEIGHT / 2);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);

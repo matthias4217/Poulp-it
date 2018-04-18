@@ -2,6 +2,7 @@ package core.util;
 
 import content.GameObject;
 import core.exceptions.InvalidArgumentsException;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * This class represents a Ray, which is used to detect collisions with GameObjects.
@@ -72,7 +73,13 @@ public class Ray {
 		
 	}
 	
-	
+	/**
+	 * Draw this ray in the GraphicContext gc
+	 * 
+	 */
+	void draw(GraphicsContext gc) {
+		gc.strokeLine(originPoint.x, originPoint.y, endingPoint.x, endingPoint.y);
+	}
 	
 	
 	

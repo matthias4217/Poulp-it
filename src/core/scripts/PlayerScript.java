@@ -51,6 +51,7 @@ public class PlayerScript extends MonoBehaviour {
 		controller = (Controller) support.scripts.get(1);		// XXX
 
 		gravity = (float) (/*-*/2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
+		gravity = 0;
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}

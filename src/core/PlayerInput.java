@@ -34,7 +34,6 @@ public class PlayerInput {
 				directionnalInput = Vector2.DOWN();
 				break;
 			case SPACE:
-
 				break;
 			default:
 				directionnalInput = Vector2.ZERO();
