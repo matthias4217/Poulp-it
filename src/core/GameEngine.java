@@ -35,6 +35,11 @@ public class GameEngine {
 	static LinkedList<GameObject> allGameObjects = new LinkedList<GameObject>();
 
 	/**
+	 * A list of all elements that can be rendered for debug purpose (ex: rays)
+	 */
+	static LinkedList<Renderable> debugElements = new LinkedList<Renderable>();
+
+	/**
 	 * A convenient access to the players (since the array contains references)
 	 */
 	static Player[] players;
@@ -86,7 +91,7 @@ public class GameEngine {
 		System.out.println("Instanciating players...");
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2(Launcher.WINDOW_WIDTH / 2, Launcher.WINDOW_HEIGHT / 2);
+			Vector2 spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -111,7 +116,8 @@ public class GameEngine {
 	 */
 	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) {
 
-		System.out.println("Current GameInformation:" + playerInput);
+		System.out.println("Current GameInformation: " + gameInformation);
+		debugElements.clear();
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
@@ -141,11 +147,15 @@ public class GameEngine {
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask) {
+		
 		Ray ray = new Ray(rayOrigin, direction, length);
+		debugElements.add(ray);
+		
 		// The coordinates in the grid this ray is casted from
 		int[] tileOrigin = toGridCoordinates(rayOrigin);
 
-		System.out.println("Raycast from tile: " + tileOrigin[0] + ", " + tileOrigin[1]);
+		System.out.println("Raycast from tile: (" + tileOrigin[0] + ", " + tileOrigin[1] + ")");
+		/*
 		// The coordinates in the grid this ray ends
 		int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
 
@@ -181,8 +191,9 @@ public class GameEngine {
 
 
 
-
+		 */
 		return null;
+		
 	}
 
 	/**

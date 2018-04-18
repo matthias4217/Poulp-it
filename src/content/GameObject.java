@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import core.GameEngine;
 import core.Launcher;
 import core.PlayerInput;
+import core.Renderable;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import core.scripts.MonoBehaviour;
@@ -18,7 +19,7 @@ import core.util.*;
  * @author Raph
  *
  */
-public abstract class GameObject {
+public abstract class GameObject implements Renderable {
 
 	/**
 	 * The current position in global coordinates of this GameObject
@@ -111,11 +112,11 @@ public abstract class GameObject {
 	/**
 	 *
 	 * @param deltaTime			- the time in seconds it took to complete the last frame
-	 * @param gameInformation 	- Info that the Launcher sends to the GameManager
+	 * @param playerInput 	- Info that the Launcher sends to the GameManager
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput gameInformation) {
+	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput) {
 		for (MonoBehaviour script: scripts) {
-			script.update(deltaTime, gameInformation);
+			script.update(deltaTime, playerInput);
 		}
 	}
 
@@ -123,8 +124,8 @@ public abstract class GameObject {
 	/**
 	 * Render this Sprite on the GraphicsContext gc.
 	 */
-	public void render(GraphicsContext gc) {
-		gc.drawImage(sprite, position.x, Launcher.WINDOW_HEIGHT -  position.y);
+	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+		gc.drawImage(sprite, position.x, windowHeight - position.y);
 		collider.render(gc, position);
 	}
 

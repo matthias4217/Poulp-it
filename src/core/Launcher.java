@@ -28,9 +28,9 @@ public class Launcher extends Application {
 	/**
 	 * SCALE is the variable which may need some adjustments.	@@@ XXX
 	 */
-	static final float SCALE = 0.9f;
-	public static float WINDOW_WIDTH = (float) (SCALE * screenSize.getWidth());
-	public static float WINDOW_HEIGHT = (float) (SCALE * screenSize.getHeight());
+	static final double SCALE = 0.9f;
+	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
+	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
 	static final String WINDOW_TITLE = "Hook Battle";
 
@@ -84,6 +84,9 @@ public class Launcher extends Application {
 		GameInformation gameInformation = new GameInformation();
 
 
+		/*
+		 * An AnimationTimer used for testing purpose. 
+		 */
 		AnimationTimer timerTest = new AnimationTimer() {
 			@Override public void handle(long now) {
 				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -116,7 +119,8 @@ public class Launcher extends Application {
 
 				gameEngine.update(deltaTime, playerInput, gameInformation);
 
-				graphicManager.render(gc);
+				System.out.println("Rendering...");
+				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 			}
 		};
 		timer.start();

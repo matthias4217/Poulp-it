@@ -1,6 +1,9 @@
 package core.util;
 
 import java.util.Arrays;
+
+import core.Launcher;
+import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,7 +20,7 @@ import javafx.scene.paint.Color;
  *
  */
 // Not sure if necessary =/
-public class Collider {
+public class Collider /*implements Renderable*/ {
 
 	protected Vector2[] pointsArray;
 	protected int nbPoints;
@@ -68,7 +71,7 @@ public class Collider {
 		double[] yPoints = new double[nbPoints]; 
 		for (int i = 0; i < nbPoints; i++) {
 			xPoints[i] = center.x + pointsArray[i].x;
-			yPoints[i] = center.y + pointsArray[i].y;
+			yPoints[i] = Launcher.WINDOW_HEIGHT - center.y - pointsArray[i].y;
 		}
 
 		gc.setStroke(Color.GREEN);
@@ -78,7 +81,7 @@ public class Collider {
 
 
 	@Override public String toString() {
-		return "Collider [" + nbPoints + " points: "	+ Arrays.toString(pointsArray);
+		return "Collider[" + nbPoints + " points: "	+ Arrays.toString(pointsArray) + "]";
 	}
 
 

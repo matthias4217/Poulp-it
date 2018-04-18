@@ -36,7 +36,7 @@ public class Player extends GameObject {
 				new Image(SPRITE_PATH /*, 64, 64, false, false*/),
 				Layer.DEFAULT,
 				Tag.DEFAULT,
-				new BoxCollider(50, 100),		//
+				new BoxCollider(64, 64),		//
 
 				new PlayerScript(),
 				new Controller());
@@ -54,7 +54,7 @@ public class Player extends GameObject {
 
 
 	@Override public String toString() {
-		return "Player [HP: " + hp + "; Position: " + position + "; Collider " + collider + "]";
+		return "Player [HP: " + hp + "; Position: " + position + "; " + collider + "]";
 	}
 
 }

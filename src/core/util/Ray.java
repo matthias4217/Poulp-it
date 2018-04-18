@@ -1,8 +1,10 @@
 package core.util;
 
 import content.GameObject;
+import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * This class represents a Ray, which is used to detect collisions with GameObjects.
@@ -12,7 +14,10 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Raph
  * 
  */
-public class Ray {
+public class Ray implements Renderable {
+	
+	public static final Color renderColor = Color.RED;
+	
 	
 	private Vector2 originPoint;
 	private Vector2 endingPoint;
@@ -74,17 +79,17 @@ public class Ray {
 	}
 	
 	/**
-	 * Draw this ray in the GraphicContext gc
-	 * 
+	 * Render this ray in the GraphicContext gc
 	 */
-	void draw(GraphicsContext gc) {
-		gc.strokeLine(originPoint.x, originPoint.y, endingPoint.x, endingPoint.y);
+	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+		gc.setStroke(renderColor);
+		gc.strokeLine(originPoint.x, windowHeight - originPoint.y, endingPoint.x, windowHeight - endingPoint.y);
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public enum Direction {
 		UP,
 		DOWN,
