@@ -157,7 +157,7 @@ public class GameEngine {
 		int[] tileOrigin = toGridCoordinates(rayOrigin);
 
 		System.out.println("Raycast from tile: (" + tileOrigin[0] + ", " + tileOrigin[1] + ")");
-		/*
+		
 		// The coordinates in the grid this ray ends
 		int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
 
@@ -193,7 +193,7 @@ public class GameEngine {
 
 
 
-		 */
+		 
 		return null;
 		
 	}

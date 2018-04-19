@@ -28,7 +28,7 @@ public class Level {
 	 */
 	private static HashMap<Character, TileType> associations;
 
-	private void initializeAssociations() {
+	private static void initializeAssociations() {
 		associations = new HashMap<Character, TileType>();
 		associations.put(' ', TileType.EMPTY);
 		associations.put('x', TileType.SQUARE);
@@ -62,17 +62,17 @@ public class Level {
 
 
 	/**
+	 * Constructor
 	 *
 	 * @param file
 	 * @throws IOException
 	 */
 	public Level(String file) throws IOException {
+		initializeAssociations();
 		/*
 		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
-		initializeAssociations();
-
 		Path filePath = FileSystems.getDefault().getPath(file);
 		System.out.println("Path to the level: " + filePath);
 
@@ -85,7 +85,7 @@ public class Level {
 		 * the level is 'level:' and then enclosed in brackets
 		 */
 
-		boolean inLevel = false; // false outside the brackets, true inside
+		boolean inLevel = false;		// false outside the brackets, true inside
 		int lineNbr = 0;
 		List<char[]> tilesList = new ArrayList<char[]>();
 
@@ -132,6 +132,7 @@ public class Level {
 				}
 			}
 		}
+
 		/*
 		 * Now, we have to convert tilesList, an ArrayList<char[]>
 		 * to levelGrid, a char[][]
@@ -474,17 +475,15 @@ public class Level {
 
 
 
-	@Override public String toString() {
-		String level_parser_txt = "";
-		String line;
-		for (TileType[] typeline: tileMatrix) {
-			line = "";
-			for (TileType type: typeline) {
-				line = line + type;
+	@Override public String toString() {		//
+		String result = "";
+		for (TileType[] typeLine: tileMatrix) {
+			for (TileType type: typeLine) {
+				result += type;
 			}
-			level_parser_txt = level_parser_txt + "\n" + line;
+			result += System.lineSeparator();
 		}
-		return level_parser_txt;
+		return result;
 	}
 
 

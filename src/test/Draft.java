@@ -37,7 +37,7 @@ public class Draft {
 		Vector2 C = new Vector2(3, -1);
 		Vector2 D = new Vector2(3, 3);
 
-		if (Annex.checkSegmentIntersection(A, B, C, D) ) {
+		if (Annex.checkSegmentIntersection(A, B, C, D) != null ) {
 			System.out.println("Intersection");
 		} else {
 			System.out.println("Nope");

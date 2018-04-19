@@ -28,6 +28,7 @@ public class Tile {
 	/*
 	 * It is linked to an image, but the image must not be duplicated;
 	 * for now I don't care, just to test the implementation.
+	 * XXX
 	 */
 	public ImageView sprite;
 
@@ -39,6 +40,8 @@ public class Tile {
 
 
 	/**
+	 * Constructor
+	 * 
 	 * @param xInt			The x coordinate on a grid of this Tile
 	 * @param yInt			The y coordinate on a grid of this Tile
 	 * @param imageView		The appearance of this Tile				@@@ Can be automatically linked to TileType
@@ -63,9 +66,8 @@ public class Tile {
 
 
 
-	@Override
-	public String toString() {
-		return type.toString() + ": " + position.toString();
+	@Override public String toString() {
+		return type.toString() + ": " + position;
 	}
 
 
