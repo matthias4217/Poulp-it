@@ -26,16 +26,16 @@ public class Level {
 	 * The HashMap used to link the characters in the txt file to the game
 	 * representation
 	 */
-	private static HashMap<Character, TileType> associations;
+	private static HashMap<Character, TileType> ASSOCIATIONS;
 
 	private static void initializeAssociations() {
-		associations = new HashMap<Character, TileType>();
-		associations.put(' ', TileType.EMPTY);
-		associations.put('x', TileType.SQUARE);
-		associations.put('/', TileType.TRIANGLE_DOWN_RIGHT);
-		associations.put('\\', TileType.TRIANGLE_DOWN_LEFT);
-		associations.put('u', TileType.TRIANGLE_TOP_RIGHT);
-		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
+		ASSOCIATIONS = new HashMap<Character, TileType>();
+		ASSOCIATIONS.put(' ', TileType.EMPTY);
+		ASSOCIATIONS.put('x', TileType.SQUARE);
+		ASSOCIATIONS.put('/', TileType.TRIANGLE_DOWN_RIGHT);
+		ASSOCIATIONS.put('\\', TileType.TRIANGLE_DOWN_LEFT);
+		ASSOCIATIONS.put('u', TileType.TRIANGLE_TOP_RIGHT);
+		ASSOCIATIONS.put('v', TileType.TRIANGLE_TOP_LEFT);
 	}
 
 	/**
@@ -69,6 +69,7 @@ public class Level {
 	 */
 	public Level(String file) throws IOException {
 		initializeAssociations();
+
 		/*
 		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
@@ -99,7 +100,7 @@ public class Level {
 					 *
 					 *  As we can see, the last 'theme:' in the file wins !
 					 */
-					System.out.println("Adding theme...");
+					System.out.println("Adding theme...");		// TODO write the name of the theme read
 					theme = line.substring(THEME.length()).trim();
 					// TODO We need to check whether the theme is 'right' (=it exists)
 				}
@@ -114,7 +115,7 @@ public class Level {
 					}
 
 				}
-				else if (inLevel && line.trim().equals("}")) { 		// we are in the level
+				else if (inLevel && line.trim().equals("}")) {
 					System.out.println("Finished treating level");
 					inLevel = false;
 				}
@@ -155,7 +156,7 @@ public class Level {
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {
-				tileMatrix[i][j] = associations.get(c);
+				tileMatrix[i][j] = ASSOCIATIONS.get(c);
 				j++;
 			}
 		}
@@ -475,7 +476,7 @@ public class Level {
 
 
 
-	@Override public String toString() {		//
+	@Override public String toString() {		// Illisible...
 		String result = "";
 		for (TileType[] typeLine: tileMatrix) {
 			for (TileType type: typeLine) {

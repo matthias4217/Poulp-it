@@ -36,9 +36,9 @@ public class Ray implements Renderable {
 	 * 
 	 * @throws InvalidArgumentsException if direction is null
 	 */
-	public Ray(Vector2 originPoint, Direction dir, float length) {
+	public Ray(Vector2 originPoint, Direction direction, float length) {
 		this.originPoint = originPoint;
-		switch (dir) {
+		switch (direction) {
 		case UP:
 			this.endingPoint = originPoint.add(new Vector2(0, length));
 			break;

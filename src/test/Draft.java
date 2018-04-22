@@ -1,6 +1,8 @@
 package test;
 
 import core.util.*;
+import java.util.*;
+import content.*;
 import core.exceptions.InvalidArgumentsException;
 
 /**
@@ -12,10 +14,13 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		System.out.println(5/0);
+		Carrelage mabite1 = new Carrelage(2, 3);
+		Carrelage mabite2 = new Carrelage(2, 3);
+		Map<Carrelage, LinkedList<GameObject>> mep = new HashMap<Carrelage, LinkedList<GameObject>>();
 		
-		
-		
+		mep.put(mabite1, null);
+		System.out.println("mabite1 dans mep : " + mep.containsKey(mabite1));
+		System.out.println("mabite2 dans mep : " + mep.containsKey(mabite2));
 
 	}
 
