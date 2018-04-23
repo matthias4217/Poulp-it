@@ -67,11 +67,11 @@ public final class Annex {
 	}
 
 
+	// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
 
 	// Given three colinear Vector2s p, q, r, the function checks if
 	// Vector2 q lies on line segment 'pr'
-	boolean onSegment(Vector2 a, Vector2 b, Vector2 p)
-	{
+	boolean onSegment(Vector2 a, Vector2 b, Vector2 p) {
 		return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
 				b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
 	}
@@ -81,8 +81,7 @@ public final class Annex {
 	// 0 --> p, q and r are colinear
 	// 1 --> Clockwise
 	// -1 --> Counterclockwise
-	float orientation(Vector2 p, Vector2 q, Vector2 r)
-	{
+	float orientation(Vector2 p, Vector2 q, Vector2 r) {
 		// See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
 		// for details of below formula.
 		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
@@ -90,8 +89,7 @@ public final class Annex {
 
 	// The main function that returns true if line segment 'p1q1'
 	// and 'p2q2' intersect.
-	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
-	{
+	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2) {
 		// Find the four orientations needed for general and
 		// special cases
 		float o1 = orientation(p1, q1, p2);

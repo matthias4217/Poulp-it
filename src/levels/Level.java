@@ -49,18 +49,28 @@ public class Level {
 	 * The grid of Tiles,
 	 * for the physics of the world
 	 */
-	public TileType[][] tileMatrix;
+	private TileType[][] tileMatrix;
 
 	/**
 	 * List of Tiles, used for rendering only
 	 */
 	public Tile[] tileList;
 
-
 	private String theme;
 
 
-
+	/**
+	 * @param i
+	 * @param j
+	 * @return	the tile of coordinates (i, j)
+	 */
+	public TileType getTile(int i, int j) {
+		return tileMatrix[i][j];
+	}
+	
+	
+	
+	
 	/**
 	 * Constructor
 	 *
