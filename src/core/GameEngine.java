@@ -223,7 +223,7 @@ public class GameEngine {
 	 * @return the grid coordinates corresponding with the position of the point A
 	 */
 	private static int[] toGridCoordinates(Vector2 A) {
-		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor(Launcher.WINDOW_HEIGHT - A.y / tileSize)};
+		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor((Launcher.WINDOW_HEIGHT - A.y) / tileSize)};
 		return result;
 	}
 
