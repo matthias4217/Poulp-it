@@ -170,7 +170,7 @@ public class GameEngine {
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask) {
-		{	// FIXME
+		{
 			Ray ray = new Ray(rayOrigin, direction, length);
 			debugElements.add(ray);
 
@@ -180,10 +180,12 @@ public class GameEngine {
 			// The coordinates in the grid this ray ends
 			int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
 
-			System.out.println("Raycast from tile (" + tileOrigin[0] + ", " + tileOrigin[1] +
-					" to tile (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
+			System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
+					") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
+
 
 			// Now we traverse the tiles line from tileOrigin to tileEnding.
+			// Beware: generic code difficult to read...
 
 			// Moving horizontally (0) or vertically (1)?
 			int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1;
@@ -192,21 +194,17 @@ public class GameEngine {
 			// Moving which way?
 			int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? -1 : 1;
 
-			for (int k = tileOrigin[var]; k </* FIXME */ tileEnding[var]; k += increment) {	
+			for (int k = tileOrigin[var]; increment * (tileEnding[var] - k) >= 0; k += increment) {
 				// Setting the current tile
 				int currentTileX = (1-var)*k + var*fixed;
 				int currentTileY = var*k + (1-var)*fixed;
-				System.out.println("Current tile: " + currentTileX + ", " + currentTileY);
 
 				// Collisions with other GameObjects
 				for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 					//				ray.collision(gameObject);
 				}
 
-
 				// Collisions with the tile
-
-
 
 
 
@@ -225,7 +223,7 @@ public class GameEngine {
 	 * @return the grid coordinates corresponding with the position of the point A
 	 */
 	private static int[] toGridCoordinates(Vector2 A) {
-		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor(A.y / tileSize)};
+		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor(Launcher.WINDOW_HEIGHT - A.y / tileSize)};
 		return result;
 	}
 
