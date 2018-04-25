@@ -1,4 +1,4 @@
-package core.scripts;
+package content.scripts;
 
 import core.util.*;
 import content.Layer;

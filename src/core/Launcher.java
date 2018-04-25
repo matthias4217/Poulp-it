@@ -14,7 +14,10 @@ import javafx.animation.AnimationTimer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+
+import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
+import core.util.GameInformation;
 
 /**
  * This is the starting point of the program.
@@ -122,7 +125,11 @@ public class Launcher extends Application {
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
 				oldNow = now;
 
-				gameEngine.update(deltaTime, playerInput, gameInformation);
+				try {
+					gameEngine.update(deltaTime, playerInput, gameInformation);
+				} catch (InvalidArgumentsException e) {
+					e.printStackTrace();
+				}
 
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);

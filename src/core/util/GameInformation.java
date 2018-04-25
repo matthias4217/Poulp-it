@@ -1,4 +1,4 @@
-package core;
+package core.util;
 
 /**
  * This class encapsulates all the data required by the clients to display the current state of the game.

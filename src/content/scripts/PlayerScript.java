@@ -1,4 +1,4 @@
-package core.scripts;
+package content.scripts;
 
 import core.PlayerInput;
 import core.util.*;
@@ -57,7 +57,7 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput) {
+	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
 		calculateVelocity (deltaTime, playerInput.directionnalInput);
 		handleWallSliding (deltaTime, playerInput.directionnalInput);
 

@@ -1,11 +1,11 @@
-package core.scripts;
+package content.scripts;
 
 import core.GameEngine;
-import content.Layer;
-import content.Tag;
+import core.exceptions.InvalidArgumentsException;
 import core.util.*;
 import core.util.Ray.Direction;
-import core.exceptions.InvalidArgumentsException;
+import content.Layer;
+import content.Tag;
 
 /**
  * TODO Doc
@@ -33,13 +33,13 @@ public class Controller extends RaycastController {
 		collisions.faceDir = 1;
 	}
 
-	public void move(Vector2 moveAmount, boolean standingOnPlatform) {		// Called when not related to some inputs
+	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {		// Called when not related to some inputs
 		move(moveAmount, Vector2.ZERO(), standingOnPlatform);
 	}
-	public void move(Vector2 moveAmount, Vector2 input) {
+	public void move(Vector2 moveAmount, Vector2 input) throws InvalidArgumentsException {
 		move(moveAmount, input, false);
 	}
-	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) {
+	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
 		collisions.reset();
 		collisions.moveAmountOld = moveAmount;
@@ -66,7 +66,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void horizontalCollisions(Vector2 moveAmount) {
+	void horizontalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionX = collisions.faceDir;
 		float rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
 
@@ -123,7 +123,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void verticalCollisions(Vector2 moveAmount) {
+	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionY = Math.signum(moveAmount.y);
 		float rayLength = Math.abs(moveAmount.y) + skinWidth;		// The more we are moving, the longer the rays are
 
@@ -204,7 +204,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void descendSlope(Vector2 moveAmount) {
+	void descendSlope(Vector2 moveAmount) throws InvalidArgumentsException {
 		RaycastHit maxSlopeHitLeft = GameEngine.raycast(support.position.add(raycastOrigins.bottomLeft),
 				Direction.DOWN, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 		RaycastHit maxSlopeHitRight = GameEngine.raycast(support.position.add(raycastOrigins.bottomRight),

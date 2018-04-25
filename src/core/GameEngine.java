@@ -134,9 +134,11 @@ public class GameEngine {
 	 * @param deltaTime 		- the time in seconds it took to complete the last frame
 	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
 	 * @param gameInformation	- the current state of the game
+	 * @throws InvalidArgumentsException 
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation) {
+	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
+			throws InvalidArgumentsException {
 
 		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
