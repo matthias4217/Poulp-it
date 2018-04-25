@@ -199,14 +199,37 @@ public class GameEngine {
 				int currentTileX = (1-var)*k + var*fixed;
 				int currentTileY = var*k + (1-var)*fixed;
 
-				// Collisions with other GameObjects
+				// Collisions with other GameObjects	TODO
 				for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 					//				ray.collision(gameObject);
 				}
 
 				// Collisions with the tile
+<<<<<<< HEAD
 				
 
+=======
+				switch(level.getTile(currentTileX, currentTileY)) {
+				case EMPTY:
+					break;
+				case SQUARE:
+					
+					break;
+				case TRIANGLE_DOWN_LEFT:
+					
+					break;
+				case TRIANGLE_DOWN_RIGHT:
+				
+					break;
+				case TRIANGLE_TOP_LEFT:
+					
+					break;
+				case TRIANGLE_TOP_RIGHT:
+					
+					break;
+				default:
+				}
+>>>>>>> branch 'bubble2' of https://github.com/matthias4217/hardcore-rodeo-96
 
 
 
