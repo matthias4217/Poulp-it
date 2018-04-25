@@ -11,9 +11,9 @@ import content.Player;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
-import core.util.Ray.Direction;
+import core.util.Annex.Direction;
 import levels.Level;
-import levels.Tile;
+import levels.Tile.TileType;
 
 /**
  * Manages the flow of the game; one instance, located on the server.
@@ -70,7 +70,65 @@ public class GameEngine {
 	 */
 	static LinkedList<GameObject>[][] tileReferences;		// TODO set this each frame
 
-	public static final LinkedList<GameObject> emptyList = new LinkedList<GameObject>();	//
+
+
+
+
+
+
+	public static final LinkedList<GameObject> emptyList = new LinkedList<GameObject>();
+
+	/**
+	 * This Map associates each TileType with its associated Collider (considering tileSize)
+	 */
+	public static final Map<TileType, Collider> TILE_TO_COLLIDER = new HashMap<TileType, Collider>();
+
+	private static void initializeTILE_TO_COLLIDER() throws InvalidArgumentsException {
+		TILE_TO_COLLIDER.put(TileType.EMPTY, null);
+
+		Vector2[] squareColliderArray = {
+				Vector2.ZERO(),
+				new Vector2(tileSize, 0),
+				new Vector2(tileSize, -tileSize),
+				new Vector2(0, -tileSize)
+		};
+		TILE_TO_COLLIDER.put(TileType.SQUARE, new Collider(squareColliderArray));
+
+		Vector2[] triangle1ColliderArray = {
+				Vector2.ZERO(),
+				new Vector2(tileSize, 0),
+				new Vector2(0, -tileSize)
+		};
+		TILE_TO_COLLIDER.put(TileType.TRIANGLE_TOP_LEFT, new Collider(triangle1ColliderArray));
+
+		Vector2[] triangle2ColliderArray = {
+				Vector2.ZERO(),
+				new Vector2(tileSize, 0),
+				new Vector2(tileSize, -tileSize),
+		};
+		TILE_TO_COLLIDER.put(TileType.TRIANGLE_TOP_RIGHT, new Collider(triangle2ColliderArray));
+
+		Vector2[] triangle3ColliderArray = {
+				Vector2.ZERO(),
+				new Vector2(tileSize, -tileSize),
+				new Vector2(0, -tileSize)
+		};
+		TILE_TO_COLLIDER.put(TileType.TRIANGLE_DOWN_LEFT, new Collider(triangle3ColliderArray));
+
+		Vector2[] triangle4ColliderArray = {
+				new Vector2(tileSize, 0),
+				new Vector2(tileSize, -tileSize),
+				new Vector2(0, -tileSize)
+		};
+		TILE_TO_COLLIDER.put(TileType.TRIANGLE_DOWN_RIGHT, new Collider(triangle4ColliderArray));
+	}
+
+
+
+
+
+
+
 
 
 	/**
@@ -90,9 +148,11 @@ public class GameEngine {
 	 * @param nbPlayers
 	 * @param levelName
 	 * @throws IOException
+	 * @throws InvalidArgumentsException 
 	 */
 	@SuppressWarnings("unchecked")
-	public void init(int nbPlayers, String levelName) throws IOException {
+	public void init(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
+		initializeTILE_TO_COLLIDER();
 
 		// Importing the level
 		System.out.println("Beginning level importation...");
@@ -140,7 +200,7 @@ public class GameEngine {
 	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
-		System.out.println("Current GameInformation: " + gameInformation);
+//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
 
 		// Applying all GameManagers
@@ -177,15 +237,15 @@ public class GameEngine {
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask)
 			throws InvalidArgumentsException {		
 		RaycastHit result = null;
-		
+
 		Ray ray = new Ray(rayOrigin, direction, length);
 		debugElements.add(ray);
 
 		// The coordinates in the grid this ray is casted from
-		int[] tileOrigin = toGridCoordinates(rayOrigin);
+		int[] tileOrigin = toTileCoordinates(rayOrigin);
 
 		// The coordinates in the grid this ray ends
-		int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
+		int[] tileEnding = toTileCoordinates(ray.getEndingPoint());
 
 		System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
 				") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
@@ -206,30 +266,48 @@ public class GameEngine {
 			int currentTileX = (1-var)*k + var*fixed;
 			int currentTileY = var*k + (1-var)*fixed;
 
+
 			// Collisions with other GameObjects	TODO
+			
 			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
 
 
 			// Collisions with the tile
-			Collider collider = Tile.associatedCollider(level.getTile(currentTileX, currentTileY));
-			Vector2 hitPoint = ray.collision(collider);
 			
+			TileType tileTypeCurrent = level.getTile(currentTileX, currentTileY);
+			Collider colliderTile = TILE_TO_COLLIDER.get(tileTypeCurrent);
+			Vector2 colliderOrigin = toWorldCoordinates(currentTileX, currentTileY);
+			
+			Vector2 hitPoint = ray.collision(colliderTile, colliderOrigin);
+
 			if (hitPoint != null) {		// if there is a collision
 				result = new RaycastHit(null, ray.getLength(), null);
 			}
+
+
+
 		}
 		return result;
 	}
 
 	/**
 	 * @param A
-	 * @return the grid coordinates corresponding with the position of the point A
+	 * @return	the grid coordinates corresponding with the position of the point A
 	 */
-	private static int[] toGridCoordinates(Vector2 A) {
+	private static int[] toTileCoordinates(Vector2 A) {
 		int[] result = {(int) Math.floor(A.x / tileSize), (int) Math.floor((Launcher.WINDOW_HEIGHT - A.y) / tileSize)};
 		return result;
+	}
+
+	/**
+	 * @param xTile
+	 * @param yTile
+	 * @return	the origin point of the tile (x, y) (top-left)
+	 */
+	private static Vector2 toWorldCoordinates(int xTile, int yTile) {
+		return new Vector2(xTile * tileSize, yTile * tileSize);
 	}
 
 

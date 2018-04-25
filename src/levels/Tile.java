@@ -33,7 +33,6 @@ public class Tile {
 	/*
 	 * It is linked to an image, but the image must not be duplicated;
 	 * for now I don't care, just to test the implementation.
-	 * XXX
 	 */
 	public ImageView sprite;
 
@@ -52,6 +51,7 @@ public class Tile {
 	 * @return	the collider matching with the TileType
 	 * @throws InvalidArgumentsException 
 	 */
+	@Deprecated
 	public static Collider associatedCollider(TileType tileType) throws InvalidArgumentsException {
 		
 		// Amélioration : ne pas recalculer à chaque fois
@@ -94,7 +94,8 @@ public class Tile {
 		Vector2[] pointsArray = new Vector2[pointsList.size()];
 		pointsList.toArray(pointsArray);
 		
-		return new Collider(pointsArray);
+		Collider result = new Collider(pointsArray); 
+		return result;
 	}
 
 
@@ -140,8 +141,8 @@ public class Tile {
 	public enum TileType {
 		EMPTY,
 		SQUARE,
-		TRIANGLE_TOP_RIGHT,
 		TRIANGLE_TOP_LEFT,
+		TRIANGLE_TOP_RIGHT,
 		TRIANGLE_DOWN_RIGHT,
 		TRIANGLE_DOWN_LEFT
 	}

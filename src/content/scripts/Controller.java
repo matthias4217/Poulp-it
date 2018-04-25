@@ -3,7 +3,7 @@ package content.scripts;
 import core.GameEngine;
 import core.exceptions.InvalidArgumentsException;
 import core.util.*;
-import core.util.Ray.Direction;
+import core.util.Annex.Direction;
 import content.Layer;
 import content.Tag;
 

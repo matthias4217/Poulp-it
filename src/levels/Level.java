@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
-
+import core.util.Annex.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import levels.Tile.TileType;
@@ -28,7 +28,7 @@ public class Level {
 	 */
 	private static HashMap<Character, TileType> ASSOCIATIONS;
 
-	private static void initializeAssociations() {
+	private static void initializeASSOCIATIONS() {
 		ASSOCIATIONS = new HashMap<Character, TileType>();
 		ASSOCIATIONS.put(' ', TileType.EMPTY);
 		ASSOCIATIONS.put('x', TileType.SQUARE);
@@ -66,8 +66,6 @@ public class Level {
 	 */
 	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
 		// FIXME tileMatrix seems to invert x and y
-		System.out.println("Largeur du lvl: " + tileMatrix.length);
-		System.out.println("Longueur du lvl: " + tileMatrix[0].length);
 		return tileMatrix[j][i];
 	}
 	
@@ -81,7 +79,7 @@ public class Level {
 	 * @throws IOException
 	 */
 	public Level(String file) throws IOException {
-		initializeAssociations();
+		initializeASSOCIATIONS();
 
 		/*
 		 * Open the file
@@ -283,7 +281,7 @@ public class Level {
 
 					int nbrDirectNeighbours = 0;
 					// So, we make a list/array of neighbours
-					List<neighbourPosition> neighbours = new ArrayList<neighbourPosition>();
+					List<Direction> neighbours = new ArrayList<Direction>();
 					/*
 					 *  if we assume the tile not to be on an edge
 					 *  Solutions :
@@ -308,16 +306,16 @@ public class Level {
 								nbrDirectNeighbours ++;
 								// then we detect where the neighbours are
 								if (curRow > i) {
-									neighbours.add(neighbourPosition.DOWN);
+									neighbours.add(Direction.DOWN);
 								}
 								else if (curRow < i) {
-									neighbours.add(neighbourPosition.UP);
+									neighbours.add(Direction.UP);
 								}
 								else if (curCol < j) {
-									neighbours.add(neighbourPosition.LEFT);
+									neighbours.add(Direction.LEFT);
 								}
 								else if (curCol > j) {
-									neighbours.add(neighbourPosition.RIGHT);
+									neighbours.add(Direction.RIGHT);
 								}
 							}
 						}
@@ -340,7 +338,7 @@ public class Level {
 						 * there is an angle
 						 * And extend the last one
 						 */
-						neighbourPosition n = neighbours.get(0);
+						Direction n = neighbours.get(0);
 						switch (n) {
 						case UP:
 							tile = new Tile(j, i, tileSurfaceTripleTop, TileType.SQUARE);
@@ -361,75 +359,75 @@ public class Level {
 						 * Not a hard problem for the textures, we just need to make 6 cases
 						 */
 						tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
-						List<neighbourPosition> temp2 = new ArrayList<neighbourPosition>(4);
-						temp2.add(neighbourPosition.UP);
-						temp2.add(neighbourPosition.DOWN);
-						temp2.add(neighbourPosition.LEFT);
-						temp2.add(neighbourPosition.RIGHT);
+						List<Direction> temp2 = new ArrayList<Direction>(4);
+						temp2.add(Direction.UP);
+						temp2.add(Direction.DOWN);
+						temp2.add(Direction.LEFT);
+						temp2.add(Direction.RIGHT);
 						for (int nIndex = 0; nIndex < 2; nIndex++) {
 							temp2.remove(neighbours.get(nIndex));
 						}
-						if ((temp2.get(0) == neighbourPosition.UP
-								&& temp2.get(1) == neighbourPosition.DOWN)
-								|| (temp2.get(0) == neighbourPosition.DOWN
-								&& temp2.get(1) == neighbourPosition.UP)) {
+						if ((temp2.get(0) == Direction.UP
+								&& temp2.get(1) == Direction.DOWN)
+								|| (temp2.get(0) == Direction.DOWN
+								&& temp2.get(1) == Direction.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopDown, TileType.SQUARE);
 						}
-						else if ((temp2.get(0) == neighbourPosition.UP
-								&& temp2.get(1) == neighbourPosition.RIGHT)
-								|| (temp2.get(0) == neighbourPosition.RIGHT
-								&& temp2.get(1) == neighbourPosition.UP)) {
+						else if ((temp2.get(0) == Direction.UP
+								&& temp2.get(1) == Direction.RIGHT)
+								|| (temp2.get(0) == Direction.RIGHT
+								&& temp2.get(1) == Direction.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopRight, TileType.SQUARE);
 						}
-						else if ((temp2.get(0) == neighbourPosition.UP
-								&& temp2.get(1) == neighbourPosition.LEFT)
-								|| (temp2.get(0) == neighbourPosition.LEFT
-								&& temp2.get(1) == neighbourPosition.UP)) {
+						else if ((temp2.get(0) == Direction.UP
+								&& temp2.get(1) == Direction.LEFT)
+								|| (temp2.get(0) == Direction.LEFT
+								&& temp2.get(1) == Direction.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopLeft, TileType.SQUARE);
 						}
-						else if ((temp2.get(0) == neighbourPosition.DOWN
-								&& temp2.get(1) == neighbourPosition.RIGHT)
-								|| (temp2.get(0) == neighbourPosition.RIGHT
-								&& temp2.get(1) == neighbourPosition.DOWN)) {
+						else if ((temp2.get(0) == Direction.DOWN
+								&& temp2.get(1) == Direction.RIGHT)
+								|| (temp2.get(0) == Direction.RIGHT
+								&& temp2.get(1) == Direction.DOWN)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
 						}
-						else if ((temp2.get(0) == neighbourPosition.DOWN
-								&& temp2.get(1) == neighbourPosition.LEFT)
-								|| (temp2.get(0) == neighbourPosition.LEFT
-								&& temp2.get(1) == neighbourPosition.DOWN)) {
+						else if ((temp2.get(0) == Direction.DOWN
+								&& temp2.get(1) == Direction.LEFT)
+								|| (temp2.get(0) == Direction.LEFT
+								&& temp2.get(1) == Direction.DOWN)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleDownLeft, TileType.SQUARE);
 						}
-						if ((temp2.get(0) == neighbourPosition.RIGHT
-								&& temp2.get(1) == neighbourPosition.LEFT)
-								|| (temp2.get(0) == neighbourPosition.LEFT
-								&& temp2.get(1) == neighbourPosition.RIGHT)) {
+						if ((temp2.get(0) == Direction.RIGHT
+								&& temp2.get(1) == Direction.LEFT)
+								|| (temp2.get(0) == Direction.LEFT
+								&& temp2.get(1) == Direction.RIGHT)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleLeftRight, TileType.SQUARE);
 						}
 						break;
 					case 3:
-						//List<neighbourPosition> temp3 = new ArrayList<neighbourPosition>(4);
-						EnumSet<neighbourPosition> temp3 = EnumSet.of(
-								neighbourPosition.UP, neighbourPosition.DOWN,
-								neighbourPosition.LEFT, neighbourPosition.RIGHT);
+						//List<Direction> temp3 = new ArrayList<Direction>(4);
+						EnumSet<Direction> temp3 = EnumSet.of(
+								Direction.UP, Direction.DOWN,
+								Direction.LEFT, Direction.RIGHT);
 						for (int nIndex = 0; nIndex < 3; nIndex++) {
 							temp3.remove(neighbours.get(nIndex));
 						}
-						if (temp3.contains(neighbourPosition.UP)) {
+						if (temp3.contains(Direction.UP)) {
 							tile = new Tile(j, i, tileSurfaceTop, TileType.SQUARE);
 						}
-						else if (temp3.contains(neighbourPosition.DOWN)) {
+						else if (temp3.contains(Direction.DOWN)) {
 							tile = new Tile(j, i, tileSurfaceDown, TileType.SQUARE);
 						}
-						else if (temp3.contains(neighbourPosition.LEFT)) {
+						else if (temp3.contains(Direction.LEFT)) {
 							tile = new Tile(j, i, tileSurfaceLeft, TileType.SQUARE);
 						}
-						else if (temp3.contains(neighbourPosition.RIGHT)) {
+						else if (temp3.contains(Direction.RIGHT)) {
 							tile = new Tile(j, i, tileSurfaceRight, TileType.SQUARE);
 						}
 						/*
@@ -502,14 +500,4 @@ public class Level {
 
 
 
-	// For now, no indirect (on a diagonal) neighbour
-	/**
-	 * @@@ TODO doc
-	 *
-	 * @author matthias
-	 *
-	 */
-	private enum neighbourPosition {
-		UP, DOWN, RIGHT, LEFT
-	}
 }

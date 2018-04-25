@@ -48,7 +48,7 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void start() {
-		controller = (Controller) support.scripts.get(1);		// XXX
+		controller = (Controller) support.scripts.get(1);		// Moche mais bon...
 
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
 		gravity = 0;
@@ -75,14 +75,12 @@ public class PlayerScript extends MonoBehaviour {
 
 
 	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
-		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
 		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;
 	}
 
 	void handleWallSliding(float deltaTime, Vector2 directionalInput) {
-		System.out.println("Handling wall sliding...");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {

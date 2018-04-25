@@ -1,8 +1,8 @@
 package core.util;
 
-import content.GameObject;
 import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
+import core.util.Annex.Direction;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -75,17 +75,21 @@ public class Ray implements Renderable {
 	 * @param collider	- The Collider to check collision with
 	 * @return	the intersection point between this ray and the collider, null if there is no intersection
 	 */
-	public Vector2 collision(Collider collider) {
+	public Vector2 collision(Collider collider, Vector2 colliderOrigin) {
 		if (collider == null) {
 			return null;
 		}
 		Vector2 result = null;
 		
 		int n = collider.getNbPoints();
-		for (int i = 0; i <= n; i++) {
+		for (int i = 0; i < n; i++) {
 
-			Vector2 intersectionPoint =	Annex.segmentsIntersection(originPoint, endingPoint,
-					collider.getPoint(i), collider.getPoint((i+1) % n));
+			Vector2 intersectionPoint =	Annex.segmentsIntersection(
+					originPoint,
+					endingPoint,
+					colliderOrigin.add(collider.getPoint(i)),
+					colliderOrigin.add(collider.getPoint((i+1) % n))
+					);
 
 			if (intersectionPoint != null) {		// if there was intersection between the lines
 				float dist = Vector2.distance(originPoint, intersectionPoint);
@@ -99,6 +103,8 @@ public class Ray implements Renderable {
 		}
 		return result;
 	}
+
+
 
 	/**
 	 * Render this ray in the GraphicContext gc
@@ -114,12 +120,5 @@ public class Ray implements Renderable {
 
 
 
-
-	public enum Direction {
-		UP,
-		DOWN,
-		LEFT,
-		RIGHT
-	}
 
 }

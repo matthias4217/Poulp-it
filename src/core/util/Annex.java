@@ -185,6 +185,16 @@ public final class Annex {
 
 
 
+	public enum Direction {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
+
+
+
+
 
 
 }
