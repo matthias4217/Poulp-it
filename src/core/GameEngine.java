@@ -8,10 +8,12 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.Player;
+import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
 import core.util.Ray.Direction;
 import levels.Level;
+import levels.Tile;
 
 /**
  * Manages the flow of the game; one instance, located on the server.
@@ -167,74 +169,56 @@ public class GameEngine {
 	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
+	 * @throws InvalidArgumentsException 
 	 */
 
-	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask) {
-		{
-			Ray ray = new Ray(rayOrigin, direction, length);
-			debugElements.add(ray);
+	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask)
+			throws InvalidArgumentsException {
+		Ray ray = new Ray(rayOrigin, direction, length);
+		debugElements.add(ray);
 
-			// The coordinates in the grid this ray is casted from
-			int[] tileOrigin = toGridCoordinates(rayOrigin);
+		// The coordinates in the grid this ray is casted from
+		int[] tileOrigin = toGridCoordinates(rayOrigin);
 
-			// The coordinates in the grid this ray ends
-			int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
+		// The coordinates in the grid this ray ends
+		int[] tileEnding = toGridCoordinates(ray.getEndingPoint());
 
-			System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
-					") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
-
-
-			// Now we traverse the tiles line from tileOrigin to tileEnding.
-			// Beware: generic code difficult to read...
-
-			// Moving horizontally (0) or vertically (1)?
-			int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1;
-			// The index of the column/row which is fixed
-			int fixed = tileOrigin[1-var];
-			// Moving which way?
-			int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? -1 : 1;
-
-			for (int k = tileOrigin[var]; increment * (tileEnding[var] - k) >= 0; k += increment) {
-				// Setting the current tile
-				int currentTileX = (1-var)*k + var*fixed;
-				int currentTileY = var*k + (1-var)*fixed;
-
-				// Collisions with other GameObjects	TODO
-				for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
-					//				ray.collision(gameObject);
-				}
-
-				// Collisions with the tile
-				switch(level.getTile(currentTileX, currentTileY)) {
-				case EMPTY:
-					break;
-				case SQUARE:
-					
-					break;
-				case TRIANGLE_DOWN_LEFT:
-					
-					break;
-				case TRIANGLE_DOWN_RIGHT:
-				
-					break;
-				case TRIANGLE_TOP_LEFT:
-					
-					break;
-				case TRIANGLE_TOP_RIGHT:
-					
-					break;
-				default:
-				}
+		System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
+				") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
 
 
+		// Now we traverse the tiles line from tileOrigin to tileEnding.
+		// Beware: generic code difficult to read...
 
+		// Moving horizontally (0) or vertically (1)?
+		int var = (direction == Direction.LEFT || direction == Direction.RIGHT) ? 0 : 1;
+		// The index of the column/row which is fixed
+		int fixed = tileOrigin[1-var];
+		// Moving which way?
+		int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? -1 : 1;
+
+		for (int k = tileOrigin[var]; increment * (tileEnding[var] - k) >= 0; k += increment) {
+			// Setting the current tile
+			int currentTileX = (1-var)*k + var*fixed;
+			int currentTileY = var*k + (1-var)*fixed;
+
+			// Collisions with other GameObjects	TODO
+			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
+				//				ray.collision(gameObject);
 			}
 
+			// Collisions with the tile
+			Collider collider = Tile.associatedCollider(level.getTile(currentTileX, currentTileY));
+			
 
 
 
-			return null;
 		}
+
+
+
+
+		return null;
 	}
 
 	/**

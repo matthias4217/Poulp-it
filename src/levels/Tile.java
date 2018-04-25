@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.LinkedList;
 
+import core.exceptions.InvalidArgumentsException;
 import core.util.Collider;
 import core.util.Vector2;
 
@@ -49,8 +50,12 @@ public class Tile {
 	 * 
 	 * @param tileType
 	 * @return	the collider matching with the TileType
+	 * @throws InvalidArgumentsException 
 	 */
-	public static Collider associatedCollider(TileType tileType) {
+	public static Collider associatedCollider(TileType tileType) throws InvalidArgumentsException {
+		
+		// Amélioration : ne pas recalculer à chaque fois
+		// -> avoir les références initialisées
 		
 		if (tileType == TileType.EMPTY) {
 			return null;
@@ -66,26 +71,30 @@ public class Tile {
 		// Then: removing some points according to the case
 		switch (tileType) {
 		case SQUARE:
-			
 			break;
 		case TRIANGLE_DOWN_LEFT:
-			
+			pointsList.remove(1);
 			break;
 		case TRIANGLE_DOWN_RIGHT:
-			
+			pointsList.remove(0);
 			break;
 		case TRIANGLE_TOP_LEFT:
-			
+			pointsList.remove(2);
 			break;
 		case TRIANGLE_TOP_RIGHT:
-			
+			pointsList.remove(3);
 			break;
 		default:
 			System.out.println("Tile not considered: " + tileType);
 			return null;
 		}
 		
-		return pointsList.toArray();
+		
+		// Transfering into a list
+		Vector2[] pointsArray = new Vector2[pointsList.size()];
+		pointsList.toArray(pointsArray);
+		
+		return new Collider(pointsArray);
 	}
 
 

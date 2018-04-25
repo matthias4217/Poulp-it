@@ -14,7 +14,38 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
+		LinkedList<Vector2> pointsList = new LinkedList<Vector2>();
+		pointsList.add(new Vector2(0, 0));					// Top left
+		pointsList.add(new Vector2(5, 0)); 			// Top right
+		pointsList.add(new Vector2(5, -5));	// Bottom right
+		pointsList.add(new Vector2(0, -5));			// Bottom left
+		
+		System.out.println(pointsList);
+		
+		Vector2[] maBite = new Vector2[pointsList.size()];
+		
+		pointsList.toArray(maBite);
+		System.out.println();
+		for (Vector2 x: maBite) {
+			System.out.println(x);
+		}
+		
+		
+		
+		Vector2[] maBite2 = (Vector2[]) pointsList.toArray();
+		System.out.println();
+		for (Vector2 x: maBite2) {
+			System.out.println(x);
+		}
+		
 
+	}
+
+
+
+
+
+	public static void testIntersection() {
 
 		// Seems to be working =)
 
@@ -38,12 +69,8 @@ public class Draft {
 		}
 
 	}
-
-
-
-
-
-
+	
+	
 	public static void testAngle() {
 
 		Vector2 A = new Vector2(1, 0);
