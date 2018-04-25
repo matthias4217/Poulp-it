@@ -205,10 +205,6 @@ public class GameEngine {
 				}
 
 				// Collisions with the tile
-<<<<<<< HEAD
-				
-
-=======
 				switch(level.getTile(currentTileX, currentTileY)) {
 				case EMPTY:
 					break;
@@ -229,7 +225,6 @@ public class GameEngine {
 					break;
 				default:
 				}
->>>>>>> branch 'bubble2' of https://github.com/matthias4217/hardcore-rodeo-96
 
 
 

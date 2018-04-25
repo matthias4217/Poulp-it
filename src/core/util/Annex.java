@@ -72,7 +72,6 @@ public final class Annex {
 
 	// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
 
-<<<<<<< HEAD
 	/**
 	 * Given three colinear Vector2s A, B, C, the function checks if
 	 * Vector2 B lies on line segment [A; C]
@@ -81,16 +80,8 @@ public final class Annex {
 	public static boolean onSegment(Vector2 A, Vector2 B, Vector2 C) {
 		return (B.x <= Math.max(A.x, C.x) && B.x >= Math.min(A.x, C.x) &&
 				B.y <= Math.max(A.y, C.y) && B.y >= Math.min(A.y, C.y));
-=======
-	// Given three colinear Vector2s p, q, r, the function checks if
-	// Vector2 q lies on line segment 'pr'
-	boolean onSegment(Vector2 a, Vector2 b, Vector2 p) {
-		return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
-				b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
->>>>>>> branch 'bubble2' of https://github.com/matthias4217/hardcore-rodeo-96
 	}
 
-<<<<<<< HEAD
 
 	/**
 	 * To find orientation of ordered triplet (p, q, r).
@@ -101,20 +92,9 @@ public final class Annex {
 	 */
 	private static float orientation(Vector2 p, Vector2 q, Vector2 r) {
 		/* See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s for details on the formula */
-=======
-	// To find orientation of ordered triplet (p, q, r).
-	// The function returns following values
-	// 0 --> p, q and r are colinear
-	// 1 --> Clockwise
-	// -1 --> Counterclockwise
-	float orientation(Vector2 p, Vector2 q, Vector2 r) {
-		// See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
-		// for details of below formula.
->>>>>>> branch 'bubble2' of https://github.com/matthias4217/hardcore-rodeo-96
 		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Indicates if the line segments [A; B] and [C; D] intersect when there is no collinearity
 	 * This method return the intersection point if there is one, null otherwise
@@ -133,17 +113,6 @@ public final class Annex {
 		float o2 = orientation(A, B, D);
 		float o3 = orientation(C, D, A);
 		float o4 = orientation(C, D, B);
-=======
-	// The main function that returns true if line segment 'p1q1'
-	// and 'p2q2' intersect.
-	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2) {
-		// Find the four orientations needed for general and
-		// special cases
-		float o1 = orientation(p1, q1, p2);
-		float o2 = orientation(p1, q1, q2);
-		float o3 = orientation(p2, q2, p1);
-		float o4 = orientation(p2, q2, q1);
->>>>>>> branch 'bubble2' of https://github.com/matthias4217/hardcore-rodeo-96
 
 		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
 
