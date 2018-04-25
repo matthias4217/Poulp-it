@@ -15,18 +15,27 @@ import javafx.scene.paint.Color;
  * 
  */
 public class Ray implements Renderable {
-	
+
 	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
 	public static final float RENDER_LENGTH_MULTIPLIER = 10;		// The lenght multiplier for screen rendering 
-	
-	
-	
+
+
+
 	private Vector2 originPoint;
 	private Vector2 endingPoint;
+	private float length;
+
+	private boolean hit = false;		// Indicates if something was hit by the ray
+
 
 	public Vector2 getEndingPoint() {
 		return endingPoint;
 	}
+
+	public float getLength() {
+		return length;
+	}
+
 
 
 	/**
@@ -54,32 +63,43 @@ public class Ray implements Renderable {
 		default:
 			break;
 		}
-		
+
 	}
+
 
 
 	/**
-	 * Check if there is a collision between this ray and a GameObject.
+	 * @@@ TODO
 	 * If this is the case, updates this ray by setting its endingPoint to the intersection point.
 	 * 
-	 * @param gameObject	- The gameObject to check collision with
+	 * @param collider	- The Collider to check collision with
+	 * @return	the intersection point between this ray and the collider, null if there is no intersection
 	 */
-	public void collision(GameObject gameObject) {
-		Collider collider = gameObject.collider;
+	public Vector2 collision(Collider collider) {
 		if (collider == null) {
-			return;
+			return null;
 		}
-		for (int i = 0; i < collider.getNbPoints(); i++) {
-			//
-			//Annex.checkcollider.getPoint(i)
-			
-			
-		}
+		Vector2 result = null;
+		
+		int n = collider.getNbPoints();
+		for (int i = 0; i <= n; i++) {
 
-		
-		
+			Vector2 intersectionPoint =	Annex.segmentsIntersection(originPoint, endingPoint,
+					collider.getPoint(i), collider.getPoint((i+1) % n));
+
+			if (intersectionPoint != null) {		// if there was intersection between the lines
+				float dist = Vector2.distance(originPoint, intersectionPoint);
+				
+				if (dist < length) {
+					this.endingPoint = intersectionPoint;		// Reducing the ray
+					length = dist;		// Updating lenght
+					result = intersectionPoint;
+				}
+			}
+		}
+		return result;
 	}
-	
+
 	/**
 	 * Render this ray in the GraphicContext gc
 	 */

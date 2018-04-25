@@ -60,7 +60,7 @@ public class Draft {
 		System.out.println("D: " + D);
 		System.out.println();
 
-		Vector2 intersection = Annex.doIntersect(A, B, C, D);
+		Vector2 intersection = Annex.segmentsIntersection(A, B, C, D);
 
 		if (intersection == null) {
 			System.out.println("null");

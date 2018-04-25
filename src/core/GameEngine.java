@@ -175,7 +175,9 @@ public class GameEngine {
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask)
-			throws InvalidArgumentsException {
+			throws InvalidArgumentsException {		
+		RaycastHit result = null;
+		
 		Ray ray = new Ray(rayOrigin, direction, length);
 		debugElements.add(ray);
 
@@ -209,18 +211,16 @@ public class GameEngine {
 				//				ray.collision(gameObject);
 			}
 
+
 			// Collisions with the tile
 			Collider collider = Tile.associatedCollider(level.getTile(currentTileX, currentTileY));
+			Vector2 hitPoint = ray.collision(collider);
 			
-
-
-
+			if (hitPoint != null) {		// if there is a collision
+				result = new RaycastHit(null, ray.getLength(), null);
+			}
 		}
-
-
-
-
-		return null;
+		return result;
 	}
 
 	/**

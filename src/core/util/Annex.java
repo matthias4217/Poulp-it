@@ -43,7 +43,7 @@ public final class Annex {
 	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
 	 */
 	@Deprecated
-	public static Vector2 checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+	public static Vector2 checkSegmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
 		try {
 			/* Explication:
 			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
@@ -107,7 +107,7 @@ public final class Annex {
 	 * @param D
 	 * @return	the intersection point between [A; B] and [C; D], or null
 	 */
-	public static Vector2 doIntersect(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+	public static Vector2 segmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
 		// Finding the four orientations needed for general and special cases
 		float o1 = orientation(A, B, C);
 		float o2 = orientation(A, B, D);
@@ -115,8 +115,6 @@ public final class Annex {
 		float o4 = orientation(C, D, B);
 
 		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
-
-			// TODO check what follows
 
 			float q = A.x*B.y - A.y*B.x;
 			float r = C.x*D.y - C.y*D.x;

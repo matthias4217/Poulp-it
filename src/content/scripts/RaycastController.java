@@ -59,7 +59,6 @@ public class RaycastController extends MonoBehaviour {
 		raycastOrigins.topRight = collider.getTopRight().add(shift1.reverse());
 		raycastOrigins.bottomLeft = collider.getBottomLeft().add(shift1);;
 		raycastOrigins.bottomRight = collider.getBottomRight().add(shift2.reverse());
-		System.out.println(raycastOrigins);
 	}
 
 }
