@@ -2,6 +2,10 @@ package levels;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
+
+import java.util.LinkedList;
+
+import core.util.Collider;
 import core.util.Vector2;
 
 /**
@@ -16,7 +20,7 @@ public class Tile {
 	 * The size of the side of a tile in the gamespace.
 	 * This constant makes the link between the float coordinates used by the game engine and the discrete nature of tiles.
 	 */
-	public static final float TILE_SIZE = 32f;
+	public static final float TILE_SIZE = 32f;		// XXX
 
 	/*
 	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE.
@@ -36,6 +40,54 @@ public class Tile {
 	 * The type of tile (full block, slope, etc)
 	 */
 	public TileType type;
+
+
+	
+	/**
+	 * The collider associated with a specific tileType (origin point up-left)
+	 * Used for the collision system
+	 * 
+	 * @param tileType
+	 * @return	the collider matching with the TileType
+	 */
+	public static Collider associatedCollider(TileType tileType) {
+		
+		if (tileType == TileType.EMPTY) {
+			return null;
+		}
+		
+		// First: creating a list with the four possible points
+		LinkedList<Vector2> pointsList = new LinkedList<Vector2>();
+		pointsList.add(new Vector2(0, 0));					// Top left
+		pointsList.add(new Vector2(TILE_SIZE, 0)); 			// Top right
+		pointsList.add(new Vector2(TILE_SIZE, -TILE_SIZE));	// Bottom right
+		pointsList.add(new Vector2(0, -TILE_SIZE));			// Bottom left
+
+		// Then: removing some points according to the case
+		switch (tileType) {
+		case SQUARE:
+			
+			break;
+		case TRIANGLE_DOWN_LEFT:
+			
+			break;
+		case TRIANGLE_DOWN_RIGHT:
+			
+			break;
+		case TRIANGLE_TOP_LEFT:
+			
+			break;
+		case TRIANGLE_TOP_RIGHT:
+			
+			break;
+		default:
+			System.out.println("Tile not considered: " + tileType);
+			return null;
+		}
+		
+		return pointsList.toArray();
+	}
+
 
 
 
@@ -69,6 +121,7 @@ public class Tile {
 	@Override public String toString() {
 		return type.toString() + ": " + position;
 	}
+
 
 
 

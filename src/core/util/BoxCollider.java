@@ -5,6 +5,7 @@ import java.util.Arrays;
 /**
  * This is a particular case of Collider where the bounds are a rectangle.
  * This is what you'll want to use in most cases.
+ * Origin point considered up-left
  *
  * @author Raph
  *

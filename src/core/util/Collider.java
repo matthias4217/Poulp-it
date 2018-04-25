@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
  * This class represents a collision mask.
  * In practice, this is simply a list of points which defines a polygon.
  * If you want rectangular bounds, use the subclass BoxCollider.
+ * Origin point considered up-left
  * The user is trusted to create valid forms.
  *
  * Note: A line (two points) is valid.
