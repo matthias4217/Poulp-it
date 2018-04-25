@@ -29,6 +29,7 @@ public class PlayerScript extends MonoBehaviour {
 	public static float wallSlideSpeedMax = 3;
 	public static float wallStickTime = .25f;				// Time the player will stay stuck against a wall when inputing away from it; useful to perform wallLeap
 
+	
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
@@ -51,7 +52,7 @@ public class PlayerScript extends MonoBehaviour {
 		controller = (Controller) support.scripts.get(1);		// Moche mais bon...
 
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-		gravity = 0;
+//		gravity = 0;
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}

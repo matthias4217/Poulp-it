@@ -81,10 +81,6 @@ public class Controller extends RaycastController {
 			RaycastHit hit = GameEngine.raycast(rayOrigin, (directionX == -1) ? Direction.LEFT : Direction.RIGHT,
 					rayLength, collisionMask);
 
-
-
-			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
-
 			if (hit != null) {		// If something was hit
 
 				//@Deprecated: we can't be in an obstacle
