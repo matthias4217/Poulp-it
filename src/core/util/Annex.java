@@ -128,6 +128,21 @@ public final class Annex {
 	}
 
 
+	/**
+	 * Calculate a normal Vector to a line.
+	 * Points A and B must be distinct. 
+	 * 
+	 * @param A
+	 * @param B
+	 * @return	- a normal vector to the line (AB) (not normalized)
+	 */
+	public static Vector2 normal(Vector2 A, Vector2 B) {
+		if (A.x != B.x) {
+			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
+		} else {
+			return new Vector2(1, (A.x - B.x) / (B.y - A.y));
+		}
+	}
 
 
 
