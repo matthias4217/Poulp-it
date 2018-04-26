@@ -12,7 +12,7 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		System.out.println("bite");
+		testNormal();
 
 
 
@@ -49,10 +49,10 @@ public class Draft {
 
 	public static void testNormal() {
 
-		// Seems to be working =)
 
-		Vector2 A = new Vector2(0, 2);
-		Vector2 B = new Vector2(1, 0);
+
+		Vector2 A = new Vector2(1, 0);
+		Vector2 B = new Vector2(0, 2);
 
 		Vector2 n = Annex.normal(A, B);
 		System.out.println("A: " + A);

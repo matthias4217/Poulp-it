@@ -69,11 +69,11 @@ public class Ray implements Renderable {
 
 
 	/**
-	 * @@@ TODO
+	 * @@@ TODO TODO
 	 * If this is the case, updates this ray by setting its endingPoint to the intersection point.
 	 * 
 	 * @param collider	- The Collider to check collision with
-	 * @return	the intersection point between this ray and the collider, null if there is no intersection
+	 * @return	the NORMAL between this ray and the collider, null if there is no intersection FIXME
 	 */
 	public Vector2 collision(Collider collider, Vector2 colliderOrigin) {
 		if (collider == null) {
@@ -84,12 +84,11 @@ public class Ray implements Renderable {
 		int n = collider.getNbPoints();
 		for (int i = 0; i < n; i++) {
 
+			Vector2 collider_I = colliderOrigin.add(collider.getPoint(i));
+			Vector2 collider_IPlusOne = colliderOrigin.add(collider.getPoint((i+1) % n));
+			
 			Vector2 intersectionPoint =	Annex.segmentsIntersection(
-					originPoint,
-					endingPoint,
-					colliderOrigin.add(collider.getPoint(i)),
-					colliderOrigin.add(collider.getPoint((i+1) % n))
-					);
+					originPoint, endingPoint, collider_I, collider_IPlusOne);
 
 			if (intersectionPoint != null) {		// if there was intersection between the lines
 				float dist = Vector2.distance(originPoint, intersectionPoint);
@@ -97,7 +96,7 @@ public class Ray implements Renderable {
 				if (dist < length) {
 					this.endingPoint = intersectionPoint;		// Reducing the ray
 					length = dist;		// Updating lenght
-					result = intersectionPoint;
+					result = Annex.normal(collider_I, collider_IPlusOne, originPoint);
 				}
 			}
 		}

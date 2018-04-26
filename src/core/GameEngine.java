@@ -280,14 +280,13 @@ public class GameEngine {
 			Collider colliderTile = TILE_TO_COLLIDER.get(tileTypeCurrent);
 			Vector2 colliderOrigin = toWorldCoordinates(currentTileX, currentTileY);
 			
-			Vector2 hitPoint = ray.collision(colliderTile, colliderOrigin);
+			Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
 
-			if (hitPoint != null) {		// if there is a collision
-				result = new RaycastHit(null, ray.getLength(), null);
+			if (normalFromHit != null) {		// if there is a collision
+				result = new RaycastHit(null, ray.getLength(), normalFromHit);
+				// XXX LAST TILE ???
+				
 			}
-
-
-
 		}
 		return result;
 	}

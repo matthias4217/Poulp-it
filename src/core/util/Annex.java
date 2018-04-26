@@ -129,18 +129,30 @@ public final class Annex {
 
 
 	/**
-	 * Calculate a normal Vector to a line.
-	 * Points A and B must be distinct. 
+	 * Calculate a normal Vector to a line (AB), such that RCD has counter-clockwise orientation.
+	 * Points A and B must be distinct.
+	 * This is used for raycast.
+	 * TODO test this
 	 * 
 	 * @param A
 	 * @param B
+	 * @param R
 	 * @return	- a normal vector to the line (AB) (not normalized)
 	 */
-	public static Vector2 normal(Vector2 A, Vector2 B) {
+	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
+		float orientation = orientation(R, A, B); 
 		if (A.x != B.x) {
-			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
+			if (orientation == -1) {
+				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
+			} else {
+				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
+			}
 		} else {
-			return new Vector2(1, (A.x - B.x) / (B.y - A.y));
+			if (orientation == -1) {
+				return new Vector2(1, (A.x - B.x) / (B.y - A.y));
+			} else {
+				return new Vector2(-1, (B.x - A.x) / (B.y - A.y));
+			}
 		}
 	}
 
