@@ -49,14 +49,15 @@ public class Draft {
 
 	public static void testNormal() {
 
-
-
 		Vector2 A = new Vector2(1, 0);
 		Vector2 B = new Vector2(0, 2);
+		Vector2 R = new Vector2(-2, -2);
 
-		Vector2 n = Annex.normal(A, B);
+		Vector2 n = Annex.normal(A, B, R);
 		System.out.println("A: " + A);
 		System.out.println("B: " + B);
+		System.out.println("R: " + R);
+		System.out.println("Orientation RAB: " + Annex.orientation(R, A, B));
 		System.out.println();
 		System.out.println("n: " + n);
 	}

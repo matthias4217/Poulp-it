@@ -32,43 +32,6 @@ public final class Annex {
 	}
 
 
-	/*
-	 * Indicates if the line segments [A; B] and [C; D] do intersect in the case ABC are not aligned.
-	 * This method is used  
-	 * 
-	 * @param A
-	 * @param B
-	 * @param C
-	 * @param D
-	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
-	 */
-	@Deprecated
-	public static Vector2 checkSegmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
-		try {
-			/* Explication:
-			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
-			 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
-			 */
-			float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
-					((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
-			float w2 = (D.y - C.y - w1*(B.y - C.y)) / (A.y - C.y);
-
-			if (w1>=0 && w2>=0 && w1+w2>=1) {
-				// In the case of intersection, return the intersection point
-				float q = A.x*B.y - A.y*B.x;
-				float r = C.x*D.y - C.y*D.x;
-				float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
-
-				return new Vector2(
-						(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
-						(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
-			}
-			return null;
-		} catch (ArithmeticException e) {		// Happens when ABC are colinear
-			return null;
-		}
-	}
-
 
 	// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
 
@@ -84,15 +47,15 @@ public final class Annex {
 
 
 	/**
-	 * To find orientation of ordered triplet (p, q, r).
+	 * To find orientation of ordered triplet (A, B, C).
 	 * The function returns following values
-	 * 0 	-> p, q and r are colinear
+	 * 0 	-> A, B and C are colinear
 	 * 1 	-> Clockwise
 	 * -1 	-> Counterclockwise
 	 */
-	private static float orientation(Vector2 p, Vector2 q, Vector2 r) {
+	public static float orientation(Vector2 A, Vector2 B, Vector2 C) {
 		/* See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s for details on the formula */
-		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
+		return Math.signum((B.y - A.y)*(C.x - B.x) - (B.x - A.x)*(C.y - B.y));
 	}
 
 	/**
@@ -129,26 +92,26 @@ public final class Annex {
 
 
 	/**
-	 * Calculate a normal Vector to a line (AB), such that RCD has counter-clockwise orientation.
-	 * Points A and B must be distinct.
+	 * Calculate a normal Vector to a line (AB) pointing toward the side of R.
+	 * Points A and B must be distinct and R must not be in (AB).
 	 * This is used for raycast.
 	 * TODO test this
 	 * 
 	 * @param A
 	 * @param B
 	 * @param R
-	 * @return	- a normal vector to the line (AB) (not normalized)
+	 * @return	- a normal vector to the line (AB) (not normalized) pointing toward the side R is
 	 */
 	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
-		float orientation = orientation(R, A, B); 
+		float orientation = orientation(R, A, B);
 		if (A.x != B.x) {
-			if (orientation == -1) {
+			if (orientation == 1) {
 				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
 			} else {
 				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
 			}
 		} else {
-			if (orientation == -1) {
+			if (orientation == 1) {
 				return new Vector2(1, (A.x - B.x) / (B.y - A.y));
 			} else {
 				return new Vector2(-1, (B.x - A.x) / (B.y - A.y));
@@ -223,5 +186,41 @@ public final class Annex {
 
 
 
+	/*
+	 * Indicates if the line segments [A; B] and [C; D] do intersect in the case ABC are not aligned.
+	 * This method is used  
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
+	 */
+	@Deprecated
+	public static Vector2 checkSegmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+		try {
+			/* Explication:
+			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
+			 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
+			 */
+			float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
+					((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
+			float w2 = (D.y - C.y - w1*(B.y - C.y)) / (A.y - C.y);
+
+			if (w1>=0 && w2>=0 && w1+w2>=1) {
+				// In the case of intersection, return the intersection point
+				float q = A.x*B.y - A.y*B.x;
+				float r = C.x*D.y - C.y*D.x;
+				float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
+
+				return new Vector2(
+						(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
+						(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
+			}
+			return null;
+		} catch (ArithmeticException e) {		// Happens when ABC are colinear
+			return null;
+		}
+	}
 
 }

@@ -278,6 +278,7 @@ public class GameEngine {
 			
 			TileType tileTypeCurrent = level.getTile(currentTileX, currentTileY);
 			Collider colliderTile = TILE_TO_COLLIDER.get(tileTypeCurrent);
+//			debugElements.add(colliderTile);
 			Vector2 colliderOrigin = toWorldCoordinates(currentTileX, currentTileY);
 			
 			Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);

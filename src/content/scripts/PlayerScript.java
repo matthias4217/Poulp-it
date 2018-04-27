@@ -21,7 +21,6 @@ public class PlayerScript extends MonoBehaviour {
 	public static float accelerationTimeAirborne = 0f;		// Amount of inertia while airborne (set to 0 for no inertia)
 	public static float accelerationTimeGrounded = 0f;		// Amount of inertia while grounded (set to 0 for no inertia)
 
-
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
 	public static Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
 	public static Vector2 wallLeap;							// Force applied to jump when wall-jumping away from the wall
@@ -59,8 +58,8 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
-		calculateVelocity (deltaTime, playerInput.directionnalInput);
-		handleWallSliding (deltaTime, playerInput.directionnalInput);
+		calculateVelocity(deltaTime, playerInput.directionnalInput);
+		handleWallSliding(deltaTime, playerInput.directionnalInput);
 
 		controller.move(velocity.multiply(deltaTime), playerInput.directionnalInput);
 
@@ -77,14 +76,16 @@ public class PlayerScript extends MonoBehaviour {
 
 	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing,
+				(controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;
 	}
 
 	void handleWallSliding(float deltaTime, Vector2 directionalInput) {
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
-		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
+		if ((controller.collisions.left || controller.collisions.right) &&
+				!controller.collisions.below && velocity.y < 0) {
 			wallSliding = true;
 
 			if (velocity.y < -wallSlideSpeedMax) {

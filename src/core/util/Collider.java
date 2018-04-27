@@ -69,14 +69,14 @@ public class Collider /*implements Renderable*/ {
 	 * Render this collider on the GraphicContext gc.
 	 * 
 	 * @param gc		- The GraphicContext on which this will be rendered
-	 * @param center	- 
+	 * @param origin	- 
 	 */
-	public void render(GraphicsContext gc, Vector2 center) {
+	public void render(GraphicsContext gc, Vector2 origin) {
 		double[] xPoints = new double[nbPoints];
 		double[] yPoints = new double[nbPoints]; 
 		for (int i = 0; i < nbPoints; i++) {
-			xPoints[i] = center.x + pointsArray[i].x;
-			yPoints[i] = Launcher.WINDOW_HEIGHT - center.y - pointsArray[i].y;
+			xPoints[i] = origin.x + pointsArray[i].x;
+			yPoints[i] = Launcher.WINDOW_HEIGHT - origin.y - pointsArray[i].y;
 		}
 
 		gc.setStroke(RENDER_COLOR);
