@@ -116,9 +116,11 @@ public class Launcher extends Application {
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
+				
 				gc.drawImage(background, 0, 0);
 
 				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+				System.out.println(playerInput);
 				stage.getScene().setOnKeyReleased(playerInput.eventHandler);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
@@ -128,6 +130,8 @@ public class Launcher extends Application {
 				try {
 					gameEngine.update(deltaTime, playerInput, gameInformation);
 				} catch (InvalidArgumentsException e) {
+					//System.out.println("Plop");
+					
 					e.printStackTrace();
 				}
 

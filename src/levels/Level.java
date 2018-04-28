@@ -62,11 +62,18 @@ public class Level {
 	/**
 	 * @param i
 	 * @param j
-	 * @return	the tile of coordinates (i, j)
+	 * @return	the tile of coordinates (i, j), if (i,j) is outside tileMatrix, returns EMPTY
 	 */
 	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
 		// FIXME tileMatrix seems to invert x and y
-		return tileMatrix[j][i];
+		//System.out.println("i and j " + j + "," + i);
+		// Check if i and j < lengths of tileMatrix
+		if (0 < j && j < tileMatrix.length && 0 < i && i < tileMatrix[0].length) {
+			return tileMatrix[j][i];
+		}
+		else {
+			return TileType.EMPTY;
+		}
 	}
 	
 	

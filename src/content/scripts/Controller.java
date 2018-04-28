@@ -216,7 +216,7 @@ public class Controller extends RaycastController {
 			Vector2 rayOrigin = support.position.add(
 			(directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft);
 
-			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN, Float.POSITIVE_INFINITY, collisionMask);
+			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN,  200 /*Float.POSITIVE_INFINITY*/, collisionMask);
 			if (hit != null) {
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.UP());
