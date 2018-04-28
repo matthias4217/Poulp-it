@@ -18,8 +18,8 @@ public class PlayerScript extends MonoBehaviour {
 	public static float maxJumpHeight = 4;
 	public static float minJumpHeight = 1;
 	public static float timeToJumpApex = .4f;
-	public static float accelerationTimeAirborne = 0f;		// Amount of inertia while airborne (set to 0 for no inertia)
-	public static float accelerationTimeGrounded = 0f;		// Amount of inertia while grounded (set to 0 for no inertia)
+	public static float accelerationTimeAirborne = .5f;		// Amount of inertia while airborne (set to 0 for no inertia)
+	public static float accelerationTimeGrounded = .5f;		// Amount of inertia while grounded (set to 0 for no inertia)
 
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
 	public static Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
@@ -58,10 +58,11 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
-		calculateVelocity(deltaTime, playerInput.directionnalInput);
-		handleWallSliding(deltaTime, playerInput.directionnalInput);
+		System.out.println("Input update " + playerInput);
+		calculateVelocity(deltaTime, playerInput.directionalInput);
+		//handleWallSliding(deltaTime, playerInput.directionnalInput);
 
-		controller.move(velocity.multiply(deltaTime), playerInput.directionnalInput);
+		controller.move(velocity.multiply(deltaTime), playerInput.directionalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
@@ -76,6 +77,7 @@ public class PlayerScript extends MonoBehaviour {
 
 	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
 		float targetVelocityX = directionalInput.x * moveSpeed;
+		System.out.println("trgtVelX " + targetVelocityX);
 		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing,
 				(controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;

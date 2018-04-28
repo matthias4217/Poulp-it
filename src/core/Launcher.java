@@ -18,6 +18,7 @@ import java.io.IOException;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.GameInformation;
+import core.util.Vector2;
 
 /**
  * This is the starting point of the program.
@@ -118,10 +119,8 @@ public class Launcher extends Application {
 
 				
 				gc.drawImage(background, 0, 0);
-
 				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
 				System.out.println(playerInput);
-				stage.getScene().setOnKeyReleased(playerInput.eventHandler);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
@@ -129,12 +128,13 @@ public class Launcher extends Application {
 
 				try {
 					gameEngine.update(deltaTime, playerInput, gameInformation);
-				} catch (InvalidArgumentsException e) {
-					//System.out.println("Plop");
-					
+				} catch (InvalidArgumentsException e) {					
 					e.printStackTrace();
 				}
 
+				playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
+				// setOnKeyPressed, then it doesn't work ?!?
+				
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 

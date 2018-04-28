@@ -66,10 +66,9 @@ public class Level {
 	 */
 	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
 		// FIXME tileMatrix seems to invert x and y
-		//System.out.println("i and j " + j + "," + i);
 		// Check if i and j < lengths of tileMatrix
-		if (0 < j && j < tileMatrix.length && 0 < i && i < tileMatrix[0].length) {
-			return tileMatrix[j][i];
+		if (0 < i && i < tileMatrix.length && 0 < j && j < tileMatrix[0].length) {
+			return tileMatrix[i][j];
 		}
 		else {
 			return TileType.EMPTY;
@@ -166,15 +165,15 @@ public class Level {
 		for (char[] line: tilesList) {
 			max = Math.max(line.length, max);
 		}
-		tileMatrix = new TileType[tilesList.size()][max];
-		// then we fill infoTileMatrix !
+		tileMatrix = new TileType[max][tilesList.size()];
+		// then we fill TileMatrix !
 
 		int j;
 
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {
-				tileMatrix[i][j] = ASSOCIATIONS.get(c);
+				tileMatrix[j][i] = ASSOCIATIONS.get(c);
 				j++;
 			}
 		}
@@ -188,8 +187,8 @@ public class Level {
 	 */
 	public void toLevel() {
 		// Variables used
-		int max_i = tileMatrix.length - 1; // height of the char[][]
-		int max_j = tileMatrix[0].length - 1; // width of the char[][]
+		int max_i = tileMatrix.length - 1; // width of the char[][]
+		int max_j = tileMatrix[0].length - 1; // height of the char[][]
 
 		/*
 		 * Now, the objects...
@@ -294,10 +293,10 @@ public class Level {
 					 *  Solutions :
 					 *  https://stackoverflow.com/questions/4120609/more-efficient-way-to-check-neighbours-in-a-two-dimensional-array-in-java#5802694
 					 */
-					int rowStart  = Math.max( i - 1, 0   );
-					int rowFinish = Math.min( i + 1, max_i);
-					int colStart  = Math.max( j - 1, 0   );
-					int colFinish = Math.min( j + 1, max_j);
+					int colStart  = Math.max( i - 1, 0    );
+					int colFinish = Math.min( i + 1, max_i);
+					int rowStart  = Math.max( j - 1, 0    );
+					int rowFinish = Math.min( j + 1, max_j);
 
 					for (int curRow = rowStart; curRow <= rowFinish; curRow++ ) {
 						for (int curCol = colStart; curCol <= colFinish; curCol++ ) {
@@ -307,21 +306,21 @@ public class Level {
 							 * First, we check that we are on a direct neighbour
 							 * then, we check that the neighbour is not empty
 							 */
-							if (((curRow == i && curCol != j) ||
-									(curRow != i && curCol == j))
-									&& (tileMatrix[curRow][curCol] != TileType.EMPTY)) {
+							if (((curRow == j && curCol != i) ||
+									(curRow != j && curCol == i))
+									&& (tileMatrix[curCol][curRow] != TileType.EMPTY)) {
 								nbrDirectNeighbours ++;
 								// then we detect where the neighbours are
-								if (curRow > i) {
+								if (curRow > j) {
 									neighbours.add(Direction.DOWN);
 								}
-								else if (curRow < i) {
+								else if (curRow < j) {
 									neighbours.add(Direction.UP);
 								}
-								else if (curCol < j) {
+								else if (curCol < i) {
 									neighbours.add(Direction.LEFT);
 								}
-								else if (curCol > j) {
+								else if (curCol > i) {
 									neighbours.add(Direction.RIGHT);
 								}
 							}
@@ -329,7 +328,7 @@ public class Level {
 					}
 					switch (nbrDirectNeighbours) {
 					case 0:
-						tile = new Tile(j, i, tileSurfaceQuadruple, TileType.SQUARE);
+						tile = new Tile(i, j, tileSurfaceQuadruple, TileType.SQUARE);
 						break;
 					case 1:
 						/*
@@ -348,16 +347,16 @@ public class Level {
 						Direction n = neighbours.get(0);
 						switch (n) {
 						case UP:
-							tile = new Tile(j, i, tileSurfaceTripleTop, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceTripleTop, TileType.SQUARE);
 							break;
 						case DOWN:
-							tile = new Tile(j, i, tileSurfaceTripleDown, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceTripleDown, TileType.SQUARE);
 							break;
 						case LEFT:
-							tile = new Tile(j, i, tileSurfaceTripleLeft, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceTripleLeft, TileType.SQUARE);
 							break;
 						case RIGHT:
-							tile = new Tile(j, i, tileSurfaceTripleRight, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceTripleRight, TileType.SQUARE);
 							break;
 						}
 						break;
@@ -365,7 +364,7 @@ public class Level {
 						/*
 						 * Not a hard problem for the textures, we just need to make 6 cases
 						 */
-						tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
+						tile = new Tile(i, j, tileSurfaceDoubleDownRight, TileType.SQUARE);
 						List<Direction> temp2 = new ArrayList<Direction>(4);
 						temp2.add(Direction.UP);
 						temp2.add(Direction.DOWN);
@@ -379,42 +378,42 @@ public class Level {
 								|| (temp2.get(0) == Direction.DOWN
 								&& temp2.get(1) == Direction.UP)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleTopDown, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleTopDown, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == Direction.UP
 								&& temp2.get(1) == Direction.RIGHT)
 								|| (temp2.get(0) == Direction.RIGHT
 								&& temp2.get(1) == Direction.UP)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleTopRight, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleTopRight, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == Direction.UP
 								&& temp2.get(1) == Direction.LEFT)
 								|| (temp2.get(0) == Direction.LEFT
 								&& temp2.get(1) == Direction.UP)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleTopLeft, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleTopLeft, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == Direction.DOWN
 								&& temp2.get(1) == Direction.RIGHT)
 								|| (temp2.get(0) == Direction.RIGHT
 								&& temp2.get(1) == Direction.DOWN)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleDownRight, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == Direction.DOWN
 								&& temp2.get(1) == Direction.LEFT)
 								|| (temp2.get(0) == Direction.LEFT
 								&& temp2.get(1) == Direction.DOWN)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleDownLeft, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleDownLeft, TileType.SQUARE);
 						}
 						if ((temp2.get(0) == Direction.RIGHT
 								&& temp2.get(1) == Direction.LEFT)
 								|| (temp2.get(0) == Direction.LEFT
 								&& temp2.get(1) == Direction.RIGHT)) {
 
-							tile = new Tile(j, i, tileSurfaceDoubleLeftRight, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDoubleLeftRight, TileType.SQUARE);
 						}
 						break;
 					case 3:
@@ -426,16 +425,16 @@ public class Level {
 							temp3.remove(neighbours.get(nIndex));
 						}
 						if (temp3.contains(Direction.UP)) {
-							tile = new Tile(j, i, tileSurfaceTop, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceTop, TileType.SQUARE);
 						}
 						else if (temp3.contains(Direction.DOWN)) {
-							tile = new Tile(j, i, tileSurfaceDown, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceDown, TileType.SQUARE);
 						}
 						else if (temp3.contains(Direction.LEFT)) {
-							tile = new Tile(j, i, tileSurfaceLeft, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceLeft, TileType.SQUARE);
 						}
 						else if (temp3.contains(Direction.RIGHT)) {
-							tile = new Tile(j, i, tileSurfaceRight, TileType.SQUARE);
+							tile = new Tile(i, j, tileSurfaceRight, TileType.SQUARE);
 						}
 						/*
 						 * xxx
@@ -446,26 +445,26 @@ public class Level {
 						 */
 						break;
 					case 4:
-						tile = new Tile(j, i, tilePlain, TileType.SQUARE);
+						tile = new Tile(i, j, tilePlain, TileType.SQUARE);
 						// and we do not need to add a collider
 						break;
 					}
 					tilefound = true;
 				}
 				else if (type == TileType.TRIANGLE_DOWN_RIGHT) {
-					tile = new Tile(j, i, tileTriangleDownRight, TileType.TRIANGLE_DOWN_RIGHT);
+					tile = new Tile(i, j, tileTriangleDownRight, TileType.TRIANGLE_DOWN_RIGHT);
 					tilefound = true;
 				}
 				else if (type == TileType.TRIANGLE_DOWN_LEFT) {
-					tile = new Tile(j, i, tileTriangleDownLeft, TileType.TRIANGLE_DOWN_LEFT);
+					tile = new Tile(i, j, tileTriangleDownLeft, TileType.TRIANGLE_DOWN_LEFT);
 					tilefound = true;
 				}
 				else if (type == TileType.TRIANGLE_TOP_LEFT) {
-					tile = new Tile(j, i, tileTriangleTopLeft, TileType.TRIANGLE_TOP_LEFT);
+					tile = new Tile(i, j, tileTriangleTopLeft, TileType.TRIANGLE_TOP_LEFT);
 					tilefound = true;
 				}
 				else if (type == TileType.TRIANGLE_TOP_RIGHT) {
-					tile = new Tile(j, i, tileTriangleTopRight, TileType.TRIANGLE_TOP_RIGHT);
+					tile = new Tile(i, j, tileTriangleTopRight, TileType.TRIANGLE_TOP_RIGHT);
 					tilefound = true;
 				}
 				else {

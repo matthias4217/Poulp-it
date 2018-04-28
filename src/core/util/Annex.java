@@ -149,6 +149,7 @@ public final class Annex {
 	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
 			float smoothTime, float deltaTime) {
 
+		//System.out.println("Target " + target);
 		if (smoothTime == 0) {		// If no damping
 			return target;
 		}

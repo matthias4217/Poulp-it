@@ -15,7 +15,9 @@ public class PlayerInput {
 	/**
 	 * The inputs relative to the direction
 	 */
-	public Vector2 directionnalInput = Vector2.ZERO();
+	public Vector2 directionalInput = Vector2.ZERO();
+	
+
 
 	//KeyEvent.getEventType returns the event type
 
@@ -23,21 +25,22 @@ public class PlayerInput {
 		public void handle(KeyEvent event) {
 			switch(event.getCode()) {
 			case LEFT:
-				directionnalInput = Vector2.LEFT();
+				directionalInput = Vector2.LEFT();
 				break;
 			case RIGHT:
-				directionnalInput = Vector2.RIGHT();
+				directionalInput = Vector2.RIGHT();
 				break;
 			case UP:
-				directionnalInput = Vector2.UP();
+				directionalInput = Vector2.UP();
 				break;
 			case DOWN:
-				directionnalInput = Vector2.DOWN();
+				directionalInput = Vector2.DOWN();
 				break;
 			case SPACE:
+				directionalInput = Vector2.ZERO();
 				break;
 			default:
-				directionnalInput = Vector2.ZERO();
+				directionalInput = Vector2.ZERO();
 				break;
 			}
 		}
@@ -46,7 +49,7 @@ public class PlayerInput {
 
 
 	@Override public String toString() {
-		return "PlayerInput [directionalInput=" + directionnalInput + "; eventHandler=" + eventHandler + "]";
+		return "PlayerInput [directionalInput=" + directionalInput + "; eventHandler=" + eventHandler + "]";
 	}
 
 }
