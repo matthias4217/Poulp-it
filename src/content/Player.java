@@ -1,11 +1,10 @@
 package content;
 
 import javafx.scene.image.Image;
-import levels.Tile;
 import core.util.BoxCollider;
 import core.util.Vector2;
-import core.scripts.PlayerScript;
-import core.scripts.Controller;
+import content.scripts.PlayerScript;
+import content.scripts.Controller;
 
 
 /**

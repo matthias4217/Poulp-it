@@ -14,51 +14,72 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		Carrelage mabite1 = new Carrelage(2, 3);
-		Carrelage mabite2 = new Carrelage(2, 3);
-		Map<Carrelage, LinkedList<GameObject>> mep = new HashMap<Carrelage, LinkedList<GameObject>>();
+		LinkedList<Vector2> pointsList = new LinkedList<Vector2>();
+		pointsList.add(new Vector2(0, 0));					// Top left
+		pointsList.add(new Vector2(5, 0)); 			// Top right
+		pointsList.add(new Vector2(5, -5));	// Bottom right
+		pointsList.add(new Vector2(0, -5));			// Bottom left
 		
-		mep.put(mabite1, null);
-		System.out.println("mabite1 dans mep : " + mep.containsKey(mabite1));
-		System.out.println("mabite2 dans mep : " + mep.containsKey(mabite2));
-
-	}
-
-	public static int test(int... entiers) {
-		int result = 0;
-		for (int x: entiers) {
-			result += x;
+		System.out.println(pointsList);
+		
+		Vector2[] maBite = new Vector2[pointsList.size()];
+		
+		pointsList.toArray(maBite);
+		System.out.println();
+		for (Vector2 x: maBite) {
+			System.out.println(x);
 		}
-		return result;
+		
+		
+		
+		Vector2[] maBite2 = (Vector2[]) pointsList.toArray();
+		System.out.println();
+		for (Vector2 x: maBite2) {
+			System.out.println(x);
+		}
+		
+
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public static void testIntersection() {
-		Vector2 A = new Vector2(2, 2);
-		Vector2 B = new Vector2(4, 2);
-		Vector2 C = new Vector2(3, -1);
-		Vector2 D = new Vector2(3, 3);
 
-		if (Annex.checkSegmentIntersection(A, B, C, D) != null ) {
-			System.out.println("Intersection");
+		// Seems to be working =)
+
+		Vector2 A = new Vector2(0, 2);
+		Vector2 B = new Vector2(2, 0);
+		Vector2 C = new Vector2(1, 1);
+		Vector2 D = new Vector2(2, 2);
+
+		System.out.println("A: " + A);
+		System.out.println("B: " + B);
+		System.out.println("C: " + C);
+		System.out.println("D: " + D);
+		System.out.println();
+
+		Vector2 intersection = Annex.segmentsIntersection(A, B, C, D);
+
+		if (intersection == null) {
+			System.out.println("null");
 		} else {
-			System.out.println("Nope");
+			System.out.println("Intersection at " + intersection);
 		}
+
 	}
 	
 	
 	public static void testAngle() {
-		
+
 		Vector2 A = new Vector2(1, 0);
 		Vector2 B = new Vector2(0, 1);
-		
+
 		System.out.println(Vector2.angle(A, B));
-		
+
 	}
-	
+
 
 
 

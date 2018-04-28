@@ -25,6 +25,7 @@ public class RaycastHit {
 	 */
 	private Vector2 normal;
 
+
 	//? Vector2 impactPoint;
 
 
@@ -40,9 +41,26 @@ public class RaycastHit {
 		return normal;
 	}
 
+	public void setGameObjectHit(GameObject gameObjectHit) {
+		this.gameObjectHit = gameObjectHit;
+	}
+
+	public void setDistance(float distance) {
+		this.distance = distance;
+	}
+
+	public void setNormal(Vector2 normal) {
+		this.normal = normal;
+	}
 
 
-	
+
+	public RaycastHit(GameObject gameObjectHit, float distance, Vector2 normal) {
+		this.gameObjectHit = gameObjectHit;
+		this.distance = distance;
+		this.normal = normal;
+	}
+
 
 
 

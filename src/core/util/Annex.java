@@ -1,5 +1,7 @@
 package core.util;
 
+import core.annotations.Unused;
+
 /**
  * This class stores diverse constants and methods such as math ones.
  * 
@@ -40,7 +42,8 @@ public final class Annex {
 	 * @param D
 	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
 	 */
-	public static Vector2 checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+	@Deprecated
+	public static Vector2 checkSegmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
 		try {
 			/* Explication:
 			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
@@ -67,56 +70,61 @@ public final class Annex {
 	}
 
 
+	// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
 
-	// Given three colinear Vector2s p, q, r, the function checks if
-	// Vector2 q lies on line segment 'pr'
-	boolean onSegment(Vector2 a, Vector2 b, Vector2 p)
-	{
-		return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
-				b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
+	/**
+	 * Given three colinear Vector2s A, B, C, the function checks if
+	 * Vector2 B lies on line segment [A; C]
+	 */
+	@Unused
+	public static boolean onSegment(Vector2 A, Vector2 B, Vector2 C) {
+		return (B.x <= Math.max(A.x, C.x) && B.x >= Math.min(A.x, C.x) &&
+				B.y <= Math.max(A.y, C.y) && B.y >= Math.min(A.y, C.y));
 	}
 
-	// To find orientation of ordered triplet (p, q, r).
-	// The function returns following values
-	// 0 --> p, q and r are colinear
-	// 1 --> Clockwise
-	// -1 --> Counterclockwise
-	float orientation(Vector2 p, Vector2 q, Vector2 r)
-	{
-		// See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
-		// for details of below formula.
+
+	/**
+	 * To find orientation of ordered triplet (p, q, r).
+	 * The function returns following values
+	 * 0 	-> p, q and r are colinear
+	 * 1 	-> Clockwise
+	 * -1 	-> Counterclockwise
+	 */
+	private static float orientation(Vector2 p, Vector2 q, Vector2 r) {
+		/* See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s for details on the formula */
 		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
 	}
 
-	// The main function that returns true if line segment 'p1q1'
-	// and 'p2q2' intersect.
-	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
-	{
-		// Find the four orientations needed for general and
-		// special cases
-		float o1 = orientation(p1, q1, p2);
-		float o2 = orientation(p1, q1, q2);
-		float o3 = orientation(p2, q2, p1);
-		float o4 = orientation(p2, q2, q1);
+	/**
+	 * Indicates if the line segments [A; B] and [C; D] intersect when there is no collinearity
+	 * This method return the intersection point if there is one, null otherwise
+	 * 
+	 * Source: https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @return	the intersection point between [A; B] and [C; D], or null
+	 */
+	public static Vector2 segmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+		// Finding the four orientations needed for general and special cases
+		float o1 = orientation(A, B, C);
+		float o2 = orientation(A, B, D);
+		float o3 = orientation(C, D, A);
+		float o4 = orientation(C, D, B);
 
-		// General case
-		if (o1 != o2 && o3 != o4)
-			return true;
+		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
 
-		// Special Cases
-		// p1, q1 and p2 are colinear and p2 lies on segment p1q1
-		if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+			float q = A.x*B.y - A.y*B.x;
+			float r = C.x*D.y - C.y*D.x;
+			float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
 
-		// p1, q1 and p2 are colinear and q2 lies on segment p1q1
-		if (o2 == 0 && onSegment(p1, q2, q1)) return true;
-
-		// p2, q2 and p1 are colinear and p1 lies on segment p2q2
-		if (o3 == 0 && onSegment(p2, p1, q2)) return true;
-
-		// p2, q2 and q1 are colinear and q1 lies on segment p2q2
-		if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-
-		return false; // Doesn't fall in any of the above cases
+			return new Vector2(
+					(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
+					(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
+		}
+		return null;
 	}
 
 
@@ -139,7 +147,7 @@ public final class Annex {
 
 	/**
 	 * Gradually changes a value over time.
-	 * 
+	 *
 	 * @param current			- the current state of the value
 	 * @param target			- the target value
 	 * @param currentVelocity	- a mutable float keeping track of the current progression
@@ -164,8 +172,8 @@ public final class Annex {
 		float num6 = target + (num4 + num5) * num3;
 
 		if ((target > current) == (num6 > target)) {
-			num6 = target;
 			currentVelocity.value = 0f;
+			return target;
 		}
 		return num6;
 	}

@@ -3,14 +3,12 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import core.GameEngine;
 import core.GraphicManager;
-import core.Launcher;
 import core.PlayerInput;
 import core.Renderable;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
-import core.scripts.MonoBehaviour;
+import content.scripts.MonoBehaviour;
 import core.util.*;
 
 /**
@@ -105,8 +103,9 @@ public abstract class GameObject implements Renderable {
 	 *
 	 * @param deltaTime
 	 * @param gameInformation
+	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation) {
+	public void update(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
 		updateAllScripts(deltaTime, gameInformation);
 	}
 
@@ -114,8 +113,9 @@ public abstract class GameObject implements Renderable {
 	 *
 	 * @param deltaTime			- the time in seconds it took to complete the last frame
 	 * @param playerInput 	- Info that the Launcher sends to the GameManager
+	 * @throws InvalidArgumentsException 
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput) {
+	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
 		for (MonoBehaviour script: scripts) {
 			script.update(deltaTime, playerInput);
 		}

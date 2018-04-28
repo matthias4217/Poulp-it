@@ -1,4 +1,4 @@
-package core.scripts;
+package content.scripts;
 
 import content.GameObject;
 import core.PlayerInput;
@@ -35,7 +35,7 @@ public abstract class MonoBehaviour {
 	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput playerInput) {}
+	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {}
 
 
 	/**

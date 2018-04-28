@@ -49,18 +49,31 @@ public class Level {
 	 * The grid of Tiles,
 	 * for the physics of the world
 	 */
-	public TileType[][] tileMatrix;
+	private TileType[][] tileMatrix;
 
 	/**
 	 * List of Tiles, used for rendering only
 	 */
 	public Tile[] tileList;
 
-
 	private String theme;
 
 
-
+	/**
+	 * @param i
+	 * @param j
+	 * @return	the tile of coordinates (i, j)
+	 */
+	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
+		// FIXME tileMatrix seems to invert x and y
+		System.out.println("Largeur du lvl: " + tileMatrix.length);
+		System.out.println("Longueur du lvl: " + tileMatrix[0].length);
+		return tileMatrix[j][i];
+	}
+	
+	
+	
+	
 	/**
 	 * Constructor
 	 *
