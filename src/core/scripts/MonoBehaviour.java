@@ -35,7 +35,7 @@ public abstract class MonoBehaviour {
 	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation) {}
+	public void update(float deltaTime, PlayerInput playerInput) {}
 
 
 	/**
@@ -44,7 +44,7 @@ public abstract class MonoBehaviour {
 	 * @param deltaTime- the time in seconds it took to complete the last frame
 	 */
 	@Unused
-	public void lateUpdate(long deltaTime, PlayerInput gameInformation) {}
+	public void lateUpdate(long deltaTime, PlayerInput playerInput) {}
 
 
 

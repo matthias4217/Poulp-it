@@ -17,7 +17,7 @@ import core.scripts.Controller;
  */
 public class Player extends GameObject {
 
-	static final String SPRITE_PATH = "resources/graphic/ball-of-goo-2018-02-03.png";
+	static final String SPRITE_PATH = "resources/graphic/player.png";
 
 
 	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
@@ -33,10 +33,10 @@ public class Player extends GameObject {
 
 	public Player(Vector2 position, int maxHP) {
 		super(position,
-				new Image(SPRITE_PATH, Tile.TILE_SIZE, Tile.TILE_SIZE, false, false),
+				new Image(SPRITE_PATH /*, 64, 64, false, false*/),
 				Layer.DEFAULT,
 				Tag.DEFAULT,
-				new BoxCollider(4, 4),		//
+				new BoxCollider(64, 64),		//
 
 				new PlayerScript(),
 				new Controller());
@@ -54,7 +54,7 @@ public class Player extends GameObject {
 
 
 	@Override public String toString() {
-		return "Player [HP: " + hp + "; Position: " + position + "; Collider " + collider + "]";
+		return "Player [HP: " + hp + "; Position: " + position + "; " + collider + "]";
 	}
 
 }

@@ -23,30 +23,19 @@ import levels.Tile.TileType;
 public class Level {
 
 	/**
-	 * The grid of Tiles,
-	 * for the physics of the world
-	 */
-	public TileType[][] tileMatrix;
-
-	/**
-	 * List of Tiles, used for rendering only
-	 */
-	public Tile[] tileList;
-    
-	/**
 	 * The HashMap used to link the characters in the txt file to the game
 	 * representation
 	 */
-	private static HashMap<Character, TileType> associations;
+	private static HashMap<Character, TileType> ASSOCIATIONS;
 
-	private void initializeAssociations() {
-		associations = new HashMap<Character, TileType>();
-		associations.put(' ', TileType.EMPTY);
-		associations.put('x', TileType.SQUARE);
-		associations.put('/', TileType.TRIANGLE_DOWN_RIGHT);
-		associations.put('\\', TileType.TRIANGLE_DOWN_LEFT);
-		associations.put('u', TileType.TRIANGLE_TOP_RIGHT);
-		associations.put('v', TileType.TRIANGLE_TOP_LEFT);
+	private static void initializeAssociations() {
+		ASSOCIATIONS = new HashMap<Character, TileType>();
+		ASSOCIATIONS.put(' ', TileType.EMPTY);
+		ASSOCIATIONS.put('x', TileType.SQUARE);
+		ASSOCIATIONS.put('/', TileType.TRIANGLE_DOWN_RIGHT);
+		ASSOCIATIONS.put('\\', TileType.TRIANGLE_DOWN_LEFT);
+		ASSOCIATIONS.put('u', TileType.TRIANGLE_TOP_RIGHT);
+		ASSOCIATIONS.put('v', TileType.TRIANGLE_TOP_LEFT);
 	}
 
 	/**
@@ -56,22 +45,35 @@ public class Level {
 	public static final String THEME = "theme:";
 
 
+	/**
+	 * The grid of Tiles,
+	 * for the physics of the world
+	 */
+	public TileType[][] tileMatrix;
+
+	/**
+	 * List of Tiles, used for rendering only
+	 */
+	public Tile[] tileList;
+
+
 	private String theme;
 
 
 
 	/**
+	 * Constructor
 	 *
 	 * @param file
 	 * @throws IOException
 	 */
 	public Level(String file) throws IOException {
+		initializeAssociations();
+
 		/*
 		 * Open the file
 		 * https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java#4716623
 		 */
-		initializeAssociations();
-
 		Path filePath = FileSystems.getDefault().getPath(file);
 		System.out.println("Path to the level: " + filePath);
 
@@ -84,7 +86,7 @@ public class Level {
 		 * the level is 'level:' and then enclosed in brackets
 		 */
 
-		boolean inLevel = false; // false outside the brackets, true inside
+		boolean inLevel = false;		// false outside the brackets, true inside
 		int lineNbr = 0;
 		List<char[]> tilesList = new ArrayList<char[]>();
 
@@ -98,7 +100,7 @@ public class Level {
 					 *
 					 *  As we can see, the last 'theme:' in the file wins !
 					 */
-					System.out.println("Adding theme...");
+					System.out.println("Adding theme...");		// TODO write the name of the theme read
 					theme = line.substring(THEME.length()).trim();
 					// TODO We need to check whether the theme is 'right' (=it exists)
 				}
@@ -113,10 +115,10 @@ public class Level {
 					}
 
 				}
-				else if (inLevel && line.trim().equals("}")) { 		// we are in the level
+				else if (inLevel && line.trim().equals("}")) {
 					System.out.println("Finished treating level");
 					inLevel = false;
-					}
+				}
 				else if (inLevel) {
 					char[] lineChars = new char[line.length()];
 					for (int i = 0; i < line.length(); i++) {
@@ -131,6 +133,7 @@ public class Level {
 				}
 			}
 		}
+
 		/*
 		 * Now, we have to convert tilesList, an ArrayList<char[]>
 		 * to levelGrid, a char[][]
@@ -153,7 +156,7 @@ public class Level {
 		for (int i = 0; i < tilesList.size(); i++) {
 			j = 0;
 			for (char c: tilesList.get(i)) {
-				tileMatrix[i][j] = associations.get(c);
+				tileMatrix[i][j] = ASSOCIATIONS.get(c);
 				j++;
 			}
 		}
@@ -184,51 +187,51 @@ public class Level {
 
 		//SQUARE
 		ImageView tilePlain = new ImageView(new Image("resources/tiles/" +
-				 theme + "/tile-plain.png", tileSize, tileSize, false, false));
+				theme + "/tile-plain.png", tileSize, tileSize, false, false));
 		// surface-simple
 		ImageView tileSurfaceTop = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-top.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-top.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDown= new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-down.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-left.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-right.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-right.png", tileSize, tileSize, false, false));
 		// surface-double
 		ImageView tileSurfaceDoubleDownLeft = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-double-down-left.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-down-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleDownRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-down-right.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-down-right.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleLeftRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-left-right.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-left-right.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopDown = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-down.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-top-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-left.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-top-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceDoubleTopRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-double-top-right.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-double-top-right.png", tileSize, tileSize, false, false));
 		// surface-triple
 		ImageView tileSurfaceTripleDown = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-down.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-triple-down.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleTop = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-top.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-triple-top.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-left.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-triple-left.png", tileSize, tileSize, false, false));
 		ImageView tileSurfaceTripleRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/tile-surface-triple-right.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-triple-right.png", tileSize, tileSize, false, false));
 		// surface-quadruple
 		ImageView tileSurfaceQuadruple = new ImageView(new Image("resources/tiles/"
-		 + theme + "/tile-surface-quadruple.png", tileSize, tileSize, false, false));
+				+ theme + "/tile-surface-quadruple.png", tileSize, tileSize, false, false));
 
 		// TRIANGLE
 		ImageView tileTriangleDownRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-down-right.png", tileSize, tileSize, false, false));
+				+ theme + "/triangle-down-right.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleDownLeft= new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-down-left.png", tileSize, tileSize, false, false));
+				+ theme + "/triangle-down-left.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleTopLeft = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-top-left.png", tileSize, tileSize, false, false));
+				+ theme + "/triangle-top-left.png", tileSize, tileSize, false, false));
 		ImageView tileTriangleTopRight = new ImageView(new Image("resources/tiles/"
-				 + theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
+				+ theme + "/triangle-top-right.png", tileSize, tileSize, false, false));
 
 
 		List<Tile> listTiles = new ArrayList<Tile>();
@@ -279,51 +282,51 @@ public class Level {
 					int colFinish = Math.min( j + 1, max_j);
 
 					for (int curRow = rowStart; curRow <= rowFinish; curRow++ ) {
-					    for (int curCol = colStart; curCol <= colFinish; curCol++ ) {
+						for (int curCol = colStart; curCol <= colFinish; curCol++ ) {
 
-					    	/*
-					    	 * The if condition is a bit messy
-					    	 * First, we check that we are on a direct neighbour
-					    	 * then, we check that the neighbour is not empty
-					    	 */
-					        if (((curRow == i && curCol != j) ||
-					        		(curRow != i && curCol == j))
-					        		&& (tileMatrix[curRow][curCol] != TileType.EMPTY)) {
-					        	nbrDirectNeighbours ++;
-					        	// then we detect where the neighbours are
-					        	if (curRow > i) {
-					        		neighbours.add(neighbourPosition.DOWN);
-					        	}
-					        	else if (curRow < i) {
-					        		neighbours.add(neighbourPosition.UP);
-					        	}
-					        	else if (curCol < j) {
-					        		neighbours.add(neighbourPosition.LEFT);
-					        	}
-					        	else if (curCol > j) {
-					        		neighbours.add(neighbourPosition.RIGHT);
-					        	}
-					        }
-					    }
+							/*
+							 * The if condition is a bit messy
+							 * First, we check that we are on a direct neighbour
+							 * then, we check that the neighbour is not empty
+							 */
+							if (((curRow == i && curCol != j) ||
+									(curRow != i && curCol == j))
+									&& (tileMatrix[curRow][curCol] != TileType.EMPTY)) {
+								nbrDirectNeighbours ++;
+								// then we detect where the neighbours are
+								if (curRow > i) {
+									neighbours.add(neighbourPosition.DOWN);
+								}
+								else if (curRow < i) {
+									neighbours.add(neighbourPosition.UP);
+								}
+								else if (curCol < j) {
+									neighbours.add(neighbourPosition.LEFT);
+								}
+								else if (curCol > j) {
+									neighbours.add(neighbourPosition.RIGHT);
+								}
+							}
+						}
 					}
 					switch (nbrDirectNeighbours) {
 					case 0:
 						tile = new Tile(j, i, tileSurfaceQuadruple, TileType.SQUARE);
 						break;
 					case 1:
-                                                /*
-                                                 * Supposing X is the char we're working onto :
-                                                 * x
-                                                 * xX
-                                                 *
-                                                 * We've got to add a collider
-                                                 * line to the side of the tile
-                                                 * opposed to the one it's attached
-                                                 * to
-                                                 * And one to the side with which
-                                                 * there is an angle
-                                                 * And extend the last one
-                                                 */
+						/*
+						 * Supposing X is the char we're working onto :
+						 * x
+						 * xX
+						 *
+						 * We've got to add a collider
+						 * line to the side of the tile
+						 * opposed to the one it's attached
+						 * to
+						 * And one to the side with which
+						 * there is an angle
+						 * And extend the last one
+						 */
 						neighbourPosition n = neighbours.get(0);
 						switch (n) {
 						case UP:
@@ -356,42 +359,42 @@ public class Level {
 						if ((temp2.get(0) == neighbourPosition.UP
 								&& temp2.get(1) == neighbourPosition.DOWN)
 								|| (temp2.get(0) == neighbourPosition.DOWN
-										&& temp2.get(1) == neighbourPosition.UP)) {
+								&& temp2.get(1) == neighbourPosition.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopDown, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == neighbourPosition.UP
 								&& temp2.get(1) == neighbourPosition.RIGHT)
 								|| (temp2.get(0) == neighbourPosition.RIGHT
-										&& temp2.get(1) == neighbourPosition.UP)) {
+								&& temp2.get(1) == neighbourPosition.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopRight, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == neighbourPosition.UP
 								&& temp2.get(1) == neighbourPosition.LEFT)
 								|| (temp2.get(0) == neighbourPosition.LEFT
-										&& temp2.get(1) == neighbourPosition.UP)) {
+								&& temp2.get(1) == neighbourPosition.UP)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleTopLeft, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == neighbourPosition.DOWN
 								&& temp2.get(1) == neighbourPosition.RIGHT)
 								|| (temp2.get(0) == neighbourPosition.RIGHT
-										&& temp2.get(1) == neighbourPosition.DOWN)) {
+								&& temp2.get(1) == neighbourPosition.DOWN)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleDownRight, TileType.SQUARE);
 						}
 						else if ((temp2.get(0) == neighbourPosition.DOWN
 								&& temp2.get(1) == neighbourPosition.LEFT)
 								|| (temp2.get(0) == neighbourPosition.LEFT
-										&& temp2.get(1) == neighbourPosition.DOWN)) {
+								&& temp2.get(1) == neighbourPosition.DOWN)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleDownLeft, TileType.SQUARE);
 						}
 						if ((temp2.get(0) == neighbourPosition.RIGHT
 								&& temp2.get(1) == neighbourPosition.LEFT)
 								|| (temp2.get(0) == neighbourPosition.LEFT
-										&& temp2.get(1) == neighbourPosition.RIGHT)) {
+								&& temp2.get(1) == neighbourPosition.RIGHT)) {
 
 							tile = new Tile(j, i, tileSurfaceDoubleLeftRight, TileType.SQUARE);
 						}
@@ -416,13 +419,13 @@ public class Level {
 						else if (temp3.contains(neighbourPosition.RIGHT)) {
 							tile = new Tile(j, i, tileSurfaceRight, TileType.SQUARE);
 						}
-                                                /*
-                                                 * xxx
-                                                 * xX
-                                                 * xx
-                                                 *
-                                                 * We need to add/extend one collider
-                                                 */
+						/*
+						 * xxx
+						 * xX
+						 * xx
+						 *
+						 * We need to add/extend one collider
+						 */
 						break;
 					case 4:
 						tile = new Tile(j, i, tilePlain, TileType.SQUARE);
@@ -473,17 +476,15 @@ public class Level {
 
 
 
-	@Override public String toString() {
-		String level_parser_txt = "";
-		String line;
-		for (TileType[] typeline: tileMatrix) {
-			line = "";
-			for (TileType type: typeline) {
-				line = line + type;
+	@Override public String toString() {		// Illisible...
+		String result = "";
+		for (TileType[] typeLine: tileMatrix) {
+			for (TileType type: typeLine) {
+				result += type;
 			}
-			level_parser_txt = level_parser_txt + "\n" + line;
+			result += System.lineSeparator();
 		}
-		return level_parser_txt;
+		return result;
 	}
 
 

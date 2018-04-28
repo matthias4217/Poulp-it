@@ -1,18 +1,19 @@
 package core.scripts;
 
 import core.util.*;
+import content.Layer;
 
 /**
  * Superclass for all scripts which rely on raycasts to detect collisions.
  * The rays are cast from the edge of the collider of a gameObject.
- * This script must be attached to a RECTANGULAR object
+ * This script must be attached to a RECTANGULAR object (GameObject with a BoxCollider)
  *
  * @author Sebastian Lague, arranged by Raph
  *
  */
 public class RaycastController extends MonoBehaviour {
 
-	public String collisionLayer;					// Indicates on which layer the Rays will detect things
+	public Layer layer;					// Indicates on which layer the Rays will detect things
 
 	public static final float PERCENT_SKIN = 0.015f;		// Percentage of the object bounds that is skin
 	protected float skinWidth;
@@ -43,7 +44,6 @@ public class RaycastController extends MonoBehaviour {
 		}
 
 		// Calculating rays
-		
 		skinWidth = PERCENT_SKIN * Math.min(collider.getWidth(), collider.getHeight());
 		horizontalRaySpacing = (collider.getWidth() - 2*skinWidth) / (horizontalRayCount - 1);
 		verticalRaySpacing = (collider.getHeight() - 2*skinWidth) / (verticalRayCount - 1);

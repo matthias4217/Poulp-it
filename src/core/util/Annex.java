@@ -49,13 +49,13 @@ public final class Annex {
 			float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
 					((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
 			float w2 = (D.y - C.y - w1*(B.y - C.y)) / (A.y - C.y);
-			
+
 			if (w1>=0 && w2>=0 && w1+w2>=1) {
 				// In the case of intersection, return the intersection point
 				float q = A.x*B.y - A.y*B.x;
 				float r = C.x*D.y - C.y*D.x;
 				float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
-				
+
 				return new Vector2(
 						(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
 						(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
@@ -151,6 +151,9 @@ public final class Annex {
 	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
 			float smoothTime, float deltaTime) {
 
+		if (smoothTime == 0) {		// If no damping
+			return target;
+		}
 		float num = 2f / smoothTime;
 		float num2 = num * deltaTime;
 		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);

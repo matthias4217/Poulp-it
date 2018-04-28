@@ -42,9 +42,7 @@ public class RaycastHit {
 
 
 
-	public RaycastHit() {
-		// TODO : Constructor
-	}
+	
 
 
 

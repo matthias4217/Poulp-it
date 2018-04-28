@@ -1,7 +1,10 @@
 package core.util;
 
 import content.GameObject;
+import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * This class represents a Ray, which is used to detect collisions with GameObjects.
@@ -11,7 +14,12 @@ import core.exceptions.InvalidArgumentsException;
  * @author Raph
  * 
  */
-public class Ray {
+public class Ray implements Renderable {
+	
+	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
+	public static final float RENDER_LENGTH_MULTIPLIER = 10;		// The lenght multiplier for screen rendering 
+	
+	
 	
 	private Vector2 originPoint;
 	private Vector2 endingPoint;
@@ -28,9 +36,9 @@ public class Ray {
 	 * 
 	 * @throws InvalidArgumentsException if direction is null
 	 */
-	public Ray(Vector2 originPoint, Direction dir, float length) {
+	public Ray(Vector2 originPoint, Direction direction, float length) {
 		this.originPoint = originPoint;
-		switch (dir) {
+		switch (direction) {
 		case UP:
 			this.endingPoint = originPoint.add(new Vector2(0, length));
 			break;
@@ -72,12 +80,21 @@ public class Ray {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Render this ray in the GraphicContext gc
+	 */
+	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+		gc.setStroke(RENDER_COLOR);
+		gc.strokeLine(originPoint.x,
+				windowHeight - originPoint.y,
+				originPoint.x + RENDER_LENGTH_MULTIPLIER * (endingPoint.x - originPoint.x),
+				windowHeight - (originPoint.y + RENDER_LENGTH_MULTIPLIER * (endingPoint.y - originPoint.y)));
+	}
+
+
+
+
+
 	public enum Direction {
 		UP,
 		DOWN,

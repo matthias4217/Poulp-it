@@ -10,14 +10,13 @@ import core.util.Vector2;
  * @author matthias
  *
  */
-
 public class Tile {
 
 	/**
 	 * The size of the side of a tile in the gamespace.
 	 * This constant makes the link between the float coordinates used by the game engine and the discrete nature of tiles.
 	 */
-	public static final float TILE_SIZE = 50f;
+	public static final float TILE_SIZE = 32f;
 
 	/*
 	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE.
@@ -29,6 +28,7 @@ public class Tile {
 	/*
 	 * It is linked to an image, but the image must not be duplicated;
 	 * for now I don't care, just to test the implementation.
+	 * XXX
 	 */
 	public ImageView sprite;
 
@@ -40,6 +40,8 @@ public class Tile {
 
 
 	/**
+	 * Constructor
+	 * 
 	 * @param xInt			The x coordinate on a grid of this Tile
 	 * @param yInt			The y coordinate on a grid of this Tile
 	 * @param imageView		The appearance of this Tile				@@@ Can be automatically linked to TileType
@@ -59,14 +61,13 @@ public class Tile {
 	 */
 	public void render(GraphicsContext gc) {
 		//System.out.println("x: " + position.x + ", y: " + position.y);
-		gc.drawImage(sprite.getImage(), position.x,	position.y);
+		gc.drawImage(sprite.getImage(), position.x, position.y);
 	}
 
 
 
-	@Override
-	public String toString() {
-		return type.toString() + ": " + position.toString();
+	@Override public String toString() {
+		return type.toString() + ": " + position;
 	}
 
 

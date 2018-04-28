@@ -75,8 +75,9 @@ public class Controller extends RaycastController {
 		}
 
 		for (int i = 0; i < horizontalRayCount; i++) {
-			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
-			rayOrigin.translate(Vector2.UP().multiply(horizontalRaySpacing * i));
+			Vector2 rayOrigin = support.position.add(
+					(directionX == -1) ? raycastOrigins.topLeft : raycastOrigins.topRight);
+			rayOrigin.translate(Vector2.DOWN().multiply(horizontalRaySpacing * i));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, (directionX == -1) ? Direction.LEFT : Direction.RIGHT,
 					rayLength, collisionMask);
 
@@ -128,7 +129,8 @@ public class Controller extends RaycastController {
 
 		for (int i = 0; i < verticalRayCount; i++) {
 
-			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
+			Vector2 rayOrigin = support.position.add(
+					(directionY == 1) ? raycastOrigins.topLeft : raycastOrigins.bottomLeft);
 			rayOrigin.translate(Vector2.RIGHT().multiply(verticalRaySpacing * i + moveAmount.x));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, (directionY == 1) ? Direction.UP : Direction.DOWN,
 					rayLength, collisionMask);
@@ -146,7 +148,7 @@ public class Controller extends RaycastController {
 					}
 					if (playerInput.y == -1) {
 						collisions.fallingThroughPlatform = true;
-//						Invoke("resetFallingThroughPlatform",.5f);		//
+						//						Invoke("resetFallingThroughPlatform",.5f);		//
 						continue;
 					}
 				}
@@ -155,7 +157,8 @@ public class Controller extends RaycastController {
 				rayLength = hit.getDistance();	// Reducing the lenght of the next rays casted to avoid collisions further than this one
 
 				if (collisions.climbingSlope) {
-					moveAmount.x = (float) (moveAmount.y / Math.tan(collisions.slopeAngle * Annex.DEG2RAD) * Math.signum(moveAmount.x));
+					moveAmount.x = (float) (moveAmount.y / Math.tan(collisions.slopeAngle * Annex.DEG2RAD) *
+							Math.signum(moveAmount.x));
 				}
 
 				collisions.below = (directionY == -1);
@@ -167,8 +170,10 @@ public class Controller extends RaycastController {
 			float directionX = Math.signum(moveAmount.x);
 			rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
 
-			Vector2 rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight).add(
-					Vector2.UP().multiply(moveAmount.y));
+
+			Vector2 rayOrigin = support.position.add(
+					((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight));
+			rayOrigin.translate(Vector2.UP().multiply(moveAmount.y));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, (directionX == -1) ? Direction.LEFT : Direction.RIGHT,
 					rayLength, collisionMask);
 
@@ -200,10 +205,10 @@ public class Controller extends RaycastController {
 	}
 
 	void descendSlope(Vector2 moveAmount) {
-		RaycastHit maxSlopeHitLeft = GameEngine.raycast(raycastOrigins.bottomLeft, Direction.DOWN,
-				Math.abs(moveAmount.y) + skinWidth, collisionMask);
-		RaycastHit maxSlopeHitRight = GameEngine.raycast(raycastOrigins.bottomRight, Direction.DOWN,
-				Math.abs(moveAmount.y) + skinWidth, collisionMask);
+		RaycastHit maxSlopeHitLeft = GameEngine.raycast(support.position.add(raycastOrigins.bottomLeft),
+				Direction.DOWN, Math.abs(moveAmount.y) + skinWidth, collisionMask);
+		RaycastHit maxSlopeHitRight = GameEngine.raycast(support.position.add(raycastOrigins.bottomRight),
+				Direction.DOWN, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 
 		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {		// xor
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
@@ -212,7 +217,8 @@ public class Controller extends RaycastController {
 
 		if (!collisions.slidingDownMaxSlope) {
 			float directionX = Math.signum(moveAmount.x);
-			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+			Vector2 rayOrigin = support.position.add(
+			(directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft);
 
 			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN, Float.POSITIVE_INFINITY, collisionMask);
 			if (hit != null) {

@@ -3,7 +3,11 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import core.GameEngine;
+import core.GraphicManager;
+import core.Launcher;
 import core.PlayerInput;
+import core.Renderable;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import core.scripts.MonoBehaviour;
@@ -16,10 +20,10 @@ import core.util.*;
  * @author Raph
  *
  */
-public abstract class GameObject {
+public abstract class GameObject implements Renderable {
 
 	/**
-	 * The current position in absolute coordinates of this GameObject
+	 * The current position in global coordinates of this GameObject
 	 */
 	public Vector2 position;
 
@@ -64,15 +68,9 @@ public abstract class GameObject {
 	/**
 	 * Standard constructor for a GameObject.
 	 * All scripts are initialized at the end of this instanciation.
-<<<<<<< HEAD
-	 *
-	 * @param position		The position in global coordinates where this will spawn
-	 * @param sprite
-=======
 	 *
 	 * @param position	- the position in global coordinates where the GameObject will spawn
 	 * @param sprite	- the sprite which will represent the GameObject
->>>>>>> debug_input_and_vector_zero
 	 * @param layer
 	 * @param tag
 	 * @param collider	- the Collider of the GameObject; set null if the GameObject can't be collided with
@@ -102,12 +100,11 @@ public abstract class GameObject {
 
 	/**
 	 * The update method called by the GameEngine.
-	 * By default, it updates all the scripts attached to this.
+	 * By default, it simply updates all the scripts attached to this.
 	 * This method can be overriden for a more specific behaviour.
 	 *
 	 * @param deltaTime
 	 * @param gameInformation
-	 * @throws InvalidArgumentsException
 	 */
 	public void update(float deltaTime, PlayerInput gameInformation) {
 		updateAllScripts(deltaTime, gameInformation);
@@ -116,12 +113,11 @@ public abstract class GameObject {
 	/**
 	 *
 	 * @param deltaTime			- the time in seconds it took to complete the last frame
-	 * @param gameInformation 	- Info that the Launcher sends to the GameManager
-	 * @throws InvalidArgumentsException
+	 * @param playerInput 	- Info that the Launcher sends to the GameManager
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput gameInformation) {
+	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput) {
 		for (MonoBehaviour script: scripts) {
-			script.update(deltaTime, gameInformation);
+			script.update(deltaTime, playerInput);
 		}
 	}
 
@@ -129,8 +125,11 @@ public abstract class GameObject {
 	/**
 	 * Render this Sprite on the GraphicsContext gc.
 	 */
-	public void render(GraphicsContext gc) {
-		gc.drawImage(sprite, position.x, position.y);
+	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+		gc.drawImage(sprite, position.x, windowHeight - position.y);
+		if (GraphicManager.debugVisible) {
+			collider.render(gc, position);
+		}
 	}
 
 

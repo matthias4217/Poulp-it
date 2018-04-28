@@ -1,7 +1,12 @@
 package core.util;
 
 import java.util.Arrays;
+
+import core.Launcher;
+import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * This class represents a collision mask.
@@ -15,9 +20,16 @@ import core.exceptions.InvalidArgumentsException;
  *
  */
 // Not sure if necessary =/
-public class Collider {
+public class Collider /*implements Renderable*/ {
+
+	public static final Color RENDER_COLOR = Color.GREEN;
+
+
 
 	protected Vector2[] pointsArray;
+	protected int nbPoints;
+
+
 
 	public Vector2 getPoint(int i) {
 		return pointsArray[i];
@@ -27,8 +39,6 @@ public class Collider {
 		/* Used by subclass BoxCollider */
 		this.pointsArray = pointsArray;
 	}
-
-	protected int nbPoints;
 
 	public int getNbPoints() {
 		return nbPoints;
@@ -53,8 +63,29 @@ public class Collider {
 
 
 
+
+	/**
+	 * Render this collider on the GraphicContext gc.
+	 * 
+	 * @param gc		- The GraphicContext on which this will be rendered
+	 * @param center	- 
+	 */
+	public void render(GraphicsContext gc, Vector2 center) {
+		double[] xPoints = new double[nbPoints];
+		double[] yPoints = new double[nbPoints]; 
+		for (int i = 0; i < nbPoints; i++) {
+			xPoints[i] = center.x + pointsArray[i].x;
+			yPoints[i] = Launcher.WINDOW_HEIGHT - center.y - pointsArray[i].y;
+		}
+
+		gc.setStroke(RENDER_COLOR);
+		gc.strokePolygon(xPoints, yPoints, nbPoints);
+	}
+
+
+
 	@Override public String toString() {
-		return "Collider [" + nbPoints + " points: "	+ Arrays.toString(pointsArray);
+		return "Collider[" + nbPoints + " points: "	+ Arrays.toString(pointsArray) + "]";
 	}
 
 
