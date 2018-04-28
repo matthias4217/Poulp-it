@@ -21,7 +21,6 @@ public class PlayerScript extends MonoBehaviour {
 	public static float accelerationTimeAirborne = 0f;		// Amount of inertia while airborne (set to 0 for no inertia)
 	public static float accelerationTimeGrounded = 0f;		// Amount of inertia while grounded (set to 0 for no inertia)
 
-
 	public static Vector2 wallJumpClimb;					// Force applied to jump when wall-jumping toward the wall
 	public static Vector2 wallJumpOff;						// Force applied to jump when wall-jumping with no input
 	public static Vector2 wallLeap;							// Force applied to jump when wall-jumping away from the wall
@@ -29,6 +28,7 @@ public class PlayerScript extends MonoBehaviour {
 	public static float wallSlideSpeedMax = 3;
 	public static float wallStickTime = .25f;				// Time the player will stay stuck against a wall when inputing away from it; useful to perform wallLeap
 
+	
 	float gravity;
 	float maxJumpVelocity;
 	float minJumpVelocity;
@@ -48,18 +48,18 @@ public class PlayerScript extends MonoBehaviour {
 
 	@Override
 	public void start() {
-		controller = (Controller) support.scripts.get(1);		// XXX
+		controller = (Controller) support.scripts.get(1);		// Moche mais bon...
 
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-		gravity = 0;
+//		gravity = 0;
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
-		calculateVelocity (deltaTime, playerInput.directionnalInput);
-		handleWallSliding (deltaTime, playerInput.directionnalInput);
+		calculateVelocity(deltaTime, playerInput.directionnalInput);
+		handleWallSliding(deltaTime, playerInput.directionnalInput);
 
 		controller.move(velocity.multiply(deltaTime), playerInput.directionnalInput);
 
@@ -75,17 +75,17 @@ public class PlayerScript extends MonoBehaviour {
 
 
 	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
-		System.out.println("Calculating velocity...");
 		float targetVelocityX = directionalInput.x * moveSpeed;
-		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne, deltaTime);
+		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing,
+				(controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne, deltaTime);
 		velocity.y += gravity * deltaTime;
 	}
 
 	void handleWallSliding(float deltaTime, Vector2 directionalInput) {
-		System.out.println("Handling wall sliding...");
 		wallDirX = (controller.collisions.left) ? -1 : 1;
 		wallSliding = false;
-		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0) {
+		if ((controller.collisions.left || controller.collisions.right) &&
+				!controller.collisions.below && velocity.y < 0) {
 			wallSliding = true;
 
 			if (velocity.y < -wallSlideSpeedMax) {

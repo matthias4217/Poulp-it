@@ -3,7 +3,7 @@ package content.scripts;
 import core.GameEngine;
 import core.exceptions.InvalidArgumentsException;
 import core.util.*;
-import core.util.Ray.Direction;
+import core.util.Annex.Direction;
 import content.Layer;
 import content.Tag;
 
@@ -80,10 +80,6 @@ public class Controller extends RaycastController {
 			rayOrigin.translate(Vector2.DOWN().multiply(horizontalRaySpacing * i));
 			RaycastHit hit = GameEngine.raycast(rayOrigin, (directionX == -1) ? Direction.LEFT : Direction.RIGHT,
 					rayLength, collisionMask);
-
-
-
-			//Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
 
 			if (hit != null) {		// If something was hit
 

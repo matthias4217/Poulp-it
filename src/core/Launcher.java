@@ -34,7 +34,7 @@ public class Launcher extends Application {
 	/**
 	 * SCALE is the variable which may need some adjustments.	@@@ XXX
 	 */
-	static final double SCALE = 0.9f;
+	static final double SCALE = 0.8f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
@@ -56,7 +56,7 @@ public class Launcher extends Application {
 
 
 	@Override
-	public void start(Stage stage) throws MultipleGameEngineException, IOException {
+	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidArgumentsException {
 
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);

@@ -8,7 +8,19 @@ package core.util;
  *
  */
 public class GameInformation {
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+	@Override public String toString() {
+		return "";
+	}
 
 }
