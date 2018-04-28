@@ -44,14 +44,14 @@ public class PlayerScript extends MonoBehaviour {
 
 	/* Constructor */
 	public PlayerScript() {}
-
+/*Cette nuit, j'ai sorti mon raphi, je l'ai mis sur ta tête ....*/
 
 	@Override
 	public void start() {
 		controller = (Controller) support.scripts.get(1);		// Moche mais bon...
 
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-//		gravity = 0;
+		gravity = 0;
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
