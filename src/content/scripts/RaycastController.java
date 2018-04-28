@@ -5,7 +5,7 @@ import content.Layer;
 
 /**
  * Superclass for all scripts which rely on raycasts to detect collisions.
- * The rays are cast from the edge of the collider of a gameObject.
+ * The rays are cast from the edge of the collider of a GameObject.
  * This script must be attached to a RECTANGULAR object (GameObject with a BoxCollider)
  *
  * @author Sebastian Lague, arranged by Raph

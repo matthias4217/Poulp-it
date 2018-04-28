@@ -15,17 +15,27 @@ import content.Tag;
  */
 public class Controller extends RaycastController {
 
+	/**
+	 * The Layer on which collisions will be detected
+	 */
 	public Layer collisionMask;
 
+	/**
+	 * The maximum angle (in degree) of a slope a player can stand on
+	 */
 	public static float maxSlopeAngle;
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
 
+
+
 	/* Constructor */
 	public Controller() {
 		collisions = new CollisionInfo();
 	}
+
+
 
 	@Override
 	public void start() {
@@ -33,12 +43,22 @@ public class Controller extends RaycastController {
 		collisions.faceDir = 1;
 	}
 
-	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {		// Called when not related to some inputs
+	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {
+		/* Called when not related to some inputs */
 		move(moveAmount, Vector2.ZERO(), standingOnPlatform);
 	}
 	public void move(Vector2 moveAmount, Vector2 input) throws InvalidArgumentsException {
 		move(moveAmount, input, false);
 	}
+
+	/**
+	 * Move the GameObject of moveAmount considering potential collisions.  
+	 * 
+	 * @param moveAmount
+	 * @param input
+	 * @param standingOnPlatform
+	 * @throws InvalidArgumentsException
+	 */
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
 		updateRayCastOrigins();
 		collisions.reset();
