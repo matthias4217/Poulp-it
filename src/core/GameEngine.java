@@ -238,6 +238,8 @@ public class GameEngine {
 			throws InvalidArgumentsException {		
 		RaycastHit result = null;
 
+		// TODO clamping length if it it too big for the level
+		
 		Ray ray = new Ray(rayOrigin, direction, length);
 		debugElements.add(ray);
 
