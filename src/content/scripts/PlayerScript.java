@@ -203,7 +203,8 @@ public class PlayerScript extends MonoBehaviour {
 		}
 		if (controller.collisions.below) {		// If the player is grounded
 			if (controller.collisions.slidingDownMaxSlope) {
-				if (directionalInput.x != -Math.signum (controller.collisions.slopeNormal.x)) {		// If not jumping AGAINST max slope
+				// if not jumping AGAINST max slope
+				if (directionalInput.x != -Math.signum (controller.collisions.slopeNormal.x)) {
 					velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
 					velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
 				}
