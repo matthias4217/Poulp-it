@@ -1,14 +1,14 @@
 package content.scripts;
 
 import core.GameEngine;
-import core.exceptions.InvalidArgumentsException;
 import core.util.*;
 import core.util.Annex.Direction;
-import content.Layer;
+import core.annotations.Unused;
+import core.exceptions.InvalidArgumentsException;
 import content.Tag;
 
 /**
- * TODO Doc
+ * TODO Raph: Document here
  *
  * @author Sebastian Lague, arranged by Raph
  *
@@ -16,14 +16,9 @@ import content.Tag;
 public class Controller extends RaycastController {
 
 	/**
-	 * The Layer on which collisions will be detected
-	 */
-	public Layer collisionMask;
-
-	/**
 	 * The maximum angle (in degree) of a slope a player can stand on
 	 */
-	public static float maxSlopeAngle;
+	@Unused public static float maxSlopeAngle;
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
@@ -52,11 +47,11 @@ public class Controller extends RaycastController {
 	}
 
 	/**
-	 * Move the GameObject of moveAmount considering potential collisions.  
+	 * Move the GameObject of the distance moveAmount while considering potential collisions
 	 * 
-	 * @param moveAmount
-	 * @param input
-	 * @param standingOnPlatform
+	 * @param moveAmount			- the distance the GameObject is supposed to move
+	 * @param input					- @@@
+	 * @param standingOnPlatform	- unused so far (because no moving platforms yet)
 	 * @throws InvalidArgumentsException
 	 */
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
