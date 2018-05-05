@@ -291,8 +291,9 @@ public class GameEngine {
 				Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
 
 				if (normalFromHit != null) {		// if there is a collision
-					System.out.println("Ya eu collision bitch AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 					result = new RaycastHit(null, ray.getLength(), normalFromHit);
+
+					debugElements.add(new RenderableVector(normalFromHit, colliderOrigin));
 					// XXX LAST TILE ???
 
 				}
