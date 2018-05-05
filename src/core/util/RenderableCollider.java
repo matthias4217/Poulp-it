@@ -4,6 +4,10 @@ import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * @author Raph
+ *
+ */
 public class RenderableCollider extends Collider implements Renderable {
 
 	Vector2 position;

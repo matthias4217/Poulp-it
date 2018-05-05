@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
  *
  */
 // Not sure if necessary =/
-public class Collider /*implements Renderable*/ {
+public class Collider {
 
 	public static final Color RENDER_COLOR = Color.GREEN;
 

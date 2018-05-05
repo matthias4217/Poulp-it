@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class Ray implements Renderable {
 
 	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
-	public static final float RENDER_LENGTH_MULTIPLIER = 1;		// The length multiplier for screen rendering 
+	public static final float RENDER_LENGTH_MULTIPLIER = 5;		// The length multiplier for screen rendering 
 
 
 
