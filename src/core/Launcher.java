@@ -24,7 +24,7 @@ import core.util.GameInformation;
  * Launcher extends Application and thus has a start method called.
  * This class should stay relatively clean and only call other methods.
  *
- * @author Raph
+ * @author Raph, matthias
  *
  */
 public class Launcher extends Application {

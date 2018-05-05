@@ -173,7 +173,7 @@ public class GameEngine {
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
-			spawnPosition = new Vector2(600, 800);		//
+			spawnPosition = new Vector2(600, 650);		//
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -200,7 +200,7 @@ public class GameEngine {
 	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
-//		System.out.println("Current GameInformation: " + gameInformation);
+		//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
 
 		// Applying all GameManagers
@@ -239,7 +239,7 @@ public class GameEngine {
 		RaycastHit result = null;
 
 		// TODO clamping length if it it too big for the level
-		
+
 		Ray ray = new Ray(rayOrigin, direction, length);
 		debugElements.add(ray);
 
@@ -270,25 +270,31 @@ public class GameEngine {
 
 
 			// Collisions with other GameObjects	TODO
-			
+
 			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
 
 
 			// Collisions with the tile
-			
-			TileType tileTypeCurrent = level.getTile(currentTileX, currentTileY);
-			Collider colliderTile = TILE_TO_COLLIDER.get(tileTypeCurrent);
-//			debugElements.add(colliderTile);
-			Vector2 colliderOrigin = toWorldCoordinates(currentTileX, currentTileY);
-			
-			Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
 
-			if (normalFromHit != null) {		// if there is a collision
-				result = new RaycastHit(null, ray.getLength(), normalFromHit);
-				// XXX LAST TILE ???
-				
+
+			TileType tileTypeCurrent = level.getTile(currentTileX, currentTileY);
+			if (tileTypeCurrent != TileType.EMPTY) {
+				Collider colliderTile = TILE_TO_COLLIDER.get(tileTypeCurrent);
+				Vector2 colliderOrigin = toWorldCoordinates(currentTileX, currentTileY);
+
+				System.out.println("Detecting collision between ray and tile collider : " + colliderTile +
+						" at tile origin " + colliderOrigin);
+				debugElements.add(new RenderableCollider(colliderTile, colliderOrigin));
+
+				Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
+
+				if (normalFromHit != null) {		// if there is a collision
+					result = new RaycastHit(null, ray.getLength(), normalFromHit);
+					// XXX LAST TILE ???
+
+				}
 			}
 		}
 		return result;
@@ -309,7 +315,7 @@ public class GameEngine {
 	 * @return	the origin point of the tile (x, y) (top-left)
 	 */
 	private static Vector2 toWorldCoordinates(int xTile, int yTile) {
-		return new Vector2(xTile * tileSize, yTile * tileSize);
+		return new Vector2(xTile * tileSize, (float) (Launcher.WINDOW_HEIGHT - yTile * tileSize));
 	}
 
 

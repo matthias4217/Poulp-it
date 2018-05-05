@@ -17,7 +17,7 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 60f;
+	public static float moveSpeed = 400f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed
@@ -119,7 +119,7 @@ public class PlayerScript extends MonoBehaviour {
 
 		// Calculating physics variables according to gameplay parameters
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-//		gravity = 0;		// For testing purpose
+		gravity = 0;		// For testing purpose
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}

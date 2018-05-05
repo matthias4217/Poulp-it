@@ -8,7 +8,8 @@ import core.exceptions.InvalidArgumentsException;
 import content.Tag;
 
 /**
- * TODO Raph: Document here
+ * A Controller script can be attached to a moving GameObject.
+ * It contains a move method which translate a GameObject of a certain distance after considering collision. 
  *
  * @author Sebastian Lague, arranged by Raph
  *
@@ -99,7 +100,6 @@ public class Controller extends RaycastController {
 
 			if (hit != null) {		// If something was hit
 
-				//@Deprecated: we can't be in an obstacle
 				if (hit.getDistance() == 0) {	// If we're actually IN an obstacle; @@@ BTW has to be changed in order to crush the character.
 					continue;
 				}
@@ -112,7 +112,7 @@ public class Controller extends RaycastController {
 						moveAmount = collisions.moveAmountOld;
 					}
 					float distanceToSlopeStart = 0;
-					if (slopeAngle != collisions.slopeAngleOld) {
+					if (slopeAngle != collisions.slopeAngleOld) {		// if we're starting to climb the slope
 						distanceToSlopeStart = hit.getDistance() - skinWidth;
 						moveAmount.x -= distanceToSlopeStart * directionX;
 					}
@@ -122,7 +122,9 @@ public class Controller extends RaycastController {
 
 				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
-					rayLength = hit.getDistance();		// Reducing the lenght of the next rays casted to avoid collisions further than this one
+
+					// Reducing the lenght of the next rays casted to avoid collisions further than this one
+					rayLength = hit.getDistance();
 
 					if (collisions.climbingSlope) {
 						moveAmount.y = (float) (Math.tan(collisions.slopeAngle * Annex.DEG2RAD) * Math.abs(moveAmount.x));
@@ -208,7 +210,7 @@ public class Controller extends RaycastController {
 		float moveDistance = Math.abs(moveAmount.x);
 		float climbMoveAmountY = (float) (Math.sin(slopeAngle * Annex.DEG2RAD) * moveDistance);
 
-		if (moveAmount.y <= climbMoveAmountY) {		// If not jumping on slope
+		if (moveAmount.y <= climbMoveAmountY) {		// if not jumping on slope
 			moveAmount.y = climbMoveAmountY;
 			moveAmount.x = (float) (Math.cos(slopeAngle * Annex.DEG2RAD) * moveDistance * Math.signum(moveAmount.x));
 			collisions.below = true;

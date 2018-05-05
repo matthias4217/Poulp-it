@@ -13,43 +13,43 @@ public class CollisionInfo {
 	public boolean above, below; 
 	public boolean left, right;
 
-	
+
 	/**
 	 * Is the GameObject climbing a slope
 	 */
 	public boolean climbingSlope; 
-	
+
 	/**
 	 * Is the GameObject descending a slope
 	 */
 	public boolean descendingSlope; 
-	
+
 	/**
 	 * Indicates if the Object is currently falling from a maxAngleSlope
 	 */
 	public boolean slidingDownMaxSlope; 
 
-	
+
 	/**
 	 * Angle of the slope encountered and previous one
 	 */
 	public float slopeAngle, slopeAngleOld; 
-	
+
 	/**
 	 * The normal vector to the slope XXX (en vrai je sais pas trop à quoi ça sert...)
 	 */
 	public Vector2 slopeNormal;
-	
+
 	/**
 	 * MoveAmount of the GameObject in the previous frame
 	 */
 	public Vector2 moveAmountOld; 
-	
+
 	/**
 	 * Direction faced by the GameObject: -1->left, 1->right
 	 */
 	public int faceDir;
-	
+
 	/**
 	 * Is the GameObject currently falling through a platform
 	 */

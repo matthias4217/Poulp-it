@@ -64,7 +64,6 @@ public class Collider /*implements Renderable*/ {
 
 
 
-
 	/**
 	 * Render this collider on the GraphicContext gc.
 	 * 
