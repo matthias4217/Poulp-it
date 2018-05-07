@@ -173,7 +173,8 @@ public class GameEngine {
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
-			spawnPosition = new Vector2(280, 710);		//
+//			spawnPosition = new Vector2(280, 710);
+			spawnPosition = new Vector2(585, 710);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -248,6 +249,7 @@ public class GameEngine {
 
 		// The coordinates in the grid this ray ends
 		int[] tileEnding = toTileCoordinates(ray.getEndingPoint());
+		System.out.println("Ending point: " + ray.getEndingPoint());
 
 		System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
 				") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
@@ -270,14 +272,14 @@ public class GameEngine {
 
 
 			// Collisions with other GameObjects	TODO
-
+/*
 			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
-
+*/
 
 			// Collisions with the tile
-
+			System.out.println("currenttile: " + currentTileX + ", " + currentTileY);
 
 			TileType tileTypeCurrent = level.getTile(currentTileX, currentTileY);
 			if (tileTypeCurrent != TileType.EMPTY) {

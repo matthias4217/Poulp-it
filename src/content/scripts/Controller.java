@@ -240,7 +240,7 @@ public class Controller extends RaycastController {
 			Vector2 rayOrigin = support.position.add(
 					(directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft);
 
-			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN, Float.POSITIVE_INFINITY, collisionMask);
+			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN, 50/*Float.POSITIVE_INFINITY*/, collisionMask);
 
 			if (hit != null) {		// if something was hit
 

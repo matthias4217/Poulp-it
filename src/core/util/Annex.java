@@ -95,7 +95,7 @@ public final class Annex {
 	 * Calculate a normal Vector to a line (AB) pointing toward the side of R.
 	 * Points A and B must be distinct and R must not be in (AB).
 	 * This is used for raycast.
-	 * TODO test this
+	 * @@@ FIXME @@@ !!! !!! !!! !!!
 	 * 
 	 * @param A
 	 * @param B

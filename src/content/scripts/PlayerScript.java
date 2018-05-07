@@ -17,7 +17,7 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 60f;
+	public static float moveSpeed = 100f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed
@@ -38,13 +38,13 @@ public class PlayerScript extends MonoBehaviour {
 	 * The time required to reach the target horizontal velocity while airborne when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeAirborne = 0f;
+	public static float accelerationTimeAirborne = 0.2f;
 
 	/**
 	 * The time required to reach the target horizontal velocity while grounded when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeGrounded = 0f;
+	public static float accelerationTimeGrounded = 0.2f;
 
 
 	/**
@@ -66,7 +66,7 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum vertical speed that can be reached when sliding down against a wall 
 	 */
-	public static float wallSlideSpeedMax = 3;
+	public static float wallSlideSpeedMax = 30;
 
 	/**
 	 * The amount of ime the player will stay stuck against a wall when inputing away from it;
