@@ -31,10 +31,7 @@ public class Launcher extends Application {
 
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
-	/**
-	 * SCALE is the variable which may need some adjustments.	@@@ XXX
-	 */
-	static final double SCALE = 0.6f;
+	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 

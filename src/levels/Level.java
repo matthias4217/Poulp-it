@@ -60,12 +60,17 @@ public class Level {
 
 
 	/**
+	 * Return the type of the tile (x, y) in the tile matrix; null if the index are out of bounds
+	 * 
 	 * @param i
 	 * @param j
-	 * @return	the tile of coordinates (i, j)
+	 * @return	the tile of coordinates (i, j); null if it's out of bounds
 	 */
-	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
+	public TileType getTile(int i, int j) {
 		// FIXME tileMatrix seems to invert x and y
+		
+		// TODO return null if there the tile requested is out of bounds
+		
 		return tileMatrix[j][i];
 	}
 	

@@ -36,7 +36,7 @@ public class CollisionInfo {
 	public float slopeAngle, slopeAngleOld; 
 
 	/**
-	 * The normal vector to the slope XXX (en vrai je sais pas trop à quoi ça sert...)
+	 * The normal vector to the slope
 	 */
 	public Vector2 slopeNormal;
 

@@ -17,7 +17,6 @@ import levels.Tile.TileType;
 
 /**
  * Manages the flow of the game; one instance, located on the server.
- * TODO more precise and detailed description
  *
  * @author Raph
  *
