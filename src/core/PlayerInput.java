@@ -2,6 +2,8 @@ package core;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import core.util.Vector2;
 
 /**
@@ -16,6 +18,11 @@ public class PlayerInput {
 	 * The inputs relative to the direction
 	 */
 	public Vector2 directionalInput = Vector2.ZERO();
+	
+	public MouseButton mouse = MouseButton.NONE;
+	
+	//XXX The position is updated only after a mouse event
+	public Vector2 mousePosition = Vector2.ZERO();
 	
 
 
@@ -46,10 +53,19 @@ public class PlayerInput {
 		}
 	};
 
+	
+	public EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
+		public void handle(MouseEvent event) {
+			mouse = event.getButton();
+			mousePosition.x = (float) event.getX();
+			mousePosition.y = (float) event.getY();
+		}
+	};
 
 
 	@Override public String toString() {
-		return "PlayerInput [directionalInput=" + directionalInput + "; eventHandler=" + eventHandler + "]";
+		return "PlayerInput [directionalInput=" + directionalInput + "; eventHandler=" + 
+	eventHandler + "; mouse=(" + mousePosition.x + "," + mousePosition.y + ")]";
 	}
 
 }
