@@ -3,7 +3,6 @@ package core.util;
 import core.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * Class used to render a vector as an arrow starting from a specific point.
@@ -13,8 +12,8 @@ import javafx.scene.paint.Paint;
  */
 public class RenderableVector extends Vector2 implements Renderable {
 
-	public static final Color RENDER_COLOR = Color.MAGENTA;			// The color rays are drawn on screen
-	public static final float RENDER_LENGTH_MULTIPLIER = 5f;		// The length multiplier for screen rendering
+	public static final Color RENDER_COLOR = Color.BLUEVIOLET;		// The color rays are drawn on screen
+	public static final float RENDER_LENGTH_MULTIPLIER = 50f;		// The length multiplier for screen rendering
 
 
 
@@ -37,8 +36,9 @@ public class RenderableVector extends Vector2 implements Renderable {
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		System.out.println("Rendering normal vector: (" + x + ", " + y + ") from " + origin);
 		gc.setStroke(RENDER_COLOR);
-		gc.strokeLine(origin.x, windowWidth - origin.y,
-				origin.x + RENDER_LENGTH_MULTIPLIER * x, windowWidth - (origin.y + RENDER_LENGTH_MULTIPLIER * y));
+		gc.strokeLine(origin.x, windowHeight - origin.y,
+				origin.x + RENDER_LENGTH_MULTIPLIER * x, windowHeight - (origin.y + RENDER_LENGTH_MULTIPLIER * y));
+
 	}
 
 }

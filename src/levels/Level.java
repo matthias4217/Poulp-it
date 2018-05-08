@@ -60,18 +60,24 @@ public class Level {
 
 
 	/**
+	 * Return the type of the tile (x, y) in the tile matrix; null if the index are out of bounds
+	 * 
 	 * @param i
 	 * @param j
+<<<<<<< HEAD
 	 * @return	the tile of coordinates (i, j), if (i,j) is outside tileMatrix, returns EMPTY
+=======
+	 * @return	the tile of coordinates (i, j); null if it's out of bounds
+>>>>>>> bubble3
 	 */
-	public TileType getTile(int i, int j) {		// TODO return null if there the tile requested is out of bounds
+	public TileType getTile(int i, int j) {
 		// FIXME tileMatrix seems to invert x and y
 		// Check if i and j < lengths of tileMatrix
 		if (0 < i && i < tileMatrix.length && 0 < j && j < tileMatrix[0].length) {
 			return tileMatrix[i][j];
 		}
 		else {
-			return TileType.EMPTY;
+			return null; // or TileType.EMPTY ?
 		}
 	}
 	

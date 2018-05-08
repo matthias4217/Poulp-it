@@ -17,7 +17,7 @@ public class BoxCollider extends Collider {
 	
 	
 	/* Constructor */
-	public BoxCollider(float width, float height) {		// XXX
+	public BoxCollider(float width, float height) {
 		super();
 		nbPoints = 4;
 		this.width = width;

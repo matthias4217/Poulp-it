@@ -30,7 +30,7 @@ public class GraphicManager {
 			tile.render(gc);
 		}
 
-		for (GameObject gameObject: GameEngine.allGameObjects) {		// XXX
+		for (GameObject gameObject: GameEngine.allGameObjects) {
 			System.out.println("Rendering GameObject " + gameObject + " on " + gameObject.position);
 			gameObject.render(gc, windowWidth, windowHeight);
 		}

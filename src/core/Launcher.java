@@ -32,10 +32,7 @@ public class Launcher extends Application {
 
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
-	/**
-	 * SCALE is the variable which may need some adjustments.	@@@ XXX
-	 */
-	static final double SCALE = 0.8f;
+	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
@@ -117,8 +114,9 @@ public class Launcher extends Application {
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
-				
-				gc.drawImage(background, 0, 0);
+				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	// Clear the window
+//				gc.drawImage(background, 0, 0);
+
 				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
 				System.out.println(playerInput);
 
