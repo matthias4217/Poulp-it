@@ -1,6 +1,8 @@
 package core.util;
 
 /**
+ * The name says it all.
+ * 
  * @author Raph
  *
  */
