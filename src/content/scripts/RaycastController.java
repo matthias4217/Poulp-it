@@ -13,28 +13,55 @@ import content.Layer;
  */
 public class RaycastController extends MonoBehaviour {
 
-	public Layer layer;					// Indicates on which layer the Rays will detect things
-
 	public static final float PERCENT_SKIN = 0.015f;		// Percentage of the object bounds that is skin
 	protected float skinWidth;
 
-	protected int horizontalRayCount = 4;			// Number of horizontal rays
-	protected int verticalRayCount = 4;				// Number of vertical rays
-	protected float horizontalRaySpacing;			// The distance between two adjacent horizontal rays
-	protected float verticalRaySpacing;				// The distance between two adjacent vertical rays
 
+	/**
+	 * The Layer on which the rays will detect things
+	 */
+	public Layer collisionMask;
+
+
+	/**
+	 * The number of horizontal rays
+	 */
+	protected int horizontalRayCount = 4;
+	
+	/**
+	 * The number of vertical rays
+	 */
+	protected int verticalRayCount = 4;
+	
+	/**
+	 * The distance between two adjacent horizontal rays
+	 */
+	protected float horizontalRaySpacing;
+
+	/**
+	 * The distance between two adjacent vertical rays
+	 */
+	protected float verticalRaySpacing;
+
+
+	/**
+	 * The collider of the GameObject this script is attached to
+	 */
 	public BoxCollider collider;
 	public RaycastOrigins raycastOrigins;
 
 
 
+	/* Constructor */
 	public RaycastController() {
 		raycastOrigins = new RaycastOrigins();
 	}
 
 
+
 	@Override
 	public void start() {
+		// Setting up references
 		try {
 			collider = (BoxCollider) support.collider;
 		}
@@ -51,7 +78,7 @@ public class RaycastController extends MonoBehaviour {
 
 
 	public void updateRayCastOrigins() {
-		// Code pas super lisible en Java, mais en réalité pas compliqué...
+		// Code pas super lisible en Java, mais en réalité pas bien compliqué...
 		// "Not very readable"... you bet !
 		Vector2 shift1 = new Vector2(skinWidth, skinWidth);
 		Vector2 shift2 = new Vector2(skinWidth, -skinWidth);

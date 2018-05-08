@@ -1,14 +1,15 @@
 package content.scripts;
 
 import core.GameEngine;
-import core.exceptions.InvalidArgumentsException;
 import core.util.*;
 import core.util.Annex.Direction;
-import content.Layer;
+import core.annotations.Unused;
+import core.exceptions.InvalidArgumentsException;
 import content.Tag;
 
 /**
- * TODO Doc
+ * A Controller script can be attached to a moving GameObject.
+ * It contains a move method which translate a GameObject of a certain distance after considering collision. 
  *
  * @author Sebastian Lague, arranged by Raph
  *
@@ -16,14 +17,9 @@ import content.Tag;
 public class Controller extends RaycastController {
 
 	/**
-	 * The Layer on which collisions will be detected
-	 */
-	public Layer collisionMask;
-
-	/**
 	 * The maximum angle (in degree) of a slope a player can stand on
 	 */
-	public static float maxSlopeAngle;
+	@Unused public static float maxSlopeAngle;
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
@@ -52,11 +48,11 @@ public class Controller extends RaycastController {
 	}
 
 	/**
-	 * Move the GameObject of moveAmount considering potential collisions.  
+	 * Move the GameObject of the distance moveAmount while considering potential collisions
 	 * 
-	 * @param moveAmount
-	 * @param input
-	 * @param standingOnPlatform
+	 * @param moveAmount			- the distance the GameObject is supposed to move
+	 * @param input					- @@@
+	 * @param standingOnPlatform	- unused so far (because no moving platforms yet)
 	 * @throws InvalidArgumentsException
 	 */
 	public void move(Vector2 moveAmount, Vector2 input, boolean standingOnPlatform) throws InvalidArgumentsException {
@@ -65,16 +61,16 @@ public class Controller extends RaycastController {
 		collisions.moveAmountOld = moveAmount;
 		playerInput = input;
 
-		if (moveAmount.y < 0) {
+		if (moveAmount.y < 0) {		// if descending movement
 			descendSlope(moveAmount);
 		}
 
-		if (moveAmount.x != 0) {
+		if (moveAmount.x != 0) {		// if there is horizontal movement 
 			collisions.faceDir = (int) Math.signum(moveAmount.x);
 		}
 
 		horizontalCollisions(moveAmount);
-		if (moveAmount.y != 0) {
+		if (moveAmount.y != 0) {		// if there is vertical movement
 			verticalCollisions(moveAmount);
 		}
 
@@ -85,6 +81,7 @@ public class Controller extends RaycastController {
 			collisions.below = true;
 		}
 	}
+
 
 	void horizontalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionX = collisions.faceDir;
@@ -103,7 +100,6 @@ public class Controller extends RaycastController {
 
 			if (hit != null) {		// If something was hit
 
-				//@Deprecated: we can't be in an obstacle
 				if (hit.getDistance() == 0) {	// If we're actually IN an obstacle; @@@ BTW has to be changed in order to crush the character.
 					continue;
 				}
@@ -116,7 +112,7 @@ public class Controller extends RaycastController {
 						moveAmount = collisions.moveAmountOld;
 					}
 					float distanceToSlopeStart = 0;
-					if (slopeAngle != collisions.slopeAngleOld) {
+					if (slopeAngle != collisions.slopeAngleOld) {		// if we're starting to climb the slope
 						distanceToSlopeStart = hit.getDistance() - skinWidth;
 						moveAmount.x -= distanceToSlopeStart * directionX;
 					}
@@ -126,7 +122,9 @@ public class Controller extends RaycastController {
 
 				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
-					rayLength = hit.getDistance();		// Reducing the lenght of the next rays casted to avoid collisions further than this one
+
+					// Reducing the lenght of the next rays casted to avoid collisions further than this one
+					rayLength = hit.getDistance();
 
 					if (collisions.climbingSlope) {
 						moveAmount.y = (float) (Math.tan(collisions.slopeAngle * Annex.DEG2RAD) * Math.abs(moveAmount.x));
@@ -138,6 +136,7 @@ public class Controller extends RaycastController {
 			}
 		}
 	}
+
 
 	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionY = Math.signum(moveAmount.y);
@@ -204,13 +203,14 @@ public class Controller extends RaycastController {
 		}
 	}
 
+
 	void climbSlope(Vector2 moveAmount, float slopeAngle, Vector2 slopeNormal) {
 
 		/* Actually just simple trigonometry */
 		float moveDistance = Math.abs(moveAmount.x);
 		float climbMoveAmountY = (float) (Math.sin(slopeAngle * Annex.DEG2RAD) * moveDistance);
 
-		if (moveAmount.y <= climbMoveAmountY) {		// If not jumping on slope
+		if (moveAmount.y <= climbMoveAmountY) {		// if not jumping on slope
 			moveAmount.y = climbMoveAmountY;
 			moveAmount.x = (float) (Math.cos(slopeAngle * Annex.DEG2RAD) * moveDistance * Math.signum(moveAmount.x));
 			collisions.below = true;
@@ -220,24 +220,29 @@ public class Controller extends RaycastController {
 		}
 	}
 
+
 	void descendSlope(Vector2 moveAmount) throws InvalidArgumentsException {
+		// Casting rays
 		RaycastHit maxSlopeHitLeft = GameEngine.raycast(support.position.add(raycastOrigins.bottomLeft),
 				Direction.DOWN, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 		RaycastHit maxSlopeHitRight = GameEngine.raycast(support.position.add(raycastOrigins.bottomRight),
 				Direction.DOWN, Math.abs(moveAmount.y) + skinWidth, collisionMask);
 
-		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {		// xor
+		// if something was hit on only one side
+		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {
+			// TODO @@@
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
 			slideDownMaxSlope(maxSlopeHitRight, moveAmount);
 		}
 
-		if (!collisions.slidingDownMaxSlope) {
+		if (!collisions.slidingDownMaxSlope) {		// if we're not currently falling down a max angle slope
 			float directionX = Math.signum(moveAmount.x);
 			Vector2 rayOrigin = support.position.add(
-			(directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft);
+					(directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft);
 
 			RaycastHit hit = GameEngine.raycast(rayOrigin, Direction.DOWN, Float.POSITIVE_INFINITY, collisionMask);
-			if (hit != null) {
+
+			if (hit != null) {		// if something was hit
 
 				float slopeAngle = Vector2.angle(hit.getNormal(), Vector2.UP());
 				if (slopeAngle != 0 && slopeAngle <= maxSlopeAngle) {
@@ -259,6 +264,7 @@ public class Controller extends RaycastController {
 		}
 	}
 
+
 	void slideDownMaxSlope(RaycastHit hit, Vector2 moveAmount) {
 
 		if (hit != null) {
@@ -274,9 +280,10 @@ public class Controller extends RaycastController {
 		}
 	}
 
+
+
 	void resetFallingThroughPlatform() {
 		collisions.fallingThroughPlatform = false;
 	}
-
 
 }

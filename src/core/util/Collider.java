@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
  *
  */
 // Not sure if necessary =/
-public class Collider /*implements Renderable*/ {
+public class Collider {
 
 	public static final Color RENDER_COLOR = Color.GREEN;
 
@@ -60,7 +60,6 @@ public class Collider /*implements Renderable*/ {
 	protected Collider() {
 		/* This constructor is only used by the subclass BoxCollider. */
 	}
-
 
 
 
