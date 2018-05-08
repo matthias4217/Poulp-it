@@ -271,11 +271,12 @@ public class GameEngine {
 
 
 			// Collisions with other GameObjects	TODO
-/*
-			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
+
+			/*for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
 */
+
 
 			// Collisions with the tile
 			System.out.println("currenttile: " + currentTileX + ", " + currentTileY);
