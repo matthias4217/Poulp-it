@@ -1,5 +1,6 @@
 package core;
 
+import core.annotations.Unused;
 import core.util.Vector2;
 
 /**
@@ -9,6 +10,7 @@ import core.util.Vector2;
  * @author Raph
  *
  */
+@Unused
 public class Camera {
 
 	private Vector2 currentPosition;
