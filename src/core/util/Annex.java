@@ -21,7 +21,7 @@ public final class Annex {
 
 	/**
 	 * Clamp a value between a minimum float and a maximum float value. 
-	 * 
+	 *
 	 * @param value
 	 * @param a
 	 * @param b
@@ -54,7 +54,7 @@ public final class Annex {
 	 * -1 	-> Counterclockwise
 	 */
 	public static float orientation(Vector2 A, Vector2 B, Vector2 C) {
-		/* See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s for details on the formula */
+		/* See https://www.geeksforgeeks.org/orientation-3-ordered-points for details on the formula */
 		return Math.signum((B.y - A.y)*(C.x - B.x) - (B.x - A.x)*(C.y - B.y));
 	}
 
