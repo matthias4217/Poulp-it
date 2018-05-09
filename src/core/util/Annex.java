@@ -1,5 +1,7 @@
 package core.util;
 
+import core.annotations.Unused;
+
 /**
  * This class stores diverse constants and methods such as math ones.
  * 
@@ -18,104 +20,148 @@ public final class Annex {
 	/* METHODS */
 
 	/**
+	 * Clamp a value between a minimum float and a maximum float value. 
+	 *
+	 * @param value
+	 * @param a
+	 * @param b
 	 * @return value clamped between a and b
 	 */
 	public static float clamp(float value, float a, float b) {
 		return Math.max(a, Math.min(b, value));	
 	}
 
+
+
+	// https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
+
 	/**
-	 * Indicates if the line segments [A; B] and [C; D] do intersect
-	 * @Todo gérer le cas de colinéarité
+	 * Given three colinear Vector2s A, B, C, the function checks if
+	 * Vector2 B lies on line segment [A; C]
 	 */
-	public static boolean checkSegmentIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
-		/* Explication:
-		 * When ABC not aligned, if CD = w1.CA + w2.CB, then
-		 * it is true iff (w1+w2 >= 1 && w1, w2 >= 0)
-		 * */		
-		float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
-				((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
-		System.out.println(w1);
-		float w2 = (D.y - C.y - w1*(B.y - C.y)) /
-				(A.y - C.y);
-		System.out.println(w2);
-		return w1>=0 && w2>=0 && w1+w2>=1;
+	@Unused
+	public static boolean onSegment(Vector2 A, Vector2 B, Vector2 C) {
+		return (B.x <= Math.max(A.x, C.x) && B.x >= Math.min(A.x, C.x) &&
+				B.y <= Math.max(A.y, C.y) && B.y >= Math.min(A.y, C.y));
+	}
+
+
+	/**
+	 * To find orientation of ordered triplet (A, B, C).
+	 * The function returns following values
+	 * 0 	-> A, B and C are colinear
+	 * 1 	-> Clockwise
+	 * -1 	-> Counterclockwise
+	 */
+	public static float orientation(Vector2 A, Vector2 B, Vector2 C) {
+		/* See https://www.geeksforgeeks.org/orientation-3-ordered-points for details on the formula */
+		return Math.signum((B.y - A.y)*(C.x - B.x) - (B.x - A.x)*(C.y - B.y));
+	}
+
+	/**
+	 * Indicates if the line segments [A; B] and [C; D] intersect when there is no collinearity
+	 * This method return the intersection point if there is one, null otherwise
+	 * 
+	 * Source: https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @return	the intersection point between [A; B] and [C; D], or null
+	 */
+	public static Vector2 segmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+		// Finding the four orientations needed for general and special cases
+		float o1 = orientation(A, B, C);
+		float o2 = orientation(A, B, D);
+		float o3 = orientation(C, D, A);
+		float o4 = orientation(C, D, B);
+
+		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
+
+			float q = A.x*B.y - A.y*B.x;
+			float r = C.x*D.y - C.y*D.x;
+			float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
+
+			return new Vector2(
+					(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
+					(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
+		}
+		return null;
+	}
+
+
+	/**
+	 * Calculate a normal Vector to a line (AB) pointing toward the side of R.
+	 * Points A and B must be distinct and R must not be in (AB).
+	 * This is used for raycast.
+	 * @@@ FIXME @@@ !!! !!! !!! !!!
+	 * 
+	 * @param A
+	 * @param B
+	 * @param R
+	 * @return	- a normal vector to the line (AB) (not normalized) pointing toward the side R is
+	 */
+	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
+		if (A.x != B.x) {		// (AB) is not vertical
+			if (orientation(R, A, B) == 1) {
+				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
+			} else {
+				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
+			}
+		} else {		// (AB) is vertical
+			return (R.x < A.x) ? Vector2.LEFT() : Vector2.RIGHT();
+		}
 	}
 
 
 
-	// Given three colinear Vector2s p, q, r, the function checks if
-	// Vector2 q lies on line segment 'pr'
-	boolean onSegment(Vector2 a, Vector2 b, Vector2 p)
-	{
-		return (b.x <= Math.max(a.x, p.x) && b.x >= Math.min(a.x, p.x) &&
-				b.y <= Math.max(a.y, p.y) && b.y >= Math.min(a.y, p.y));
+	/**
+	 * https://en.wikipedia.org/wiki/Smoothstep
+	 */
+	public static float smoothStep(float x) {
+		x = clamp(x, 0, 1);
+		return x * x * (3 - 2*x);
 	}
 
-	// To find orientation of ordered triplet (p, q, r).
-	// The function returns following values
-	// 0 --> p, q and r are colinear
-	// 1 --> Clockwise
-	// -1 --> Counterclockwise
-	float orientation(Vector2 p, Vector2 q, Vector2 r)
-	{
-		// See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s/
-		// for details of below formula.
-		return Math.signum((q.y - p.y)*(r.x - q.x) - (q.x - p.x)*(r.y - q.y));
-	}
-
-	// The main function that returns true if line segment 'p1q1'
-	// and 'p2q2' intersect.
-	boolean doIntersect(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2)
-	{
-		// Find the four orientations needed for general and
-		// special cases
-		float o1 = orientation(p1, q1, p2);
-		float o2 = orientation(p1, q1, q2);
-		float o3 = orientation(p2, q2, p1);
-		float o4 = orientation(p2, q2, q1);
-
-		// General case
-		if (o1 != o2 && o3 != o4)
-			return true;
-
-		// Special Cases
-		// p1, q1 and p2 are colinear and p2 lies on segment p1q1
-		if (o1 == 0 && onSegment(p1, p2, q1)) return true;
-
-		// p1, q1 and p2 are colinear and q2 lies on segment p1q1
-		if (o2 == 0 && onSegment(p1, q2, q1)) return true;
-
-		// p2, q2 and p1 are colinear and p1 lies on segment p2q2
-		if (o3 == 0 && onSegment(p2, p1, q2)) return true;
-
-		// p2, q2 and q1 are colinear and q1 lies on segment p2q2
-		if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-
-		return false; // Doesn't fall in any of the above cases
+	public static float smootherStep(float x) {
+		x = clamp(x, 0, 1);
+		return x * x * x * (x * (6*x - 15) + 10);
 	}
 
 
+	/**
+	 * Gradually changes a value over time.
+	 *
+	 * @param current			- the current state of the value
+	 * @param target			- the target value
+	 * @param currentVelocity	- a mutable float keeping track of the current progression
+	 * @param smoothTime		- the approximative time it will take to reach the target
+	 * @param deltaTime			- the time since the last call of this function
+	 * 
+	 * @author Not me, taken from the Unity Engine
+	 */
+	public static float SmoothDamp (float current, float target, MutableFloat currentVelocity,
+			float smoothTime, float deltaTime) {
 
-	public static float SmoothDamp (float current, float target, Float currentVelocity,
-			float smoothTime, float maxSpeed, float deltaTime) {
-		
+		//System.out.println("Target " + target);
+		if (smoothTime == 0) {		// If no damping
+			return target;
+		}
 		float num = 2f / smoothTime;
 		float num2 = num * deltaTime;
 		float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
 		float num4 = current - target;
-		float num6 = maxSpeed * smoothTime;
-		num4 = clamp (num4, -num6, num6);
 		target = current - num4;
-		float num7 = (currentVelocity + num * num4) * deltaTime;
-		currentVelocity = (currentVelocity - num * num7) * num3;
-		float num8 = target + (num4 + num7) * num3;
-		if (target - current > 0f == num8 > target)
-		{
-			num8 = target;
-			currentVelocity = (num8 - target) / deltaTime;
+		float num5 = (currentVelocity.value + num * num4) * deltaTime;
+		currentVelocity.value = (currentVelocity.value - num * num5) * num3;
+		float num6 = target + (num4 + num5) * num3;
+
+		if ((target > current) == (num6 > target)) {
+			currentVelocity.value = 0f;
+			return target;
 		}
-		return num8;
+		return num6;
 	}
 
 
@@ -125,6 +171,52 @@ public final class Annex {
 
 
 
+	public enum Direction {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
 
+
+
+
+
+	/*
+	 * Indicates if the line segments [A; B] and [C; D] do intersect in the case ABC are not aligned.
+	 * This method is used  
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @return	- the intersection point le cas échéant, null if there is no intersection or if C is in (AB)
+	 */
+	@Deprecated
+	public static Vector2 checkSegmentsIntersection(Vector2 A, Vector2 B, Vector2 C, Vector2 D) {
+		try {
+			/* Explication:
+			 * When ABC not aligned, if CD = w1.CA + w2.CB, then
+			 * there is intersection iff ((w1+w2 >= 1) && (w1, w2 >= 0))
+			 */
+			float w1 = (C.x*(A.y - C.y) + (D.y - C.y)*(A.x - C.x) - D.x*(A.y - C.y)) /
+					((B.y - C.y)*(A.x - C.x) - (B.x - C.x)*(A.y - C.y));
+			float w2 = (D.y - C.y - w1*(B.y - C.y)) / (A.y - C.y);
+
+			if (w1>=0 && w2>=0 && w1+w2>=1) {
+				// In the case of intersection, return the intersection point
+				float q = A.x*B.y - A.y*B.x;
+				float r = C.x*D.y - C.y*D.x;
+				float denom = (A.x - B.x)*(C.y - D.y) - (A.y - B.y)*(C.x - D.x);
+
+				return new Vector2(
+						(q*(C.x - D.x) - r*(A.x - B.x)) / denom,
+						(q*(C.y - D.y) - r*(A.y - B.y)) / denom);
+			}
+			return null;
+		} catch (ArithmeticException e) {		// Happens when ABC are colinear
+			return null;
+		}
+	}
 
 }

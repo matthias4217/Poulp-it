@@ -4,9 +4,7 @@
 
   * We code in english t(-_-t) !
   * Cochez "Generate comments" quand vous créez une nouvelle classe SVP pour qu'on ait les mêmes templates.
-  * On ne suit pas les conventions Javadoc, qui sont vraiment trop extrêmes,
-  		mais chaque classe, chaque méthode, chaque attribut est documenté... 
-  * ...sauf si c'est vraiment explicite.
+  * Chaque classe, chaque méthode, chaque attribut est documenté, sauf si c'est vraiment explicite.
   * Les méthodes sont documentées au dessus
   * On utilise @Override : l'annotation est à mettre en en-tête de toute méthode surchargée
 
@@ -45,8 +43,8 @@
   		- ont une position dans l'espace
   		- ont une apparence (méthode void render())
   	À un GameObject est attaché une liste de scripts caractérisant son comportement.
-  	Par défaut, l'update d'un GameObject signifie que tous ses scripts sont updatés, mais il est possible de personnaliser cela en 	surchargeant cette méthode.
-  * Un script est un objet héritant de la classe MonoBehavior. Il possède notamment les méthodes start()@@@ et update().
+  	Par défaut, l'update d'un GameObject signifie que tous ses scripts sont updatés, mais il est possible de personnaliser cela en surchargeant cette méthode.
+  * Un script est un objet héritant de la classe MonoBehaviour. Il possède notamment les méthodes start() et update().
   
 
 ## Textures ##

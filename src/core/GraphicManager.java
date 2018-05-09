@@ -1,11 +1,8 @@
 package core;
 
 import javafx.scene.canvas.GraphicsContext;
-
-import java.util.LinkedList;
-
+import levels.Tile;
 import content.GameObject;
-import content.Tile;
 
 /**
  * Client
@@ -16,32 +13,38 @@ import content.Tile;
  *
  */
 public class GraphicManager {
-	
-	
-	// @@@ TODO
-	
-	
-	
+
+	public static boolean debugVisible = true;
+
+
+
 	/**
 	 * Render the game on the GraphicsContext gc.
-	 * 
-	 * @param gc
+	 *
+	 * @param gc			- the GraphicContext on which the rendering will be done
+	 * @param windowWidth	- the width of the window
+	 * @param windowHeight	- the height of the window 
 	 */
-	public void render(GraphicsContext gc) {
-
-		Tile[] tiles = GameEngine.tiles;
-		for (Tile tile: tiles) {
-			// System.out.println("Rendering tile " + tile);
+	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+		for (Tile tile: GameEngine.level.tileList) {		// XXX
 			tile.render(gc);
 		}
-		
 
-		LinkedList<GameObject> allGameObjects = GameEngine.allGameObjects;		//
-		for (GameObject gameObject: allGameObjects) {
-			System.out.println("Rendering " + gameObject + " on " + gameObject.position);
-			gameObject.render(gc);
+		for (GameObject gameObject: GameEngine.allGameObjects) {
+			System.out.println("Rendering GameObject " + gameObject + " on " + gameObject.position);
+			gameObject.render(gc, windowWidth, windowHeight);
 		}
 
+		if (debugVisible) {
+			for (Renderable gizmo: GameEngine.debugElements) {
+				gizmo.render(gc, windowWidth, windowHeight);
+			}
+		}
+
+
+
 	}
+
+
 
 }

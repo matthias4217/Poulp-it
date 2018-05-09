@@ -10,29 +10,57 @@ import content.GameObject;
  */
 public class RaycastHit {
 
-	private GameObject gameObjectHit;	// A reference to the GameObject whose collider was hit
+	/**
+	 * A reference to the GameObject which was hit; null if what was hit isn't a GameObject
+	 */
+	private GameObject gameObjectHit;
 
-	// ↑ not yet correct because tile can be detected too
+	/**
+	 * The distance from the ray origin to the impact point
+	 */
+	private float distance;
 
-	private float distance;				// The distance from the ray origin to the impact point
-	private Vector2 normal;				// The normal Vector2 of the line hit
+	/**
+	 * The normal Vector2 of the line hit
+	 */
+	private Vector2 normal;
+
+
 	//? Vector2 impactPoint;
+
 
 	public GameObject getGameObjectHit() {
 		return gameObjectHit;
 	}
+	
 	public float getDistance() {
 		return distance;
 	}
+	
 	public Vector2 getNormal() {
 		return normal;
 	}
 
-
-
-	public RaycastHit() {
-		// @@@ TODO : Constructor
+	public void setGameObjectHit(GameObject gameObjectHit) {
+		this.gameObjectHit = gameObjectHit;
 	}
+
+	public void setDistance(float distance) {
+		this.distance = distance;
+	}
+
+	public void setNormal(Vector2 normal) {
+		this.normal = normal;
+	}
+
+
+
+	public RaycastHit(GameObject gameObjectHit, float distance, Vector2 normal) {
+		this.gameObjectHit = gameObjectHit;
+		this.distance = distance;
+		this.normal = normal;
+	}
+
 
 
 

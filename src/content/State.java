@@ -7,6 +7,7 @@ package content;
  * @author Raph
  *
  */
+@Deprecated
 public abstract class State {
 	
 }
