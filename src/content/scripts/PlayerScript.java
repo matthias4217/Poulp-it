@@ -38,13 +38,13 @@ public class PlayerScript extends MonoBehaviour {
 	 * The time required to reach the target horizontal velocity while airborne when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeAirborne = 0.2f;
+	public static float accelerationTimeAirborne = 0f;
 
 	/**
 	 * The time required to reach the target horizontal velocity while grounded when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeGrounded = 0.2f;
+	public static float accelerationTimeGrounded = 0f;
 
 
 	/**
