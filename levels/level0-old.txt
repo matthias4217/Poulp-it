@@ -17,9 +17,9 @@ xxxxxxxx   /xxx         x
 x         /xx           x
 x        /xxx           x
 x        xxxx           x
-x   xx     ux\          x
-x  xxx      ux\         x
-x    x       ux\        x
-x             ux\       x
+x   xx            xxx   x
+x  xxx            xxx   x
+x    x                  x
+x                       x
 xxxxxxxxxxxxxxxxxxxxxxxxx
 }
