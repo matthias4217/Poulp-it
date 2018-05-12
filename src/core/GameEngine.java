@@ -272,7 +272,7 @@ public class GameEngine {
 			for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
-
+	
 
 			// Collisions with the tile
 			
