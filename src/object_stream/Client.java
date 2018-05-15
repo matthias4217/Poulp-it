@@ -3,7 +3,7 @@ package object_stream;
 import java.net.*;
 import java.io.*;
 
-class Client implements java.lang.AutoCloseable{
+class Client {
 	String hostName;
 	int portNumber;
 	Socket dSocket;
@@ -18,9 +18,9 @@ class Client implements java.lang.AutoCloseable{
 	}
 	public void start() {
 		try {
-			Socket dSocket = new Socket(hostName, portNumber);
-			ObjectOutputStream out = new ObjectOutputStream(dSocket.getOutputStream());
-			ObjectInputStream in = new ObjectInputStream(dSocket.getInputStream());
+			this.dSocket = new Socket(hostName, portNumber);
+			this.out = new ObjectOutputStream(dSocket.getOutputStream());
+			this.in = new ObjectInputStream(dSocket.getInputStream());
 		} 
 		catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
@@ -49,18 +49,8 @@ class Client implements java.lang.AutoCloseable{
 			e1.getMessage();
 		}
 	}
-	public Object read() {
-		try {
-			return in.readObject();
-		}
-		catch(IOException e){
-			System.err.println("Couldn't get I/O for the connection to " + hostName + "during the reading by client");
-		}
-		catch(Exception e1){
-			System.err.println("Error during reading by client");
-			e1.getMessage();
-		}
-		finally {return null;}
+	public Object read() throws ClassNotFoundException, IOException {
+			return(this.in.readObject());
 	}
 	
 }

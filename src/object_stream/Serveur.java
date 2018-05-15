@@ -9,8 +9,6 @@ class Serveur {
 	Socket clientSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
-	Objet_test inputObject;
-	Objet_test OutputObject;
 	
 	public Serveur(int portNumber) {
 		this.portNumber = portNumber;
@@ -20,6 +18,7 @@ class Serveur {
 		in.close();
 		out.close();
 		serverSocket.close();
+	
 	}
 	public void write(Object object){
 		try {
@@ -33,29 +32,17 @@ class Serveur {
 			e1.getMessage();
 		}
 	}
-	public Object read(){
-		try {
-			return in.readObject();
-		}
-		catch(IOException e){
-			System.err.println("Couldn't get I/O for the connection to during the reading by server");
-		}
-		catch(Exception e1){
-			System.err.println("Error during reading by server");
-			e1.getMessage();
-		}
-		finally {return null;}
-		
+	public Object read() throws ClassNotFoundException, IOException{
+		return in.readObject();
+
 	}
 	public void run() {
-		try (
-			ServerSocket serverSocket = new ServerSocket(portNumber);
-			Socket clientSocket = serverSocket.accept();
-			ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-	        ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+		try {
+			this.serverSocket = new ServerSocket(portNumber);
+			this.clientSocket = serverSocket.accept();
+			this.out = new ObjectOutputStream(clientSocket.getOutputStream());
+	        this.in = new ObjectInputStream(clientSocket.getInputStream());
 			
-		){
-			this.write("allo ?");
 		}
 		catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
@@ -66,13 +53,5 @@ class Serveur {
 			System.out.println("Exception catch during the construction of the server");
 			e1.getMessage();
 		}
-		
-		/*inputObject = (Objet_test) this.read();
-		this.write(inputObject);
-		while() {
-			Objet_test answer = new Objet_test("server" + inputObject.message);
-			this.write(answer);
-			this.write(inputObject);
-			}*/
 	}
 }

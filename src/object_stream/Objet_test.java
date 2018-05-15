@@ -1,12 +1,14 @@
 package object_stream;
 
-public class Objet_test {
+import java.io.Serializable;
+
+public class Objet_test implements Serializable{
 	
 	String message;
 	public Objet_test(String message) {
 		this.message = message;
 	}
-	public void getMessage() {
-		System.out.println(this.message);
+	public String toString() {
+		return(this.message);
 	}
 }
