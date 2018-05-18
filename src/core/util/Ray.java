@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class Ray implements Renderable {
 
 	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
-	public static final float RENDER_LENGTH_MULTIPLIER = 5f;		// The length multiplier for screen rendering 
+	public static final float RENDER_LENGTH_MULTIPLIER = 1f;		// The length multiplier for screen rendering 
 
 
 
@@ -25,7 +25,6 @@ public class Ray implements Renderable {
 	private Vector2 endingPoint;
 	private float length;
 
-	private boolean hit = false;		// Indicates if something was hit by the ray
 
 
 	public Vector2 getEndingPoint() {

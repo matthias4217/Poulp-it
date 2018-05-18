@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
+import core.util.Annex;
 import core.util.GameInformation;
 import core.util.Vector2;
 
@@ -93,10 +94,28 @@ public class Launcher extends Application {
 		 */
 		AnimationTimer timerTest = new AnimationTimer() {
 			@Override public void handle(long now) {
-				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-				double[] xPoints = {50.0, 75.0, 100.0};
-				double[] yPoints = {50.0, 200.0, 50.0};
-				gc.strokePolyline(xPoints, yPoints, 3);
+
+				// Setting axes
+				gc.setStroke(Color.BLACK);
+				gc.strokeLine(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
+				gc.strokeLine(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
+				
+				Vector2 A = new Vector2(0, 0);
+				Vector2 B = new Vector2(1, 1);
+				Vector2 R = new Vector2(0, 1);
+
+				Vector2 n = Annex.normal(A, B, R);
+				System.out.println("A: " + A);
+				System.out.println("B: " + B);
+				System.out.println("R: " + R);
+				System.out.println("Orientation RAB: " + Annex.orientation(R, A, B));
+				System.out.println();
+				System.out.println("n: " + n);
+
+				gc.setStroke(Color.BLUE);
+				gc.strokeLine(A.x, A.y, B.x, B.y);
+				
+				
 			}
 		};
 
@@ -147,7 +166,7 @@ public class Launcher extends Application {
 				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
-		timer.start();
+		timerTest.start();
 	}
 
 
