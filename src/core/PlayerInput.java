@@ -18,11 +18,14 @@ public class PlayerInput {
 	 * The inputs relative to the direction
 	 */
 	public Vector2 directionalInput = Vector2.ZERO();
+	public boolean spacePressed;
 	
-	public MouseButton mouse = MouseButton.NONE;
+	public MouseEvent mouse;
 	
 	//XXX The position is updated only after a mouse event
 	public Vector2 mousePosition = Vector2.ZERO();
+	public boolean mouseLeftPressed;
+	public boolean mouseRightPressed;
 	
 
 
@@ -30,6 +33,8 @@ public class PlayerInput {
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
 		public void handle(KeyEvent event) {
+			spacePressed = false;
+			directionalInput = Vector2.ZERO();
 			switch(event.getCode()) {
 			case LEFT:
 				directionalInput = Vector2.LEFT();
@@ -44,7 +49,7 @@ public class PlayerInput {
 				directionalInput = Vector2.DOWN();
 				break;
 			case SPACE:
-				directionalInput = Vector2.ZERO();
+				spacePressed = true;
 				break;
 			default:
 				directionalInput = Vector2.ZERO();
@@ -56,12 +61,31 @@ public class PlayerInput {
 	
 	public EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
 		public void handle(MouseEvent event) {
-			mouse = event.getButton();
+			mouse = event;
 			mousePosition.x = (float) event.getX();
 			mousePosition.y = (float) event.getY();
+			MouseButton button = event.getButton();
+			if (button == MouseButton.NONE) {
+				mouseLeftPressed = false;
+				mouseRightPressed = false;
+			} else if (button == MouseButton.PRIMARY) {
+				mouseLeftPressed = true;
+			} else if (button == MouseButton.SECONDARY) {
+				mouseRightPressed = true;
+			}
 		}
 	};
 
+	
+	public PlayerInput copy() {
+		PlayerInput result = new PlayerInput();
+		result.directionalInput = this.directionalInput;
+		result.mouse = this.mouse;
+		result.mousePosition = this.mousePosition;
+		result.mouseLeftPressed = this.mouseLeftPressed;
+		result.mouseRightPressed = this.mouseRightPressed;
+		return result;
+	}
 
 	@Override public String toString() {
 		return "PlayerInput [directionalInput=" + directionalInput + "; eventHandler=" + 

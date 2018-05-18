@@ -196,11 +196,12 @@ public class GameEngine {
 	 *
 	 * @param deltaTime 		- the time in seconds it took to complete the last frame
 	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
+	 * @param previousPlayerInput 
 	 * @param gameInformation	- the current state of the game
 	 * @throws InvalidArgumentsException 
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
 		//		System.out.println("Current GameInformation: " + gameInformation);
@@ -210,12 +211,12 @@ public class GameEngine {
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, playerInput);
+			gameManager.apply(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, playerInput);
+			gameObject.update(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating the tileReferences matrix

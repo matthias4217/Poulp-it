@@ -38,6 +38,8 @@ public class Launcher extends Application {
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
 	static final String WINDOW_TITLE = "Hook Battle";
+	
+	PlayerInput previousPlayerInput;
 
 
 
@@ -81,9 +83,10 @@ public class Launcher extends Application {
 		gameEngine.init(nbPlayers, level);
 
 		PlayerInput playerInput = new PlayerInput();
+		previousPlayerInput = new PlayerInput();
 
 		/* 
-		 * gameInformation contains the information which is sent top the clientd each frame.
+		 * gameInformation contains the information which is sent to the client each frame.
 		 * It is updated each frame by the GameEngine.
 		 */
 		GameInformation gameInformation = new GameInformation();
@@ -122,14 +125,14 @@ public class Launcher extends Application {
 
 
 
-
-
 		AnimationTimer timer = new AnimationTimer() {
 			long oldNow = System.nanoTime();
 			float timeToFramerateDisplay = 0f;
 			int framerate;
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
+				
+				previousPlayerInput = playerInput.copy();
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
@@ -145,7 +148,7 @@ public class Launcher extends Application {
 				oldNow = now;
 
 				try {
-					gameEngine.update(deltaTime, playerInput, gameInformation);
+					gameEngine.update(deltaTime, playerInput, previousPlayerInput, gameInformation);
 				} catch (InvalidArgumentsException e) {					
 					e.printStackTrace();
 				}
@@ -166,7 +169,7 @@ public class Launcher extends Application {
 				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
-		timerTest.start();
+		timer.start();
 	}
 
 

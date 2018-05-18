@@ -17,22 +17,22 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 500f;
+	public static float moveSpeed = 900f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed
 	 */
-	public static float maxJumpHeight = 4;
+	public static float maxJumpHeight = 200;
 
 	/**
 	 * The minimum height of a jump
 	 */
-	public static float minJumpHeight = 1;
+	public static float minJumpHeight = 150;
 
 	/**
 	 * The time required to reach the apex of the jump parable
 	 */
-	public static float timeToJumpApex = .4f;
+	public static float timeToJumpApex = .39f;
 
 	/**
 	 * The time required to reach the target horizontal velocity while airborne when starting with a null velocity
@@ -125,11 +125,14 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		System.out.println("Input update " + playerInput);
 		calculateVelocity(deltaTime, playerInput.directionalInput);
 		//handleWallSliding(deltaTime, playerInput.directionnalInput);
 
+		if (playerInput.spacePressed) {
+			onJumpInputDown(playerInput.directionalInput);
+		}
 		controller.move(velocity.multiply(deltaTime), playerInput.directionalInput);
 
 		if (controller.collisions.above || controller.collisions.below) {
