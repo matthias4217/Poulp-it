@@ -30,6 +30,11 @@ public class PlayerInput {
 	public boolean mouseLeftPressed;
 	public boolean mouseRightPressed;
 	
+	private boolean leftPressed = false;
+	private boolean rightPressed = false;
+	private boolean upPressed = false;
+	private boolean downPressed = false;
+	
 
 	//KeyEvent.getEventType returns the event type
 
@@ -37,22 +42,37 @@ public class PlayerInput {
 		@Override
 		public void handle(KeyEvent event) {
 			directionalInput = Vector2.ZERO();
-			System.out.println("Code : " + event.getCode());
-			if (event.getCode() == KeyCode.LEFT) {
+			switch (event.getCode()) {
+				case LEFT:	leftPressed = true;
+					break;
+				case RIGHT:	rightPressed = true;
+					break;
+				case DOWN: downPressed = true;
+					break;
+				case UP: upPressed = true;
+					break;
+				case SPACE: spacePressed = true;
+					break;
+			}
+			if (leftPressed) {
 				directionalInput.x = -1;
 			}
-			if (event.getCode() == KeyCode.RIGHT) {
+			if (rightPressed) {
 				directionalInput.x = 1;
 			}
-			if (event.getCode() == KeyCode.DOWN) {
-				directionalInput.y = -1;
+			if (leftPressed && rightPressed) {
+				directionalInput.x = 0;
 			}
-			if (event.getCode() == KeyCode.UP) {
+			if (upPressed) {
 				directionalInput.y = 1;
 			}
-			if (event.getCode() == KeyCode.SPACE) {
-				spacePressed = true;
+			if (downPressed) {
+				directionalInput.y = -1;
 			}
+			if (upPressed && downPressed) {
+				directionalInput.y = 0;
+			}
+			directionalInput.normalize();
 		}
 	};
 
@@ -61,6 +81,18 @@ public class PlayerInput {
 		public void handle(KeyEvent event) {
 			directionalInput = Vector2.ZERO();
 			spacePressed = false;
+			switch (event.getCode()) {
+			case LEFT:	leftPressed = false;
+				break;
+			case RIGHT:	rightPressed = false;
+				break;
+			case DOWN: downPressed = false;
+				break;
+			case UP: upPressed = false;
+				break;
+			case SPACE: spacePressed = false;
+				break;
+		}
 			}
 	};
 	
