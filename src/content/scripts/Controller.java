@@ -156,7 +156,7 @@ public class Controller extends RaycastController {
 			if (hit != null) {		// If something was hit
 				// problem : hit is always null !
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.
-				if (hit.getGameObjectHit().tag == Tag.TRAVERSABLE) {
+				if ((hit.getGameObjectHit() != null) && (hit.getGameObjectHit().tag == Tag.TRAVERSABLE)) {
 					if (directionY == 1 || hit.getDistance() == 0) {		//
 						continue;
 					}

@@ -53,7 +53,7 @@ public class GameEngine {
 	 * It is changed in order to change the zoom of the camera.
 	 */
 	public static float tileSize = 32;
-	public static float TIME_FACTOR = .25f;
+	public static float TIME_FACTOR = 1f;
 
 	/**
 	 * A map which associates to each tile what GameObject is there
@@ -176,7 +176,7 @@ public class GameEngine {
 //			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 //			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 //			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(585, 315);
+			spawnPosition = new Vector2(505, 415);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -267,7 +267,9 @@ public class GameEngine {
 		// The index of the column/row which is fixed
 		int fixed = tileOrigin[1-var];
 		// Moving which way?
-		int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? -1 : 1;
+		
+		//XXX
+		int increment = (direction == Direction.UP || direction == Direction.LEFT) ? -1 : 1;
 
 		for (int k = tileOrigin[var]; increment * (tileEnding[var] - k) >= 0; k += increment) {
 			// Setting the current tile
