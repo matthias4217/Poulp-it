@@ -21,7 +21,7 @@ public final class Annex {
 
 	/**
 	 * Clamp a value between a minimum float and a maximum float value. 
-	 * 
+	 *
 	 * @param value
 	 * @param a
 	 * @param b
@@ -54,7 +54,7 @@ public final class Annex {
 	 * -1 	-> Counterclockwise
 	 */
 	public static float orientation(Vector2 A, Vector2 B, Vector2 C) {
-		/* See https://www.geeksforgeeks.org/orientation-3-ordered-Vector2s for details on the formula */
+		/* See https://www.geeksforgeeks.org/orientation-3-ordered-points for details on the formula */
 		return Math.signum((B.y - A.y)*(C.x - B.x) - (B.x - A.x)*(C.y - B.y));
 	}
 
@@ -103,19 +103,12 @@ public final class Annex {
 	 * @return	- a normal vector to the line (AB) (not normalized) pointing toward the side R is
 	 */
 	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
-		float orientation = orientation(R, A, B);
-		if (A.x != B.x) {
-			if (orientation == 1) {
-				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
-			} else {
-				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
-			}
+		if (A.x == B.x) {		// (AB) is vertical
+			return (R.x < A.x) ? Vector2.LEFT() : Vector2.RIGHT();
+		} else if (A.y == B.y) {		// (AB) is horizontal
+			return (R.y < A.y) ? Vector2.DOWN() : Vector2.UP();
 		} else {
-			if (orientation == 1) {
-				return new Vector2(1, (A.x - B.x) / (B.y - A.y));
-			} else {
-				return new Vector2(-1, (B.x - A.x) / (B.y - A.y));
-			}
+			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
 		}
 	}
 

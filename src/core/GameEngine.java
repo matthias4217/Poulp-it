@@ -170,10 +170,11 @@ public class GameEngine {
 		System.out.println("Instanciating players...");
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
-			Vector2 spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
-			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
+			Vector2 spawnPosition;
+//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 //			spawnPosition = new Vector2(280, 710);
-			//spawnPosition = new Vector2(585, 730);
+			spawnPosition = new Vector2(585, 730);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -275,7 +276,7 @@ public class GameEngine {
 			/*for (GameObject gameObject: tileReferences[currentTileX][currentTileY]) {
 				//				ray.collision(gameObject);
 			}
-*/
+			 */
 
 
 			// Collisions with the tile
@@ -288,7 +289,9 @@ public class GameEngine {
 
 				System.out.println("Detecting collision between ray and tile collider : " + colliderTile +
 						" at tile origin " + colliderOrigin);
-				debugElements.add(new RenderableCollider(colliderTile, colliderOrigin));
+				if (colliderTile != null) {
+					debugElements.add(new RenderableCollider(colliderTile, colliderOrigin));
+				}
 
 				Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
 
