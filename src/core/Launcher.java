@@ -79,7 +79,7 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
-		String level = "level0";
+		String level = "level1";
 		gameEngine.init(nbPlayers, level);
 
 		PlayerInput playerInput = new PlayerInput();
@@ -132,7 +132,6 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 				
-				previousPlayerInput = playerInput.copy();
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
@@ -153,8 +152,10 @@ public class Launcher extends Application {
 					e.printStackTrace();
 				}
 
+				previousPlayerInput = playerInput.copy();
 				playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
 				// setOnKeyPressed, then it doesn't work ?!?
+				playerInput.spacePressed = false;
 				
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);

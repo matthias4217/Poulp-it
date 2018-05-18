@@ -133,8 +133,11 @@ public class PlayerScript extends MonoBehaviour {
 		if (playerInput.spacePressed) {
 			onJumpInputDown(playerInput.directionalInput);
 		}
+		else if (!playerInput.spacePressed && previousPlayerInput.spacePressed) {
+			onJumpInputUp();
+		}
 		controller.move(velocity.multiply(deltaTime), playerInput.directionalInput);
-
+		
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
 				// Modulation of the vertical acceleration according to the slope

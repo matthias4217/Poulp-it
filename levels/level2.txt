@@ -3,19 +3,12 @@
 # All lines beginning with a '#' are ommited
 # Empty lines _matter_
 #
-tilesize: 32
+tilesize: 64
 theme: simplegrey
 #
 level:{
 xxxxxxxxxxxxxxxxxxxxxxxxx
-xv                     ux
-x                       x
-x      xxxxxxx          x
-x                       x
-x                      xx
-xxxxxxxx   /xxx         x
-x         /xx           x
-x        /xxx           x
+x
 x        xxxx           x
 x   xx     ux\          x
 x  xxx      ux\         
