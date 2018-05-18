@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
  */
 public class Player2 extends GameObject {
 
-	static final String SPRITE_PATH = "resources/graphic/player.png";
+	static final String SPRITE_PATH = "resources/graphic/sophie.png";
 
 
 
@@ -31,7 +31,7 @@ public class Player2 extends GameObject {
 	}
 
 
-	
+
 	public Player2(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour[] scripts) {
 		super(position, sprite, layer, tag, collider, scripts);
 	}

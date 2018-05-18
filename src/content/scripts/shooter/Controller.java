@@ -29,7 +29,7 @@ public class Controller extends MonoBehaviour {
 	
 	Vector2 velocity = Vector2.ZERO();
 	MutableFloat velocityXSmoothing = new MutableFloat(0f);		// Used for the smoothing of the horizontal velocity
-	MutableFloat velocityYSmoothing = new MutableFloat(0f);		// Used for the smoothing of the horizontal velocity
+	MutableFloat velocityYSmoothing = new MutableFloat(0f);		// Used for the smoothing of the vertical velocity
 
 
 
