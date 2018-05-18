@@ -103,14 +103,12 @@ public final class Annex {
 	 * @return	- a normal vector to the line (AB) (not normalized) pointing toward the side R is
 	 */
 	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
-		if (A.x != B.x) {		// (AB) is not vertical
-			if (orientation(R, A, B) == 1) {
-				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
-			} else {
-				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
-			}
-		} else {		// (AB) is vertical
+		if (A.x == B.x) {		// (AB) is vertical
 			return (R.x < A.x) ? Vector2.LEFT() : Vector2.RIGHT();
+		} else if (A.y == B.y) {		// (AB) is horizontal
+			return (R.y < A.y) ? Vector2.DOWN() : Vector2.UP();
+		} else {
+			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
 		}
 	}
 

@@ -118,6 +118,7 @@ public class Launcher extends Application {
 //				gc.drawImage(background, 0, 0);
 
 				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+				stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
 				System.out.println(playerInput);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
