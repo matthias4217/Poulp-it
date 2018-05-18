@@ -47,6 +47,9 @@ public class PlayerInput {
 			if (event.getCode() == KeyCode.DOWN) {
 				directionalInput.y = -1;
 			}
+			if (event.getCode() == KeyCode.UP) {
+				directionalInput.y = 1;
+			}
 			if (event.getCode() == KeyCode.SPACE) {
 				spacePressed = true;
 			}
