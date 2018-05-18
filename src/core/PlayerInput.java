@@ -35,6 +35,11 @@ public class PlayerInput {
 	private boolean upPressed = false;
 	private boolean downPressed = false;
 	
+	private boolean aPressed = false;
+	private boolean zPressed = false;
+	private boolean ePressed = false;
+	private boolean rPressed = false;
+	
 
 	//KeyEvent.getEventType returns the event type
 
@@ -52,6 +57,14 @@ public class PlayerInput {
 				case UP: upPressed = true;
 					break;
 				case SPACE: spacePressed = true;
+					break;
+				case A: aPressed = true;
+					break;
+				case Z: zPressed = true;
+					break;
+				case E: ePressed = true;
+					break;
+				case R: rPressed = true;
 					break;
 			}
 			if (leftPressed) {
@@ -91,6 +104,14 @@ public class PlayerInput {
 			case UP: upPressed = false;
 				break;
 			case SPACE: spacePressed = false;
+				break;
+			case A: aPressed = false;
+				break;
+			case Z: zPressed = false;
+				break;
+			case E: ePressed = false;
+				break;
+			case R: rPressed = false;
 				break;
 		}
 			}

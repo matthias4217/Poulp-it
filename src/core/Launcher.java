@@ -81,7 +81,7 @@ public class Launcher extends Application {
 		int nbPlayers = 1;
 		String level = "level1";
 //		gameEngine.init1(nbPlayers, level);
-		gameEngine.init1(1, level);
+		gameEngine.init1(1,level);
 		PlayerInput playerInput = new PlayerInput();
 		previousPlayerInput = new PlayerInput();
 
