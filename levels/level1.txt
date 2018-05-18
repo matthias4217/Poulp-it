@@ -8,19 +8,19 @@ theme: simplegrey
 #
 level:{
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xv                                  ux
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x      xxxxxxx                       x
-x                                    x
-x                                    x
-x                                    x
-xxxxxxxx   /xxx                      x
+xxv                                 ux
+xx                                   x
+xx                                   x
+xx                                   x
+xx                                   x
+xx                                   x
+xx                                   x
+xx                                   x
+xx      xxxxxxx                      x
+xx                                   x
+xx                                   x
+xx                                   x
+xxxxxxxxx   /xxx                      x
 x         /xx                        x
 x        /xxx       x                x
 x        xxxx                        x

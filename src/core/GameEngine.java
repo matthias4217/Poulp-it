@@ -176,7 +176,7 @@ public class GameEngine {
 //			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 //			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 //			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(100, 900);
+			spawnPosition = new Vector2(100, 600);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
