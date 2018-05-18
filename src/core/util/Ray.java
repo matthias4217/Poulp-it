@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class Ray implements Renderable {
 
 	public static final Color RENDER_COLOR = Color.RED;			// The color rays are drawn on screen
-	public static final float RENDER_LENGTH_MULTIPLIER = 5f;		// The length multiplier for screen rendering 
+	public static final float RENDER_LENGTH_MULTIPLIER = 1f;		// The length multiplier for screen rendering 
 
 
 
@@ -25,7 +25,6 @@ public class Ray implements Renderable {
 	private Vector2 endingPoint;
 	private float length;
 
-	private boolean hit = false;		// Indicates if something was hit by the ray
 
 
 	public Vector2 getEndingPoint() {
@@ -81,7 +80,7 @@ public class Ray implements Renderable {
 			return null;
 		}
 		Vector2 result = null;
-		System.out.println("initialisation de result");
+		//System.out.println("initialisation de result");
 
 		int n = collider.getNbPoints();
 		for (int i = 0; i < n; i++) {
@@ -91,9 +90,11 @@ public class Ray implements Renderable {
 			Vector2 intersectionPoint = Annex.segmentsIntersection(
 					originPoint, endingPoint, collider_I, collider_IPlusOne);
 
+			//System.out.println("intersectionPoint" + intersectionPoint);
 			System.out.println("    i = " + i);
 			System.out.println("    [" + originPoint + "; " + endingPoint + "] - [" +
 					collider_I + "; " + collider_IPlusOne + "]");
+			System.out.println("truc");
 
 			if (intersectionPoint != null) {		// if there was intersection between the lines
 				float dist = Vector2.distance(originPoint, intersectionPoint);
@@ -106,6 +107,9 @@ public class Ray implements Renderable {
 					result = Annex.normal(collider_I, collider_IPlusOne, originPoint);
 				}
 			}
+		}
+		if (result != null) {
+			System.out.println("resultColl : " + result);
 		}
 		return result;
 	}

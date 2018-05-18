@@ -119,7 +119,7 @@ public class PlayerScript extends MonoBehaviour {
 
 		// Calculating physics variables according to gameplay parameters
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-		gravity = 0;		// For testing purpose
+		//gravity = 0;		// For testing purpose
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
@@ -188,7 +188,7 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 
-	public void onJumpInputDown() {
+	public void onJumpInputDown(Vector2 directionalInput) {
 		if (wallSliding) {
 			if (wallDirX == directionalInput.x) {
 				velocity.x = -wallDirX * wallJumpClimb.x;
