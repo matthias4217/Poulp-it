@@ -108,7 +108,7 @@ public final class Annex {
 		} else if (A.y == B.y) {		// (AB) is horizontal
 			return (R.y < A.y) ? Vector2.DOWN() : Vector2.UP();
 		} else {
-			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
+			return (new Vector2((A.y - B.y) / (B.x - A.x), 1)).normalize();
 		}
 	}
 

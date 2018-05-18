@@ -77,7 +77,7 @@ public class Level {
 			return tileMatrix[i][j];
 		}
 		else {
-			return null; // or TileType.EMPTY ?
+			return TileType.EMPTY;
 		}
 	}
 	
