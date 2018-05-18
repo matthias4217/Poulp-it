@@ -1,9 +1,12 @@
 package core;
 
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+
+
 import core.util.Vector2;
 
 /**
@@ -28,36 +31,37 @@ public class PlayerInput {
 	public boolean mouseRightPressed;
 	
 
-
 	//KeyEvent.getEventType returns the event type
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
+		@Override
 		public void handle(KeyEvent event) {
-			spacePressed = false;
 			directionalInput = Vector2.ZERO();
-			switch(event.getCode()) {
-			case LEFT:
-				directionalInput = Vector2.LEFT();
-				break;
-			case RIGHT:
-				directionalInput = Vector2.RIGHT();
-				break;
-			case UP:
-				directionalInput = Vector2.UP();
-				break;
-			case DOWN:
-				directionalInput = Vector2.DOWN();
-				break;
-			case SPACE:
+			System.out.println("Code : " + event.getCode());
+			if (event.getCode() == KeyCode.LEFT) {
+				directionalInput.x = -1;
+			}
+			if (event.getCode() == KeyCode.RIGHT) {
+				directionalInput.x = 1;
+			}
+			if (event.getCode() == KeyCode.DOWN) {
+				directionalInput.y = -1;
+			}
+			if (event.getCode() == KeyCode.SPACE) {
 				spacePressed = true;
-				break;
-			default:
-				directionalInput = Vector2.ZERO();
-				break;
 			}
 		}
 	};
 
+	public EventHandler<KeyEvent> eventHandlerReleased = new EventHandler<KeyEvent>() {
+		@Override
+		public void handle(KeyEvent event) {
+			directionalInput = Vector2.ZERO();
+			spacePressed = false;
+			}
+	};
+	
+	
 	
 	public EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
 		public void handle(MouseEvent event) {

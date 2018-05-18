@@ -13,6 +13,7 @@ import core.exceptions.MultipleGameEngineException;
 import core.util.*;
 import core.util.Annex.Direction;
 import levels.Level;
+import levels.Tile;
 import levels.Tile.TileType;
 
 /**
@@ -52,7 +53,7 @@ public class GameEngine {
 	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
-	public static float tileSize = 32;
+	public static float tileSize = Tile.TILE_SIZE;
 	public static float TIME_FACTOR = 1f;
 
 	/**

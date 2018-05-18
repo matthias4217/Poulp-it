@@ -91,6 +91,9 @@ public class Launcher extends Application {
 		 */
 		GameInformation gameInformation = new GameInformation();
 
+		stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+		stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
+		stage.getScene().setOnKeyReleased(playerInput.eventHandlerReleased);
 
 		/*
 		 * An AnimationTimer used for testing purpose. 
@@ -138,8 +141,7 @@ public class Launcher extends Application {
 				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	// Clear the window
 //				gc.drawImage(background, 0, 0);
 
-				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
-				stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
+
 				System.out.println(playerInput);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
@@ -153,9 +155,9 @@ public class Launcher extends Application {
 				}
 
 				previousPlayerInput = playerInput.copy();
-				playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
+				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
 				// setOnKeyPressed, then it doesn't work ?!?
-				playerInput.spacePressed = false;
+				//playerInput.spacePressed = false;
 				
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
