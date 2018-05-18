@@ -128,7 +128,9 @@ public abstract class GameObject implements Renderable {
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		gc.drawImage(sprite, position.x, windowHeight - position.y);
 		if (GraphicManager.debugVisible) {
-			collider.render(gc, position);
+			if (collider != null) {
+				collider.render(gc, position);
+			}
 		}
 	}
 

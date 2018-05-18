@@ -78,12 +78,13 @@ public class Launcher extends Application {
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
 		String level = "level0";
-		gameEngine.init(nbPlayers, level);
+//		gameEngine.init(nbPlayers, level);
+		gameEngine.init2(level);
 
 		PlayerInput playerInput = new PlayerInput();
 
 		/* 
-		 * gameInformation contains the information which is sent top the clientd each frame.
+		 * gameInformation contains the information which is sent to the client each frame.
 		 * It is updated each frame by the GameEngine.
 		 */
 		GameInformation gameInformation = new GameInformation();
@@ -166,7 +167,7 @@ public class Launcher extends Application {
 				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
-		timerTest.start();
+		timer.start();
 	}
 
 
