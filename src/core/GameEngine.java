@@ -174,7 +174,7 @@ public class GameEngine {
 //			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 //			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 //			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(585, 730);
+			spawnPosition = new Vector2(585, 350);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -232,7 +232,7 @@ public class GameEngine {
 	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask)
@@ -249,7 +249,7 @@ public class GameEngine {
 
 		// The coordinates in the grid this ray ends
 		int[] tileEnding = toTileCoordinates(ray.getEndingPoint());
-		System.out.println("Ending point: " + ray.getEndingPoint());
+		//System.out.println("Ending point: " + ray.getEndingPoint());
 
 		System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
 				") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
@@ -294,8 +294,10 @@ public class GameEngine {
 				}
 
 				Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
+				System.out.println("normalFromHit : " + normalFromHit);
 
 				if (normalFromHit != null) {		// if there is a collision
+					System.out.println("result : " + result);
 					result = new RaycastHit(null, ray.getLength(), normalFromHit);
 
 					debugElements.add(new RenderableVector(normalFromHit, colliderOrigin));
