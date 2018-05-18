@@ -49,10 +49,11 @@ public class GameEngine {
 	public static Level level;
 
 	/**
-	 * The lenght of a tile in window coordinates.
+	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
 	public static float tileSize = 32;
+	public static float TIME_FACTOR = .25f;
 
 	/**
 	 * A map which associates to each tile what GameObject is there
@@ -81,6 +82,7 @@ public class GameEngine {
 	 * This Map associates each TileType with its associated Collider (considering tileSize)
 	 */
 	public static final Map<TileType, Collider> TILE_TO_COLLIDER = new HashMap<TileType, Collider>();
+
 
 	private static void initializeTILE_TO_COLLIDER() throws InvalidArgumentsException {
 		TILE_TO_COLLIDER.put(TileType.EMPTY, null);
@@ -174,7 +176,7 @@ public class GameEngine {
 //			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 //			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 //			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(585, 350);
+			spawnPosition = new Vector2(585, 315);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -203,6 +205,8 @@ public class GameEngine {
 
 		//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
+		
+		deltaTime *= TIME_FACTOR;
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {

@@ -80,12 +80,12 @@ public final class Annex {
 		System.out.println("ori " + o1 + " "+ o2 + " " + o3 + " " + o4);
 		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
 
-			try {
+			/*try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 
 			float q = A.x*B.y - A.y*B.x;
 			float r = C.x*D.y - C.y*D.x;
