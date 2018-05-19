@@ -1,10 +1,13 @@
-package content;
+package content.platformer;
 
 import javafx.scene.image.Image;
 import core.util.BoxCollider;
 import core.util.Vector2;
-import content.scripts.PlayerScript;
-import content.scripts.Controller;
+import content.GameObject;
+import content.Layer;
+import content.Tag;
+import content.platformer.scripts.Controller;
+import content.platformer.scripts.PlayerScript;
 
 
 /**

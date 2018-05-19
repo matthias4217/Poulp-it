@@ -1,5 +1,6 @@
-package content.scripts;
+package content.platformer.scripts;
 
+import content.MonoBehaviour;
 import core.PlayerInput;
 import core.util.*;
 import core.exceptions.InvalidArgumentsException;
@@ -50,23 +51,23 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The force applied to jump when wall-jumping toward the wall
 	 */
-	public static Vector2 wallJumpClimb;
+	public static Vector2 wallJumpClimb = new Vector2(50, 200);
 
 	/**
 	 * The force applied to jump when wall-jumping with no input
 	 */
-	public static Vector2 wallJumpOff;
+	public static Vector2 wallJumpOff = new Vector2(100, 100);
 
 	/**
 	 * The force applied to jump when wall-jumping away from the wall
 	 */
-	public static Vector2 wallLeap;
+	public static Vector2 wallLeap = new Vector2(200, 50);
 
 
 	/**
 	 * The maximum vertical speed that can be reached when sliding down against a wall 
 	 */
-	public static float wallSlideSpeedMax = 30;
+	public static float wallSlideSpeedMax = 200f;
 
 	/**
 	 * The amount of ime the player will stay stuck against a wall when inputing away from it;

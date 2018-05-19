@@ -1,7 +1,8 @@
-package content.scripts;
+package content.platformer.scripts;
 
 import core.util.*;
 import content.Layer;
+import content.MonoBehaviour;
 
 /**
  * Superclass for all scripts which rely on raycasts to detect collisions.

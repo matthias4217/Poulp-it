@@ -1,6 +1,6 @@
-package content.scripts.shooter;
+package content.shooter.scripts;
 
-import content.scripts.MonoBehaviour;
+import content.MonoBehaviour;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
