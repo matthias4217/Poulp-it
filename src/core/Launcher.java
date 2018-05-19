@@ -38,7 +38,14 @@ public class Launcher extends Application {
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
 	static final String WINDOW_TITLE = "Hook Battle";
-	
+
+
+	/**
+	 * The game that will be loaded
+	 */
+	static Game game = Game.HOOK_BATTLE;
+
+
 	PlayerInput previousPlayerInput;
 
 
@@ -72,16 +79,35 @@ public class Launcher extends Application {
 		stage.show();
 
 
-		// If we implement a menu, that's probably around here.
-
 
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 1;
-		String level = "level0";
-		gameEngine.init1(nbPlayers, level);
-//		gameEngine.init2(level);
+
+
+
+		switch (game) {
+		case HOOK_BATTLE:
+			int nbPlayers = 1;
+			String level0 = "level0";
+			gameEngine.initPlatformer(nbPlayers, level0);
+			break;
+		case SHOOTER:
+			String level1 = "level0";
+			gameEngine.init2(level1);
+		case MAZE:
+			
+			break;
+		case ALIEN:
+
+			break;
+		default:
+
+			break;
+		}
+
+
+
 		PlayerInput playerInput = new PlayerInput();
 		previousPlayerInput = new PlayerInput();
 
@@ -105,7 +131,7 @@ public class Launcher extends Application {
 				gc.setStroke(Color.BLACK);
 				gc.strokeLine(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
 				gc.strokeLine(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
-				
+
 				Vector2 A = new Vector2(0, 0);
 				Vector2 B = new Vector2(1, 1);
 				Vector2 R = new Vector2(0, 1);
@@ -120,8 +146,8 @@ public class Launcher extends Application {
 
 				gc.setStroke(Color.BLUE);
 				gc.strokeLine(A.x, A.y, B.x, B.y);
-				
-				
+
+
 			}
 		};
 
@@ -134,7 +160,7 @@ public class Launcher extends Application {
 			int framerate;
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
-				
+
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
@@ -158,7 +184,7 @@ public class Launcher extends Application {
 				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
 				// setOnKeyPressed, then it doesn't work ?!?
 				//playerInput.spacePressed = false;
-				
+
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 

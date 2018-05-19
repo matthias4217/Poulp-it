@@ -153,7 +153,7 @@ public class GameEngine {
 	 * @throws InvalidArgumentsException 
 	 */
 	@SuppressWarnings("unchecked")
-	public void init1(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
+	public void initPlatformer(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
 		initializeTILE_TO_COLLIDER();
 
 		// Importing the level
