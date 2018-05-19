@@ -35,10 +35,10 @@ public class PlayerInput {
 	private boolean upPressed = false;
 	private boolean downPressed = false;
 	
-	private boolean aPressed = false;
-	private boolean zPressed = false;
-	private boolean ePressed = false;
-	private boolean rPressed = false;
+	public boolean aPressed = false;
+	public boolean zPressed = false;
+	public boolean ePressed = false;
+	public boolean rPressed = false;
 	
 
 	//KeyEvent.getEventType returns the event type

@@ -13,6 +13,6 @@ public enum Game {
 	MAZE,
 	SHOOTER,
 	ALIEN,
-	RYTHM_GAME
+	RHYTHM_GAME
 	
 }

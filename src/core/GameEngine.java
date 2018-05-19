@@ -8,6 +8,7 @@ import content.GameManager;
 import content.GameObject;
 import content.Layer;
 import content.platformer.Player;
+import content.rythmgame.RhythmConductor;
 import content.shooter.Player2;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
@@ -201,6 +202,24 @@ public class GameEngine {
 	}
 
 
+	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
+		initializeTILE_TO_COLLIDER();
+
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+
+		// Initializing the tileReferences matrix
+		tileReferences = (LinkedList<GameObject>[][]) new LinkedList[50][50];		// XXX
+		for (int i = 0; i < tileReferences.length; i++) {
+			for (int j = 0; j < tileReferences[i].length; j++) {
+				tileReferences[i][j] = emptyList;
+			}
+		}
+		
+		RhythmConductor conductor = new RhythmConductor();
+		allGameObjects.add(conductor);
+	}
 
 
 	/**

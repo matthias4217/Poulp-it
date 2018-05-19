@@ -43,7 +43,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.RHYTHM_GAME;
 
 
 	PlayerInput previousPlayerInput;
@@ -101,7 +101,9 @@ public class Launcher extends Application {
 		case ALIEN:
 
 			break;
-		case RYTHM_GAME:
+		case RHYTHM_GAME:
+			String level = "rhythmgame";
+			gameEngine.initRhythmGame(level);
 			break;
 		default:
 
