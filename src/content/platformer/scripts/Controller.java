@@ -1,4 +1,4 @@
-package content.scripts;
+package content.platformer.scripts;
 
 import core.GameEngine;
 import core.util.*;
@@ -19,7 +19,7 @@ public class Controller extends RaycastController {
 	/**
 	 * The maximum angle (in degree) of a slope a player can stand on
 	 */
-	@Unused public static float maxSlopeAngle;
+	public static float maxSlopeAngle;		// FIXME
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
@@ -232,7 +232,7 @@ public class Controller extends RaycastController {
 
 		// if something was hit on only one side
 		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {
-			// TODO @@@
+			// 
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
 			slideDownMaxSlope(maxSlopeHitRight, moveAmount);
 		}

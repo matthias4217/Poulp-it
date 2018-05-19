@@ -8,7 +8,6 @@ import core.PlayerInput;
 import core.Renderable;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
-import content.scripts.MonoBehaviour;
 import core.util.*;
 
 /**

@@ -7,14 +7,13 @@ import java.util.Map;
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
-import content.Player;
-import content.Player2;
+import content.platformer.Player;
+import content.shooter.Player2;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
 import core.util.Annex.Direction;
 import levels.Level;
-import levels.Tile;
 import levels.Tile.TileType;
 
 /**
@@ -54,8 +53,8 @@ public class GameEngine {
 	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
-	public static float TIME_FACTOR = 1f;
-	public static float tileSize = 64;
+	public static float TIME_FACTOR = 0.5f;
+	public static float tileSize = 32;
 
 	/**
 	 * A map which associates to each tile what GameObject is there

@@ -1,7 +1,10 @@
-package content;
+package content.shooter;
 
-import content.scripts.shooter.Controller;
-import content.scripts.MonoBehaviour;
+import content.GameObject;
+import content.Layer;
+import content.MonoBehaviour;
+import content.Tag;
+import content.shooter.scripts.Controller;
 import core.util.BoxCollider;
 import core.util.Collider;
 import core.util.Vector2;

@@ -68,7 +68,7 @@ public class Launcher extends Application {
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("resources/graphic/background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 
 
@@ -79,9 +79,9 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 		int nbPlayers = 1;
-		String level = "level1";
-//		gameEngine.init1(nbPlayers, level);
-		gameEngine.init1(1, level);
+		String level = "level0";
+		gameEngine.init1(nbPlayers, level);
+//		gameEngine.init2(level);
 		PlayerInput playerInput = new PlayerInput();
 		previousPlayerInput = new PlayerInput();
 

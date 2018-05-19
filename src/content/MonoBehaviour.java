@@ -1,6 +1,5 @@
-package content.scripts;
+package content;
 
-import content.GameObject;
 import core.PlayerInput;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
