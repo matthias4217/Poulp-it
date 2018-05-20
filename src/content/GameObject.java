@@ -8,7 +8,6 @@ import core.PlayerInput;
 import core.Renderable;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
-import content.scripts.MonoBehaviour;
 import core.util.*;
 
 /**
@@ -103,10 +102,11 @@ public abstract class GameObject implements Renderable {
 	 *
 	 * @param deltaTime
 	 * @param gameInformation
+	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation) throws InvalidArgumentsException {
-		updateAllScripts(deltaTime, gameInformation);
+	public void update(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+		updateAllScripts(deltaTime, gameInformation, previousPlayerInput);
 	}
 
 	/**
@@ -115,9 +115,9 @@ public abstract class GameObject implements Renderable {
 	 * @param playerInput 	- Info that the Launcher sends to the GameManager
 	 * @throws InvalidArgumentsException 
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		for (MonoBehaviour script: scripts) {
-			script.update(deltaTime, playerInput);
+			script.update(deltaTime, playerInput, previousPlayerInput);
 		}
 	}
 
@@ -128,7 +128,9 @@ public abstract class GameObject implements Renderable {
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		gc.drawImage(sprite, position.x, windowHeight - position.y);
 		if (GraphicManager.debugVisible) {
-			collider.render(gc, position);
+			if (collider != null) {
+				collider.render(gc, position);
+			}
 		}
 	}
 

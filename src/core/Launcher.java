@@ -40,6 +40,15 @@ public class Launcher extends Application {
 	static final String WINDOW_TITLE = "Hook Battle";
 
 
+	/**
+	 * The game that will be loaded
+	 */
+	static Game game = Game.RHYTHM_GAME;
+
+
+	PlayerInput previousPlayerInput;
+
+
 
 	public static void main(String[] args) {
 		/**
@@ -66,28 +75,53 @@ public class Launcher extends Application {
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("resources/graphic/background_dogs.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 
-
-		// If we implement a menu, that's probably around here.
 
 
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		int nbPlayers = 1;
-		String level = "level0";
-		gameEngine.init(nbPlayers, level);
+
+
+
+		switch (game) {
+		case HOOK_BATTLE:
+			int nbPlayers = 1;
+			String level0 = "level0";
+			gameEngine.initPlatformer(nbPlayers, level0);
+			break;
+		case SHOOTER:
+			String level1 = "level0";
+			gameEngine.init2(level1);
+		case MAZE:
+			
+			break;
+		case ALIEN:
+
+			break;
+		case RHYTHM_GAME:
+			String level = "rhythmgame";
+			gameEngine.initRhythmGame(level);
+			break;
+		default:
+
+			break;
+		}
 
 		PlayerInput playerInput = new PlayerInput();
+		previousPlayerInput = new PlayerInput();
 
 		/* 
-		 * gameInformation contains the information which is sent top the clientd each frame.
+		 * gameInformation contains the information which is sent to the client each frame.
 		 * It is updated each frame by the GameEngine.
 		 */
 		GameInformation gameInformation = new GameInformation();
 
+		stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+		stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
+		stage.getScene().setOnKeyReleased(playerInput.eventHandlerReleased);
 
 		/*
 		 * An AnimationTimer used for testing purpose. 
@@ -99,7 +133,7 @@ public class Launcher extends Application {
 				gc.setStroke(Color.BLACK);
 				gc.strokeLine(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT);
 				gc.strokeLine(0, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT/2);
-				
+
 				Vector2 A = new Vector2(0, 0);
 				Vector2 B = new Vector2(1, 1);
 				Vector2 R = new Vector2(0, 1);
@@ -114,12 +148,10 @@ public class Launcher extends Application {
 
 				gc.setStroke(Color.BLUE);
 				gc.strokeLine(A.x, A.y, B.x, B.y);
-				
-				
+
+
 			}
 		};
-
-
 
 
 
@@ -131,13 +163,13 @@ public class Launcher extends Application {
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
 
+
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
 				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	// Clear the window
 //				gc.drawImage(background, 0, 0);
 
-				stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
-				stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
+
 				System.out.println(playerInput);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
@@ -145,14 +177,16 @@ public class Launcher extends Application {
 				oldNow = now;
 
 				try {
-					gameEngine.update(deltaTime, playerInput, gameInformation);
+					gameEngine.update(deltaTime, playerInput, previousPlayerInput, gameInformation);
 				} catch (InvalidArgumentsException e) {					
 					e.printStackTrace();
 				}
 
-				playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
+				previousPlayerInput = playerInput.copy();
+				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
 				// setOnKeyPressed, then it doesn't work ?!?
-				
+				//playerInput.spacePressed = false;
+
 				System.out.println("Rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -166,7 +200,7 @@ public class Launcher extends Application {
 				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
-		timerTest.start();
+		timer.start();
 	}
 
 

@@ -18,7 +18,6 @@ public final class Annex {
 
 
 	/* METHODS */
-
 	/**
 	 * Clamp a value between a minimum float and a maximum float value. 
 	 *
@@ -116,7 +115,7 @@ public final class Annex {
 		} else if (A.y == B.y) {		// (AB) is horizontal
 			return (R.y < A.y) ? Vector2.DOWN() : Vector2.UP();
 		} else {
-			return (new Vector2((A.y - B.y) / (B.x - A.x), 1)).normalize();
+			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
 		}
 	}
 

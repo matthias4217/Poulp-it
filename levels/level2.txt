@@ -1,0 +1,18 @@
+### Level0
+#
+# All lines beginning with a '#' are ommited
+# Empty lines _matter_
+#
+tilesize: 64
+theme: simplegrey
+#
+level:{
+xxxxxxxxxxxxxxxxxxxxxxxxx
+x
+x        xxxx           x
+x   xx     ux\          x
+x  xxx      ux\         
+x    x       ux\        
+x             ux\                    x
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+}

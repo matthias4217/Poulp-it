@@ -7,7 +7,9 @@ import java.util.Map;
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
-import content.Player;
+import content.platformer.Player;
+import content.rythmgame.RhythmConductor;
+import content.shooter.Player2;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -52,8 +54,8 @@ public class GameEngine {
 	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
+	public static float TIME_FACTOR = 0.5f;
 	public static float tileSize = 32;
-	public static float TIME_FACTOR = 1f;
 
 	/**
 	 * A map which associates to each tile what GameObject is there
@@ -152,7 +154,7 @@ public class GameEngine {
 	 * @throws InvalidArgumentsException 
 	 */
 	@SuppressWarnings("unchecked")
-	public void init(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
+	public void initPlatformer(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
 		initializeTILE_TO_COLLIDER();
 
 		// Importing the level
@@ -173,10 +175,10 @@ public class GameEngine {
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition;
-//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
-//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
-//			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(505, 415);
+			//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
+			//			spawnPosition = new Vector2(280, 710);
+			spawnPosition = new Vector2(585, 730);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -189,6 +191,36 @@ public class GameEngine {
 
 	}
 
+	public void init2(String levelName) throws IOException {
+
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+
+		Player2 player = new Player2(new Vector2(585, 730));
+		allGameObjects.add(player);
+	}
+
+
+	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
+		initializeTILE_TO_COLLIDER();
+
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+
+		// Initializing the tileReferences matrix
+		tileReferences = (LinkedList<GameObject>[][]) new LinkedList[50][50];		// XXX
+		for (int i = 0; i < tileReferences.length; i++) {
+			for (int j = 0; j < tileReferences[i].length; j++) {
+				tileReferences[i][j] = emptyList;
+			}
+		}
+		
+		RhythmConductor conductor = new RhythmConductor();
+		allGameObjects.add(conductor);
+	}
+
 
 	/**
 	 * This method is called each frame of the game and updates all game elements.
@@ -196,11 +228,12 @@ public class GameEngine {
 	 *
 	 * @param deltaTime 		- the time in seconds it took to complete the last frame
 	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
+	 * @param previousPlayerInput 
 	 * @param gameInformation	- the current state of the game
 	 * @throws InvalidArgumentsException 
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
 		//		System.out.println("Current GameInformation: " + gameInformation);
@@ -210,12 +243,12 @@ public class GameEngine {
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, playerInput);
+			gameManager.apply(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, playerInput);
+			gameObject.update(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating the tileReferences matrix
