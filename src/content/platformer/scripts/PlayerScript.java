@@ -1,5 +1,6 @@
-package content.scripts;
+package content.platformer.scripts;
 
+import content.MonoBehaviour;
 import core.PlayerInput;
 import core.util.*;
 import core.exceptions.InvalidArgumentsException;
@@ -17,22 +18,22 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 100f;
+	public static float moveSpeed = 900f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed
 	 */
-	public static float maxJumpHeight = 4;
+	public static float maxJumpHeight = 200;
 
 	/**
 	 * The minimum height of a jump
 	 */
-	public static float minJumpHeight = 1;
+	public static float minJumpHeight = 150;
 
 	/**
 	 * The time required to reach the apex of the jump parable
 	 */
-	public static float timeToJumpApex = .4f;
+	public static float timeToJumpApex = .39f;
 
 	/**
 	 * The time required to reach the target horizontal velocity while airborne when starting with a null velocity
@@ -50,23 +51,23 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The force applied to jump when wall-jumping toward the wall
 	 */
-	public static Vector2 wallJumpClimb;
+	public static Vector2 wallJumpClimb = new Vector2(50, 200);
 
 	/**
 	 * The force applied to jump when wall-jumping with no input
 	 */
-	public static Vector2 wallJumpOff;
+	public static Vector2 wallJumpOff = new Vector2(100, 100);
 
 	/**
 	 * The force applied to jump when wall-jumping away from the wall
 	 */
-	public static Vector2 wallLeap;
+	public static Vector2 wallLeap = new Vector2(200, 50);
 
 
 	/**
 	 * The maximum vertical speed that can be reached when sliding down against a wall 
 	 */
-	public static float wallSlideSpeedMax = 30;
+	public static float wallSlideSpeedMax = 200f;
 
 	/**
 	 * The amount of ime the player will stay stuck against a wall when inputing away from it;
@@ -119,19 +120,25 @@ public class PlayerScript extends MonoBehaviour {
 
 		// Calculating physics variables according to gameplay parameters
 		gravity = (float) (-2 * maxJumpHeight / (timeToJumpApex * timeToJumpApex));
-		gravity = 0;		// For testing purpose
+		//gravity = 0;		// For testing purpose
 		maxJumpVelocity = Math.abs(gravity) * timeToJumpApex;
 		minJumpVelocity = (float) Math.sqrt(2 * Math.abs(gravity) * minJumpHeight);
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		System.out.println("Input update " + playerInput);
 		calculateVelocity(deltaTime, playerInput.directionalInput);
 		//handleWallSliding(deltaTime, playerInput.directionnalInput);
 
+		if (playerInput.spacePressed) {
+			onJumpInputDown(playerInput.directionalInput);
+		}
+		else if (!playerInput.spacePressed && previousPlayerInput.spacePressed) {
+			onJumpInputUp();
+		}
 		controller.move(velocity.multiply(deltaTime), playerInput.directionalInput);
-
+		
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
 				// Modulation of the vertical acceleration according to the slope
@@ -188,7 +195,7 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 
-	public void onJumpInputDown() {
+	public void onJumpInputDown(Vector2 directionalInput) {
 		if (wallSliding) {
 			if (wallDirX == directionalInput.x) {
 				velocity.x = -wallDirX * wallJumpClimb.x;

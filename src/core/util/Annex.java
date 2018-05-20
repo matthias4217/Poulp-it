@@ -18,7 +18,6 @@ public final class Annex {
 
 
 	/* METHODS */
-
 	/**
 	 * Clamp a value between a minimum float and a maximum float value. 
 	 *
@@ -77,7 +76,15 @@ public final class Annex {
 		float o3 = orientation(C, D, A);
 		float o4 = orientation(C, D, B);
 
+		System.out.println("ori " + o1 + " "+ o2 + " " + o3 + " " + o4);
 		if ((o1 != o2) && (o3 != o4)) {		// if there is intersection
+
+			/*try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 
 			float q = A.x*B.y - A.y*B.x;
 			float r = C.x*D.y - C.y*D.x;
@@ -103,14 +110,12 @@ public final class Annex {
 	 * @return	- a normal vector to the line (AB) (not normalized) pointing toward the side R is
 	 */
 	public static Vector2 normal(Vector2 A, Vector2 B, Vector2 R) {
-		if (A.x != B.x) {		// (AB) is not vertical
-			if (orientation(R, A, B) == 1) {
-				return new Vector2((A.y - B.y) / (B.x - A.x), 1);
-			} else {
-				return new Vector2((B.y - A.y) / (B.x - A.x), -1);
-			}
-		} else {		// (AB) is vertical
+		if (A.x == B.x) {		// (AB) is vertical
 			return (R.x < A.x) ? Vector2.LEFT() : Vector2.RIGHT();
+		} else if (A.y == B.y) {		// (AB) is horizontal
+			return (R.y < A.y) ? Vector2.DOWN() : Vector2.UP();
+		} else {
+			return new Vector2((A.y - B.y) / (B.x - A.x), 1);
 		}
 	}
 

@@ -7,7 +7,9 @@ import java.util.Map;
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
-import content.Player;
+import content.platformer.Player;
+import content.rythmgame.RhythmConductor;
+import content.shooter.Player2;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -49,9 +51,10 @@ public class GameEngine {
 	public static Level level;
 
 	/**
-	 * The lenght of a tile in window coordinates.
+	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
+	public static float TIME_FACTOR = 0.5f;
 	public static float tileSize = 32;
 
 	/**
@@ -81,6 +84,7 @@ public class GameEngine {
 	 * This Map associates each TileType with its associated Collider (considering tileSize)
 	 */
 	public static final Map<TileType, Collider> TILE_TO_COLLIDER = new HashMap<TileType, Collider>();
+
 
 	private static void initializeTILE_TO_COLLIDER() throws InvalidArgumentsException {
 		TILE_TO_COLLIDER.put(TileType.EMPTY, null);
@@ -150,7 +154,7 @@ public class GameEngine {
 	 * @throws InvalidArgumentsException 
 	 */
 	@SuppressWarnings("unchecked")
-	public void init(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
+	public void initPlatformer(int nbPlayers, String levelName) throws IOException, InvalidArgumentsException {
 		initializeTILE_TO_COLLIDER();
 
 		// Importing the level
@@ -171,9 +175,9 @@ public class GameEngine {
 		players = new Player[nbPlayers];
 		for (int i = 0; i < nbPlayers; i++) {
 			Vector2 spawnPosition;
-//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
-//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
-//			spawnPosition = new Vector2(280, 710);
+			//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
+			//			spawnPosition = new Vector2(280, 710);
 			spawnPosition = new Vector2(585, 730);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
@@ -187,6 +191,36 @@ public class GameEngine {
 
 	}
 
+	public void init2(String levelName) throws IOException {
+
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+
+		Player2 player = new Player2(new Vector2(585, 730));
+		allGameObjects.add(player);
+	}
+
+
+	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
+		initializeTILE_TO_COLLIDER();
+
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+
+		// Initializing the tileReferences matrix
+		tileReferences = (LinkedList<GameObject>[][]) new LinkedList[50][50];		// XXX
+		for (int i = 0; i < tileReferences.length; i++) {
+			for (int j = 0; j < tileReferences[i].length; j++) {
+				tileReferences[i][j] = emptyList;
+			}
+		}
+		
+		RhythmConductor conductor = new RhythmConductor();
+		allGameObjects.add(conductor);
+	}
+
 
 	/**
 	 * This method is called each frame of the game and updates all game elements.
@@ -194,24 +228,27 @@ public class GameEngine {
 	 *
 	 * @param deltaTime 		- the time in seconds it took to complete the last frame
 	 * @param playerInput		- the current input of the player 		(TODO gérer plusieurs joueurs)
+	 * @param previousPlayerInput 
 	 * @param gameInformation	- the current state of the game
 	 * @throws InvalidArgumentsException 
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, GameInformation gameInformation)
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
 		//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
+		
+		deltaTime *= TIME_FACTOR;
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
-			gameManager.apply(deltaTime, playerInput);
+			gameManager.apply(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating all GameObjects
 		for (GameObject gameObject: allGameObjects) {
-			gameObject.update(deltaTime, playerInput);
+			gameObject.update(deltaTime, playerInput, previousPlayerInput);
 		}
 
 		// Updating the tileReferences matrix
@@ -232,7 +269,7 @@ public class GameEngine {
 	 * @param collisionMask	- the Layer on which collisions will be detected
 	 *
 	 * @return a RaycastHit containing the information about what was hit by the ray.
-	 * @throws InvalidArgumentsException 
+	 * @throws InvalidArgumentsException
 	 */
 
 	public static RaycastHit raycast(Vector2 rayOrigin, Direction direction, float length, Layer collisionMask)
@@ -249,7 +286,7 @@ public class GameEngine {
 
 		// The coordinates in the grid this ray ends
 		int[] tileEnding = toTileCoordinates(ray.getEndingPoint());
-		System.out.println("Ending point: " + ray.getEndingPoint());
+		//System.out.println("Ending point: " + ray.getEndingPoint());
 
 		System.out.println("Raycast " + direction + " from (" + tileOrigin[0] + ", " + tileOrigin[1] +
 				") to (" + tileEnding[0] + ", " + tileEnding[1] + "); length = " + length);
@@ -263,7 +300,9 @@ public class GameEngine {
 		// The index of the column/row which is fixed
 		int fixed = tileOrigin[1-var];
 		// Moving which way?
-		int increment = (direction == Direction.DOWN || direction == Direction.LEFT) ? -1 : 1;
+		
+		//XXX
+		int increment = (direction == Direction.UP || direction == Direction.LEFT) ? -1 : 1;
 
 		for (int k = tileOrigin[var]; increment * (tileEnding[var] - k) >= 0; k += increment) {
 			// Setting the current tile
@@ -294,8 +333,10 @@ public class GameEngine {
 				}
 
 				Vector2 normalFromHit = ray.collision(colliderTile, colliderOrigin);
+				System.out.println("normalFromHit : " + normalFromHit);
 
 				if (normalFromHit != null) {		// if there is a collision
+					System.out.println("result : " + result);
 					result = new RaycastHit(null, ray.getLength(), normalFromHit);
 
 					debugElements.add(new RenderableVector(normalFromHit, colliderOrigin));

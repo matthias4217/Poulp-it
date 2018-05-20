@@ -17,8 +17,9 @@ public interface GameManager {
 	 *
 	 * @param deltaTime - the time in seconds it took to complete the last frame
 	 * @param gameInformation
+	 * @param previousPlayerInput 
 	 */
-	public void apply(float deltaTime, PlayerInput gameInformation);
+	public void apply(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput);
 
 
 }

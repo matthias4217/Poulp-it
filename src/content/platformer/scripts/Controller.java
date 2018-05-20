@@ -1,4 +1,4 @@
-package content.scripts;
+package content.platformer.scripts;
 
 import core.GameEngine;
 import core.util.*;
@@ -19,7 +19,7 @@ public class Controller extends RaycastController {
 	/**
 	 * The maximum angle (in degree) of a slope a player can stand on
 	 */
-	@Unused public static float maxSlopeAngle;
+	public static float maxSlopeAngle;		// FIXME
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
@@ -85,7 +85,7 @@ public class Controller extends RaycastController {
 
 	void horizontalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionX = collisions.faceDir;
-		float rayLength = Math.abs(moveAmount.x) + skinWidth;		// The more we are moving, the longer the rays are
+		float rayLength = Math.abs(moveAmount.x) + skinWidth ;		// The more we are moving, the longer the rays are
 
 		if (Math.abs(moveAmount.x) < skinWidth) {
 			rayLength = 2*skinWidth;
@@ -152,9 +152,11 @@ public class Controller extends RaycastController {
 
 			// Debug.DrawRay(rayOrigin, Vector2.up * directionY, Color.red);
 
+			System.out.println("hit : " + hit); // we never get a non null hit --"
 			if (hit != null) {		// If something was hit
+				// problem : hit is always null !
 				// NOTE: Do not make slopes traversable because it is not well handled and it's useless anyway.
-				if (hit.getGameObjectHit().tag == Tag.TRAVERSABLE) {
+				if ((hit.getGameObjectHit() != null) && (hit.getGameObjectHit().tag == Tag.TRAVERSABLE)) {
 					if (directionY == 1 || hit.getDistance() == 0) {		//
 						continue;
 					}
@@ -230,7 +232,7 @@ public class Controller extends RaycastController {
 
 		// if something was hit on only one side
 		if ((maxSlopeHitLeft != null) ^ (maxSlopeHitRight != null)) {
-			// TODO @@@
+			// 
 			slideDownMaxSlope(maxSlopeHitLeft, moveAmount);
 			slideDownMaxSlope(maxSlopeHitRight, moveAmount);
 		}

@@ -1,6 +1,5 @@
-package content.scripts;
+package content;
 
-import content.GameObject;
 import core.PlayerInput;
 import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
@@ -33,9 +32,10 @@ public abstract class MonoBehaviour {
 	 * Is called every frame the support GameObject is active.
 	 *
 	 * @param deltaTime - the time in seconds it took to complete the last frame
+	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput playerInput) throws InvalidArgumentsException {}
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {}
 
 
 	/**

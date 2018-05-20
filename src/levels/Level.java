@@ -77,7 +77,7 @@ public class Level {
 			return tileMatrix[i][j];
 		}
 		else {
-			return null; // or TileType.EMPTY ?
+			return TileType.EMPTY;
 		}
 	}
 	
@@ -208,6 +208,9 @@ public class Level {
 		float tileSize = Tile.TILE_SIZE;
 		//System.out.println(theme);
 
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA resources/tiles/ +\n" + 
+								theme + "/tile-plain.png");
+		
 		//SQUARE
 		ImageView tilePlain = new ImageView(new Image("resources/tiles/" +
 				theme + "/tile-plain.png", tileSize, tileSize, false, false));
