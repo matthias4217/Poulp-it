@@ -1,10 +1,12 @@
 package content.platformer.scripts;
 
 import core.GameEngine;
+import core.PlayerInput;
 import core.util.*;
 import core.util.Annex.Direction;
 import core.exceptions.InvalidArgumentsException;
 import content.Tag;
+import content.platformer.Bullet;
 
 /**
  * A Controller script can be attached to a moving GameObject.
@@ -36,6 +38,13 @@ public class Controller extends RaycastController {
 	public void start() {
 		super.start();
 		collisions.faceDir = 1;
+	}
+	
+	@Override
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+		if (playerInput.aPressed) {
+			shootBullet();
+		}
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {
@@ -122,7 +131,7 @@ public class Controller extends RaycastController {
 				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
 
-					// Reducing the lenght of the next rays casted to avoid collisions further than this one
+					// Reducing the length of the next rays casted to avoid collisions further than this one
 					rayLength = hit.getDistance();
 
 					if (collisions.climbingSlope) {
@@ -136,6 +145,15 @@ public class Controller extends RaycastController {
 		}
 	}
 
+	void shootBullet() {
+		Bullet bullet = new Bullet(support.position.add(playerInput.multiply(64f)), collisionMask, Tag.SOLID, playerInput, 100f);
+		/*
+		 *  we need to add it to the gameEngine...
+		 *  Problem : how can we get the instance of the gameEngine ?
+		 */
+		// TODO each object should have a reference to the gameEngine
+		GameEngine.allGameObjects.add(bullet);
+	}
 
 	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionY = Math.signum(moveAmount.y);

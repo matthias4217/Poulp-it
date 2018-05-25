@@ -10,6 +10,6 @@ package content;
 public enum Tag {
 	DEFAULT,
 	TRAVERSABLE,
-
+	SOLID
 
 }
