@@ -4,6 +4,7 @@ import java.net.*;
 import java.io.*;
 
 class Client {
+	
 	String hostName;
 	int portNumber;
 	Socket dSocket;
@@ -16,6 +17,7 @@ class Client {
 		
 		
 	}
+	
 	public void start() {
 		try {
 			this.dSocket = new Socket(hostName, portNumber);
@@ -32,6 +34,7 @@ class Client {
             System.exit(1);
             }
 	}
+	
 	public void close() throws IOException {
 		in.close();
 		out.close();
@@ -49,6 +52,7 @@ class Client {
 			e1.getMessage();
 		}
 	}
+	
 	public Object read() {
 		try {
 			return(this.in.readObject());
