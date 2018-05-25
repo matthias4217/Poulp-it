@@ -4,14 +4,17 @@ import java.net.*;
 import java.io.*;
 
 class Serveur {
+
 	int portNumber;
 	int nbPlayer;
+	int nbPlayerConnected = 0;
 	ServerSocket serverSocket;
 	Socket[] clientSockets;
 	ObjectOutputStream[] out;
 	ObjectInputStream[] in;
-	
-	
+
+
+
 	public Serveur(int portNumber, int nbPlayer) {
 		this.portNumber = portNumber;
 		this.nbPlayer = nbPlayer;
@@ -24,32 +27,43 @@ class Serveur {
 			System.err.println(e2.getCause());
 		}
 	}
+
+
+
 	public void acceptConnection(int k) {
-		
-			try {
-				Socket client = serverSocket.accept();
-				clientSockets[k] = client;
-				out[k] = new ObjectOutputStream(client.getOutputStream());
-		        in[k] = new ObjectInputStream(client.getInputStream());
-			}
-			catch (IOException e) {
-	            System.err.println("Exception caught when trying to listen on port "
-	                + portNumber + " or listening for a connection");
-	            System.err.println(e.getMessage());
-			}
-			catch(IndexOutOfBoundsException e1) {
-				System.err.println("Can't accept a new player : "+k+"> nbPlayer");
-			}
-		
+		try {
+			Socket client = serverSocket.accept();
+			clientSockets[k] = client;
+			out[k] = new ObjectOutputStream(client.getOutputStream());
+			in[k] = new ObjectInputStream(client.getInputStream());
+			nbPlayerConnected++;
+		}
+		catch (IOException e) {
+			System.err.println("Exception caught when trying to listen on port "
+					+ portNumber + " or listening for a connection");
+			System.err.println(e.getMessage());
+		}
+		catch(IndexOutOfBoundsException e1) {
+			System.err.println("Can't accept a new player : "+k+"> nbPlayer");
+		}
 	}
+	
+	public void acceptAllConnections() {
+		for (int k = 0; k < nbPlayer; k++) {
+			acceptConnection(k);
+			writeForAll(k + " ème connection effectuée");
+			
+		}
+	}
+
 	public void close() throws IOException {
 		for(int k =0; k<=2;k++) {
 			in[k].close();
 			out[k].close();
 		}
 		serverSocket.close();
-	
 	}
+
 	public void write(Object object, int numClient){
 		try {
 			out[numClient].writeObject(object);
@@ -62,8 +76,9 @@ class Serveur {
 			e1.getMessage();
 		}
 	}
+
 	public void writeForAll(Object object){
-		for(int k = 0; k<nbPlayer; k++) {
+		for(int k = 0; k < nbPlayerConnected; k++) {
 			try {
 				out[k].writeObject(object);
 			}
@@ -75,11 +90,13 @@ class Serveur {
 				e1.getMessage();
 			}
 		}
-		
-	}
-	public Object read(int numClient) throws ClassNotFoundException, IOException{
-		return in[numClient].readObject();
 
 	}
-	
+
+	public Object read(int numClient) throws ClassNotFoundException, IOException{
+		return in[numClient].readObject();
+	}
+
+
+
 }
