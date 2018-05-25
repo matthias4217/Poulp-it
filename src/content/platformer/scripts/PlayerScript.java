@@ -131,7 +131,7 @@ public class PlayerScript extends MonoBehaviour {
 		calculateVelocity(deltaTime, playerInput.directionalInput);
 		//handleWallSliding(deltaTime, playerInput.directionnalInput);
 
-		if (playerInput.spacePressed) {
+		if (playerInput.spacePressed && !previousPlayerInput.spacePressed) {
 			onJumpInputDown(playerInput.directionalInput);
 		}
 		else if (!playerInput.spacePressed && previousPlayerInput.spacePressed) {
@@ -147,6 +147,7 @@ public class PlayerScript extends MonoBehaviour {
 				velocity.y = 0;		// To avoid "accumulating" gravity
 			}
 		}
+		handleWallSliding(deltaTime, playerInput.directionalInput);
 	}
 
 
