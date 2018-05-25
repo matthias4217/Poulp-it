@@ -19,7 +19,7 @@ public class Controller extends RaycastController {
 	/**
 	 * The maximum angle (in degree) of a slope a player can stand on
 	 */
-	public static float maxSlopeAngle;		// FIXME
+	public static float maxSlopeAngle = 80f;		// FIXME
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;

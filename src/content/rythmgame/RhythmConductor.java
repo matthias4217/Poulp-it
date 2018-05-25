@@ -7,6 +7,9 @@ import content.Tag;
 import content.scripts.rhythmgame.Controller;
 import core.util.Vector2;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 
 /**
@@ -15,10 +18,8 @@ import javafx.scene.canvas.GraphicsContext;
 *
 */
 public class RhythmConductor extends GameObject {
-	
 
-
-	public Controller controller;
+	Controller controller;
 
 	public RhythmConductor() {
 		super(Vector2.ZERO(),
@@ -32,6 +33,8 @@ public class RhythmConductor extends GameObject {
 	
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		//We'll just print the letter at the center of the screen
+		gc.setFill(Color.RED);
+		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 40));
 		gc.fillText(controller.currentLetter, Math.round(windowWidth/2), Math.round(windowHeight/2));//windowWidth/2, windowHeight/2);
 		gc.fillText(String.valueOf(controller.score), 100, 100);
 	}

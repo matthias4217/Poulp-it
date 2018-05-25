@@ -202,6 +202,17 @@ public class GameEngine {
 	}
 
 
+	public void initMazeGame(int width, int height) {
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
 		initializeTILE_TO_COLLIDER();
 

@@ -5,7 +5,7 @@
   * We code in english t(-_-t) !
   * Cochez "Generate comments" quand vous créez une nouvelle classe SVP pour qu'on ait les mêmes templates.
   * Chaque classe, chaque méthode, chaque attribut est documenté, sauf si c'est vraiment explicite.
-  * Les méthodes sont documentées au dessus
+  * Les méthodes sont documentées au dessus selon la convention Javadoc
   * On utilise @Override : l'annotation est à mettre en en-tête de toute méthode surchargée
 
 
@@ -16,7 +16,7 @@
   * 
 
 
-  
+
 ## Structure du programme ##
 
   * content : contient le squelette des éléments de jeu (exemples : classe GameObject, classe Player) + 

@@ -10,9 +10,7 @@ public class Main {
 		System.out.println(maze);
 		
 
-		//maze.show();
-		maze.play();
-		//maze.play();
+		maze.showFantastic();
 
 
 	}

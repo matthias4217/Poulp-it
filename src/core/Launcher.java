@@ -37,13 +37,11 @@ public class Launcher extends Application {
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
-	static final String WINDOW_TITLE = "Hook Battle";
-
 
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.RHYTHM_GAME;
+	static Game game = Game.SHOOTER;
 
 
 	PlayerInput previousPlayerInput;
@@ -68,7 +66,7 @@ public class Launcher extends Application {
 
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
-		stage.setTitle(WINDOW_TITLE);
+		stage.setTitle(game.windowTitle);
 		stage.setResizable(false);
 		Group group0 = new Group();
 		stage.setScene(new Scene(group0));
@@ -96,7 +94,7 @@ public class Launcher extends Application {
 			String level1 = "level0";
 			gameEngine.init2(level1);
 		case MAZE:
-			
+			gameEngine.initMazeGame(38, 17);
 			break;
 		case ALIEN:
 

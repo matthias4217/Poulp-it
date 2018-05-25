@@ -19,10 +19,10 @@ public class Controller extends MonoBehaviour {
 	//interval between each apparition of a new input
 	public float INTERVAL = 1f;
 	public float timeIntervalSpent = 0f;
-	
+
 	public int score;
-	
-	
+
+
 	public String currentLetter = "";
 	Map<Integer, String> numMap = new HashMap<>();
 	Map<Integer, String> mapLetters = new HashMap<>();
@@ -38,7 +38,7 @@ public class Controller extends MonoBehaviour {
 		System.out.println("initialLetter : " + currentLetter);
 		score = 0;
 	};
-	
+
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		timeIntervalSpent += deltaTime;
@@ -48,29 +48,29 @@ public class Controller extends MonoBehaviour {
 			currentLetter = generateLetter();
 		}
 		switch (currentLetter) {
-			case "A": if (playerInput.aPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "Z": if (playerInput.zPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "E": if (playerInput.ePressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "R": if (playerInput.rPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
+		case "A": if (playerInput.aPressed) {
+			currentLetter = generateLetter();
+			score += 1;
+		}
+		break;
+		case "Z": if (playerInput.zPressed) {
+			currentLetter = generateLetter();
+			score += 1;
+		}
+		break;
+		case "E": if (playerInput.ePressed) {
+			currentLetter = generateLetter();
+			score += 1;
+		}
+		break;
+		case "R": if (playerInput.rPressed) {
+			currentLetter = generateLetter();
+			score += 1;
+		}
+		break;
 		}
 	};
-	
+
 	public String generateLetter() {
 		String tempLetter = "";
 		while (tempLetter == currentLetter) {
