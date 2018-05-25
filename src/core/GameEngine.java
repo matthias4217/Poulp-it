@@ -220,8 +220,25 @@ public class GameEngine {
 		RhythmConductor conductor = new RhythmConductor();
 		allGameObjects.add(conductor);
 	}
-	public void initForTwo(int nbPlayers, String levelName) {
-		
+	public void initForTwo(int nbPlayers, String levelName) throws IOException { 
+		//je reutilise les classes du shooter pour gagner du temps
+		// Importing the level
+		System.out.println("Beginning level importation...");
+		level = new Level("levels/" + levelName + ".txt");
+		// Instantiating players and adding them to the players array
+		System.out.println("Instanciating players...");
+		Player2[] players2 = new Player2[nbPlayers];
+				for (int i = 0; i < nbPlayers; i++) {
+					Vector2 spawnPosition;
+					//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+					//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
+					//			spawnPosition = new Vector2(280, 710);
+					spawnPosition = new Vector2(585+i*10, 730);
+					Player2 playerI = new Player2(spawnPosition);
+					players2[i] = playerI;
+					allGameObjects.add(playerI);
+				}
+				System.out.println("Players instanciation finished");
 	}
 
 
