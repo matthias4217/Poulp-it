@@ -37,6 +37,9 @@ class Serveur {
 	                + portNumber + " or listening for a connection");
 	            System.err.println(e.getMessage());
 			}
+			catch(IndexOutOfBoundsException e1) {
+				System.err.println("Can't accept a new player : "+k+"> nbPlayer");
+			}
 		
 	}
 	public void close() throws IOException {

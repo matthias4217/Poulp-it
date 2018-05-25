@@ -178,7 +178,7 @@ public class GameEngine {
 			//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
 			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 			//			spawnPosition = new Vector2(280, 710);
-			spawnPosition = new Vector2(585, 730);
+			spawnPosition = new Vector2(585+i*10, 730);
 			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
@@ -219,6 +219,9 @@ public class GameEngine {
 		
 		RhythmConductor conductor = new RhythmConductor();
 		allGameObjects.add(conductor);
+	}
+	public void initForTwo(int nbPlayers, String levelName) {
+		
 	}
 
 

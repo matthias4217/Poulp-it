@@ -43,7 +43,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.RHYTHM_GAME;
+	static Game game = Game.SHOOTER;
 
 
 	PlayerInput previousPlayerInput;
@@ -88,7 +88,7 @@ public class Launcher extends Application {
 
 		switch (game) {
 		case HOOK_BATTLE:
-			int nbPlayers = 1;
+			int nbPlayers = 2;
 			String level0 = "level0";
 			gameEngine.initPlatformer(nbPlayers, level0);
 			break;
