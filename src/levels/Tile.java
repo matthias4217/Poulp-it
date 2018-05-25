@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.LinkedList;
 
+import core.GameEngine;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Collider;
 import core.util.Vector2;
@@ -21,7 +22,7 @@ public class Tile {
 	 * The size of the side of a tile in the gamespace.
 	 * This constant makes the link between the float coordinates used by the game engine and the discrete nature of tiles.
 	 */
-	public static final float TILE_SIZE = 32f;		// XXX
+	public static final float TILE_SIZE = GameEngine.tileSize;		// XXX
 
 	/*
 	 * It can be converted to the position of non-tile objects by multiplying it by TILE_SIZE.

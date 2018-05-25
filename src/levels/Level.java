@@ -64,11 +64,7 @@ public class Level {
 	 * 
 	 * @param i
 	 * @param j
-<<<<<<< HEAD
 	 * @return	the tile of coordinates (i, j), if (i,j) is outside tileMatrix, returns EMPTY
-=======
-	 * @return	the tile of coordinates (i, j); null if it's out of bounds
->>>>>>> bubble3
 	 */
 	public TileType getTile(int i, int j) {
 		// FIXME tileMatrix seems to invert x and y
