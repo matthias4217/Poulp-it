@@ -22,7 +22,7 @@ import core.util.GameInformation;
 import core.util.Vector2;
 
 /**
- * This is the starting point of the program.
+ * This is the starting point of the program. It is the server.
  * Launcher extends Application and thus has a start method called.
  * This class should stay relatively clean and only call other methods.
  *
@@ -83,7 +83,9 @@ public class Launcher extends Application {
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-
+		if (isServer) {
+			Serveur serveur = new Serveur(3000, 2);
+		}
 
 
 		switch (game) {
@@ -187,7 +189,7 @@ public class Launcher extends Application {
 				// setOnKeyPressed, then it doesn't work ?!?
 				//playerInput.spacePressed = false;
 
-				System.out.println("Rendering...");
+				System.out.println("Now rendering...");
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 				timeToFramerateDisplay -= deltaTime;

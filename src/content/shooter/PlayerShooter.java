@@ -16,13 +16,25 @@ import javafx.scene.image.Image;
  * @author Raph
  *
  */
-public class Player2 extends GameObject {
+public class PlayerShooter extends GameObject {
 
 	static final String SPRITE_PATH = "resources/graphic/sophie.png";
 
+	/**
+	 * The amount of Player objects created 
+	 */
+	private static int nbPlayers = 0;
 
 
-	public Player2(Vector2 position) {
+
+	/**
+	 * The id of the player. It is used to get the correct inputs. 
+	 */
+	private int id;
+
+
+
+	public PlayerShooter(Vector2 position) {
 		super(position,
 				new Image(SPRITE_PATH /*, 64, 64, false, false*/),
 				Layer.DEFAULT,
@@ -31,11 +43,14 @@ public class Player2 extends GameObject {
 
 				new Controller());
 
+		this.id = nbPlayers;
+		nbPlayers++;
+
 	}
 
 
 
-	public Player2(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour[] scripts) {
+	public PlayerShooter(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour[] scripts) {
 		super(position, sprite, layer, tag, collider, scripts);
 	}
 
