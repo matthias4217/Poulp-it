@@ -1,7 +1,6 @@
 package core;
 
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -66,6 +65,7 @@ public class PlayerInput {
 					break;
 				case R: rPressed = true;
 					break;
+				default: break;
 			}
 			if (leftPressed) {
 				directionalInput.x = -1;
@@ -112,6 +112,8 @@ public class PlayerInput {
 			case E: ePressed = false;
 				break;
 			case R: rPressed = false;
+				break;
+			default:
 				break;
 		}
 			}

@@ -3,7 +3,6 @@ package core.util;
 import java.util.Arrays;
 
 import core.Launcher;
-import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

@@ -3,7 +3,6 @@ package content.platformer.scripts;
 import core.GameEngine;
 import core.util.*;
 import core.util.Annex.Direction;
-import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import content.Tag;
 
