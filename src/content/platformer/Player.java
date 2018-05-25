@@ -13,8 +13,7 @@ import content.platformer.scripts.PlayerScript;
 /**
  * This class represents a Player.
  *
- * @author matthias
- * @author Raph
+ * @author matthias, Raph
  *
  */
 public class Player extends GameObject {

@@ -22,6 +22,7 @@ public class Vector2 {
 	}
 
 
+
 	// Dégueu, mais je vois pas comment faire autrement =/
 	public static final Vector2 ZERO()	{	return new Vector2(0, 0);	}
 	public static final Vector2 UP()	{	return new Vector2(0, 1);	}
