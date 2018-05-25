@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import content.maze.Maze;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.Annex;
@@ -41,7 +42,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.MAZE;
 
 
 	PlayerInput previousPlayerInput;
@@ -94,7 +95,7 @@ public class Launcher extends Application {
 			String level1 = "level0";
 			gameEngine.init2(level1);
 		case MAZE:
-			gameEngine.initMazeGame(38, 17);
+			gameEngine.initMazeGame(38, 17, true);
 			break;
 		case ALIEN:
 
@@ -124,7 +125,7 @@ public class Launcher extends Application {
 		/*
 		 * An AnimationTimer used for testing purpose. 
 		 */
-		AnimationTimer timerTest = new AnimationTimer() {
+		AnimationTimer timerTest1 = new AnimationTimer() {
 			@Override public void handle(long now) {
 
 				// Setting axes
@@ -151,6 +152,19 @@ public class Launcher extends Application {
 			}
 		};
 
+		/*
+		 * Another one 
+		 */
+		Maze maze = new Maze(38, 17, true);
+		AnimationTimer timerTest2 = new AnimationTimer() {
+			@Override public void handle(long now) {
+				maze.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+
+			}
+		};
+		
+		
 
 
 

@@ -4,7 +4,7 @@ package content.rythmgame;
 import content.GameObject;
 import content.Layer;
 import content.Tag;
-import content.scripts.rhythmgame.Controller;
+import content.rythmgame.scripts.Controller;
 import core.util.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

@@ -7,6 +7,7 @@ import java.util.Map;
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
+import content.maze.Maze;
 import content.platformer.Player;
 import content.rythmgame.RhythmConductor;
 import content.shooter.Player2;
@@ -202,13 +203,8 @@ public class GameEngine {
 	}
 
 
-	public void initMazeGame(int width, int height) {
-		
-		
-		
-		
-		
-		
+	public void initMazeGame(int width, int height, boolean fantastic) {
+		Maze maze = new Maze(width, height, fantastic);
 	}
 	
 	

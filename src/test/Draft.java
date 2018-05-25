@@ -12,7 +12,7 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		testNormal();
+		Maze maze = new Maze();
 
 
 

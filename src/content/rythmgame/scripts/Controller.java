@@ -1,4 +1,4 @@
-package content.scripts.rhythmgame;
+package content.rythmgame.scripts;
 
 import java.util.HashMap;
 import java.util.Map;
