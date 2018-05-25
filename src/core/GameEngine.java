@@ -9,7 +9,7 @@ import content.GameObject;
 import content.Layer;
 import content.platformer.Player;
 import content.rythmgame.RhythmConductor;
-import content.shooter.Player2;
+import content.shooter.PlayerShooter;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -26,6 +26,11 @@ import levels.Tile.TileType;
 public class GameEngine {
 
 	private static boolean alreadyExist = false;	// To ensure there can be only one instance of GameEngine created
+
+
+
+	public static int nbClients;
+
 
 	/**
 	 * The list of all active GameManagers currently on the scene
@@ -197,7 +202,7 @@ public class GameEngine {
 		System.out.println("Beginning level importation...");
 		level = new Level("levels/" + levelName + ".txt");
 
-		Player2 player = new Player2(new Vector2(585, 730));
+		PlayerShooter player = new PlayerShooter(new Vector2(585, 730));
 		allGameObjects.add(player);
 	}
 
@@ -239,9 +244,9 @@ public class GameEngine {
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
-		//		System.out.println("Current GameInformation: " + gameInformation);
+//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
-		
+
 		deltaTime *= TIME_FACTOR;
 
 		// Applying all GameManagers

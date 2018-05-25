@@ -22,6 +22,8 @@ public class Player extends GameObject {
 	static final String SPRITE_PATH = "resources/graphic/player.png";
 
 
+	private int id;
+	
 	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
 
 	private int hp;				// The current amount of HP the player has
