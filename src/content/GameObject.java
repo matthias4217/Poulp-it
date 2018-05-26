@@ -100,8 +100,8 @@ public abstract class GameObject implements Renderable {
 	 * By default, it simply updates all the scripts attached to this.
 	 * This method can be overriden for a more specific behaviour.
 	 *
-	 * @param deltaTime
-	 * @param playerInput
+	 * @param deltaTime		- the time in seconds it took to complete the last frame
+	 * @param playerInput	- 
 	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
@@ -111,8 +111,8 @@ public abstract class GameObject implements Renderable {
 
 	/**
 	 *
-	 * @param deltaTime			- the time in seconds it took to complete the last frame
-	 * @param playerInput 	- Info that the Launcher sends to the GameManager
+	 * @param deltaTime		- the time in seconds it took to complete the last frame
+	 * @param playerInput 	- 
 	 * @throws InvalidArgumentsException 
 	 */
 	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {

@@ -18,6 +18,8 @@ import javafx.scene.paint.Color;
  */
 public class PlayerMaze extends GameObject {
 
+	public static float TIME_BETWEEN_TWO_STEPS = 0.04f;
+
 	/**
 	 * The color of the player
 	 */
@@ -28,13 +30,15 @@ public class PlayerMaze extends GameObject {
 	 */
 	public static float PLAYER_TILE_RATIO = 0.9f;
 	private static float K = (1 - PLAYER_TILE_RATIO) / 2;
-	
+
 
 
 	public int x;
 	public int y;
-	
-	Maze maze;		// Yes, the maze object is actually included in the player object
+
+	private Maze maze;		// Yes, the maze object is actually included in the player object
+
+	private float moveCooldown = 0;		// The time left before the player is able to move again
 
 
 
@@ -54,19 +58,25 @@ public class PlayerMaze extends GameObject {
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput)
 			throws InvalidArgumentsException {
 
-		float xInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.RIGHT());
-		float yInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.UP());
-		
-		if (xInput != 0 && yInput == 0) {
-			int direction = (int) Math.signum(xInput);
-			if (maze.canMoveLeftRight(x, y, direction)) {
-				x += direction;
+		if (moveCooldown <= 0) {		// if we're not in move cooldown
+			float xInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.RIGHT());
+			float yInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.UP());
+
+			if (xInput != 0 && yInput == 0) {
+				int direction = (int) Math.signum(xInput);
+				if (maze.canMoveLeftRight(x, y, direction)) {
+					x += direction;
+					moveCooldown = TIME_BETWEEN_TWO_STEPS;
+				}
+			} else if (xInput == 0 && yInput != 0) {
+				int direction = (int) Math.signum(yInput);
+				if (maze.canMoveUpDown(x, y, direction)) {
+					y -= direction;
+					moveCooldown = TIME_BETWEEN_TWO_STEPS;
+				}
 			}
-		} else if (xInput == 0 && yInput != 0) {
-			int direction = (int) Math.signum(yInput);
-			if (maze.canMoveUpDown(x, y, direction)) {
-				y -= direction;
-			}
+		} else {
+			moveCooldown -= deltaTime;
 		}
 
 	}
@@ -83,13 +93,13 @@ public class PlayerMaze extends GameObject {
 		 * simply a full circle which has to be adapted to the size of the maze.
 		 */
 		this.maze.render(gc, windowWidth, windowHeight);
-		
-		
+
+
 		double positionX = maze.x0 + (x + K) * maze.wallSize;
 		double positionY = maze.y0 + (y + K) * maze.wallSize;
-		
+
 		double playerScale = PLAYER_TILE_RATIO * maze.wallSize;
-		
+
 		gc.setFill(PLAYER_COLOR);
 		gc.fillOval(positionX, positionY, playerScale, playerScale);
 	}
