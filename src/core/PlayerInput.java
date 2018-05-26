@@ -30,10 +30,10 @@ public class PlayerInput {
 	public boolean mouseLeftPressed;
 	public boolean mouseRightPressed;
 	
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
-	private boolean upPressed = false;
-	private boolean downPressed = false;
+	public boolean leftPressed = false;
+	public boolean rightPressed = false;
+	public boolean upPressed = false;
+	public boolean downPressed = false;
 	
 	public boolean aPressed = false;
 	public boolean zPressed = false;

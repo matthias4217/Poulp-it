@@ -34,12 +34,16 @@ public class Maze implements Renderable {
 	private static final Color PLAYER_COLOR = Color.WHITE;
 	private static final int SPARKLING_PERIOD = 110;		// Time between color changes in fantastic mode (ms)
 	// Other (please do not touch, they're fine like that)
-	private static final boolean ZEROZERO = true;		// Does the recursion start at (0, 0)?
+	private static final boolean ZEROZERO = false;		// Does the recursion start at (0, 0)?
 	private static final float MARGIN = 0.02f;		// Used for window representation	@@@
 
 	// ATTRIBUTES
 
 	public boolean fantastic;
+	public double x0;
+	public double y0;
+	public double wallSize;
+
 
 	private int width;
 	private int height;
@@ -57,7 +61,7 @@ public class Maze implements Renderable {
 	public Maze(int width, int height) {
 		this(width, height, false);
 	}
-	
+
 	public Maze(int width, int height, boolean fantastic) {
 		this.width = width;
 		this.height = height;
@@ -84,32 +88,32 @@ public class Maze implements Renderable {
 
 
 
+	/**
+	 * Indicates if it is possible to move left or right from the tile (x, y).
+	 */
+	public boolean canMoveLeftRight(int x, int y, int direction) {
+		return verticalWalls[direction<0 ? x : x+1][y];
+	}
+
+	/**
+	 * Indicates if it is possible to move up or down from the tile (x, y).
+	 */
+	public boolean canMoveUpDown(int x, int y, int direction) {
+		return horizontalWalls[x][direction<0 ? y+1 : y];
+	}
+
+
 
 
 
 	/**
-	 * Calculate the length of a wall according to the size of the rendering window  
+	 * Calculate the length of a wall according to the size of the rendering window;
+	 * also calculate the origin of the maze in the window.
 	 * 
 	 * @param windowWidth	- the width of the window the maze will be rendered on
 	 * @param windowHeight	- the height of the window the maze will be rendered on
 	 */
-	public double calculateWallSize(double windowWidth, double windowHeight) {
-		return (1 - 2*MARGIN) * 
-				((windowWidth * height < windowHeight * width) ? windowWidth/width : windowHeight/height);
-	}
-
-
-	@Override
-	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
-		//System.out.println("Window width: " + getWidth() + " ; window height: " + getHeight());
-
-		gc.setFill(BACKGROUND_COLOR);
-		gc.fillRect(0, 0, windowWidth, windowHeight);				
-
-		// Determining parameters
-		double x0;
-		double y0;
-		double wallSize;
+	public void calculate(double windowWidth, double windowHeight) {
 		if (windowWidth * height < windowHeight * width) {		// Is the maze large or long?
 			x0 = windowWidth * MARGIN;
 			wallSize = (windowWidth - 2*x0) / width;
@@ -119,7 +123,17 @@ public class Maze implements Renderable {
 			wallSize = (windowHeight - 2*y0) / height;
 			x0 = (windowWidth - width*wallSize) / 2;
 		}
-		
+	}
+
+
+	@Override
+	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
+
+		gc.setFill(BACKGROUND_COLOR);
+		gc.fillRect(0, 0, windowWidth, windowHeight);
+
+		calculate(windowWidth, windowHeight);
+
 		// Maze representation
 		gc.setStroke(WALL_COLOR);
 		for (int j = 0; j < height; j++) {
@@ -149,6 +163,8 @@ public class Maze implements Renderable {
 		double h = height*wallSize;
 		gc.strokeRect(x0, y0, w, h);		// Contour
 	}
+
+
 
 
 

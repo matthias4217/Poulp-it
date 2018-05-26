@@ -68,7 +68,7 @@ public class Launcher extends Application {
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(game.windowTitle);
-		stage.setResizable(false);
+		stage.setResizable(true);
 		Group group0 = new Group();
 		stage.setScene(new Scene(group0));
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -158,7 +158,7 @@ public class Launcher extends Application {
 		Maze maze = new Maze(38, 17, true);
 		AnimationTimer timerTest2 = new AnimationTimer() {
 			@Override public void handle(long now) {
-				maze.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
+				maze.render(gc, stage.getWidth(), stage.getHeight());
 
 
 			}
@@ -178,7 +178,7 @@ public class Launcher extends Application {
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
-				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	// Clear the window
+				gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
 //				gc.drawImage(background, 0, 0);
 
 
@@ -200,7 +200,7 @@ public class Launcher extends Application {
 				//playerInput.spacePressed = false;
 
 				System.out.println("Rendering...");
-				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
+				graphicManager.render(gc, stage.getWidth(), stage.getHeight());
 
 				timeToFramerateDisplay -= deltaTime;
 				if (timeToFramerateDisplay <= 0) {

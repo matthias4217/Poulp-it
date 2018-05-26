@@ -101,12 +101,12 @@ public abstract class GameObject implements Renderable {
 	 * This method can be overriden for a more specific behaviour.
 	 *
 	 * @param deltaTime
-	 * @param gameInformation
+	 * @param playerInput
 	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		updateAllScripts(deltaTime, gameInformation, previousPlayerInput);
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+		updateAllScripts(deltaTime, playerInput, previousPlayerInput);
 	}
 
 	/**
