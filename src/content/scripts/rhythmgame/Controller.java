@@ -40,7 +40,7 @@ public class Controller extends MonoBehaviour {
 	};
 	
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {
 		timeIntervalSpent += deltaTime;
 		if (timeIntervalSpent > INTERVAL) {
 			//generate new CurrentLetter
@@ -48,22 +48,22 @@ public class Controller extends MonoBehaviour {
 			currentLetter = generateLetter();
 		}
 		switch (currentLetter) {
-			case "A": if (playerInput.aPressed) {
+			case "A": if (playerInput[0].aPressed) {
 				currentLetter = generateLetter();
 				score += 1;
 			}
 				break;
-			case "Z": if (playerInput.zPressed) {
+			case "Z": if (playerInput[0].zPressed) {
 				currentLetter = generateLetter();
 				score += 1;
 			}
 				break;
-			case "E": if (playerInput.ePressed) {
+			case "E": if (playerInput[0].ePressed) {
 				currentLetter = generateLetter();
 				score += 1;
 			}
 				break;
-			case "R": if (playerInput.rPressed) {
+			case "R": if (playerInput[0].rPressed) {
 				currentLetter = generateLetter();
 				score += 1;
 			}

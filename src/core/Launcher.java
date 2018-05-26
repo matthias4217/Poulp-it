@@ -14,6 +14,7 @@ import javafx.animation.AnimationTimer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.net.InetAddress;
 
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
@@ -37,13 +38,18 @@ public class Launcher extends Application {
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
-	static final String WINDOW_TITLE = "Hook Battle";
-
+	static final String WINDOW_TITLE = "For two";
+	//variables created to implement multi
+	static int nbPlayers = 1; //default number of player
+	//Initialization of the multi
+	boolean isServer = false;
+	int id = 0;
+	Object roleReseau;
 
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.SHOOTER;
+	static Game game = Game.FOR_TWO;
 
 
 	PlayerInput previousPlayerInput;
@@ -65,7 +71,6 @@ public class Launcher extends Application {
 
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidArgumentsException {
-
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(WINDOW_TITLE);
@@ -83,14 +88,12 @@ public class Launcher extends Application {
 		// Initialization of the game
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
-		if (isServer) {
-			Serveur serveur = new Serveur(3000, 2);
-		}
+		
 
 
 		switch (game) {
 		case HOOK_BATTLE:
-			int nbPlayers = 2;
+			nbPlayers = 2;
 			String level0 = "level0";
 			gameEngine.initPlatformer(nbPlayers, level0);
 			break;
@@ -107,13 +110,28 @@ public class Launcher extends Application {
 			String level = "rhythmgame";
 			gameEngine.initRhythmGame(level);
 			break;
+		case FOR_TWO:
+			nbPlayers = 2;
+			if (isServer) {
+				roleReseau = new Serveur(3000, nbPlayers);
+			}
+			else {
+				roleReseau = new Client(InetAddress.getByName("127.0.0.1"),3000);
+			}
+			String levelForTwo = "rhythmgame";
+			id = gameEngine.initForTwo(nbPlayers, levelForTwo,isServer,roleReseau);
 		default:
 
 			break;
 		}
 
-		PlayerInput playerInput = new PlayerInput();
-		previousPlayerInput = new PlayerInput();
+		PlayerInput[] playerInput = new PlayerInput[nbPlayers];
+		PlayerInput[] previousPlayerInput = new PlayerInput[nbPlayers];
+		for(int k = 0; k<nbPlayers; k++) {
+			playerInput[k] = new PlayerInput();
+			previousPlayerInput[k] = new PlayerInput();
+		}
+		
 
 		/* 
 		 * gameInformation contains the information which is sent to the client each frame.
@@ -121,9 +139,22 @@ public class Launcher extends Application {
 		 */
 		GameInformation gameInformation = new GameInformation();
 
-		stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
-		stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
-		stage.getScene().setOnKeyReleased(playerInput.eventHandlerReleased);
+		stage.getScene().setOnKeyPressed(playerInput[id].eventHandler);		// getting the player input.
+		stage.getScene().setOnMousePressed(playerInput[id].mouseEventHandler);
+		stage.getScene().setOnKeyReleased(playerInput[id].eventHandlerReleased);
+		if(isServer) {
+			for(int k = 0;k<nbPlayers-1; k++) { //nbPlayers-1 car le serveur joue
+				playerInput[k+1]=(PlayerInput) ((Serveur)roleReseau).read(k);
+				}
+			for(int k = 0;k<nbPlayers-1; k++) {//nbPlayers-1 car le serveur joue
+				((Serveur)roleReseau).write(playerInput[k+1],k);
+			}
+			
+		}
+		else {
+			((Client)roleReseau).write(playerInput[id]);
+			((Client)roleReseau).write(playerInput[id]);
+			}
 
 		/*
 		 * An AnimationTimer used for testing purpose. 
@@ -147,7 +178,7 @@ public class Launcher extends Application {
 				System.out.println("Orientation RAB: " + Annex.orientation(R, A, B));
 				System.out.println();
 				System.out.println("n: " + n);
-
+				
 				gc.setStroke(Color.BLUE);
 				gc.strokeLine(A.x, A.y, B.x, B.y);
 
@@ -164,7 +195,22 @@ public class Launcher extends Application {
 			int framerate;
 			@Override public void handle(long now) {
 				/* handle is called in each frame while the timer is active. */
+				if(isServer) {
+					for(int k = 0;k<nbPlayers-1; k++) { //nbPlayers-1 car le serveur joue
+						playerInput[k+1]=(PlayerInput) ((Serveur)roleReseau).read(k);
 
+					}
+					for(int k = 0;k<nbPlayers-1; k++) { //nbPlayers-1 car le serveur joue
+						((Serveur)roleReseau).write(playerInput[k+1],k);
+					}
+					
+				}
+				else {
+					((Client)roleReseau).write(playerInput[id]);
+					for(int k = 0;k<nbPlayers-1; k++) { //nbPlayers-1 car le serveur joue
+						playerInput[k+1]=(PlayerInput) ((Client)roleReseau).read();
+					}
+				}
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
@@ -172,7 +218,7 @@ public class Launcher extends Application {
 //				gc.drawImage(background, 0, 0);
 
 
-				System.out.println(playerInput);
+				System.out.println(playerInput[id]);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
@@ -184,12 +230,15 @@ public class Launcher extends Application {
 					e.printStackTrace();
 				}
 
-				previousPlayerInput = playerInput.copy();
+				for(int k = 0;k<nbPlayers; k++) {
+					previousPlayerInput[k] = playerInput[k].copy();
+				}
 				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
 				// setOnKeyPressed, then it doesn't work ?!?
 				//playerInput.spacePressed = false;
 
 				System.out.println("Now rendering...");
+				System.out.println("id: " + id);
 				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 				timeToFramerateDisplay -= deltaTime;

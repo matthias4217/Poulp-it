@@ -35,7 +35,7 @@ public abstract class MonoBehaviour {
 	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {}
+	public void update(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {}
 
 
 	/**

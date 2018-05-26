@@ -105,7 +105,7 @@ public abstract class GameObject implements Renderable {
 	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput[] gameInformation, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {
 		updateAllScripts(deltaTime, gameInformation, previousPlayerInput);
 	}
 
@@ -115,7 +115,7 @@ public abstract class GameObject implements Renderable {
 	 * @param playerInput 	- Info that the Launcher sends to the GameManager
 	 * @throws InvalidArgumentsException 
 	 */
-	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	protected final void updateAllScripts(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {
 		for (MonoBehaviour script: scripts) {
 			script.update(deltaTime, playerInput, previousPlayerInput);
 		}

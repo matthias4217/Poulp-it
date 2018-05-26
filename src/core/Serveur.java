@@ -49,11 +49,12 @@ class Serveur {
 	}
 	
 	public void acceptAllConnections() {
-		for (int k = 0; k < nbPlayer; k++) {
+		for (int k = 0; k < nbPlayer-1; k++) { //on fait -1 car il y a le serveur qui joue
 			acceptConnection(k);
-			writeForAll(k + " ème connection effectuée");
-			
+			write(k+1,k); //envoie son id au joueur et cest k+1 car l id 0 cest le joueur serveur
+			writeForAll((k+1)+"ème connexion");
 		}
+		writeForAll("Le jeu commence");
 	}
 
 	public void close() throws IOException {
@@ -93,8 +94,17 @@ class Serveur {
 
 	}
 
-	public Object read(int numClient) throws ClassNotFoundException, IOException{
-		return in[numClient].readObject();
+	public Object read(int numClient) {
+		try {
+			return in[numClient].readObject();
+		} catch(ClassNotFoundException e1) {
+			e1.getCause();
+			return null;
+		}
+		catch(IOException e2) {
+			e2.getCause();
+			return null;
+		}
 	}
 
 

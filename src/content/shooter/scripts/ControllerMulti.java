@@ -13,8 +13,11 @@ import core.util.Vector2;
  * @author Raph
  *
  */
-public class Controller extends MonoBehaviour {
-
+public class ControllerMulti extends MonoBehaviour {
+	/**
+	 * The id of the player who owned this script
+	 */
+	public int id;
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
@@ -34,7 +37,9 @@ public class Controller extends MonoBehaviour {
 
 
 	/* Constructor */
-	public Controller() {}
+	public ControllerMulti(int id) {
+		this.id = id;
+	}
 
 
 
@@ -44,9 +49,9 @@ public class Controller extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {
 		
-		calculateVelocity(deltaTime, playerInput.directionalInput);
+		calculateVelocity(deltaTime, playerInput[id].directionalInput); //nbPlayers-1 car le serveur joue
 
 		// Moving
 		support.position.translate(velocity.multiply(deltaTime));

@@ -5,13 +5,13 @@ import java.io.*;
 
 class Client {
 	
-	String hostName;
+	InetAddress hostName;
 	int portNumber;
 	Socket dSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
 	
-	public Client(String hostName, int portNumber) {
+	public Client(InetAddress hostName, int portNumber) {
 		this.hostName = hostName;
 		this.portNumber = portNumber;
 		

@@ -225,25 +225,40 @@ public class GameEngine {
 		RhythmConductor conductor = new RhythmConductor();
 		allGameObjects.add(conductor);
 	}
-	public void initForTwo(int nbPlayers, String levelName) throws IOException { 
+	public int initForTwo(int nbPlayers, String levelName,boolean isServer, Object roleReseau) throws IOException { 
 		//je reutilise les classes du shooter pour gagner du temps
 		// Importing the level
 		System.out.println("Beginning level importation...");
 		level = new Level("levels/" + levelName + ".txt");
 		// Instantiating players and adding them to the players array
 		System.out.println("Instanciating players...");
-		Player2[] players2 = new Player2[nbPlayers];
-				for (int i = 0; i < nbPlayers; i++) {
-					Vector2 spawnPosition;
-					//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
-					//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
-					//			spawnPosition = new Vector2(280, 710);
-					spawnPosition = new Vector2(585+i*10, 730);
-					Player2 playerI = new Player2(spawnPosition);
-					players2[i] = playerI;
-					allGameObjects.add(playerI);
-				}
-				System.out.println("Players instanciation finished");
+		PlayerShooter[] players2 = new PlayerShooter[nbPlayers];
+		int id = 0;
+		if(isServer) {
+			((Serveur) roleReseau).acceptAllConnections();
+		}
+		else {
+			((Client)roleReseau).start();
+			id = (int) ((Client) roleReseau).read();
+			Object inputObject = ((Client) roleReseau).read();
+			System.out.println(inputObject);
+			while(!inputObject.equals("Le jeu commence")) {
+				inputObject = ((Client) roleReseau).read();
+				System.out.println(inputObject);
+			}
+		}
+		for (int i = 0; i < nbPlayers; i++) {
+			Vector2 spawnPosition;
+			//			spawnPosition = new Vector2((float)Launcher.WINDOW_WIDTH / 2, (float) Launcher.WINDOW_HEIGHT / 2);
+			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
+			//			spawnPosition = new Vector2(280, 710);
+			spawnPosition = new Vector2(200+i*100, 730);
+			PlayerShooter playerI = new PlayerShooter(spawnPosition);
+			players2[i] = playerI;
+			allGameObjects.add(playerI);
+		}
+		System.out.println("Players instanciation finished");
+		return id;
 	}
 
 
@@ -258,7 +273,7 @@ public class GameEngine {
 	 * @throws InvalidArgumentsException 
 	 *
 	 */
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, GameInformation gameInformation)
+	public void update(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput, GameInformation gameInformation)
 			throws InvalidArgumentsException {
 
 //		System.out.println("Current GameInformation: " + gameInformation);

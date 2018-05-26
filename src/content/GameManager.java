@@ -19,7 +19,7 @@ public interface GameManager {
 	 * @param gameInformation
 	 * @param previousPlayerInput 
 	 */
-	public void apply(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput);
+	public void apply(float deltaTime, PlayerInput[] gameInformation, PlayerInput[] previousPlayerInput);
 
 
 }

@@ -126,18 +126,18 @@ public class PlayerScript extends MonoBehaviour {
 	}
 
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput[] playerInput, PlayerInput[] previousPlayerInput) throws InvalidArgumentsException {
 		System.out.println("Input update " + playerInput);
-		calculateVelocity(deltaTime, playerInput.directionalInput);
+		calculateVelocity(deltaTime, playerInput[0].directionalInput);
 		//handleWallSliding(deltaTime, playerInput.directionnalInput);
 
-		if (playerInput.spacePressed) {
-			onJumpInputDown(playerInput.directionalInput);
+		if (playerInput[0].spacePressed) {
+			onJumpInputDown(playerInput[0].directionalInput);
 		}
-		else if (!playerInput.spacePressed && previousPlayerInput.spacePressed) {
+		else if (!playerInput[0].spacePressed && previousPlayerInput[0].spacePressed) {
 			onJumpInputUp();
 		}
-		controller.move(velocity.multiply(deltaTime), playerInput.directionalInput);
+		controller.move(velocity.multiply(deltaTime), playerInput[0].directionalInput);
 		
 		if (controller.collisions.above || controller.collisions.below) {
 			if (controller.collisions.slidingDownMaxSlope) {
