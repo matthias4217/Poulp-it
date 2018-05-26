@@ -3,7 +3,6 @@ package content.maze;
 import content.GameObject;
 import content.Layer;
 import content.Tag;
-import content.maze.scripts.Controller;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Vector2;
@@ -28,7 +27,7 @@ public class PlayerMaze extends GameObject {
 	/**
 	 * The ratio of the player dimensions compared to one "tile"'s dimensions
 	 */
-	public static float PLAYER_TILE_RATIO = 0.9f;
+	public static float PLAYER_TILE_RATIO = 0.5f;
 	private static float K = (1 - PLAYER_TILE_RATIO) / 2;
 
 
