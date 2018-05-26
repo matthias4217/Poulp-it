@@ -10,7 +10,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
- * 
+ * The GameObject for the player in the maze game.
+ * The Maze in which the player evolve is actually an attribute of this GameObject.
  * 
  * @author Raph
  *
