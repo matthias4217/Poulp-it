@@ -24,6 +24,9 @@ public class Controller extends RaycastController {
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
+	
+	public static float fireCooldown = 0.5f;		// the time between two shots
+	private float timeBeforeShoot = 0f;
 
 
 
@@ -42,9 +45,11 @@ public class Controller extends RaycastController {
 	
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		if (playerInput.aPressed) {
+		if (playerInput.aPressed && timeBeforeShoot <= 0) {
 			shootBullet(deltaTime);
+			timeBeforeShoot = fireCooldown;
 		}
+		timeBeforeShoot -= deltaTime;
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {
@@ -146,6 +151,9 @@ public class Controller extends RaycastController {
 	}
 
 	void shootBullet(float deltaTime) {
+		if (playerInput == Vector2.ZERO()) {
+			playerInput = Vector2.RIGHT();
+		}
 		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
 				collisionMask, 
 				Tag.SOLID, 

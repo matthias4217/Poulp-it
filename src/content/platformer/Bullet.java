@@ -1,6 +1,3 @@
-/**
- * 
- */
 package content.platformer;
 
 import content.GameObject;

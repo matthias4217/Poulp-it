@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.SHOOTER;
+	static Game game = Game.MAZE;
 
 
 	PlayerInput previousPlayerInput;
