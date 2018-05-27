@@ -37,8 +37,8 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
-	
-	
+
+
 	private static double K;
 	private static double L;
 
@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.MAZE;
 
 
 	PlayerInput previousPlayerInput;
