@@ -146,13 +146,17 @@ public class Controller extends RaycastController {
 	}
 
 	void shootBullet() {
-		Bullet bullet = new Bullet(support.position.add(playerInput.multiply(64f)), collisionMask, Tag.SOLID, playerInput, 100f);
 		/*
 		 *  we need to add it to the gameEngine...
 		 *  Problem : how can we get the instance of the gameEngine ?
 		 */
 		// TODO each object should have a reference to the gameEngine
-		GameEngine.allGameObjects.add(bullet);
+		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
+				collisionMask, 
+				Tag.SOLID, 
+				playerInput, 
+				100f, 
+				support.gameEngine));
 	}
 
 	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
