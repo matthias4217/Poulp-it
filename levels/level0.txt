@@ -4,7 +4,7 @@
 # Empty lines _matter_
 #
 tilesize: 32
-theme: bubblegold
+theme: simplegrey
 #
 level:{
 xxxxxxxxxxxxxxxxxxxxxxxxxx

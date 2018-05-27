@@ -117,7 +117,7 @@ public class Ray implements Renderable {
 
 
 	/**
-	 * Render this ray in the GraphicContext gc
+	 * Render this ray in the GraphicContext gc.
 	 */
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		gc.setStroke(RENDER_COLOR);
