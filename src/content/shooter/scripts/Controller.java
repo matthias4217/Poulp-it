@@ -1,6 +1,9 @@
 package content.shooter.scripts;
 
+import content.Layer;
 import content.MonoBehaviour;
+import content.Tag;
+import content.platformer.Bullet;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
@@ -59,6 +62,9 @@ public class Controller extends MonoBehaviour {
 		calculateVelocity(deltaTime, playerInput.directionalInput);
 
 
+		if (playerInput.aPressed) {
+			shootBullet(playerInput.directionalInput);
+		}
 
 
 		// Moving
@@ -76,7 +82,14 @@ public class Controller extends MonoBehaviour {
 		velocity.y = Annex.SmoothDamp(velocity.y, targetVelocityY, velocityYSmoothing, accelerationTime, deltaTime);
 	}
 
-
+	void shootBullet(Vector2 directionalInput) {
+		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(directionalInput.multiply(64f)), 
+				Layer.DEFAULT, 
+				Tag.SOLID, 
+				directionalInput, 
+				100f, 
+				support.gameEngine));
+	}
 
 
 }

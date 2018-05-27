@@ -203,9 +203,6 @@ public class Launcher extends Application {
 				}
 
 				previousPlayerInput = playerInput.copy();
-				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
-				// setOnKeyPressed, then it doesn't work ?!?
-				//playerInput.spacePressed = false;
 
 				System.out.println("Rendering...");
 				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);

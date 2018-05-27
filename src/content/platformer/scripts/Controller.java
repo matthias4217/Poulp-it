@@ -146,11 +146,6 @@ public class Controller extends RaycastController {
 	}
 
 	void shootBullet() {
-		/*
-		 *  we need to add it to the gameEngine...
-		 *  Problem : how can we get the instance of the gameEngine ?
-		 */
-		// TODO each object should have a reference to the gameEngine
 		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
 				collisionMask, 
 				Tag.SOLID, 
