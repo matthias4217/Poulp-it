@@ -23,7 +23,7 @@ public class PlayerMaze extends GameObject {
 	/**
 	 * The color of the player
 	 */
-	public static Color PLAYER_COLOR = Color.CHARTREUSE;
+	public static Color PLAYER_COLOR = Color.RED;
 
 	/**
 	 * The ratio of the player dimensions compared to one "tile"'s dimensions

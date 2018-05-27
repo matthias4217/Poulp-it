@@ -37,12 +37,16 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	
+	
+	private static double K;
+	private static double L;
 
 
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.MAZE;
+	static Game game = Game.HOOK_BATTLE;
 
 
 	PlayerInput previousPlayerInput;
@@ -76,7 +80,11 @@ public class Launcher extends Application {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
-
+		
+		
+		// XXX
+		K = stage.getWidth() - WINDOW_WIDTH;
+		L = stage.getHeight() - WINDOW_HEIGHT;
 
 
 		// Initialization of the game
@@ -200,7 +208,7 @@ public class Launcher extends Application {
 				//playerInput.spacePressed = false;
 
 				System.out.println("Rendering...");
-				graphicManager.render(gc, stage.getWidth(), stage.getHeight());
+				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);
 
 				timeToFramerateDisplay -= deltaTime;
 				if (timeToFramerateDisplay <= 0) {
