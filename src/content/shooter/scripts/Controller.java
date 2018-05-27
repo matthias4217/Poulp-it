@@ -63,7 +63,7 @@ public class Controller extends MonoBehaviour {
 
 
 		if (playerInput.aPressed) {
-			shootBullet(playerInput.directionalInput);
+			shootBullet(playerInput.directionalInput, deltaTime);
 		}
 
 
@@ -82,12 +82,12 @@ public class Controller extends MonoBehaviour {
 		velocity.y = Annex.SmoothDamp(velocity.y, targetVelocityY, velocityYSmoothing, accelerationTime, deltaTime);
 	}
 
-	void shootBullet(Vector2 directionalInput) {
+	void shootBullet(Vector2 directionalInput, float deltaTime) {
 		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(directionalInput.multiply(64f)), 
 				Layer.DEFAULT, 
 				Tag.SOLID, 
 				directionalInput, 
-				100f, 
+				200f * deltaTime, 
 				support.gameEngine));
 	}
 

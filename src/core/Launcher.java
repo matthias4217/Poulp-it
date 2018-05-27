@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.SHOOTER;
 
 
 	PlayerInput previousPlayerInput;
@@ -102,6 +102,7 @@ public class Launcher extends Application {
 		case SHOOTER:
 			String level1 = "level0";
 			gameEngine.init2(level1);
+			break;
 		case MAZE:
 			gameEngine.initMazeGame(38, 17, true);
 			break;

@@ -43,7 +43,7 @@ public class Controller extends RaycastController {
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		if (playerInput.aPressed) {
-			shootBullet();
+			shootBullet(deltaTime);
 		}
 	}
 
@@ -145,12 +145,12 @@ public class Controller extends RaycastController {
 		}
 	}
 
-	void shootBullet() {
+	void shootBullet(float deltaTime) {
 		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
 				collisionMask, 
 				Tag.SOLID, 
 				playerInput, 
-				100f, 
+				100f * deltaTime, 
 				support.gameEngine));
 	}
 
