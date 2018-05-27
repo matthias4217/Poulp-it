@@ -1,6 +1,7 @@
 package content.platformer;
 
 import javafx.scene.image.Image;
+import core.GameEngine;
 import core.util.BoxCollider;
 import core.util.Vector2;
 import content.GameObject;
@@ -32,12 +33,13 @@ public class Player extends GameObject {
 
 
 
-	public Player(Vector2 position, int maxHP) {
+	public Player(Vector2 position, int maxHP, GameEngine gameEngine) {
 		super(position,
 				new Image(SPRITE_PATH /*, 64, 64, false, false*/),
 				Layer.DEFAULT,
 				Tag.DEFAULT,
 				new BoxCollider(64, 64),		//
+				gameEngine,
 
 				new PlayerScript(),
 				new Controller());
