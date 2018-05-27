@@ -10,7 +10,7 @@ import content.Layer;
 import content.maze.Maze;
 import content.maze.PlayerMaze;
 import content.platformer.Player;
-import content.rythmgame.RhythmConductor;
+import content.rhythmgame.RhythmConductor;
 import content.shooter.Player2;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
@@ -181,7 +181,7 @@ public class GameEngine {
 			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 			//			spawnPosition = new Vector2(280, 710);
 			spawnPosition = new Vector2(585, 730);
-			Player playerI = new Player(spawnPosition, 10);
+			Player playerI = new Player(spawnPosition, 10, this);
 			players[i] = playerI;
 			allGameObjects.add(playerI);
 		}
@@ -199,14 +199,14 @@ public class GameEngine {
 		System.out.println("Beginning level importation...");
 		level = new Level("levels/" + levelName + ".txt");
 
-		Player2 player = new Player2(new Vector2(585, 730));
+		Player2 player = new Player2(new Vector2(585, 730), this);
 		allGameObjects.add(player);
 	}
 
 
 	public void initMazeGame(int width, int height, boolean fantastic) {
 		
-		PlayerMaze player = new PlayerMaze(38, 17);
+		PlayerMaze player = new PlayerMaze(38, 17, this);
 		allGameObjects.add(player);
 		
 	}
@@ -228,7 +228,7 @@ public class GameEngine {
 			}
 		}
 		
-		RhythmConductor conductor = new RhythmConductor();
+		RhythmConductor conductor = new RhythmConductor(this);
 		allGameObjects.add(conductor);
 	}
 

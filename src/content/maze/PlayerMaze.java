@@ -3,6 +3,7 @@ package content.maze;
 import content.GameObject;
 import content.Layer;
 import content.Tag;
+import core.GameEngine;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Vector2;
@@ -42,12 +43,12 @@ public class PlayerMaze extends GameObject {
 
 
 
-	public PlayerMaze(int mazeWidth, int mazeHeight) {
-		this(mazeWidth, mazeHeight, false);
+	public PlayerMaze(int mazeWidth, int mazeHeight, GameEngine gameEngine) {
+		this(mazeWidth, mazeHeight, false, gameEngine);
 	}
 
-	public PlayerMaze(int mazeWidth, int mazeHeight, boolean mazeIsFantastic) {
-		super(null, null, Layer.DEFAULT, Tag.DEFAULT, null);
+	public PlayerMaze(int mazeWidth, int mazeHeight, boolean mazeIsFantastic, GameEngine gameEngine) {
+		super(null, null, Layer.DEFAULT, Tag.DEFAULT, null, gameEngine);
 
 		maze = new Maze(mazeWidth, mazeHeight, mazeIsFantastic);
 	}

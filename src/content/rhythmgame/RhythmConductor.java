@@ -1,10 +1,11 @@
-package content.rythmgame;
+package content.rhythmgame;
 
 
 import content.GameObject;
 import content.Layer;
 import content.Tag;
-import content.rythmgame.scripts.Controller;
+import content.rhythmgame.scripts.Controller;
+import core.GameEngine;
 import core.util.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -21,12 +22,13 @@ public class RhythmConductor extends GameObject {
 
 	Controller controller;
 
-	public RhythmConductor() {
+	public RhythmConductor(GameEngine gameEngine) {
 		super(Vector2.ZERO(),
 				null,
 				Layer.DEFAULT,
 				Tag.DEFAULT,
 				null,
+				gameEngine,
 				new Controller());
 		controller = (Controller) scripts.get(0);
 	}

@@ -3,6 +3,7 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import core.GameEngine;
 import core.GraphicManager;
 import core.PlayerInput;
 import core.Renderable;
@@ -41,6 +42,11 @@ public abstract class GameObject implements Renderable {
 	 * The collider used to detect collisions against this GameObject; null if this GameObject can't be collided with
 	 */
 	public Collider collider;
+	
+	/**
+	 * A reference to the game engine.
+	 */
+	public GameEngine gameEngine;
 
 	/**
 	 * A list of scripts attached to this GameObject, which describe its behaviour
@@ -73,12 +79,13 @@ public abstract class GameObject implements Renderable {
 	 * @param collider	- the Collider of the GameObject; set null if the GameObject can't be collided with
 	 * @param scripts	- the scripts attached to this GameObject
 	 */
-	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour... scripts) {
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, GameEngine gameEngine, MonoBehaviour... scripts) {
 		this.position = position;
 		this.sprite = sprite;
 		this.layer = layer;
 		this.tag = tag;
 		this.collider = collider;
+		this.gameEngine = gameEngine;
 
 		this.scripts = new LinkedList<MonoBehaviour>();
 		for (MonoBehaviour script: scripts) {
