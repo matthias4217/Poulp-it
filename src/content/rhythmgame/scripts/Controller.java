@@ -16,8 +16,8 @@ import core.exceptions.InvalidArgumentsException;
  */
 public class Controller extends MonoBehaviour {
 
-	//interval between each apparition of a new input
-	public float INTERVAL = 1f;
+	// interval between each apparition of a new input
+	public float interval = 0.4f;
 	public float timeIntervalSpent = 0f;
 	
 	public int score;
@@ -27,10 +27,10 @@ public class Controller extends MonoBehaviour {
 	public boolean[] lettersPressed = new boolean[4];
 	Map<Integer, String> numMap = new HashMap<>();
 	Map<Integer, String> mapLetters = new HashMap<>();
-	String temp0 = mapLetters.put(0, "A");
-	String temp1 = mapLetters.put(1, "Z");
-	String temp2 = mapLetters.put(2, "E");
-	String temp3 = mapLetters.put(3, "R");
+	private String temp0 = mapLetters.put(0, "A");
+	private String temp1 = mapLetters.put(1, "Z");
+	private String temp2 = mapLetters.put(2, "E");
+	private String temp3 = mapLetters.put(3, "R");
 
 	@Override
 	public void start() {
@@ -42,7 +42,7 @@ public class Controller extends MonoBehaviour {
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		timeIntervalSpent += deltaTime;
-		if (timeIntervalSpent > INTERVAL) {
+		if (timeIntervalSpent > interval) {
 			if (checkEquality()) {
 				score += 1;
 				System.out.println("truc !");
@@ -50,7 +50,7 @@ public class Controller extends MonoBehaviour {
 				score -= 1;
 			}
 			generateRow();
-			timeIntervalSpent -= INTERVAL;
+			timeIntervalSpent -= interval;
 		}
 		lettersPressed[0] = (playerInput.aPressed);
 		lettersPressed[1] = (playerInput.zPressed);

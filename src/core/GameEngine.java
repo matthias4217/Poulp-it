@@ -249,7 +249,7 @@ public class GameEngine {
 
 		//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
-		
+
 		deltaTime *= TIME_FACTOR;
 
 		// Applying all GameManagers
