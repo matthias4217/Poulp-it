@@ -2,7 +2,7 @@ package content.rhythmgame.scripts;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 import content.MonoBehaviour;
 import core.PlayerInput;
@@ -22,20 +22,20 @@ public class Controller extends MonoBehaviour {
 	
 	public int score;
 	
-	
-	public String currentLetter = "";
+	Random random = new Random();
+	public boolean[] currentLetters = new boolean[4]; // 0:a ; 1:z ; 2:e ; 3:r
+	public boolean[] lettersPressed = new boolean[4];
 	Map<Integer, String> numMap = new HashMap<>();
 	Map<Integer, String> mapLetters = new HashMap<>();
-	String temp0 = mapLetters.put(1, "A");
-	String temp1 = mapLetters.put(2, "Z");
-	String temp2 = mapLetters.put(3, "E");
-	String temp3 = mapLetters.put(4, "R");
+	String temp0 = mapLetters.put(0, "A");
+	String temp1 = mapLetters.put(1, "Z");
+	String temp2 = mapLetters.put(2, "E");
+	String temp3 = mapLetters.put(3, "R");
 
 	@Override
 	public void start() {
 
-		currentLetter = generateLetter();
-		System.out.println("initialLetter : " + currentLetter);
+		generateRow();
 		score = 0;
 	};
 	
@@ -43,39 +43,43 @@ public class Controller extends MonoBehaviour {
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		timeIntervalSpent += deltaTime;
 		if (timeIntervalSpent > INTERVAL) {
-			//generate new CurrentLetter
+			if (checkEquality()) {
+				score += 1;
+				System.out.println("truc !");
+			} else {
+				score -= 1;
+			}
+			generateRow();
 			timeIntervalSpent -= INTERVAL;
-			currentLetter = generateLetter();
 		}
-		switch (currentLetter) {
-			case "A": if (playerInput.aPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "Z": if (playerInput.zPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "E": if (playerInput.ePressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-			case "R": if (playerInput.rPressed) {
-				currentLetter = generateLetter();
-				score += 1;
-			}
-				break;
-		}
-	};
+		lettersPressed[0] = (playerInput.aPressed);
+		lettersPressed[1] = (playerInput.zPressed);
+		lettersPressed[2] = (playerInput.ePressed);
+		lettersPressed[3] = (playerInput.rPressed);
+			
+		
+	}
 	
-	public String generateLetter() {
-		String tempLetter = "";
-		while (tempLetter == currentLetter) {
-			tempLetter = mapLetters.get(ThreadLocalRandom.current().nextInt(1, 5));
+	/**
+	 * Generate a new currentLetters table
+	 */
+	public void generateRow() {
+		for (int i = 0; i <4 ; i++) {
+			currentLetters[i] = random.nextBoolean();
 		}
-		return tempLetter;
+	}
+	
+	/**
+	 * Check the equality between currentLetters and lettersPressed
+	 * 
+	 * @return true if currentLetters equals lettersPressed, else false
+	 */
+	public boolean checkEquality() {
+		for (int i = 0; i <4 ; i++) {
+			if (!(currentLetters[i] == lettersPressed[i])) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
