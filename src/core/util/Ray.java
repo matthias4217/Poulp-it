@@ -65,6 +65,12 @@ public class Ray implements Renderable {
 		}
 
 	}
+	
+	public Ray(Vector2 originPoint, Vector2 direction, float length) {
+		this.originPoint = originPoint;
+		this.length = length;
+		this.endingPoint = originPoint.add(direction.normalize().multiply(length));
+	}
 
 
 
