@@ -206,7 +206,7 @@ public class GameEngine {
 
 	public void initMazeGame(int width, int height, boolean fantastic) {
 		
-		PlayerMaze player = new PlayerMaze(38, 17, this);
+		PlayerMaze player = new PlayerMaze(38, 17, fantastic, this);
 		allGameObjects.add(player);
 		
 	}

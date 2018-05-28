@@ -59,6 +59,11 @@ public class PlayerMaze extends GameObject {
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput)
 			throws InvalidArgumentsException {
 
+		
+		
+		
+		
+		
 		if (moveCooldown <= 0) {		// if we're not in move cooldown
 			float xInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.RIGHT());
 			float yInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.UP());

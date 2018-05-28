@@ -103,7 +103,7 @@ public class Launcher extends Application {
 			String level1 = "level0";
 			gameEngine.init2(level1);
 		case MAZE:
-			gameEngine.initMazeGame(38, 17, true);
+			gameEngine.initMazeGame(38, 17, false);
 			break;
 		case ALIEN:
 
