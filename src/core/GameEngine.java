@@ -7,6 +7,8 @@ import java.util.Map;
 import content.GameManager;
 import content.GameObject;
 import content.Layer;
+import content.alien.Alien;
+import content.alien.Pineapple;
 import content.maze.Maze;
 import content.maze.PlayerMaze;
 import content.platformer.Player;
@@ -212,8 +214,12 @@ public class GameEngine {
 	}
 	
 	public void initAlien(int nbrPineapples) {
+		
+		allGameObjects.add(new Alien(new Vector2(100, 100),
+				null, null, null));
 		for (int i = 0; i < nbrPineapples ; i++) {
-			// allGameObjects.add(new Pineapple())
+			Vector2 position = new Vector2(0,0);
+			allGameObjects.add(new Pineapple(position, null, null, null));
 		}
 		
 	}
