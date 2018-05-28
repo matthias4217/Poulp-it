@@ -211,6 +211,12 @@ public class GameEngine {
 		
 	}
 	
+	public void initAlien(int nbrPineapples) {
+		for (int i = 0; i < nbrPineapples ; i++) {
+			// allGameObjects.add(new Pineapple())
+		}
+		
+	}
 	
 	
 	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
@@ -376,6 +382,16 @@ public class GameEngine {
 	private static Vector2 toWorldCoordinates(int xTile, int yTile) {
 		return new Vector2(xTile * tileSize, (float) (Launcher.WINDOW_HEIGHT - yTile * tileSize));
 	}
+
+
+
+
+
+
+
+
+
+
 
 
 

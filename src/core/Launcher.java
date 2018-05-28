@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.RHYTHM_GAME;
+	static Game game = Game.HOOK_BATTLE;
 
 
 	PlayerInput previousPlayerInput;
@@ -107,7 +107,7 @@ public class Launcher extends Application {
 			gameEngine.initMazeGame(38, 17, false);
 			break;
 		case ALIEN:
-
+			gameEngine.initAlien(20); // 20 is the number of pineapples
 			break;
 		case RHYTHM_GAME:
 			String level = "rhythmgame";

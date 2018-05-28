@@ -19,7 +19,7 @@ import content.platformer.scripts.PlayerScript;
  */
 public class Player extends GameObject {
 
-	static final String SPRITE_PATH = "resources/graphic/player.png";
+	static final String SPRITE_PATH = "resources/graphic/sophie.png";
 
 
 	public int maxHP;			// The maximum amount of HP the player can have; also the initial HP
@@ -35,7 +35,7 @@ public class Player extends GameObject {
 
 	public Player(Vector2 position, int maxHP, GameEngine gameEngine) {
 		super(position,
-				new Image(SPRITE_PATH /*, 64, 64, false, false*/),
+				new Image(SPRITE_PATH, 64, 64, false, false),
 				Layer.DEFAULT,
 				Tag.DEFAULT,
 				new BoxCollider(64, 64),		//
