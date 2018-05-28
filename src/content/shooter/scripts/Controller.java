@@ -1,6 +1,9 @@
 package content.shooter.scripts;
 
+import content.Layer;
 import content.MonoBehaviour;
+import content.Tag;
+import content.platformer.Bullet;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
@@ -16,20 +19,27 @@ import core.util.Vector2;
 public class Controller extends MonoBehaviour {
 
 	/**
-	 * The maximum horizontal move speed of the player  
+	 * The default move speed of the GameObject  
 	 */
-	public static float moveSpeed = 500f;
+	public static float defaultMoveSpeed = 500f;
 
+	/**
+	 * The speed of the GameObject when dashing
+	 */
+	public static float dashSpeed = 3000f;
+	
 	/**
 	 * The time required to reach the target velocity when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTime = 0.1f;
+	public static float accelerationTime = 0f;
 
-	
+
 	Vector2 velocity = Vector2.ZERO();
 	MutableFloat velocityXSmoothing = new MutableFloat(0f);		// Used for the smoothing of the horizontal velocity
 	MutableFloat velocityYSmoothing = new MutableFloat(0f);		// Used for the smoothing of the vertical velocity
+
+	boolean isDashing;
 
 
 
@@ -40,13 +50,22 @@ public class Controller extends MonoBehaviour {
 
 	@Override
 	public void start() {
-
+		
 	}
 
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		
+
+		if (!isDashing && playerInput.spacePressed) {
+			isDashing = true;
+		}
 		calculateVelocity(deltaTime, playerInput.directionalInput);
+
+
+		if (playerInput.aPressed) {
+			shootBullet(playerInput.directionalInput, deltaTime);
+		}
+
 
 		// Moving
 		support.position.translate(velocity.multiply(deltaTime));
@@ -57,13 +76,20 @@ public class Controller extends MonoBehaviour {
 	 * Calculate the velocity of the player for this frame according to its input.
 	 */
 	void calculateVelocity(float deltaTime, Vector2 directionalInput) {
-		float targetVelocityX = moveSpeed * directionalInput.x;
-		float targetVelocityY = moveSpeed * directionalInput.y;
+		float targetVelocityX = (isDashing ? dashSpeed : defaultMoveSpeed) * directionalInput.x;
+		float targetVelocityY = (isDashing ? dashSpeed : defaultMoveSpeed) * directionalInput.y;
 		velocity.x = Annex.SmoothDamp(velocity.x, targetVelocityX, velocityXSmoothing, accelerationTime, deltaTime);
 		velocity.y = Annex.SmoothDamp(velocity.y, targetVelocityY, velocityYSmoothing, accelerationTime, deltaTime);
 	}
 
-
+	void shootBullet(Vector2 directionalInput, float deltaTime) {
+		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(directionalInput.multiply(64f)), 
+				Layer.DEFAULT, 
+				Tag.SOLID, 
+				directionalInput, 
+				200f * deltaTime, 
+				support.gameEngine));
+	}
 
 
 }

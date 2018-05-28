@@ -3,6 +3,7 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import core.GameEngine;
 import core.GraphicManager;
 import core.PlayerInput;
 import core.Renderable;
@@ -41,6 +42,11 @@ public abstract class GameObject implements Renderable {
 	 * The collider used to detect collisions against this GameObject; null if this GameObject can't be collided with
 	 */
 	public Collider collider;
+	
+	/**
+	 * A reference to the game engine.
+	 */
+	public GameEngine gameEngine;
 
 	/**
 	 * A list of scripts attached to this GameObject, which describe its behaviour
@@ -73,12 +79,13 @@ public abstract class GameObject implements Renderable {
 	 * @param collider	- the Collider of the GameObject; set null if the GameObject can't be collided with
 	 * @param scripts	- the scripts attached to this GameObject
 	 */
-	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour... scripts) {
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, GameEngine gameEngine, MonoBehaviour... scripts) {
 		this.position = position;
 		this.sprite = sprite;
 		this.layer = layer;
 		this.tag = tag;
 		this.collider = collider;
+		this.gameEngine = gameEngine;
 
 		this.scripts = new LinkedList<MonoBehaviour>();
 		for (MonoBehaviour script: scripts) {
@@ -100,19 +107,19 @@ public abstract class GameObject implements Renderable {
 	 * By default, it simply updates all the scripts attached to this.
 	 * This method can be overriden for a more specific behaviour.
 	 *
-	 * @param deltaTime
-	 * @param gameInformation
+	 * @param deltaTime		- the time in seconds it took to complete the last frame
+	 * @param playerInput	- 
 	 * @param previousPlayerInput 
 	 * @throws InvalidArgumentsException 
 	 */
-	public void update(float deltaTime, PlayerInput gameInformation, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		updateAllScripts(deltaTime, gameInformation, previousPlayerInput);
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+		updateAllScripts(deltaTime, playerInput, previousPlayerInput);
 	}
 
 	/**
 	 *
-	 * @param deltaTime			- the time in seconds it took to complete the last frame
-	 * @param playerInput 	- Info that the Launcher sends to the GameManager
+	 * @param deltaTime		- the time in seconds it took to complete the last frame
+	 * @param playerInput 	- 
 	 * @throws InvalidArgumentsException 
 	 */
 	protected final void updateAllScripts(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {

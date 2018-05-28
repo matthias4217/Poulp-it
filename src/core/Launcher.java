@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
+import content.maze.Maze;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.Annex;
@@ -37,13 +38,15 @@ public class Launcher extends Application {
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 
-	static final String WINDOW_TITLE = "Hook Battle";
+
+	private static double K;
+	private static double L;
 
 
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.MAZE;
 
 
 	PlayerInput previousPlayerInput;
@@ -68,8 +71,8 @@ public class Launcher extends Application {
 
 		// Initialization of the window
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
-		stage.setTitle(WINDOW_TITLE);
-		stage.setResizable(false);
+		stage.setTitle(game.windowTitle);
+		stage.setResizable(true);
 		Group group0 = new Group();
 		stage.setScene(new Scene(group0));
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -77,7 +80,11 @@ public class Launcher extends Application {
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
-
+		
+		
+		// XXX
+		K = stage.getWidth() - WINDOW_WIDTH;
+		L = stage.getHeight() - WINDOW_HEIGHT;
 
 
 		// Initialization of the game
@@ -95,8 +102,9 @@ public class Launcher extends Application {
 		case SHOOTER:
 			String level1 = "level0";
 			gameEngine.init2(level1);
+			break;
 		case MAZE:
-			
+			gameEngine.initMazeGame(38, 17, true);
 			break;
 		case ALIEN:
 
@@ -126,7 +134,7 @@ public class Launcher extends Application {
 		/*
 		 * An AnimationTimer used for testing purpose. 
 		 */
-		AnimationTimer timerTest = new AnimationTimer() {
+		AnimationTimer timerTest1 = new AnimationTimer() {
 			@Override public void handle(long now) {
 
 				// Setting axes
@@ -153,6 +161,19 @@ public class Launcher extends Application {
 			}
 		};
 
+		/*
+		 * Another one 
+		 */
+		Maze maze = new Maze(38, 17, true);
+		AnimationTimer timerTest2 = new AnimationTimer() {
+			@Override public void handle(long now) {
+				maze.render(gc, stage.getWidth(), stage.getHeight());
+
+
+			}
+		};
+		
+		
 
 
 
@@ -166,7 +187,7 @@ public class Launcher extends Application {
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
-				gc.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);	// Clear the window
+				gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
 //				gc.drawImage(background, 0, 0);
 
 
@@ -183,12 +204,9 @@ public class Launcher extends Application {
 				}
 
 				previousPlayerInput = playerInput.copy();
-				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
-				// setOnKeyPressed, then it doesn't work ?!?
-				//playerInput.spacePressed = false;
 
 				System.out.println("Rendering...");
-				graphicManager.render(gc, WINDOW_WIDTH, WINDOW_HEIGHT);
+				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);
 
 				timeToFramerateDisplay -= deltaTime;
 				if (timeToFramerateDisplay <= 0) {

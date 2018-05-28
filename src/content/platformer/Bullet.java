@@ -1,6 +1,3 @@
-/**
- * 
- */
 package content.platformer;
 
 import content.GameObject;
@@ -8,6 +5,7 @@ import content.Layer;
 import content.MonoBehaviour;
 import content.Tag;
 import content.platformer.scripts.BulletController;
+import core.GameEngine;
 import core.util.BoxCollider;
 import core.util.Collider;
 import core.util.Vector2;
@@ -28,12 +26,13 @@ public class Bullet extends GameObject {
 	Vector2 directionShot; //must be a normalized Vector2
 	float velocityFactor;
 	
-	public Bullet(Vector2 position, Layer layer, Tag tag, Vector2 directionShot, float velocityFactor) {
+	public Bullet(Vector2 position, Layer layer, Tag tag, Vector2 directionShot, float velocityFactor, GameEngine gameEngine) {
 		super(position,
 				new Image("resources/graphic/bullet.png"),
 				Layer.DEFAULT,
 				Tag.SOLID,
 				new BoxCollider(2, 2),
+				gameEngine,
 				new BulletController(velocityFactor, directionShot));
 		// TODO Auto-generated constructor stub
 		this.directionShot = directionShot;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package content.platformer.scripts;
 
 import content.MonoBehaviour;
@@ -32,7 +29,8 @@ public class BulletController extends MonoBehaviour {
 	}
 	
 	@Override
-	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput)
+			throws InvalidArgumentsException {
 		/*
 		 * Here we update the speed, throwing a ray first, and if no
 		 * obstacle, with support.velocityFactor * directionShot

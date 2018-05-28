@@ -26,8 +26,11 @@ public class GraphicManager {
 	 * @param windowHeight	- the height of the window 
 	 */
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
-		for (Tile tile: GameEngine.level.tileList) {		// XXX
-			tile.render(gc);
+
+		if (GameEngine.level != null) {
+			for (Tile tile: GameEngine.level.tileList) {		// XXX
+				tile.render(gc);
+			}
 		}
 
 		for (GameObject gameObject: GameEngine.allGameObjects) {

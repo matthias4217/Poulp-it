@@ -1,10 +1,10 @@
-package content.maze;
+package content.maze.old;
 
+import java.awt.Color;
 import java.util.Random;
-import javafx.scene.paint.Color;
 
 
-public class AnnexMaze {
+public class AnnexMazeOld {
 
 	public static int randInt(int min, int max) {
 		/* Return a random integer in [[min; max[[. */
@@ -12,13 +12,13 @@ public class AnnexMaze {
 		return rn.nextInt(max-min) + min;
 	}
 
-	public static Color randomColor() {
+	public static Color randomColorOld() {
 		/* Return a random color uniformly among the 16 millions. */
 		Random rn = new Random();
 		float r = rn.nextFloat();
 		float g = rn.nextFloat();
 		float b = rn.nextFloat();
-		return new Color(r, g, b, 1);
+		return new Color(r, g, b);
 	}
 
 
@@ -37,6 +37,8 @@ public class AnnexMaze {
 	En partant de (0, 0) : en moyenne 123.668023 intersections.
 	En partant du centre : en moyenne 123.691469 intersections.
 	 */
+
+
 
 
 }
