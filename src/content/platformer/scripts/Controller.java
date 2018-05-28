@@ -1,11 +1,12 @@
 package content.platformer.scripts;
 
 import core.GameEngine;
+import core.PlayerInput;
 import core.util.*;
 import core.util.Annex.Direction;
-import core.annotations.Unused;
 import core.exceptions.InvalidArgumentsException;
 import content.Tag;
+import content.platformer.Bullet;
 
 /**
  * A Controller script can be attached to a moving GameObject.
@@ -23,6 +24,9 @@ public class Controller extends RaycastController {
 
 	public CollisionInfo collisions;
 	public Vector2 playerInput;
+	
+	public static float fireCooldown = 0.5f;		// the time between two shots
+	private float timeBeforeShoot = 0f;
 
 
 
@@ -37,6 +41,15 @@ public class Controller extends RaycastController {
 	public void start() {
 		super.start();
 		collisions.faceDir = 1;
+	}
+	
+	@Override
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
+		if (playerInput.aPressed && timeBeforeShoot <= 0) {
+			shootBullet(deltaTime);
+			timeBeforeShoot = fireCooldown;
+		}
+		timeBeforeShoot -= deltaTime;
 	}
 
 	public void move(Vector2 moveAmount, boolean standingOnPlatform) throws InvalidArgumentsException {
@@ -123,7 +136,7 @@ public class Controller extends RaycastController {
 				if (!collisions.climbingSlope || slopeAngle > maxSlopeAngle) {
 					moveAmount.x = (hit.getDistance() - skinWidth) * directionX;
 
-					// Reducing the lenght of the next rays casted to avoid collisions further than this one
+					// Reducing the length of the next rays casted to avoid collisions further than this one
 					rayLength = hit.getDistance();
 
 					if (collisions.climbingSlope) {
@@ -137,6 +150,17 @@ public class Controller extends RaycastController {
 		}
 	}
 
+	void shootBullet(float deltaTime) {
+		if (playerInput == Vector2.ZERO()) {
+			playerInput = Vector2.RIGHT();
+		}
+		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
+				collisionMask, 
+				Tag.SOLID, 
+				playerInput, 
+				100f * deltaTime, 
+				support.gameEngine));
+	}
 
 	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {
 		float directionY = Math.signum(moveAmount.y);

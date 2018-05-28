@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.MAZE;
+	static Game game = Game.RHYTHM_GAME;
 
 
 	PlayerInput previousPlayerInput;
@@ -102,6 +102,7 @@ public class Launcher extends Application {
 		case SHOOTER:
 			String level1 = "level0";
 			gameEngine.init2(level1);
+			break;
 		case MAZE:
 			gameEngine.initMazeGame(38, 17, false);
 			break;
@@ -203,9 +204,6 @@ public class Launcher extends Application {
 				}
 
 				previousPlayerInput = playerInput.copy();
-				//playerInput.directionalInput = Vector2.ZERO(); //XXX if placed just **before**
-				// setOnKeyPressed, then it doesn't work ?!?
-				//playerInput.spacePressed = false;
 
 				System.out.println("Rendering...");
 				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);

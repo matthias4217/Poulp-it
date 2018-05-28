@@ -1,6 +1,9 @@
 package content.shooter.scripts;
 
+import content.Layer;
 import content.MonoBehaviour;
+import content.Tag;
+import content.platformer.Bullet;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
@@ -31,6 +34,9 @@ public class Controller extends MonoBehaviour {
 	 */
 	public static float accelerationTime = 0f;
 
+	public static float fireCooldown = 0.5f;		// the time between two shots
+	private float timeBeforeShoot = 0f;
+
 
 	Vector2 velocity = Vector2.ZERO();
 	MutableFloat velocityXSmoothing = new MutableFloat(0f);		// Used for the smoothing of the horizontal velocity
@@ -59,6 +65,11 @@ public class Controller extends MonoBehaviour {
 		calculateVelocity(deltaTime, playerInput.directionalInput);
 
 
+		if (playerInput.aPressed && timeBeforeShoot <= 0) {
+			shootBullet(playerInput.directionalInput, deltaTime);
+			timeBeforeShoot = fireCooldown;
+		}
+		timeBeforeShoot -= deltaTime;
 
 
 		// Moving
@@ -76,7 +87,14 @@ public class Controller extends MonoBehaviour {
 		velocity.y = Annex.SmoothDamp(velocity.y, targetVelocityY, velocityYSmoothing, accelerationTime, deltaTime);
 	}
 
-
+	void shootBullet(Vector2 directionalInput, float deltaTime) {
+		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(directionalInput.multiply(64f)), 
+				Layer.DEFAULT, 
+				Tag.SOLID, 
+				directionalInput, 
+				200f * deltaTime, 
+				support.gameEngine));
+	}
 
 
 }

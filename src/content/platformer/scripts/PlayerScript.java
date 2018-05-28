@@ -129,7 +129,7 @@ public class PlayerScript extends MonoBehaviour {
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		System.out.println("Input update " + playerInput);
 		calculateVelocity(deltaTime, playerInput.directionalInput);
-		//handleWallSliding(deltaTime, playerInput.directionnalInput);
+		handleWallSliding(deltaTime, playerInput.directionalInput);
 
 		if (playerInput.spacePressed && !previousPlayerInput.spacePressed) {
 			onJumpInputDown(playerInput.directionalInput);
@@ -147,7 +147,6 @@ public class PlayerScript extends MonoBehaviour {
 				velocity.y = 0;		// To avoid "accumulating" gravity
 			}
 		}
-		handleWallSliding(deltaTime, playerInput.directionalInput);
 	}
 
 

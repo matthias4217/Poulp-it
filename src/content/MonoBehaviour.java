@@ -47,5 +47,4 @@ public abstract class MonoBehaviour {
 	public void lateUpdate(long deltaTime, PlayerInput playerInput) {}
 
 
-
 }
