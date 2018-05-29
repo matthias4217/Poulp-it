@@ -19,7 +19,7 @@ public class Controller extends MonoBehaviour {
 	/**
 	 * The interval between each apparition of a new input
 	 */
-	public static float interval = .8f;
+	public static float interval = 1.2f;
 	
 
 	private float timeIntervalSpent = 0f;
@@ -38,7 +38,6 @@ public class Controller extends MonoBehaviour {
 
 	@Override
 	public void start() {
-
 		generateRow();
 		score = 0;
 	};

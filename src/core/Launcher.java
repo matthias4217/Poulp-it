@@ -37,24 +37,23 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
-		
 
-	private static double K;
-	private static double L;
+
+	private static double K, L;
 
 
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.HOOK_BATTLE;
+	static Game game = Game.RHYTHM_GAME;
 
-	
-	
-	
-	
+
+
+
+
 	private static Image background = null;
-	
-	
+
+
 
 
 	PlayerInput previousPlayerInput;
@@ -78,12 +77,12 @@ public class Launcher extends Application {
 	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidArgumentsException {
 
 		// Initialization of the window
-		
+
 		if (game == Game.ALIEN) {
 			WINDOW_WIDTH = 694;
 			WINDOW_HEIGHT = 520;
 		}
-		
+
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(game.windowTitle);
 		stage.setResizable(true);
@@ -93,8 +92,8 @@ public class Launcher extends Application {
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		stage.show();
-		
-		
+
+
 		// XXX
 		K = stage.getWidth() - WINDOW_WIDTH;
 		L = stage.getHeight() - WINDOW_HEIGHT;
@@ -104,14 +103,14 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 
-//		
-//		
-//		
+		//		
+		//		
+		//		
 
 		switch (game) {
 		case HOOK_BATTLE:
 			//background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-			
+
 			int nbPlayers = 1;
 			String level0 = "level0";
 			gameEngine.initPlatformer(nbPlayers, level0);
@@ -125,7 +124,7 @@ public class Launcher extends Application {
 			break;
 		case ALIEN:
 			background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-			
+
 			int nbPineapples = 20;
 			gameEngine.initAlien(nbPineapples, stage.getWidth(), stage.getHeight());
 			break;
@@ -191,8 +190,8 @@ public class Launcher extends Application {
 
 			}
 		};
-		
-		
+
+
 
 
 
@@ -211,7 +210,7 @@ public class Launcher extends Application {
 				} else {
 					gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
 				}
-				
+
 
 
 				System.out.println(playerInput);

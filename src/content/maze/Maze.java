@@ -29,9 +29,9 @@ public class Maze implements Renderable {
 	private static final int DEFAULT_WIDTH = 38;		// | (38, 17) optimal for Eclipse console
 	private static final int DEFAULT_HEIGHT = 17;		// |
 	// Representation related variables
-	private static final Color WALL_COLOR = Color.MAGENTA;
-	private static final float WALL_WIDTH = 1;
-	private static final Color BACKGROUND_COLOR = Color.BLACK;
+	private static final Color WALL_COLOR = Color.BLACK;
+	private static final float WALL_WIDTH = 10;
+	private static final Color BACKGROUND_COLOR = Color.WHITE;
 	@Deprecated private static final Color PLAYER_COLOR = Color.WHITE;
 	@Deprecated private static final int SPARKLING_PERIOD = 110;		// Time between color changes in fantastic mode (ms)
 	// Other (please do not touch, they're fine like that)
