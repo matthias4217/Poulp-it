@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.RHYTHM_GAME;
+	static Game game = Game.ALIEN;
 
 
 	PlayerInput previousPlayerInput;
@@ -94,8 +94,8 @@ public class Launcher extends Application {
 
 //		final Image background = null;
 //		final Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-//		final Image background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-		final Image background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		final Image background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+//		final Image background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 
 
 		switch (game) {
@@ -112,6 +112,8 @@ public class Launcher extends Application {
 			gameEngine.initMazeGame(38, 17, false);
 			break;
 		case ALIEN:
+			/*WINDOW_WIDTH = 694;
+			WINDOW_HEIGHT = 520;*/
 			gameEngine.initAlien(20, (float) WINDOW_WIDTH, (float) WINDOW_HEIGHT); // 20 is the number of pineapples
 			break;
 		case RHYTHM_GAME:

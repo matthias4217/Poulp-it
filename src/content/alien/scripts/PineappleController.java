@@ -19,8 +19,16 @@ public class PineappleController extends MonoBehaviour {
 	private float maxX;
 	private float maxY;
 	
+	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, float maxX, float maxY) throws InvalidArgumentsException {
+		this.maxX = maxX;
+		this.maxY= maxY;
+		update(deltaTime, playerInput, previousPlayerInput);
+	}
+	
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		
+		changeSpeed();
+		support.position.add(speed);
+		validatePosition(maxX, maxY);	
 	}
 	
 	public void validatePosition(float maxX, float maxY) {
@@ -42,5 +50,9 @@ public class PineappleController extends MonoBehaviour {
 			y = 0;
 			speed.y *= -1;
 		}
+	}
+	
+	public void changeSpeed() {
+		
 	}
 }
