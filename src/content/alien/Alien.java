@@ -17,9 +17,7 @@ import javafx.scene.image.Image;
  */
 public class Alien extends GameObject {
 
-	
-	public static int WIDTH = 694;
-	public static int HEIGHT = 520;
+
 	
 	
 	public Alien(Vector2 position, Layer layer, Tag tag, GameEngine gameEngine) {
