@@ -22,10 +22,10 @@ import java.awt.Toolkit;
 
 /**
  * This class represents a rectangular maze.
- * It is characterized by two matrix : horizontalWalls and verticalWalls.
+ * It is characterized by two matrix: horizontalWalls and verticalWalls.
  * 
  * 
- * TODO: 	explosion!, void removeWalls()..., improved evaluation function (countBranch + length of them)
+ * TODO: 	explosions!, void removeWalls()..., improved evaluation function (countBranch + length of them)
  * 				play, implementation 2), 3)
  */
 public class MazeAWT { 

@@ -18,7 +18,7 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 500f;
+	public static float moveSpeed = 1000f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed
@@ -39,13 +39,13 @@ public class PlayerScript extends MonoBehaviour {
 	 * The time required to reach the target horizontal velocity while airborne when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeAirborne = 0f;
+	public static float accelerationTimeAirborne = 0.2f;
 
 	/**
 	 * The time required to reach the target horizontal velocity while grounded when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
-	public static float accelerationTimeGrounded = 0f;
+	public static float accelerationTimeGrounded = 0.2f;
 
 
 	/**

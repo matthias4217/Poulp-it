@@ -3,7 +3,6 @@ package content;
 import java.util.LinkedList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import core.GameEngine;
 import core.GraphicManager;
 import core.PlayerInput;
 import core.Renderable;
@@ -30,6 +29,9 @@ public abstract class GameObject implements Renderable {
 	 */
 	public Image sprite;
 
+	/**
+	 * The layer on which the GameObject is
+	 */
 	@Unused
 	public Layer layer;
 
@@ -42,11 +44,6 @@ public abstract class GameObject implements Renderable {
 	 * The collider used to detect collisions against this GameObject; null if this GameObject can't be collided with
 	 */
 	public Collider collider;
-	
-	/**
-	 * A reference to the game engine.
-	 */
-	public GameEngine gameEngine;
 
 	/**
 	 * A list of scripts attached to this GameObject, which describe its behaviour
@@ -57,7 +54,8 @@ public abstract class GameObject implements Renderable {
 	/**
 	 * This method generates the lists of scripts which will be attached to a GameObject.
 	 * A GameObject must override this method in order to set its own scripts.
-	 * We use such an implementation to bypass the (annoying) fact that Java won't allow any instruction before super() in a constructor.
+	 * We use such an implementation to bypass the (annoying) fact that Java won't allow any instruction before super()
+	 * in a constructor.
 	 *
 	 * @return		an empty list by default (if not overridden)
 	 */
@@ -79,13 +77,12 @@ public abstract class GameObject implements Renderable {
 	 * @param collider	- the Collider of the GameObject; set null if the GameObject can't be collided with
 	 * @param scripts	- the scripts attached to this GameObject
 	 */
-	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, GameEngine gameEngine, MonoBehaviour... scripts) {
+	public GameObject(Vector2 position, Image sprite, Layer layer, Tag tag, Collider collider, MonoBehaviour... scripts) {
 		this.position = position;
 		this.sprite = sprite;
 		this.layer = layer;
 		this.tag = tag;
 		this.collider = collider;
-		this.gameEngine = gameEngine;
 
 		this.scripts = new LinkedList<MonoBehaviour>();
 		for (MonoBehaviour script: scripts) {

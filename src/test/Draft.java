@@ -12,7 +12,7 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		
+		// ------
 
 
 
@@ -46,6 +46,7 @@ public class Draft {
 		}
 	}
 
+
 	public static void testNormal() {
 
 		Vector2 A = new Vector2(0, 0);
@@ -60,6 +61,7 @@ public class Draft {
 		System.out.println();
 		System.out.println("n: " + n);
 	}
+
 
 	public static void testAngle() {
 

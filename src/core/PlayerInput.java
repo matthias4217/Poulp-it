@@ -24,7 +24,7 @@ public class PlayerInput {
 	
 	public MouseEvent mouse;
 	
-	//XXX The position is updated only after a mouse event
+	// XXX The position is updated only after a mouse event
 	public Vector2 mousePosition = Vector2.ZERO();
 	public boolean mouseLeftPressed;
 	public boolean mouseRightPressed;
@@ -40,11 +40,10 @@ public class PlayerInput {
 	public boolean rPressed = false;
 	
 
-	//KeyEvent.getEventType returns the event type
+	// KeyEvent.getEventType returns the event type
 
 	public EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
-		@Override
-		public void handle(KeyEvent event) {
+		@Override public void handle(KeyEvent event) {
 			directionalInput = Vector2.ZERO();
 			switch (event.getCode()) {
 				case LEFT:	leftPressed = true;
@@ -90,8 +89,7 @@ public class PlayerInput {
 	};
 
 	public EventHandler<KeyEvent> eventHandlerReleased = new EventHandler<KeyEvent>() {
-		@Override
-		public void handle(KeyEvent event) {
+		@Override public void handle(KeyEvent event) {
 			directionalInput = Vector2.ZERO();
 			spacePressed = false;
 			switch (event.getCode()) {
@@ -122,7 +120,7 @@ public class PlayerInput {
 	
 	
 	public EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
-		public void handle(MouseEvent event) {
+		@Override public void handle(MouseEvent event) {
 			mouse = event;
 			mousePosition.x = (float) event.getX();
 			mousePosition.y = (float) event.getY();
@@ -139,6 +137,9 @@ public class PlayerInput {
 	};
 
 	
+	/**
+	 * Makes a copy of a PlayerInput object
+	 */
 	public PlayerInput copy() {
 		PlayerInput result = new PlayerInput();
 		result.directionalInput = this.directionalInput;
@@ -148,6 +149,8 @@ public class PlayerInput {
 		result.mouseRightPressed = this.mouseRightPressed;
 		return result;
 	}
+
+
 
 	@Override public String toString() {
 		return "PlayerInput [directionalInput=" + directionalInput + "; eventHandler=" + 

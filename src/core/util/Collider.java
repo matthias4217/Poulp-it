@@ -62,6 +62,11 @@ public class Collider {
 
 
 
+	public static Collider NO_COLLIDER() {
+		return null;
+	}
+
+
 
 	/**
 	 * Render this collider on the GraphicContext gc.

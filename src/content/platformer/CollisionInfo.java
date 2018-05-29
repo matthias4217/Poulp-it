@@ -1,4 +1,6 @@
-package core.util;
+package content.platformer;
+
+import core.util.Vector2;
 
 /**
  * Struct like class which stores information related to collision of a GameObject.

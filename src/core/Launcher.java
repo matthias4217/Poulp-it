@@ -15,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
 
-import content.maze.Maze;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.Annex;
@@ -42,6 +41,7 @@ public class Launcher extends Application {
 	private static double K, L;
 
 
+
 	/**
 	 * The game that will be loaded
 	 */
@@ -52,9 +52,6 @@ public class Launcher extends Application {
 
 
 	private static Image background = null;
-
-
-
 
 	PlayerInput previousPlayerInput;
 
@@ -76,14 +73,13 @@ public class Launcher extends Application {
 	@Override
 	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidArgumentsException {
 
-		// Initialization of the window
-
-		if (game == Game.ALIEN) {
+		/*	if (game == Game.ALIEN) {
 			WINDOW_WIDTH = 694;
 			WINDOW_HEIGHT = 520;
-		}
+		} */
 
-		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
+		// Initialization of the window
+		System.out.println(WINDOW_WIDTH + " x " + WINDOW_HEIGHT);
 		stage.setTitle(game.windowTitle);
 		stage.setResizable(true);
 		Group group0 = new Group();
@@ -103,35 +99,45 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 
-		//		
-		//		
-		//		
+
 
 		switch (game) {
 		case HOOK_BATTLE:
-			//background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+
+			background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 
 			int nbPlayers = 1;
 			String level0 = "level0";
 			gameEngine.initPlatformer(nbPlayers, level0);
 			break;
+
 		case SHOOTER:
+
 			String level1 = "level0";
 			gameEngine.init2(level1);
 			break;
+
 		case MAZE:
-			gameEngine.initMazeGame(38, 17, false);
+
+			int mazeWidth = 38;
+			int mazeHeight = 17;
+			gameEngine.initMazeGame(mazeWidth, mazeHeight, false);
 			break;
+
 		case ALIEN:
+
 			background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 
-			int nbPineapples = 20;
+			int nbPineapples = 30;
 			gameEngine.initAlien(nbPineapples, stage.getWidth(), stage.getHeight());
 			break;
+
 		case RHYTHM_GAME:
+
 			background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 			gameEngine.initRhythmGame();
 			break;
+
 		default:
 			break;
 		}
@@ -142,16 +148,19 @@ public class Launcher extends Application {
 		/* 
 		 * gameInformation contains the information which is sent to the client each frame.
 		 * It is updated each frame by the GameEngine.
+		 * Currently not functionnal
 		 */
 		GameInformation gameInformation = new GameInformation();
 
-		stage.getScene().setOnKeyPressed(playerInput.eventHandler);		// getting the player input.
+		// Getting the player input.
+		stage.getScene().setOnKeyPressed(playerInput.eventHandler);
 		stage.getScene().setOnMousePressed(playerInput.mouseEventHandler);
 		stage.getScene().setOnKeyReleased(playerInput.eventHandlerReleased);
 
 		/*
 		 * An AnimationTimer used for testing purpose. 
 		 */
+		@SuppressWarnings("unused")
 		AnimationTimer timerTest1 = new AnimationTimer() {
 			@Override public void handle(long now) {
 
@@ -175,24 +184,8 @@ public class Launcher extends Application {
 				gc.setStroke(Color.BLUE);
 				gc.strokeLine(A.x, A.y, B.x, B.y);
 
-
 			}
 		};
-
-		/*
-		 * Another one 
-		 */
-		Maze maze = new Maze(38, 17, true);
-		AnimationTimer timerTest2 = new AnimationTimer() {
-			@Override public void handle(long now) {
-				maze.render(gc, stage.getWidth(), stage.getHeight());
-
-
-			}
-		};
-
-
-
 
 
 		AnimationTimer timer = new AnimationTimer() {
@@ -211,8 +204,6 @@ public class Launcher extends Application {
 					gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
 				}
 
-
-
 				System.out.println(playerInput);
 
 				float deltaTime = (now - oldNow) * 0.000000001f;
@@ -220,8 +211,10 @@ public class Launcher extends Application {
 				oldNow = now;
 
 				try {
+					// Updating the game
 					gameEngine.update(deltaTime, playerInput, previousPlayerInput, gameInformation);
-				} catch (InvalidArgumentsException e) {					
+
+				} catch (InvalidArgumentsException e) {
 					e.printStackTrace();
 				}
 
@@ -229,6 +222,7 @@ public class Launcher extends Application {
 
 				System.out.println("Rendering...");
 				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);
+
 
 				timeToFramerateDisplay -= deltaTime;
 				if (timeToFramerateDisplay <= 0) {

@@ -4,6 +4,7 @@ import content.Layer;
 import content.MonoBehaviour;
 import content.Tag;
 import content.platformer.Bullet;
+import core.GameEngine;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
@@ -11,12 +12,12 @@ import core.util.MutableFloat;
 import core.util.Vector2;
 
 /**
- * The controller script which manages the movement of the GameObject
+ * The controller script which manages the movement of the GameObject.
  * 
  * @author Raph
  *
  */
-public class Controller extends MonoBehaviour {
+public class ControllerShooter extends MonoBehaviour {
 
 	/**
 	 * The default move speed of the GameObject  
@@ -27,15 +28,18 @@ public class Controller extends MonoBehaviour {
 	 * The speed of the GameObject when dashing
 	 */
 	public static float dashSpeed = 3000f;
-	
+
 	/**
 	 * The time required to reach the target velocity when starting with a null velocity
 	 * (set 0 for no inertia)
 	 */
 	public static float accelerationTime = 0f;
 
-	public static float fireCooldown = 0.5f;		// the time between two shots
-	private float timeBeforeShoot = 0f;
+	/**
+	 * The minimum amount of time between two shots
+	 */
+	public static float fireCooldown = 0.5f;
+
 
 
 	Vector2 velocity = Vector2.ZERO();
@@ -44,16 +48,18 @@ public class Controller extends MonoBehaviour {
 
 	boolean isDashing;
 
+	private float timeBeforeShoot = 0f;
+
 
 
 	/* Constructor */
-	public Controller() {}
+	public ControllerShooter() {}
 
 
 
 	@Override
 	public void start() {
-		
+
 	}
 
 	@Override
@@ -88,12 +94,12 @@ public class Controller extends MonoBehaviour {
 	}
 
 	void shootBullet(Vector2 directionalInput, float deltaTime) {
-		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(directionalInput.multiply(64f)), 
+		Bullet bullet = new Bullet(support.position.add(directionalInput.multiply(64f)), 
 				Layer.DEFAULT, 
 				Tag.SOLID, 
 				directionalInput, 
-				200f * deltaTime, 
-				support.gameEngine));
+				200f * deltaTime);
+		GameEngine.instanciate(bullet);
 	}
 
 

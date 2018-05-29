@@ -3,9 +3,9 @@ package content.maze;
 import content.GameObject;
 import content.Layer;
 import content.Tag;
-import core.GameEngine;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
+import core.util.Collider;
 import core.util.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -13,12 +13,17 @@ import javafx.scene.paint.Color;
 /**
  * The GameObject for the player in the maze game.
  * The Maze in which the player evolve is actually an attribute of this GameObject.
+ * The Player is represented as a circle in the maze.
  * 
  * @author Raph
  *
  */
 public class PlayerMaze extends GameObject {
 
+	/**
+	 * The amount of time the player cannot move after moving once.
+	 * Used to avoid going too fast at the end of a corridor. 
+	 */
 	public static float TIME_BETWEEN_TWO_STEPS = 0.04f;
 
 	/**
@@ -43,12 +48,18 @@ public class PlayerMaze extends GameObject {
 
 
 
-	public PlayerMaze(int mazeWidth, int mazeHeight, GameEngine gameEngine) {
-		this(mazeWidth, mazeHeight, false, gameEngine);
+	public PlayerMaze() {
+		super(null, null, Layer.DEFAULT, Tag.DEFAULT, Collider.NO_COLLIDER());
+
+		maze = new Maze();
 	}
 
-	public PlayerMaze(int mazeWidth, int mazeHeight, boolean mazeIsFantastic, GameEngine gameEngine) {
-		super(null, null, Layer.DEFAULT, Tag.DEFAULT, null, gameEngine);
+	public PlayerMaze(int mazeWidth, int mazeHeight) {
+		this(mazeWidth, mazeHeight, false);
+	}
+
+	public PlayerMaze(int mazeWidth, int mazeHeight, boolean mazeIsFantastic) {
+		super(null, null, Layer.DEFAULT, Tag.DEFAULT, Collider.NO_COLLIDER());
 
 		maze = new Maze(mazeWidth, mazeHeight, mazeIsFantastic);
 	}
@@ -60,7 +71,7 @@ public class PlayerMaze extends GameObject {
 			throws InvalidArgumentsException {
 
 
-
+		// BAD!
 		if (moveCooldown <= 0) {		// if we're not in move cooldown
 			float xInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.RIGHT());
 			float yInput = Vector2.dotProduct(playerInput.directionalInput, Vector2.UP());
@@ -87,6 +98,7 @@ public class PlayerMaze extends GameObject {
 
 
 
+
 	/**
 	 * Render this Sprite on the GraphicsContext gc.
 	 */
@@ -95,7 +107,7 @@ public class PlayerMaze extends GameObject {
 		 * We override the GameObject render method because the player is not represented by a specific sprite but is
 		 * simply a full circle which has to be adapted to the size of the maze.
 		 */
-		this.maze.render(gc, windowWidth, windowHeight);
+		maze.render(gc, windowWidth, windowHeight);
 
 
 		double positionX = maze.x0 + (x + K) * maze.wallSize;
@@ -105,6 +117,12 @@ public class PlayerMaze extends GameObject {
 
 		gc.setFill(PLAYER_COLOR);
 		gc.fillOval(positionX, positionY, playerScale, playerScale);
+	}
+
+
+
+	@Override public String toString() {
+		return "PlayerMaze[" + x + ", " + y + "]";
 	}
 
 }

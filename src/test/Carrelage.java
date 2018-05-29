@@ -7,16 +7,10 @@ public class Carrelage {
 
 
 
-
-
-
 	public Carrelage(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-
-
-
 
 
 

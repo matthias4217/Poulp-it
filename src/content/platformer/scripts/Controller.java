@@ -7,6 +7,7 @@ import core.util.Annex.Direction;
 import core.exceptions.InvalidArgumentsException;
 import content.Tag;
 import content.platformer.Bullet;
+import content.platformer.CollisionInfo;
 
 /**
  * A Controller script can be attached to a moving GameObject.
@@ -150,16 +151,20 @@ public class Controller extends RaycastController {
 		}
 	}
 
+	/**
+	 * XXX This method should not be there. 
+	 * Controller is for movement
+	 */
 	void shootBullet(float deltaTime) {
 		if (playerInput == Vector2.ZERO()) {
 			playerInput = Vector2.RIGHT();
 		}
-		support.gameEngine.allGameObjects.add(new Bullet(support.position.add(playerInput.multiply(64f)), 
+		Bullet bullet = new Bullet(support.position.add(playerInput.multiply(64f)), 
 				collisionMask, 
 				Tag.SOLID, 
 				playerInput, 
-				100f * deltaTime, 
-				support.gameEngine));
+				100f * deltaTime);
+		GameEngine.instanciate(bullet);
 	}
 
 	void verticalCollisions(Vector2 moveAmount) throws InvalidArgumentsException {

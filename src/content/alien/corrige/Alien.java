@@ -88,7 +88,7 @@ public class Alien extends Application {
 
 
 		new AnimationTimer() {
-			public void handle(long arg0) {
+			public void handle(long now) {
 
 				gc.drawImage(space, 0, 0);
 
@@ -111,8 +111,8 @@ public class Alien extends Application {
 				spaceship.render(gc);
 
 				String txt = "Score: " + score;
-				gc.fillText(txt, 540, 36 );
-				gc.strokeText(txt, 540, 36 ); 
+				gc.fillText(txt, 540, 36);
+				gc.strokeText(txt, 540, 36); 
 			}
 		}.start();
 	}
@@ -121,7 +121,7 @@ public class Alien extends Application {
 
 	private void changeSpeed(Sprite pinapple) {
 		int max = 5;
-		pinapple.setSpeed(max*Math.random() - max/2, max*Math.random() - max/2);
+		pinapple.setSpeed(max * (Math.random() - 0.5), max * (Math.random() - 0.5));
 	}
 
 }

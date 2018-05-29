@@ -11,7 +11,6 @@ package content.maze;
 
 import java.util.*;
 
-import content.GameObject;
 import core.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -32,8 +31,6 @@ public class Maze implements Renderable {
 	private static final Color WALL_COLOR = Color.BLACK;
 	private static final float WALL_WIDTH = 10;
 	private static final Color BACKGROUND_COLOR = Color.WHITE;
-	@Deprecated private static final Color PLAYER_COLOR = Color.WHITE;
-	@Deprecated private static final int SPARKLING_PERIOD = 110;		// Time between color changes in fantastic mode (ms)
 	// Other (please do not touch, they're fine like that)
 	private static final boolean ZEROZERO = false;		// Does the recursion start at (0, 0)?
 	private static final float MARGIN = 0.02f;		// Used for window representation	@@@

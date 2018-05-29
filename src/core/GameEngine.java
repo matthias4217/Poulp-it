@@ -9,11 +9,10 @@ import content.GameObject;
 import content.Layer;
 import content.alien.Alien;
 import content.alien.Pineapple;
-import content.maze.Maze;
 import content.maze.PlayerMaze;
 import content.platformer.Player;
-import content.rhythmgame.RhythmConductor;
-import content.shooter.Player2;
+import content.rhythm_game.RhythmConductor;
+import content.shooter.PlayerShooter;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -55,10 +54,14 @@ public class GameEngine {
 	public static Level level;
 
 	/**
+	 * The multiplicative factor used to affect the time flow in the game 
+	 */
+	public static float timeFactor = 1f;
+
+	/**
 	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
-	public static float TIME_FACTOR = 1f;
 	public static float tileSize = 32;
 
 	/**
@@ -183,9 +186,9 @@ public class GameEngine {
 			//			spawnPosition.translate(Vector2.RIGHT().multiply(100 * i));
 			//			spawnPosition = new Vector2(280, 710);
 			spawnPosition = new Vector2(585, 730);
-			Player playerI = new Player(spawnPosition, 10, this);
+			Player playerI = new Player(spawnPosition, 10);
 			players[i] = playerI;
-			allGameObjects.add(playerI);
+			instanciate(playerI);
 		}
 		System.out.println("Players instanciation finished");
 
@@ -201,36 +204,59 @@ public class GameEngine {
 		System.out.println("Beginning level importation...");
 		level = new Level("levels/" + levelName + ".txt");
 
-		Player2 player = new Player2(new Vector2(585, 730), this);
-		allGameObjects.add(player);
+		PlayerShooter player = new PlayerShooter(new Vector2(585, 730));
+		instanciate(player);
+
 	}
 
 
-	public void initMazeGame(int width, int height, boolean fantastic) {
-		
-		PlayerMaze player = new PlayerMaze(38, 17, fantastic, this);
-		allGameObjects.add(player);
-		
+	public void initMazeGame(int mazeWidth, int mazeHeight, boolean fantastic) {
+
+		PlayerMaze player = new PlayerMaze(mazeWidth, mazeHeight, fantastic);
+		instanciate(player);
+
 	}
-	
+
+
 	public void initAlien(int nbrPineapples, double windowWidth, double windowHeight) {
-		
-		allGameObjects.add(new Alien(new Vector2(100, 100),
-				null, null, null));
+
+		Alien alien = new Alien(new Vector2(100, 100), null, null);
+		instanciate(alien);
 		for (int i = 0; i < nbrPineapples ; i++) {
 			Vector2 position = new Vector2((float) (windowWidth * Math.random()), (float) (windowHeight * Math.random()));
-			allGameObjects.add(new Pineapple(position, null, null, null));
+			instanciate(new Pineapple(position, null, null));
 		}
-		
-	}
-	
-	
-	public void initRhythmGame() throws IOException, InvalidArgumentsException {
-		initializeTILE_TO_COLLIDER();
 
-		RhythmConductor conductor = new RhythmConductor(this);
-		allGameObjects.add(conductor);
 	}
+
+
+	public void initRhythmGame() throws IOException, InvalidArgumentsException {
+
+		initializeTILE_TO_COLLIDER();
+		RhythmConductor conductor = new RhythmConductor();
+		instanciate(conductor);
+	}
+
+
+
+	/**
+	 * Add a GameObject to the GameEngine
+	 * 
+	 * @param gameObject	- The GameObject to instanciate
+	 */
+	public static void instanciate(GameObject gameObject) {
+		allGameObjects.add(gameObject);
+	}
+	
+	/**
+	 * Remove a GameObject from the GameEngine
+	 * 
+	 * @param gameObject	- The GameObject to remove
+	 */
+	public static void remove(GameObject gameObject) {
+		allGameObjects.remove(gameObject);
+	}
+
 
 
 	/**
@@ -250,7 +276,7 @@ public class GameEngine {
 		//		System.out.println("Current GameInformation: " + gameInformation);
 		debugElements.clear();
 
-		deltaTime *= TIME_FACTOR;
+		deltaTime *= timeFactor;
 
 		// Applying all GameManagers
 		for (GameManager gameManager: allGameManagers) {
@@ -271,8 +297,10 @@ public class GameEngine {
 
 
 
+
+
 	/**
-	 * Casts a ray which can detect collisions
+	 * Casts a ray which can detect obstacles
 	 *
 	 * @param rayOrigin		- the origin of the ray in absolute coordinates
 	 * @param direction		- the direction in which the ray is cast
@@ -311,7 +339,7 @@ public class GameEngine {
 		// The index of the column/row which is fixed
 		int fixed = tileOrigin[1-var];
 		// Moving which way?
-		
+
 		//XXX
 		int increment = (direction == Direction.UP || direction == Direction.LEFT) ? -1 : 1;
 
@@ -376,11 +404,6 @@ public class GameEngine {
 	private static Vector2 toWorldCoordinates(int xTile, int yTile) {
 		return new Vector2(xTile * tileSize, (float) (Launcher.WINDOW_HEIGHT - yTile * tileSize));
 	}
-
-
-
-
-
 
 
 
