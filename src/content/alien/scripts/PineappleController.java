@@ -17,6 +17,7 @@ import core.util.Vector2;
 public class PineappleController extends MonoBehaviour {
 
 	Vector2 speed = Vector2.ZERO();
+	float speedFactor = 1.3f;
 	private float maxX = (float) Launcher.WINDOW_WIDTH;;
 	private float maxY = (float) Launcher.WINDOW_HEIGHT;;
 	
@@ -60,6 +61,6 @@ public class PineappleController extends MonoBehaviour {
 		int max = 5;
 		float x = max * (float) Math.random() - max/2;
 		float y = max * (float) Math.random() - max/2;
-		speed = new Vector2(x, y);
+		speed = new Vector2(x, y).multiply(speedFactor);
 	}
 }
