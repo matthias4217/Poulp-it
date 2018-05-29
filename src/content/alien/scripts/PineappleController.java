@@ -5,6 +5,7 @@ package content.alien.scripts;
 
 import content.MonoBehaviour;
 import content.alien.Alien;
+import core.Launcher;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Vector2;
@@ -16,8 +17,8 @@ import core.util.Vector2;
 public class PineappleController extends MonoBehaviour {
 
 	Vector2 speed = Vector2.ZERO();
-	private float maxX;
-	private float maxY;
+	private float maxX = (float) Launcher.WINDOW_WIDTH;;
+	private float maxY = (float) Launcher.WINDOW_HEIGHT;;
 	
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, float maxX, float maxY) throws InvalidArgumentsException {
 		this.maxX = maxX;
@@ -26,8 +27,11 @@ public class PineappleController extends MonoBehaviour {
 	}
 	
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
-		changeSpeed();
-		support.position.add(speed);
+		if(Math.random() > 0.995) {
+			changeSpeed();
+		}
+		support.position.x += speed.x;
+		support.position.y += speed.y;
 		validatePosition(maxX, maxY);	
 	}
 	
@@ -53,6 +57,9 @@ public class PineappleController extends MonoBehaviour {
 	}
 	
 	public void changeSpeed() {
-		
+		int max = 5;
+		float x = max * (float) Math.random() - max/2;
+		float y = max * (float) Math.random() - max/2;
+		speed = new Vector2(x, y);
 	}
 }
