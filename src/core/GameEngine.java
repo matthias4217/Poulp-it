@@ -213,12 +213,12 @@ public class GameEngine {
 		
 	}
 	
-	public void initAlien(int nbrPineapples) {
+	public void initAlien(int nbrPineapples, float windowWidth, float windowHeight) {
 		
 		allGameObjects.add(new Alien(new Vector2(100, 100),
 				null, null, null));
 		for (int i = 0; i < nbrPineapples ; i++) {
-			Vector2 position = new Vector2(0,0);
+			Vector2 position = new Vector2(windowWidth * (float) Math.random(), windowHeight * (float) Math.random());
 			allGameObjects.add(new Pineapple(position, null, null, null));
 		}
 		

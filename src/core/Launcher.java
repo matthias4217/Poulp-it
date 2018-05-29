@@ -46,7 +46,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.ALIEN;
+	static Game game = Game.RHYTHM_GAME;
 
 
 	PlayerInput previousPlayerInput;
@@ -78,7 +78,6 @@ public class Launcher extends Application {
 		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		group0.getChildren().add(canvas);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 		stage.show();
 		
 		
@@ -91,6 +90,12 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 
+
+
+//		final Image background = null;
+//		final Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+//		final Image background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+		final Image background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 
 
 		switch (game) {
@@ -107,14 +112,13 @@ public class Launcher extends Application {
 			gameEngine.initMazeGame(38, 17, false);
 			break;
 		case ALIEN:
-			gameEngine.initAlien(20); // 20 is the number of pineapples
+			gameEngine.initAlien(20, (float) WINDOW_WIDTH, (float) WINDOW_HEIGHT); // 20 is the number of pineapples
 			break;
 		case RHYTHM_GAME:
 			String level = "rhythmgame";
 			gameEngine.initRhythmGame(level);
 			break;
 		default:
-
 			break;
 		}
 
@@ -188,7 +192,7 @@ public class Launcher extends Application {
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
 				gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
-//				gc.drawImage(background, 0, 0);
+				gc.drawImage(background, 0, 0);
 
 
 				System.out.println(playerInput);
