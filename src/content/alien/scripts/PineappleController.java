@@ -21,6 +21,11 @@ public class PineappleController extends MonoBehaviour {
 	private float maxX = (float) Launcher.WINDOW_WIDTH;;
 	private float maxY = (float) Launcher.WINDOW_HEIGHT;;
 	
+	public void start() {
+		changeSpeed();
+	}
+	
+	
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, float maxX, float maxY) throws InvalidArgumentsException {
 		this.maxX = maxX;
 		this.maxY= maxY;

@@ -14,7 +14,7 @@ import content.GameObject;
  */
 public class GraphicManager {
 
-	public static boolean debugVisible = true;
+	public static boolean debugVisible = false;
 
 
 

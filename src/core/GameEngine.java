@@ -213,33 +213,21 @@ public class GameEngine {
 		
 	}
 	
-	public void initAlien(int nbrPineapples, float windowWidth, float windowHeight) {
+	public void initAlien(int nbrPineapples, double windowWidth, double windowHeight) {
 		
 		allGameObjects.add(new Alien(new Vector2(100, 100),
 				null, null, null));
 		for (int i = 0; i < nbrPineapples ; i++) {
-			Vector2 position = new Vector2(windowWidth * (float) Math.random(), windowHeight * (float) Math.random());
+			Vector2 position = new Vector2((float) (windowWidth * Math.random()), (float) (windowHeight * Math.random()));
 			allGameObjects.add(new Pineapple(position, null, null, null));
 		}
 		
 	}
 	
 	
-	public void initRhythmGame(String levelName) throws IOException, InvalidArgumentsException {
+	public void initRhythmGame() throws IOException, InvalidArgumentsException {
 		initializeTILE_TO_COLLIDER();
 
-		// Importing the level
-		System.out.println("Beginning level importation...");
-		level = new Level("levels/" + levelName + ".txt");
-
-		// Initializing the tileReferences matrix
-		tileReferences = (LinkedList<GameObject>[][]) new LinkedList[50][50];		// XXX
-		for (int i = 0; i < tileReferences.length; i++) {
-			for (int j = 0; j < tileReferences[i].length; j++) {
-				tileReferences[i][j] = emptyList;
-			}
-		}
-		
 		RhythmConductor conductor = new RhythmConductor(this);
 		allGameObjects.add(conductor);
 	}

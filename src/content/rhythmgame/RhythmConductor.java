@@ -34,24 +34,29 @@ public class RhythmConductor extends GameObject {
 	}
 	
 	@Override public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
-		//We'll just print the letter at the center of the screen
-		gc.setFill(Color.RED);
-		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 40));
+
+		// We'll just print the letter at the center of the screen
+		gc.setFill(Color.WHITE);
+		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 200));
 		if (controller.currentLetters[0]) {
-			gc.fillText("A", 200, 300);
+			gc.fillText("A", 320, 700);
 		}
 
 		if (controller.currentLetters[1]) {
-			gc.fillText("Z", 250, 300);
+			gc.fillText("Z", 630, 704);
 		}
 
 		if (controller.currentLetters[2]) {
-			gc.fillText("E", 300, 300);
+			gc.fillText("E", 949, 700);
 		}
 
 		if (controller.currentLetters[3]) {
-			gc.fillText("R", 350, 300);
+			gc.fillText("R", 1240, 700);
 		}
-		gc.fillText(String.valueOf(controller.score), 100, 100);
+		
+		// Score
+		gc.setFill(Color.YELLOW);
+		gc.setFont(Font.font("Comic Sans MS", FontWeight.NORMAL, 80));
+		gc.fillText(String.valueOf(controller.score), 0.48 * windowWidth, 0.3 * windowHeight);
 	}
 }

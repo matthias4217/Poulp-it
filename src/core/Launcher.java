@@ -37,7 +37,7 @@ public class Launcher extends Application {
 	static final double SCALE = 0.9f;
 	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
 	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
-
+		
 
 	private static double K;
 	private static double L;
@@ -46,7 +46,15 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.ALIEN;
+	static Game game = Game.HOOK_BATTLE;
+
+	
+	
+	
+	
+	private static Image background = null;
+	
+	
 
 
 	PlayerInput previousPlayerInput;
@@ -70,6 +78,12 @@ public class Launcher extends Application {
 	public void start(Stage stage) throws MultipleGameEngineException, IOException, InvalidArgumentsException {
 
 		// Initialization of the window
+		
+		if (game == Game.ALIEN) {
+			WINDOW_WIDTH = 694;
+			WINDOW_HEIGHT = 520;
+		}
+		
 		System.out.println(WINDOW_WIDTH + " × " + WINDOW_HEIGHT);
 		stage.setTitle(game.windowTitle);
 		stage.setResizable(true);
@@ -90,16 +104,14 @@ public class Launcher extends Application {
 		GameEngine gameEngine = new GameEngine();
 		GraphicManager graphicManager = new GraphicManager();
 
-
-
-//		final Image background = null;
-//		final Image background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-		final Image background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-//		final Image background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
-
+//		
+//		
+//		
 
 		switch (game) {
 		case HOOK_BATTLE:
+			background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+			
 			int nbPlayers = 1;
 			String level0 = "level0";
 			gameEngine.initPlatformer(nbPlayers, level0);
@@ -112,13 +124,14 @@ public class Launcher extends Application {
 			gameEngine.initMazeGame(38, 17, false);
 			break;
 		case ALIEN:
-			/*WINDOW_WIDTH = 694;
-			WINDOW_HEIGHT = 520;*/
-			gameEngine.initAlien(20, (float) WINDOW_WIDTH, (float) WINDOW_HEIGHT); // 20 is the number of pineapples
+			background = new Image("resources/graphic/alien/space.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+			
+			int nbPineapples = 20;
+			gameEngine.initAlien(nbPineapples, stage.getWidth(), stage.getHeight());
 			break;
 		case RHYTHM_GAME:
-			String level = "rhythmgame";
-			gameEngine.initRhythmGame(level);
+			background = new Image("resources/graphic/backgrounds/fond_GH.png", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+			gameEngine.initRhythmGame();
 			break;
 		default:
 			break;
@@ -193,8 +206,12 @@ public class Launcher extends Application {
 
 				System.out.print(System.lineSeparator());		// To differentiate the different frames in the console
 
-				gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
-				gc.drawImage(background, 0, 0);
+				if (background != null) {
+					gc.drawImage(background, 0, 0, stage.getWidth(), stage.getHeight());
+				} else {
+					gc.clearRect(0, 0, stage.getWidth(), stage.getHeight());	// Clear the window
+				}
+				
 
 
 				System.out.println(playerInput);

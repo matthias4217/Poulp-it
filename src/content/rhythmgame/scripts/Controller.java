@@ -16,9 +16,11 @@ import core.exceptions.InvalidArgumentsException;
  */
 public class Controller extends MonoBehaviour {
 
-	// interval between each apparition of a new input
+	/**
+	 * The interval between each apparition of a new input
+	 */
 	public float interval = 0.4f;
-	public float timeIntervalSpent = 0f;
+	private float timeIntervalSpent = 0f;
 	
 	public int score;
 	

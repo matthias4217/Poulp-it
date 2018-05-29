@@ -2,24 +2,4 @@
 tilesize: 32
 theme: bubblegold
 level: {
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xv                                  ux
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x                                    x
-x\                                  /x
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }

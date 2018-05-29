@@ -29,10 +29,11 @@ public class Maze implements Renderable {
 	private static final int DEFAULT_WIDTH = 38;		// | (38, 17) optimal for Eclipse console
 	private static final int DEFAULT_HEIGHT = 17;		// |
 	// Representation related variables
-	private static final Color WALL_COLOR = Color.MAGENTA;
-	private static final Color BACKGROUND_COLOR = Color.BLACK;
-	private static final Color PLAYER_COLOR = Color.WHITE;
-	private static final int SPARKLING_PERIOD = 110;		// Time between color changes in fantastic mode (ms)
+	private static final Color WALL_COLOR = Color.BLACK;
+	private static final float WALL_WIDTH = 10;
+	private static final Color BACKGROUND_COLOR = Color.WHITE;
+	@Deprecated private static final Color PLAYER_COLOR = Color.WHITE;
+	@Deprecated private static final int SPARKLING_PERIOD = 110;		// Time between color changes in fantastic mode (ms)
 	// Other (please do not touch, they're fine like that)
 	private static final boolean ZEROZERO = false;		// Does the recursion start at (0, 0)?
 	private static final float MARGIN = 0.02f;		// Used for window representation	@@@
@@ -135,6 +136,7 @@ public class Maze implements Renderable {
 		calculate(windowWidth, windowHeight);
 
 		// Maze representation
+		gc.setLineWidth(WALL_WIDTH);		// Width of the walls
 		gc.setStroke(WALL_COLOR);
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
