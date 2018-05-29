@@ -19,7 +19,9 @@ public class Controller extends MonoBehaviour {
 	/**
 	 * The interval between each apparition of a new input
 	 */
-	public float interval = 0.4f;
+	public static float interval = .8f;
+	
+
 	private float timeIntervalSpent = 0f;
 	
 	public int score;

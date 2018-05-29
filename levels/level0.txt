@@ -4,22 +4,22 @@
 # Empty lines _matter_
 #
 tilesize: 32
-theme: bubblegold
+theme: simplegrey
 #
 level:{
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-xxv                     ux
-xx                       x
-xx      xxxxxxx          x
-xx                       x
-xx                      xx
-xxxxxxxxx   /xxx         x
-xx         /xx           x
-xx        /xxx           x
-xx        xxxx           x
-xx   xx     ux\          x
-xx  xxx      ux\         
-xx    x       ux\        
+xxxxxxxxxxxxxxxxxxxxxxxxxx 
+xxv                     ux 
+xx                       x 
+xx      xxxxxxx          x 
+xx                       x 
+xx                      xx 
+xxxxxxxxx   /xxx         x 
+xx         /xx           x 
+xx        /xxx           x 
+xx        xxxx           x 
+xx   xx     ux\   xxx    x 
+xx  xxx      ux\          
+xx    x       ux\                     
 xx             ux\                   x
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 }

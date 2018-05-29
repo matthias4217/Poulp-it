@@ -58,7 +58,7 @@ public class GameEngine {
 	 * The length of a tile in window coordinates.
 	 * It is changed in order to change the zoom of the camera.
 	 */
-	public static float TIME_FACTOR = 0.5f;
+	public static float TIME_FACTOR = 1f;
 	public static float tileSize = 32;
 
 	/**
@@ -71,7 +71,7 @@ public class GameEngine {
 	/**
 	 * tileReferences[i][j] contains the list of GameObjects which are in the tile (i, j).
 	 * null if there is no GameObject in this tile.
-	 * 
+	 *
 	 * It is used for collision detection
 	 */
 	static LinkedList<GameObject>[][] tileReferences;		// TODO set this each frame
@@ -208,7 +208,7 @@ public class GameEngine {
 
 	public void initMazeGame(int width, int height, boolean fantastic) {
 		
-		PlayerMaze player = new PlayerMaze(38, 17, fantastic, this);
+		PlayerMaze player = new PlayerMaze(160, 80, fantastic, this);
 		allGameObjects.add(player);
 		
 	}

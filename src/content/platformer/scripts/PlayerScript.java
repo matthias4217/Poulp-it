@@ -18,7 +18,7 @@ public class PlayerScript extends MonoBehaviour {
 	/**
 	 * The maximum horizontal move speed of the player  
 	 */
-	public static float moveSpeed = 900f;
+	public static float moveSpeed = 500f;
 
 	/**
 	 * The maximum height that can be reached when keeping the jump button pressed

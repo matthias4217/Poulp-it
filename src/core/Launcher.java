@@ -110,7 +110,7 @@ public class Launcher extends Application {
 
 		switch (game) {
 		case HOOK_BATTLE:
-			background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
+			//background = new Image("resources/graphic/backgrounds/rideau.jpg", WINDOW_WIDTH, WINDOW_HEIGHT, true, true);
 			
 			int nbPlayers = 1;
 			String level0 = "level0";
