@@ -19,19 +19,38 @@ import core.exceptions.InvalidArgumentsException;
 public class ControllerRhythm extends MonoBehaviour {
 
 	/**
-	 * The interval between each apparition of a new row of letters.
-	 * Adjust this to control the difficulty.
+	 * The maximum amount of time for a round; correspond to the easiest difficulty
 	 */
-	public static float interval = 0.5f;
-	
+	public static float INTERVAL_MAX = 1f;
+
+	/**
+	 * The minimum amount of time for a round; correspond to the hardest difficulty
+	 */
+	public static float INTERVAL_MIN = 0.48f;
+
 	/**
 	 * The duration of the feedback period (when the letters are colored after a win or fail).
 	 * Denoted as a percentage of interval.
 	 */
-	public static float percentFeedback = 0.35f;
+	public static float PERCENT_FEEDBACK = 0.35f;
+
+	/**
+	 * The initial score.
+	 */
+	public static int INITIAL_SCORE = 0;
+
+	/**
+	 * The maximum score after which the difficulty stops increasing
+	 */
+	public static int SCORE_MAX_DIFFICULTY = 50;
 
 
 
+
+	/**
+	 * The interval between each apparition of a new row of letters.
+	 */
+	public float interval;
 	/**
 	 * The current score
 	 */
@@ -39,10 +58,15 @@ public class ControllerRhythm extends MonoBehaviour {
 
 	/**
 	 * The current state:
+	 * 	- NORMAL	
+	 *  - WIN		
+	 *  - LOSE		
 	 */
 	public State state;
 
-
+	/**
+	 * The amount of time currently spent in this phase
+	 */
 	private float timeIntervalSpent = 0f;
 
 
@@ -56,8 +80,9 @@ public class ControllerRhythm extends MonoBehaviour {
 
 	@Override
 	public void start() {
+		score = INITIAL_SCORE;
+		calculateInterval(score);
 		state = State.NORMAL;
-		score = 0;
 		generateRow();
 	};
 
@@ -66,10 +91,10 @@ public class ControllerRhythm extends MonoBehaviour {
 			throws InvalidArgumentsException {
 
 		timeIntervalSpent += deltaTime;
-		
+
 		switch (state) {
 		case NORMAL:
-			
+
 			if (timeIntervalSpent >= interval) {		// if the time interval is finished
 				if (checkEquality(playerInput)) {
 					System.out.println("Win!");
@@ -87,11 +112,13 @@ public class ControllerRhythm extends MonoBehaviour {
 			break;
 		case WIN:
 		case FAIL:
-			
-			if (timeIntervalSpent >= percentFeedback * interval) {
+
+			if (timeIntervalSpent >= PERCENT_FEEDBACK * interval) {
 				generateRow();
 				state = State.NORMAL;
 				timeIntervalSpent = 0;
+				
+				calculateInterval(score);
 			}
 			break;
 
@@ -121,6 +148,10 @@ public class ControllerRhythm extends MonoBehaviour {
 				playerInput.zPressed == currentLetters[1] &&
 				playerInput.ePressed == currentLetters[2] &&
 				playerInput.rPressed == currentLetters[3];
+	}
+
+	void calculateInterval(int score) {
+		interval = INTERVAL_MAX + (INTERVAL_MIN - INTERVAL_MAX) * score / SCORE_MAX_DIFFICULTY;
 	}
 
 }
