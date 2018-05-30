@@ -29,6 +29,18 @@ public final class Annex {
 	public static float clamp(float value, float a, float b) {
 		return Math.max(a, Math.min(b, value));	
 	}
+	
+	/**
+	 * Clamp an integer value between a minimum int and a int float value. 
+	 *
+	 * @param value
+	 * @param a
+	 * @param b
+	 * @return value clamped between a and b
+	 */
+	public static int clamp(int value, int a, int b) {
+		return Math.max(a, Math.min(b, value));	
+	}
 
 
 

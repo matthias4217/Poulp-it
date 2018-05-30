@@ -119,9 +119,10 @@ public class Launcher extends Application {
 
 		case MAZE:
 
-			int mazeWidth = 38;
-			int mazeHeight = 17;
-			gameEngine.initMazeGame(mazeWidth, mazeHeight, false);
+			int mazeWidth = 37;
+			int mazeHeight = 18;
+			boolean fantastic = false;
+			gameEngine.initMazeGame(mazeWidth, mazeHeight, fantastic);
 			break;
 
 		case ALIEN:

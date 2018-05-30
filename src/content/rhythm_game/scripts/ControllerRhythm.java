@@ -8,6 +8,7 @@ import content.MonoBehaviour;
 import content.rhythm_game.State;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
+import core.util.Annex;
 
 
 /**
@@ -26,7 +27,7 @@ public class ControllerRhythm extends MonoBehaviour {
 	/**
 	 * The minimum amount of time for a round; correspond to the hardest difficulty
 	 */
-	public static float INTERVAL_MIN = 0.48f;
+	public static float INTERVAL_MIN = 0.45f;
 
 	/**
 	 * The duration of the feedback period (when the letters are colored after a win or fail).
@@ -37,12 +38,12 @@ public class ControllerRhythm extends MonoBehaviour {
 	/**
 	 * The initial score.
 	 */
-	public static int INITIAL_SCORE = 0;
+	public static int INITIAL_SCORE = 10;
 
 	/**
 	 * The maximum score after which the difficulty stops increasing
 	 */
-	public static int SCORE_MAX_DIFFICULTY = 50;
+	public static int SCORE_MAX_DIFFICULTY = 100;
 
 
 
@@ -118,7 +119,7 @@ public class ControllerRhythm extends MonoBehaviour {
 				state = State.NORMAL;
 				timeIntervalSpent = 0;
 				
-				calculateInterval(score);
+				calculateInterval(Annex.clamp(score, 0, SCORE_MAX_DIFFICULTY));
 			}
 			break;
 
