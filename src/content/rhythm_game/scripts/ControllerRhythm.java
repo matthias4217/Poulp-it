@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import content.MonoBehaviour;
+import content.rhythm_game.State;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 
@@ -19,8 +20,16 @@ public class ControllerRhythm extends MonoBehaviour {
 
 	/**
 	 * The interval between each apparition of a new row of letters.
+	 * Adjust this to control the difficulty.
 	 */
-	public static float interval = 1.2f;
+	public static float interval = 0.5f;
+	
+	/**
+	 * The duration of the feedback period (when the letters are colored after a win or fail).
+	 * Denoted as a percentage of interval.
+	 */
+	public static float percentFeedback = 0.35f;
+
 
 
 	/**
@@ -30,7 +39,6 @@ public class ControllerRhythm extends MonoBehaviour {
 
 	/**
 	 * The current state:
-	 * TODO
 	 */
 	public State state;
 
@@ -48,6 +56,7 @@ public class ControllerRhythm extends MonoBehaviour {
 
 	@Override
 	public void start() {
+		state = State.NORMAL;
 		score = 0;
 		generateRow();
 	};
@@ -57,20 +66,38 @@ public class ControllerRhythm extends MonoBehaviour {
 			throws InvalidArgumentsException {
 
 		timeIntervalSpent += deltaTime;
+		
+		switch (state) {
+		case NORMAL:
+			
+			if (timeIntervalSpent >= interval) {		// if the time interval is finished
+				if (checkEquality(playerInput)) {
+					System.out.println("Win!");
+					score++;
+					state = State.WIN;
+				} else {
+					System.out.println("Fail!");
+					score--;
+					state = State.FAIL;
+				}
+				timeIntervalSpent = 0;
 
-		if (timeIntervalSpent >= interval) {		// if the time interval is finished
-			if (checkEquality(playerInput)) {
-				System.out.println("Win!");
-				score++;
-			} else {
-				System.out.println("Fail!");
-				score--;
 			}
-			generateRow();
-			timeIntervalSpent = 0;
 
+			break;
+		case WIN:
+		case FAIL:
+			
+			if (timeIntervalSpent >= percentFeedback * interval) {
+				generateRow();
+				state = State.NORMAL;
+				timeIntervalSpent = 0;
+			}
+			break;
+
+		default:
+			break;
 		}
-
 
 	}
 
@@ -95,12 +122,5 @@ public class ControllerRhythm extends MonoBehaviour {
 				playerInput.ePressed == currentLetters[2] &&
 				playerInput.rPressed == currentLetters[3];
 	}
-
-}
-
-enum State {
-	NORMAL,
-	WIN,
-	FAIL
 
 }

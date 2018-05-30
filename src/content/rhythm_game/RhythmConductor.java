@@ -24,8 +24,9 @@ public class RhythmConductor extends GameObject {
 	public static Color LETTER_COLOR_WIN = Color.LIMEGREEN;
 	public static Color LETTER_COLOR_FAIL = Color.RED;
 	public static Color SCORE_COLOR = Color.YELLOW;
-	
-	
+
+
+
 	ControllerRhythm controller;		// A reference to this' Controller script
 
 
@@ -50,9 +51,22 @@ public class RhythmConductor extends GameObject {
 	@Override
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 
-		
-		
-		gc.setFill(LETTER_COLOR_NORMAL);
+
+
+		switch (controller.state) {
+		case NORMAL:
+			gc.setFill(LETTER_COLOR_NORMAL);
+			break;
+		case WIN:
+			gc.setFill(LETTER_COLOR_WIN);
+			break;
+		case FAIL:
+			gc.setFill(LETTER_COLOR_FAIL);
+			break;
+		default:
+			break;
+		}
+
 		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 200));
 		if (controller.currentLetters[0]) {
 			gc.fillText("A", 320, 700);
