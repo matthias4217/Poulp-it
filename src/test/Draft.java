@@ -1,6 +1,7 @@
 package test;
 
 import core.util.*;
+import javafx.scene.media.AudioClip;
 import core.exceptions.InvalidArgumentsException;
 
 /**
@@ -12,7 +13,9 @@ import core.exceptions.InvalidArgumentsException;
 public class Draft {
 	public static void main(String[] args) throws InvalidArgumentsException {
 
-		// ------
+		AudioClip sound = new AudioClip("resources/audio/sound_effects/CasualGameSounds/DM-CGS-02.wav");
+		sound.play();
+		
 
 
 

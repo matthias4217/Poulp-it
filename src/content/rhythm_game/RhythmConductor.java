@@ -51,8 +51,6 @@ public class RhythmConductor extends GameObject {
 	@Override
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 
-
-
 		switch (controller.state) {
 		case NORMAL:
 			gc.setFill(LETTER_COLOR_NORMAL);
@@ -69,16 +67,16 @@ public class RhythmConductor extends GameObject {
 
 		gc.setFont(Font.font("Helvetica", FontWeight.BOLD, 200));
 		if (controller.currentLetters[0]) {
-			gc.fillText("A", 320, 700);
+			gc.fillText("A", 320, 704);
 		}
 		if (controller.currentLetters[1]) {
-			gc.fillText("Z", 630, 704);
+			gc.fillText("Z", 635, 704);
 		}
 		if (controller.currentLetters[2]) {
-			gc.fillText("E", 949, 700);
+			gc.fillText("E", 949, 704);
 		}
 		if (controller.currentLetters[3]) {
-			gc.fillText("R", 1240, 700);
+			gc.fillText("R", 1242, 704);
 		}
 
 		// Score

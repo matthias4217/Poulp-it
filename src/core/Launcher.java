@@ -34,8 +34,10 @@ public class Launcher extends Application {
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
 	static final double SCALE = 0.9f;
-	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
-	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
+	static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	
+	public static final boolean FRAMERATE_DISPLAYED = true;
 
 
 	private static double K, L;
@@ -190,7 +192,7 @@ public class Launcher extends Application {
 
 
 		AnimationTimer timer = new AnimationTimer() {
-			long oldNow = System.nanoTime();
+			long before = System.nanoTime();
 			float timeToFramerateDisplay = 0f;
 			int framerate;
 			@Override public void handle(long now) {
@@ -207,9 +209,9 @@ public class Launcher extends Application {
 
 				System.out.println(playerInput);
 
-				float deltaTime = (now - oldNow) * 0.000000001f;
+				float deltaTime = (now - before) * 0.000000001f;
 				System.out.println("Time elapsed since the last frame: " + deltaTime + "s");
-				oldNow = now;
+				before = now;
 
 				try {
 					// Updating the game
@@ -225,14 +227,16 @@ public class Launcher extends Application {
 				graphicManager.render(gc, stage.getWidth() - K, stage.getHeight() - L);
 
 
-				timeToFramerateDisplay -= deltaTime;
-				if (timeToFramerateDisplay <= 0) {
-					framerate = Math.min(60, (int) (1 / deltaTime)); 
-					timeToFramerateDisplay = 0.1f;
+				if (FRAMERATE_DISPLAYED) {
+					timeToFramerateDisplay -= deltaTime;
+					if (timeToFramerateDisplay <= 0) {
+						framerate = Math.min(60, (int) (1 / deltaTime)); 
+						timeToFramerateDisplay = 0.1f;
+					}
+					gc.setFont(Font.font("Helvetica", FontWeight.SEMI_BOLD, 12));
+					gc.setFill(Color.LIME);
+					gc.fillText(Integer.toString(framerate), 5, 15);
 				}
-				gc.setFont(Font.font("Helvetica", FontWeight.SEMI_BOLD, 12));
-				gc.setFill(Color.LIME);
-				gc.fillText(Integer.toString(framerate), 5, 15);
 			}
 		};
 		timer.start();

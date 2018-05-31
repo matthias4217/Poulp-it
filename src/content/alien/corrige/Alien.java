@@ -94,7 +94,7 @@ public class Alien extends Application {
 
 				spaceship.updatePosition();
 
-				Iterator<Sprite> it=pinapples.iterator();
+				Iterator<Sprite> it = pinapples.iterator();
 				while(it.hasNext()) {
 					Sprite pinapple = it.next();
 					pinapple.updatePosition();

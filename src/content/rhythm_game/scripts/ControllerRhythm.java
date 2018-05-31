@@ -9,6 +9,7 @@ import content.rhythm_game.State;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
+import javafx.scene.media.AudioClip;
 
 
 /**
@@ -33,7 +34,7 @@ public class ControllerRhythm extends MonoBehaviour {
 	 * The duration of the feedback period (when the letters are colored after a win or fail).
 	 * Denoted as a percentage of interval.
 	 */
-	public static float PERCENT_FEEDBACK = 0.35f;
+	public static float PERCENT_FEEDBACK = 0.31f;
 
 	/**
 	 * The initial score.
@@ -44,6 +45,23 @@ public class ControllerRhythm extends MonoBehaviour {
 	 * The maximum score after which the difficulty stops increasing
 	 */
 	public static int SCORE_MAX_DIFFICULTY = 100;
+
+	/**
+	 * The sound effect played when a round is won
+	 */
+	public static final AudioClip WIN_SOUND = new AudioClip("file:///C:/Users/Raphaël/git/hardcore-rodeo-96/bin/resources/audio/sound_effects/CasualGameSounds/"
+			+ "DM-CGS-45.wav");
+
+	/**
+	 * The sound effect played when a round is failed 
+	 */
+	public static final AudioClip FAIL_SOUND = new AudioClip("file:///C:/Users/Raphaël/git/hardcore-rodeo-96/bin/resources/audio/sound_effects/CasualGameSounds/"
+			+ "DM-CGS-02.wav");
+
+	/**
+	 * The volume of the sound effects
+	 */
+	public static double volume = 1.0;
 
 
 
@@ -99,10 +117,12 @@ public class ControllerRhythm extends MonoBehaviour {
 			if (timeIntervalSpent >= interval) {		// if the time interval is finished
 				if (checkEquality(playerInput)) {
 					System.out.println("Win!");
+					WIN_SOUND.play(volume);
 					score++;
 					state = State.WIN;
 				} else {
 					System.out.println("Fail!");
+					FAIL_SOUND.play(volume);
 					score--;
 					state = State.FAIL;
 				}
@@ -118,7 +138,7 @@ public class ControllerRhythm extends MonoBehaviour {
 				generateRow();
 				state = State.NORMAL;
 				timeIntervalSpent = 0;
-				
+
 				calculateInterval(Annex.clamp(score, 0, SCORE_MAX_DIFFICULTY));
 			}
 			break;
