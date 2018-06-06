@@ -117,7 +117,7 @@ public class ControllerRhythm extends MonoBehaviour {
 			if (timeIntervalSpent >= interval) {		// if the time interval is finished
 				if (checkEquality(playerInput)) {
 					System.out.println("Win!");
-					WIN_SOUND.play(volume);
+					WIN_SOUND.play(volume/2);
 					score++;
 					state = State.WIN;
 				} else {
