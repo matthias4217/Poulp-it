@@ -47,7 +47,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.EPERVIER;
+	static Game game = Game.CHESS;
 
 
 

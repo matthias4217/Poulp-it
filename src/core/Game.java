@@ -16,7 +16,7 @@ public enum Game {
 	SHOOTER("Dash"),
 	ALIEN("Alien VS Ananas"),
 	RHYTHM_GAME("Rythme Game"),
-	EPERVIER("Chess");
+	CHESS("Chess");
 
 
 
