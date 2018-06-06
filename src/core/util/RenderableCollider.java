@@ -36,7 +36,7 @@ public class RenderableCollider extends Collider implements Renderable {
 
 	@Override
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
-		render(gc, position);
+		render(gc, position, windowWidth, windowHeight);
 	}
 
 

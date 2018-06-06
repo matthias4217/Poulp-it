@@ -1,8 +1,6 @@
 # Poulp'It
 
-Moteur de jeu 2D
+2D Game Engine, featuring several games.
 
 
-## Utilisation
-
-
+## Usage

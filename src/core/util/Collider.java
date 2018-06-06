@@ -62,6 +62,11 @@ public class Collider {
 
 
 
+	public static Collider NO_COLLIDER() {
+		return null;
+	}
+
+
 
 	/**
 	 * Render this collider on the GraphicContext gc.
@@ -69,12 +74,12 @@ public class Collider {
 	 * @param gc		- The GraphicContext on which this will be rendered
 	 * @param origin	- 
 	 */
-	public void render(GraphicsContext gc, Vector2 origin) {
+	public void render(GraphicsContext gc, Vector2 origin, double windowWidth, double windowHeight) {
 		double[] xPoints = new double[nbPoints];
 		double[] yPoints = new double[nbPoints]; 
 		for (int i = 0; i < nbPoints; i++) {
 			xPoints[i] = origin.x + pointsArray[i].x;
-			yPoints[i] = Launcher.WINDOW_HEIGHT - origin.y - pointsArray[i].y;
+			yPoints[i] = windowHeight - origin.y - pointsArray[i].y;
 		}
 
 		gc.setStroke(RENDER_COLOR);

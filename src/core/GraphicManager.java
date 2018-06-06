@@ -27,9 +27,9 @@ public class GraphicManager {
 	 */
 	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 
-		if (GameEngine.level != null) {
-			for (Tile tile: GameEngine.level.tileList) {		// XXX
-				tile.render(gc);
+		if (GameEngine.level != null) {		// if the game has a level 
+			for (Tile tile: GameEngine.level.tileList) {		// XXX tileList = pas beau
+				tile.render(gc, windowWidth, windowHeight);
 			}
 		}
 
@@ -43,7 +43,6 @@ public class GraphicManager {
 				gizmo.render(gc, windowWidth, windowHeight);
 			}
 		}
-
 
 
 	}

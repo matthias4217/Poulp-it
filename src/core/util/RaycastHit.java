@@ -26,7 +26,7 @@ public class RaycastHit {
 	private Vector2 normal;
 
 
-	//? Vector2 impactPoint;
+	//? Vector2 impactPoint;		// I don't know if it's useful
 
 
 	public GameObject getGameObjectHit() {

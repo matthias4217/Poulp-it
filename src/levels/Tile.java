@@ -6,17 +6,18 @@ import javafx.scene.image.ImageView;
 import java.util.LinkedList;
 
 import core.GameEngine;
+import core.Renderable;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Collider;
 import core.util.Vector2;
 
 /**
- * Class which represents a tile.
+ * This class represents a tile.
  *
  * @author matthias
  *
  */
-public class Tile {
+public class Tile implements Renderable {
 
 	/**
 	 * The size of the side of a tile in the gamespace.
@@ -48,8 +49,8 @@ public class Tile {
 	 * The collider associated with a specific tileType (origin point up-left)
 	 * Used for the collision system
 	 * 
-	 * @param tileType
-	 * @return	the collider matching with the TileType
+	 * @param 	- tileType
+	 * @return	- the collider matching with the TileType
 	 * @throws InvalidArgumentsException 
 	 */
 	@Deprecated
@@ -122,7 +123,8 @@ public class Tile {
 	 * Render this Sprite on the GraphicsContext gc.
 	 * It may be optimized if we don't use getImage()
 	 */
-	public void render(GraphicsContext gc) {
+	@Override
+	public void render(GraphicsContext gc, double windowWidth, double windowHeight) {
 		//System.out.println("x: " + position.x + ", y: " + position.y);
 		gc.drawImage(sprite.getImage(), position.x, position.y);
 	}

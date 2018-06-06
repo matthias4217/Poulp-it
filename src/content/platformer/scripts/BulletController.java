@@ -6,6 +6,8 @@ import core.exceptions.InvalidArgumentsException;
 import core.util.Vector2;
 
 /**
+ * ---
+ * 
  * @author matthias
  *
  */
@@ -14,9 +16,9 @@ public class BulletController extends MonoBehaviour {
 	float velocityFactor;
 	float currentVelocity;
 	Vector2 directionShot;
-	
-	
-	
+
+
+
 	public BulletController(float velocityFactor, Vector2 directionShot) {
 		super();
 		this.velocityFactor = velocityFactor;
@@ -24,10 +26,8 @@ public class BulletController extends MonoBehaviour {
 		currentVelocity = 0;
 	}
 
-	@Override
-	public void start() {
-	}
-	
+
+
 	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput)
 			throws InvalidArgumentsException {
@@ -38,4 +38,6 @@ public class BulletController extends MonoBehaviour {
 		support.position.x += velocityFactor * directionShot.x;
 		support.position.y += velocityFactor * directionShot.y;
 	}
+
+
 }

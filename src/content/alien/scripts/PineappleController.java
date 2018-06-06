@@ -1,6 +1,3 @@
-/**
- * 
- */
 package content.alien.scripts;
 
 import content.MonoBehaviour;
@@ -11,6 +8,8 @@ import core.exceptions.InvalidArgumentsException;
 import core.util.Vector2;
 
 /**
+ * The script which control a pineapple
+ * 
  * @author matthias
  *
  */
@@ -20,13 +19,21 @@ public class PineappleController extends MonoBehaviour {
 	float speedFactor = 1.3f;
 	private float maxX = (float) Launcher.WINDOW_WIDTH;;
 	private float maxY = (float) Launcher.WINDOW_HEIGHT;;
-	
+
+
+
+	@Override
+	public void start() {
+		changeSpeed();
+	}
+
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput, float maxX, float maxY) throws InvalidArgumentsException {
 		this.maxX = maxX;
 		this.maxY= maxY;
 		update(deltaTime, playerInput, previousPlayerInput);
 	}
-	
+
+	@Override
 	public void update(float deltaTime, PlayerInput playerInput, PlayerInput previousPlayerInput) throws InvalidArgumentsException {
 		if(Math.random() > 0.995) {
 			changeSpeed();
@@ -35,11 +42,12 @@ public class PineappleController extends MonoBehaviour {
 		support.position.y += speed.y;
 		validatePosition(maxX, maxY);	
 	}
-	
+
+
 	public void validatePosition(float maxX, float maxY) {
 		float x = support.position.x;
 		float y = support.position.y;
-		
+
 		if (x + Alien.width >= maxX) {
 			x = maxX - Alien.width;
 			speed.x *= -1;
@@ -56,11 +64,13 @@ public class PineappleController extends MonoBehaviour {
 			speed.y *= -1;
 		}
 	}
-	
+
 	public void changeSpeed() {
 		int max = 5;
 		float x = max * (float) Math.random() - max/2;
 		float y = max * (float) Math.random() - max/2;
 		speed = new Vector2(x, y).multiply(speedFactor);
 	}
+
+
 }

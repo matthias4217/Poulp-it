@@ -1,36 +1,38 @@
-/**
- * 
- */
 package content.alien;
 
 import content.GameObject;
 import content.Layer;
 import content.Tag;
 import content.alien.scripts.PineappleController;
-import core.GameEngine;
 import core.util.BoxCollider;
 import core.util.Vector2;
 import javafx.scene.image.Image;
 
 /**
+ * ---
+ * 
  * @author matthias
  *
  */
 public class Pineapple extends GameObject {
 
+	static final String SPRITE_PATH = "resources/graphic/alien/pineapple.png";
 	
-
 	public static float width = 19;
 	public static float height = 36;
-	
-	public Pineapple(Vector2 position, Layer layer, Tag tag, GameEngine gameEngine) {
+
+
+
+	public Pineapple(Vector2 position, Layer layer, Tag tag) {
 		super(position,
-				new Image("resources/graphic/alien/pinapple.png", 19, 36, false, false),
-				layer, tag, new BoxCollider(19, 36),
-				gameEngine,
+				new Image(SPRITE_PATH, width, height, false, false),
+				layer,
+				tag,
+				new BoxCollider(width, height),
+
 				new PineappleController());
 	}
-	
-	
+
+
 
 }

@@ -2,7 +2,7 @@ package core;
 
 /**
  * The list of games that can be loaded by the Launcher.
- * Each of them encapsulates its name and the title of the window.
+ * Each of them encapsulates its name, the title of the window and a description (empty by default)
  * 
  * @see Launcher
  * 
@@ -15,7 +15,9 @@ public enum Game {
 	MAZE("Maze Game"),
 	SHOOTER("Dash"),
 	ALIEN("Alien VS Ananas"),
-	RHYTHM_GAME("Rythme Game");
+	RHYTHM_GAME("Rythme Game"),
+	CHESS("Chess");
+
 
 
 
@@ -23,7 +25,7 @@ public enum Game {
 	 * The name of the Game
 	 */
 	public String name;
-	
+
 	/**
 	 * The title of the game window
 	 */
@@ -32,18 +34,24 @@ public enum Game {
 	/**
 	 * A description of the game
 	 */
-	public String description = "";
+	public String description;
 
 
 
 	Game(String name) {
-		this(name, name);
+		this(name, name, "");
 	}
 
 	Game(String name, String windowTitle){
+		this(name, windowTitle, "");
+	}
+
+	Game(String name, String windowTitle, String description) {
 		this.name = name;
 		this.windowTitle = windowTitle;
+		this.description = description;
 	}
+
 
 
 
