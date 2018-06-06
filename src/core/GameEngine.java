@@ -13,6 +13,7 @@ import content.maze.PlayerMaze;
 import content.platformer.Player;
 import content.rhythm_game.RhythmConductor;
 import content.shooter.PlayerShooter;
+import content.test.Mouse;
 import core.exceptions.InvalidArgumentsException;
 import core.exceptions.MultipleGameEngineException;
 import core.util.*;
@@ -207,7 +208,7 @@ public class GameEngine {
 		}
 		System.out.println("Players instanciation finished");
 
-
+		instanciate(new Mouse());
 		// ----
 
 
@@ -419,6 +420,11 @@ public class GameEngine {
 	 */
 	private static Vector2 toWorldCoordinates(int xTile, int yTile) {
 		return new Vector2(xTile * tileSize, (float) (Launcher.WINDOW_HEIGHT - yTile * tileSize));
+	}
+	
+	public static Vector2 screenToWindow(Vector2 screenPos) {
+		return new Vector2(screenPos.x, (float) Launcher.WINDOW_HEIGHT - screenPos.y);
+		
 	}
 
 

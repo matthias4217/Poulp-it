@@ -7,6 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 
 import core.util.Vector2;
+import core.Launcher;
 
 /**
  * This class represents the input of a player sent by a client to the server.
@@ -124,6 +125,7 @@ public class PlayerInput {
 			mouse = event;
 			mousePosition.x = (float) event.getX();
 			mousePosition.y = (float) event.getY();
+			mousePosition = GameEngine.screenToWindow(mousePosition);
 			MouseButton button = event.getButton();
 			if (button == MouseButton.NONE) {
 				mouseLeftPressed = false;
