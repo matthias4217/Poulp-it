@@ -54,6 +54,20 @@ public class GameEngine {
 	public static Level level;
 
 	/**
+	 * The origin point of the camera.
+	 * Modify this value in order to move the camera.
+	 * TODO
+	 */
+	public static Vector2 cameraOrigin = Vector2.ZERO();
+
+	/**
+	 * The scale of the camera.
+	 * Modify this value to change the zoom of the camera.
+	 * TODO
+	 */
+	public static double /* float */ cameraZoom = 1.0;
+	
+	/**
 	 * The multiplicative factor used to affect the time flow in the game 
 	 */
 	public static float timeFactor = 1f;
@@ -249,7 +263,7 @@ public class GameEngine {
 	public static void instanciate(GameObject gameObject) {
 		allGameObjects.add(gameObject);
 	}
-	
+
 	/**
 	 * Remove a GameObject from the GameEngine
 	 * 
