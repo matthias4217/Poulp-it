@@ -28,6 +28,12 @@ import levels.Tile.TileType;
  *
  */
 public class GameEngine {
+	
+	/** 
+	 * Path where the application is run
+	 */
+	public static String PATH = System.getProperty("user.dir");
+	
 
 	private static boolean alreadyExist = false;	// To ensure there can be only one instance of GameEngine created
 

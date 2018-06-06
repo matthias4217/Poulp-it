@@ -6,6 +6,7 @@ import java.util.Random;
 
 import content.MonoBehaviour;
 import content.rhythm_game.State;
+import core.GameEngine;
 import core.PlayerInput;
 import core.exceptions.InvalidArgumentsException;
 import core.util.Annex;
@@ -13,7 +14,7 @@ import javafx.scene.media.AudioClip;
 
 
 /**
- * This script manages the flow of the Rythm game.
+ * This script manages the flow of the Rhythm game.
  *
  * @author matthias
  *
@@ -49,13 +50,13 @@ public class ControllerRhythm extends MonoBehaviour {
 	/**
 	 * The sound effect played when a round is won
 	 */
-	public static final AudioClip WIN_SOUND = new AudioClip("file:///C:/Users/Raphaël/git/hardcore-rodeo-96/bin/resources/audio/sound_effects/CasualGameSounds/"
+	public static final AudioClip WIN_SOUND = new AudioClip("file:///" + GameEngine.PATH + "/bin/resources/audio/sound_effects/CasualGameSounds/"
 			+ "DM-CGS-45.wav");
 
 	/**
 	 * The sound effect played when a round is failed 
 	 */
-	public static final AudioClip FAIL_SOUND = new AudioClip("file:///C:/Users/Raphaël/git/hardcore-rodeo-96/bin/resources/audio/sound_effects/CasualGameSounds/"
+	public static final AudioClip FAIL_SOUND = new AudioClip("file:///" + GameEngine.PATH + "/bin/resources/audio/sound_effects/CasualGameSounds/"
 			+ "DM-CGS-02.wav");
 
 	/**
