@@ -5,7 +5,6 @@ package content.test.scripts;
 
 import content.MonoBehaviour;
 import core.PlayerInput;
-import core.GameEngine;
 
 /**
  * @author matthias
