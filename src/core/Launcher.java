@@ -34,8 +34,8 @@ public class Launcher extends Application {
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();		// Problems may happen in case of multi-monitors.
 
 	static final double SCALE = 0.9f;
-	static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
-	static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
+	public static double WINDOW_WIDTH = SCALE * screenSize.getWidth();
+	public static double WINDOW_HEIGHT = SCALE * screenSize.getHeight();
 	
 	public static final boolean FRAMERATE_DISPLAYED = true;
 
@@ -47,7 +47,7 @@ public class Launcher extends Application {
 	/**
 	 * The game that will be loaded
 	 */
-	static Game game = Game.RHYTHM_GAME;
+	static Game game = Game.EPERVIER;
 
 
 

@@ -152,6 +152,7 @@ public class GameEngine {
 	}
 
 
+
 	/**
 	 * Initializes the game
 	 *
@@ -236,6 +237,7 @@ public class GameEngine {
 		RhythmConductor conductor = new RhythmConductor();
 		instanciate(conductor);
 	}
+
 
 
 
